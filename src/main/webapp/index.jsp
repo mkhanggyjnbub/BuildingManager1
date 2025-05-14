@@ -31,7 +31,7 @@
             <nav id="nav-menu">
                 <a href="Index">Trang chủ</a>
                 <a href="ListRooms">Phòng</a>
-                <a href="#">Đặt phòng</a>
+                <a href="#">Đặt phòng 1</a>
                 <a href="#">Liên hệ</a>
                 <a href="UpImage">Up ảnh</a>
                 <c:choose  > 
