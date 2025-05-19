@@ -15,12 +15,19 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import com.cloudinary.*;
 import com.cloudinary.utils.ObjectUtils;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.http.Part;
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Map;
 
 /**
  *
  * @author Kiều Hoàng Mạnh Khang - ce180749
  */
+@MultipartConfig
 @WebServlet(name = "cloudImage", urlPatterns = {"/cloudImage"})
 public class cloudImage extends HttpServlet {
 
@@ -62,11 +69,7 @@ public class cloudImage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", "dmkdqxqx6",
-                "api_key", "813724666765833",
-                "api_secret", "rE6HgCAE0wMLSB1naRnhhU2wAmk"
-        ));
+
     }
 
     /**
@@ -80,7 +83,24 @@ public class cloudImage extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", "dmkdqxqx6",
+                "api_key", "813724666765833",
+                "api_secret", "rE6HgCAE0wMLSB1naRnhhU2wAmk"
+        ));
+        // Nhận phần file từ form HTML
+        Part filePart = request.getPart("image");
+        String title = request.getParameter("title");  // Nhận tiêu đề ảnh
+        // Lưu tạm file lên server
+        File tempFile = File.createTempFile("upload_", ".jpg");
+        try ( InputStream input = filePart.getInputStream()) {
+            Files.copy(input, tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        }
+        // Upload file lên Cloudinary
+        Map result = cloudinary.uploader().upload(tempFile, ObjectUtils.emptyMap());
+        String imageUrl = result.get("secure_url").toString();  // URL ảnh sau khi upload
+        
+        
     }
 
     /**

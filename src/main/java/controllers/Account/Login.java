@@ -4,6 +4,7 @@
  */
 package controllers.Account;
 
+import dao.CustomerDao;
 import dao.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import models.Customers;
 import models.Users;
 
 /**
@@ -76,48 +78,56 @@ public class Login extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if (request.getParameter("sub") != null) {
+            HttpSession session = request.getSession();
+            int checkLoginUser = 0;
+            int checkLoginCuss = 0;
+
+            String accountType = request.getParameter("accountType").trim();
             String userName = request.getParameter("tk").trim();
-            String PassWord = request.getParameter("pas").trim();
-            Users user = new Users();
-            user.setUserName(userName);
-            user.setPassword(PassWord);
+            String passWord = request.getParameter("pas").trim();
+            session.setAttribute("userName", userName);
+            session.setAttribute("accountType", accountType);
+
             UserDao userDao = new UserDao();
-            int checkLogin = userDao.loginForId(user);
-            int checkRole = userDao.getRoleById(checkLogin);
-            if (checkLogin != 0 && checkRole != 0 && checkLogin != 0) {
-                String userId = checkLogin + "";
-                HttpSession session = request.getSession();
+            CustomerDao customerDao = new CustomerDao();
+            if (accountType.equalsIgnoreCase("option1")) {
+                Users user = new Users();
+                user.setUserName(userName);
+                user.setPassword(passWord);
+                checkLoginUser = userDao.loginAdminForId(user);
+                String userId = checkLoginUser + "";
 
+                int checkRole = userDao.getRoleById(checkLoginUser);
+                session.setAttribute("role", checkRole);
                 if (checkRole == 1) {
-                    Cookie c = new Cookie("phienAdmin", userId);
-                    // thiết lập thời gian hết hạn của cookie
-                    c.setMaxAge(60 * 10 * 3);
-                    // đẩy file xuống máy người dùng
-                    response.addCookie(c);
+                    session.setAttribute("adminId", userId);
                     response.sendRedirect("Admin");
+
                 } else if (checkRole == 2) {
-
+                    session.setAttribute("managerId", userId);
                 } else if (checkRole == 3) {
-                    response.sendRedirect("Index");
+                    session.setAttribute("staffId", userId);
                 } else if (checkRole == 4) {
-
+                    session.setAttribute("onsumablesId", userId);
                 } else if (checkRole == 5) {
-                    Cookie c = new Cookie("phienCustomer", userId);
-                    // thiết lập thời gian hết hạn của cookie
-                    c.setMaxAge(60 * 10 * 3);
-                    // đẩy file xuống máy người dùng
-                    response.addCookie(c);
-                    session.setAttribute("customerName", userName);
-                    session.setAttribute("customerId", userId);
-
-                    response.sendRedirect("Index");
+                    session.setAttribute("equipmentId", userId);
                 }
 
             } else {
-                response.sendRedirect("Login");
+                Customers customer = new Customers();
+                customer.setUserName(userName);
+                customer.setPassword(passWord);
+                checkLoginCuss = customerDao.loginCussForId(customer);
+                String cusstomerId = checkLoginCuss + "";
+                session.setAttribute("cusstomerId", cusstomerId);
+                response.sendRedirect("Index");
+
             }
 
+        } else {
+            response.sendRedirect("Login");
         }
+
     }
 
     /**
