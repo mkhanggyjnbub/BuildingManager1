@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.spi.DirStateFactory;
 import models.AccountStatus;
+import models.Customers;
 import models.Roles;
 import models.Users;
 
@@ -59,7 +60,9 @@ public class UserDao {
         }
     }
 
-    public int loginForId(Users acc) {
+
+
+    public int loginAdminForId(Users acc) {
         try {
             String sql = "Select * from Users where UserName=? and Password=?";
             PreparedStatement pst = conn.prepareStatement(sql);
@@ -95,6 +98,7 @@ public class UserDao {
 
         return role;
     }
+
     public List<Users> getFullOfDashBoard(int page) {
         List<Users> listUser = new ArrayList<>();
 
@@ -159,8 +163,6 @@ public class UserDao {
 
     }
 
-
-
     public Users getUserById(int id) {
         ResultSet rs = null;
         Users user = new Users();
@@ -192,9 +194,8 @@ public class UserDao {
         }
         return user;
     }
-    
-    
-     public Users getRoleUserById(int id) {
+
+    public Users getRoleUserById(int id) {
         ResultSet rs = null;
         Users user = new Users();
         try {
@@ -212,13 +213,12 @@ public class UserDao {
                 user.setFullName(rs.getString("FullName"));
                 user.setUserId(rs.getInt("UserId"));
                 user.setRole(role);
-          }
+            }
         } catch (SQLException ex) {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return user;
     }
-
 
     public int UpdateRole(int RoleId, int UserId) {
         int cnt = 0;
@@ -229,13 +229,11 @@ public class UserDao {
             pst.setInt(1, RoleId);
             pst.setInt(2, UserId);
             cnt = pst.executeUpdate();
-              
+
         } catch (SQLException ex) {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return cnt;
     }
-
-   
 
 }

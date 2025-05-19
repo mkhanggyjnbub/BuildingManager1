@@ -43,13 +43,13 @@
             <!-- Người lớn -->
             <div class="form-group">
                 <label for="adults">Người lớn</label>
-                <input oninput="search()" type="number" id="adults" name="adults" min="1" value="1">
+                <input  oninput="search()" type="number" id="adults" name="adults" min="1" value="1">
             </div>
 
             <!-- Trẻ em -->
             <div class="form-group">
                 <label for="children">Trẻ em</label>
-                <input oninput="search()" type="number" id="children" name="children" min="0" value="0">
+                <input  oninput="search()" type="number" id="children" name="children" min="0" value="0">
             </div>
 
         </div>

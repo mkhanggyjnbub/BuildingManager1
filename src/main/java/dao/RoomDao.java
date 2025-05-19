@@ -126,7 +126,7 @@ public class RoomDao {
                     + "AND B.Location = ?\n"
                     + "AND NOT EXISTS (\n"
                     + "    SELECT 1\n"
-                    + "    FROM Booking B\n"
+                    + "    FROM Bookings B\n"
                     + "    WHERE B.RoomId = R.RoomId\n"
                     + "    AND B.StartDate < ? AND B.EndDate >? \n"
                     + "    AND B.StatusId in(1,2,3)\n"
