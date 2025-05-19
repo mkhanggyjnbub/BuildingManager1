@@ -77,7 +77,7 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (request.getParameter("sub") != null) {
+        if (request.getParameter("tk") != null) {
             HttpSession session = request.getSession();
             int checkLoginUser = 0;
             int checkLoginCuss = 0;
@@ -95,22 +95,27 @@ public class Login extends HttpServlet {
                 user.setUserName(userName);
                 user.setPassword(passWord);
                 checkLoginUser = userDao.loginAdminForId(user);
-                String userId = checkLoginUser + "";
+                if (checkLoginUser > 1) {
+                    String userId = checkLoginUser + "";
 
-                int checkRole = userDao.getRoleById(checkLoginUser);
-                session.setAttribute("role", checkRole);
-                if (checkRole == 1) {
-                    session.setAttribute("adminId", userId);
-                    response.sendRedirect("Admin");
+                    int checkRole = userDao.getRoleById(checkLoginUser);
+                    session.setAttribute("role", checkRole);
+                    if (checkRole == 1) {
+                        session.setAttribute("adminId", userId);
+                        response.sendRedirect("Admin");
 
-                } else if (checkRole == 2) {
-                    session.setAttribute("managerId", userId);
-                } else if (checkRole == 3) {
-                    session.setAttribute("staffId", userId);
-                } else if (checkRole == 4) {
-                    session.setAttribute("onsumablesId", userId);
-                } else if (checkRole == 5) {
-                    session.setAttribute("equipmentId", userId);
+                    } else if (checkRole == 2) {
+                        session.setAttribute("managerId", userId);
+                    } else if (checkRole == 3) {
+                        session.setAttribute("staffId", userId);
+                    } else if (checkRole == 4) {
+                        session.setAttribute("onsumablesId", userId);
+                    } else if (checkRole == 5) {
+                        session.setAttribute("equipmentId", userId);
+                    }
+                } else {
+                    response.sendRedirect("Login");
+
                 }
 
             } else {
@@ -118,10 +123,13 @@ public class Login extends HttpServlet {
                 customer.setUserName(userName);
                 customer.setPassword(passWord);
                 checkLoginCuss = customerDao.loginCussForId(customer);
-                String cusstomerId = checkLoginCuss + "";
-                session.setAttribute("cusstomerId", cusstomerId);
-                response.sendRedirect("Index");
-
+                if (checkLoginCuss > 1) {
+                    String cusstomerId = checkLoginCuss + "";
+                    session.setAttribute("cusstomerId", cusstomerId);
+                    response.sendRedirect("Index");
+                } else {
+                    response.sendRedirect("Login");
+                }
             }
 
         } else {
