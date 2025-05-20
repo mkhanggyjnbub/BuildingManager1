@@ -2,27 +2,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package cloudImages;
+package controllers.asset;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-// Import the required packages
-
-import com.cloudinary.*;
-import com.cloudinary.utils.ObjectUtils;
-import java.util.Map;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Kiều Hoàng Mạnh Khang - ce180749
+ * @author KHANH
  */
-@WebServlet(name = "cloudImage", urlPatterns = {"/cloudImage"})
-public class cloudImage extends HttpServlet {
+@WebServlet(name = "AssetModel", urlPatterns = {"/AssetModel"})
+public class AssetModel extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +36,10 @@ public class cloudImage extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet cloudImage</title>");
+            out.println("<title>Servlet AssetModel</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet cloudImage at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AssetModel at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,11 +57,7 @@ public class cloudImage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", "dmkdqxqx6",
-                "api_key", "813724666765833",
-                "api_secret", "rE6HgCAE0wMLSB1naRnhhU2wAmk"
-        ));
+        processRequest(request, response);
     }
 
     /**

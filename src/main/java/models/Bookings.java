@@ -8,7 +8,7 @@ package models;
  *
  * @author Kiều Hoàng Mạnh Khang - ce180749
  */
-public class Booking {
+public class Bookings {
 
     private int bookingId;
     private int roomId;
@@ -17,11 +17,10 @@ public class Booking {
     private int endDate;
     private String Status;
 
-  
-
-    public Booking() {
+    public Bookings() {
     }
-  public Booking(int bookingId, int roomId, int userId, int startDate, int endDate, String Status) {
+
+    public Bookings(int bookingId, int roomId, int userId, int startDate, int endDate, String Status) {
         this.bookingId = bookingId;
         this.roomId = roomId;
         this.userId = userId;
