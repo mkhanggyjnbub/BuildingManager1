@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -70,11 +71,17 @@ public class EquipmentDao {
                 mash.setEquipment(eq);
                 Timestamp timestamp = rs.getTimestamp("Date");
                 mash.setDate(timestamp.toLocalDateTime());
+                LocalDateTime date = rs.getTimestamp("Date").toLocalDateTime();
+DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+String formatted = date.format(formatter); // ✅ đúng
+mash.setFormattedDate(formatted);          // Nếu bạn có setter
+
 
                 MaintenanceStatuses maintenanceStatuses = new MaintenanceStatuses();
                 maintenanceStatuses.setStatusName(rs.getString("StatusName"));
                 mash.setMaintenanceStatuses(maintenanceStatuses);
                 EquipmentDao dao = new EquipmentDao();
+                
 
                 list.add(mash);
             }

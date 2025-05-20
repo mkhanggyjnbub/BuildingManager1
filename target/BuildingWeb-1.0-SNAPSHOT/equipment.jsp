@@ -8,6 +8,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.*, models.MaintenanceSchedule, dao.EquipmentDao"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:formatDate value="${ms.date}" pattern="yyyy-MM-dd HH:mm"/>
 
 
 
@@ -15,6 +17,7 @@
 <html>
     <head>
     <title>Lịch Bảo Trì Thiết Bị</title>
+    
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -88,8 +91,9 @@
         <td>${ms.equipment.equipmentName}</td>
         <td>${ms.date}</td>
         <td>${ms.maintenanceStatuses.statusName}</td>
-        <td>${ms.users.userName}</td>
+        <td>${ms.users.userName} </td>
     </tr>
+    
             </c:forEach>
         </table>
     </body>
