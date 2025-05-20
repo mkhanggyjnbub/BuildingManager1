@@ -29,8 +29,10 @@
         <header>
             <div class="logo">🏨 HotelManager</div>
             <nav id="nav-menu">
+                <a href="Equipment">Equipment</a>
                 <a href="Index">Trang chủ</a>
                 <a href="ListRooms">Phòng</a>
+                
                 <a href="#">Đặt phòng</a>
                 <a href="#">Liên hệ</a>
                 <a href="UpImage">Up ảnh</a>
