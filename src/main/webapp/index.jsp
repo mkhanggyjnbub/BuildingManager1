@@ -41,6 +41,7 @@
                     <c:when test="${ accountType eq 'option1'   }">  
                         <c:choose> 
                             <c:when test="${role == 1}">
+                                      <a href="Admin">Admin</a> 
                                 <a href="?id=${adminId}">${userName}</a> 
                             </c:when>
                             <c:when test="${role == 2}">

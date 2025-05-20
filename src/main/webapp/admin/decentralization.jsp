@@ -25,7 +25,7 @@
         </style>
     </head>
     <body>
-        <div>Phân Quyền Cho: <td>${user.fullName}</td></div>
+        <div>Phân Quyền Cho: <td>${user.employees.fullName}</td></div>
 
         <table border="1">
 
@@ -39,8 +39,8 @@
                             <select name="roleId">
                                 <option <c:if  test="${user.role.roleName eq 'Quản lý' }">selected </c:if>  value="2">Quản lý</option>
                                 <option <c:if test="${user.role.roleName eq 'Lễ tân' }">selected </c:if>  value="3">Lễ tân</option>
-                                <option <c:if test="${user.role.roleName eq 'Nhân viên'}">selected </c:if>  value="4">Nhân viên kỹ thuật</option>
-                                <option <c:if test="${user.role.roleName eq 'Khách hàng'}"> selected</c:if> value="5">Khách hàng</option>
+                                <option <c:if test="${user.role.roleName eq 'Nhân viên kỹ thuật'}">selected </c:if>  value="4">Nhân viên kỹ thuật</option>
+                                <option <c:if test="${user.role.roleName eq 'Nhân viên dọn phòng'}"> selected</c:if> value="5">Nhân viên dọn phòng</option>
                             </select>
                             <button name="submit" style="submit" value="success" >Save</button>
                         </form>
