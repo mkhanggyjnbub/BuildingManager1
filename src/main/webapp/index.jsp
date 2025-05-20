@@ -36,6 +36,7 @@
                 <a href="#">Đặt phòng</a>
                 <a href="#">Liên hệ</a>
                 <a href="UpImage">Up ảnh</a>
+                <a href="VouchersDashBoard">voucher</a>
                 <c:choose  > 
                     <c:when test="${ empty accountType   }">  
                         <a href="Login">Đăng nhập</a> 

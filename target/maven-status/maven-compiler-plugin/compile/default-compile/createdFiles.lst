@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+controllers\voucher\Vouchers.class
+=======
 controllers\asset\AssetModel.class
+>>>>>>> origin
 models\Roles.class
 db\ConnectData.class
 models\Booking.class
@@ -7,16 +11,29 @@ controllers\UpImage.class
 dao\RoomDao.class
 dao\UserDao.class
 dao\PaginationDao.class
+cloudImages\cloudImage.class
 controllers\admin\Decentralization.class
 controllers\admin\Admin.class
 models\Users.class
 controllers\Account\Login.class
+<<<<<<< HEAD
+dao\VoucherDAO.class
+controllers\voucher\VouchersDashBoard.class
+controllers\voucher\EditVoucher.class
+=======
+>>>>>>> origin
 controllers\Account\SignUp.class
 models\Floors.class
 controllers\admin\DashboardUser.class
 controllers\admin\AdminView.class
 models\Buildings.class
 controllers\room\ListRooms.class
+<<<<<<< HEAD
+controllers\voucher\AddVoucher.class
+models\Vouchers.class
+controllers\voucher\DeleteVoucher.class
+=======
 controllers\asset\Assets.class
+>>>>>>> origin
 models\AccountStatus.class
 models\Rooms.class
