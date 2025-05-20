@@ -37,7 +37,7 @@
                         <!--Công thức in ra số trang ở từng phân trang-->
                         <td>${(thisPage - 1) * 10 + i.index + 1}</td>
                         <td>${user.userName}</td>
-                        <td>${user.email}</td>
+                        <td>${user.employees.email}</td>
                         <td>${user.role.roleName}</td>
                         <td><a href="AdminView?id=${user.userId}"><i  class="fa-solid fa-eye"></i></a>
                             <a href="AdminEdit?id=${user.userId}"><i class="fa-solid fa-pencil"></i></a>
