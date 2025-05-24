@@ -1,39 +1,42 @@
-<<<<<<< HEAD
-controllers\voucher\Vouchers.class
-=======
 controllers\asset\AssetModel.class
->>>>>>> origin
 models\Roles.class
 db\ConnectData.class
-models\Booking.class
 controllers\Index.class
 controllers\UpImage.class
 dao\RoomDao.class
 dao\UserDao.class
+models\Equipment.class
 dao\PaginationDao.class
-cloudImages\cloudImage.class
+controllers\voucher\AdminViewVoucher.class
 controllers\admin\Decentralization.class
+models\MaintenanceStatuses.class
 controllers\admin\Admin.class
 models\Users.class
 controllers\Account\Login.class
-<<<<<<< HEAD
+models\MaintenanceSchedule.class
+controllers\Equipment.class
 dao\VoucherDAO.class
 controllers\voucher\VouchersDashBoard.class
+dao\CustomerDao.class
 controllers\voucher\EditVoucher.class
-=======
->>>>>>> origin
 controllers\Account\SignUp.class
+dao\EquipmentDao.class
+dao\CustomerVoucherDao.class
 models\Floors.class
 controllers\admin\DashboardUser.class
 controllers\admin\AdminView.class
+models\Bookings.class
 models\Buildings.class
+models\Employees.class
 controllers\room\ListRooms.class
-<<<<<<< HEAD
+models\Customers.class
+controllers\voucher\ViewVouchers.class
+models\CustomerStatus.class
 controllers\voucher\AddVoucher.class
 models\Vouchers.class
 controllers\voucher\DeleteVoucher.class
-=======
+models\string.class
+models\RoomEquipment.class
 controllers\asset\Assets.class
->>>>>>> origin
 models\AccountStatus.class
 models\Rooms.class

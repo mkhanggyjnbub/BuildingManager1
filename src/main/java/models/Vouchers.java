@@ -11,6 +11,7 @@ import java.sql.Date;
  * @author CE180441_Dương Đinh Thế Vinh
  */
 public class Vouchers {
+
     private int voucherId;
     private String code;
     private int typeId;
@@ -20,21 +21,26 @@ public class Vouchers {
     private Date startDate;
     private Date endDate;
     private String description;
+    private boolean status;
+    private int quantity;
 
     public Vouchers() {
     }
 
- 
-    public Vouchers(int voucherId, String code, int typeId, Integer discountPercent, Integer discountAmount, int minOrderAmount, Date startDate, Date endDate, String description) {
-        this.voucherId = voucherId;
-        this.code = code;
-        this.typeId = typeId;
-        this.discountPercent = discountPercent;
-        this.discountAmount = discountAmount;
-        this.minOrderAmount = minOrderAmount;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.description = description;
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public int getVoucherId() {
@@ -108,5 +114,5 @@ public class Vouchers {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
 }

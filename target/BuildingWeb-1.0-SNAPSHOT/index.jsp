@@ -32,11 +32,12 @@
                 <a href="Equipment">Equipment</a>
                 <a href="Index">Trang chủ</a>
                 <a href="ListRooms">Phòng</a>
-                
+
                 <a href="#">Đặt phòng</a>
                 <a href="#">Liên hệ</a>
                 <a href="UpImage">Up ảnh</a>
-                <a href="VouchersDashBoard">voucher</a>
+                <a href="VouchersDashBoard">VouchersDashBoard</a>
+                <a href="ViewVouchers" > ViewVouchers </a> <br>
                 <c:choose  > 
                     <c:when test="${ empty accountType   }">  
                         <a href="Login">Đăng nhập</a> 
@@ -44,7 +45,7 @@
                     <c:when test="${ accountType eq 'option1'   }">  
                         <c:choose> 
                             <c:when test="${role == 1}">
-                                      <a href="Admin">Admin</a> 
+                                <a href="Admin">Admin</a> 
                                 <a href="?id=${adminId}">${userName}</a> 
                             </c:when>
                             <c:when test="${role == 2}">

@@ -13,24 +13,26 @@ import java.time.LocalDateTime;
  * @author Kiều Hoàng Mạnh Khang - ce180749
  */
 public class Customers {
+
     private int CustomerID;
-    private String  UserName;
-    private String  Password;
-    private String  FullName;
-    private String  Phone;
-    private String  Email;
-    private String  Address;
-    private String  Gender;
-    private Date  DateOfBirth;
-    private int  StatusId;
-    private String  AvatarUrl;
-    private LocalDateTime  CreationDate;
-    private LocalDateTime  LastLogin;
+    private String UserName;
+    private String Password;
+    private String FullName;
+    private String Phone;
+    private String Email;
+    private String Address;
+    private String Gender;
+    private Date DateOfBirth;
+    private int StatusId;
+    private String AvatarUrl;
+    private LocalDateTime CreationDate;
+    private LocalDateTime LastLogin;
+    private CustomerStatus customerStatus;
 
     public Customers() {
     }
 
-    public Customers(int CustomerID, String UserName, String Password, String FullName, String Phone, String Email, String Address, String Gender, Date DateOfBirth, int StatusId, String AvatarUrl, LocalDateTime CreationDate, LocalDateTime LastLogin) {
+    public Customers(int CustomerID, String UserName, String Password, String FullName, String Phone, String Email, String Address, String Gender, Date DateOfBirth, int StatusId, String AvatarUrl, LocalDateTime CreationDate, LocalDateTime LastLogin, CustomerStatus customerStatus) {
         this.CustomerID = CustomerID;
         this.UserName = UserName;
         this.Password = Password;
@@ -44,6 +46,7 @@ public class Customers {
         this.AvatarUrl = AvatarUrl;
         this.CreationDate = CreationDate;
         this.LastLogin = LastLogin;
+        this.customerStatus = customerStatus;
     }
 
     public int getCustomerID() {
@@ -149,5 +152,13 @@ public class Customers {
     public void setLastLogin(LocalDateTime LastLogin) {
         this.LastLogin = LastLogin;
     }
-  
+
+    public CustomerStatus getCustomerStatus() {
+        return customerStatus;
+    }
+
+    public void setCustomerStatus(CustomerStatus customerStatus) {
+        this.customerStatus = customerStatus;
+    }
+
 }

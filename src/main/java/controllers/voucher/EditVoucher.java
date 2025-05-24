@@ -62,13 +62,11 @@ public class EditVoucher extends HttpServlet {
             throws ServletException, IOException {
         int voucherId = Integer.parseInt(request.getParameter("voucherId"));
         Vouchers vouchers = new Vouchers();
-        
+
         VoucherDAO dao = new VoucherDAO();
         vouchers = dao.getVoucherById(voucherId);
         request.setAttribute("voucher", vouchers);
         request.getRequestDispatcher("vouchersAdmin/editVoucher.jsp").forward(request, response);
-        
-   
 
     }
 
@@ -83,8 +81,8 @@ public class EditVoucher extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         int id = Integer.parseInt(request.getParameter("voucherId"));
-        
         String code = request.getParameter("code");
         int typeId = Integer.parseInt(request.getParameter("typeId"));
         int discountPercent = Integer.parseInt(request.getParameter("discountPercent"));
@@ -93,22 +91,29 @@ public class EditVoucher extends HttpServlet {
         Date startDate = Date.valueOf(request.getParameter("startDate"));
         Date endDate = Date.valueOf(request.getParameter("endDate"));
         String description = request.getParameter("description");
+        int quantity = Integer.parseInt(request.getParameter("quantity")) ;
 
-        Vouchers v = new Vouchers(id, code, typeId, discountPercent, discountAmount,
-                minOrderAmount, startDate, endDate, description);
+        // Gán giá trị cho Vouchers object
+        Vouchers v = new Vouchers();
+        v.setVoucherId(id);
+        v.setCode(code);
+        v.setTypeId(typeId);
+        v.setDiscountPercent(discountPercent);
+        v.setDiscountAmount(discountAmount);
+        v.setMinOrderAmount(minOrderAmount);
+        v.setStartDate(startDate);
+        v.setEndDate(endDate);
+        v.setDescription(description);
+        v.setQuantity(quantity);
 
         VoucherDAO dao = new VoucherDAO();
-        
-        int cnt = dao.updateVoucher(v); // Phải có phương thức này trong DAO
+        int cnt = dao.updateVoucher(v);
 
-        
-        if(cnt != 0){
+        if (cnt != 0) {
             response.sendRedirect("VouchersDashBoard");
+        } else {
+            response.sendRedirect("EditVoucher?voucherId=" + id + "&error=1");
         }
-        else {
-            response.sendRedirect("...");
-        }
-        
     }
 
     /**
