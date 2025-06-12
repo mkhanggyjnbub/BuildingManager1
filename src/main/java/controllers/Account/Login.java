@@ -124,8 +124,8 @@ public class Login extends HttpServlet {
                 customer.setPassword(passWord);
                 checkLoginCuss = customerDao.loginCussForId(customer);
                 if (checkLoginCuss !=0 ) {
-                    String cusstomerId = checkLoginCuss + "";
-                    session.setAttribute("cusstomerId", cusstomerId);
+                    String customerId = checkLoginCuss + "";
+                    session.setAttribute("customerId", customerId);
                     response.sendRedirect("Index");
                 } else {
                     response.sendRedirect("Login");

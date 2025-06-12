@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.spi.DirStateFactory;
-import models.AccountStatus;
 import models.Customers;
 import models.Employees;
 import models.Roles;
@@ -77,7 +76,7 @@ public class UserDao {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, "Lỗi truy vấn đăng nhập", ex);
         }
 
-        return -1;
+        return 0;
 
     }
 
@@ -196,16 +195,13 @@ public class UserDao {
             if (rs.next()) {
                 Roles role = new Roles();
                 Employees employees = new Employees();
-                AccountStatus accountStatus = new AccountStatus();
-                accountStatus.setStatusName(rs.getString("StatusName"));
+                
                 role.setRoleName(rs.getString("RoleName"));
                 user.setUserName(rs.getString("Username"));
                 employees.setFullName(rs.getString("FullName"));
                 employees.setEmail(rs.getString("Email"));
                 employees.setPhone(rs.getString("Phone"));
                 user.setEmployees(employees);
-
-                user.setAccountStatus(accountStatus);
                 user.setRole(role);
                 user.setAvatarUrl(rs.getString("AvatarUrl"));
             }

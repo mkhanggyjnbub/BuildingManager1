@@ -24,24 +24,12 @@ public class Users {
     private Roles role;
     private LocalDateTime CreationDate;
     private Employees employees;
-    private AccountStatus accountStatus;
+    
 
     public Users() {
     }
 
-    public Users(int userId, String userName, String password, String avatarUrl, Date lastLogin, int roleId, int status, Roles role, LocalDateTime CreationDate, Employees employees, AccountStatus accountStatus) {
-        this.userId = userId;
-        this.userName = userName;
-        this.password = password;
-        this.avatarUrl = avatarUrl;
-        this.lastLogin = lastLogin;
-        this.roleId = roleId;
-        this.status = status;
-        this.role = role;
-        this.CreationDate = CreationDate;
-        this.employees = employees;
-        this.accountStatus = accountStatus;
-    }
+ 
 
     public Employees getEmployees() {
         return employees;
@@ -125,14 +113,7 @@ public class Users {
         this.CreationDate = CreationDate;
     }
 
-    public AccountStatus getAccountStatus() {
-        return accountStatus;
-    }
-
-    public void setAccountStatus(AccountStatus accountStatus) {
-        this.accountStatus = accountStatus;
-    }
-
+ 
   
    
     

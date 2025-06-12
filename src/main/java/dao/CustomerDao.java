@@ -41,7 +41,7 @@ public class CustomerDao {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, "Lỗi truy vấn đăng nhập", ex);
         }
 
-        return -1;
+        return 0;
 
     }
 }
