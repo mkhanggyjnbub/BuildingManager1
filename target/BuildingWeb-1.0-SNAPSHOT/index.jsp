@@ -28,6 +28,7 @@
 
         <%@include file="header/header.jsp" %> 
 
+
         <!-- banner -->
         <section class="hero">
             <div class="overlay"></div>

@@ -4,7 +4,6 @@
  */
 package models;
 
-import com.nimbusds.oauth2.sdk.Role;
 import java.sql.Date;
 import java.time.LocalDateTime;
 
