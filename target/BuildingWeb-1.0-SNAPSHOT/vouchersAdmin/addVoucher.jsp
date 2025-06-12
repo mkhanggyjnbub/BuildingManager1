@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="vi">
     <head>
@@ -121,15 +122,12 @@
             <div class="form-grid">
                 <label>Mã voucher:</label>
                 <input type="text" name="code" required />
-
-                <label>Loại voucher (1: %, 2: tiền):</label>
-                <input type="number" name="typeId" min="1" max="2" required />
+                
+                <label>Số lượng:</label>
+                <input type="number" name="quantity" required/>
 
                 <label>Giảm %:</label>
                 <input type="number" name="discountPercent" />
-
-                <label>Giảm số tiền (VNĐ):</label>
-                <input type="number" name="discountAmount" />
 
                 <label>Đơn tối thiểu:</label>
                 <input type="number" name="minOrderAmount" required />
@@ -139,10 +137,19 @@
 
                 <label>Ngày kết thúc:</label>
                 <input type="date" name="endDate" required />
+                
+               
             </div>
 
             <label>Mô tả:</label>
             <textarea name="description"></textarea>
+            
+            <label>Trạng thái: hoạt động</label>
+            <input type="checkbox" name="isActive"
+                   <c:if test="${voucher.isActive}"> 
+            checked 
+            </c:if>
+            /> 
 
             <div class="button-group">
                 <button type="submit">Thêm voucher</button>

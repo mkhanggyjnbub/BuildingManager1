@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
@@ -82,29 +83,20 @@ public class EditVoucher extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int id = Integer.parseInt(request.getParameter("voucherId"));
-        String code = request.getParameter("code");
-        int typeId = Integer.parseInt(request.getParameter("typeId"));
-        int discountPercent = Integer.parseInt(request.getParameter("discountPercent"));
-        int discountAmount = Integer.parseInt(request.getParameter("discountAmount"));
-        int minOrderAmount = Integer.parseInt(request.getParameter("minOrderAmount"));
-        Date startDate = Date.valueOf(request.getParameter("startDate"));
-        Date endDate = Date.valueOf(request.getParameter("endDate"));
-        String description = request.getParameter("description");
-        int quantity = Integer.parseInt(request.getParameter("quantity")) ;
-
-        // Gán giá trị cho Vouchers object
         Vouchers v = new Vouchers();
+
+        int id = Integer.parseInt(request.getParameter("voucherId"));
         v.setVoucherId(id);
-        v.setCode(code);
-        v.setTypeId(typeId);
-        v.setDiscountPercent(discountPercent);
-        v.setDiscountAmount(discountAmount);
-        v.setMinOrderAmount(minOrderAmount);
-        v.setStartDate(startDate);
-        v.setEndDate(endDate);
-        v.setDescription(description);
-        v.setQuantity(quantity);
+        v.setVoucherId(Integer.parseInt(request.getParameter("voucherId")));
+        v.setCode(request.getParameter("code"));
+        v.setDiscountPercent(Integer.parseInt(request.getParameter("discountPercent")));
+        v.setStartDate(Date.valueOf(request.getParameter("startDate")));
+        v.setEndDate(Date.valueOf(request.getParameter("endDate")));
+        v.setMinOrderAmount(new BigDecimal(request.getParameter("minOrderAmount")));
+        v.setDescription(request.getParameter("description"));
+        v.setQuantity(Integer.parseInt(request.getParameter("quantity")));
+        boolean isActive = request.getParameter("isActive") != null;
+        v.setIsActive(isActive);
 
         VoucherDAO dao = new VoucherDAO();
         int cnt = dao.updateVoucher(v);

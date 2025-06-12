@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.sql.Date;
 import models.Vouchers;
 
@@ -76,34 +77,23 @@ public class AddVoucher extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
-        String code = request.getParameter("code");
-        int typeId = Integer.parseInt(request.getParameter("typeId"));
-        String discountPercentStr = request.getParameter("discountPercent");
-        String discountAmountStr = request.getParameter("discountAmount");
-
-        Integer discountPercent = (discountPercentStr == null || discountPercentStr.isEmpty()) ? 0 : Integer.parseInt(discountPercentStr);
-        Integer discountAmount = (discountAmountStr == null || discountAmountStr.isEmpty()) ? 0 : Integer.parseInt(discountAmountStr);
-
-        int minOrderAmount = Integer.parseInt(request.getParameter("minOrderAmount"));
-        Date startDate = Date.valueOf(request.getParameter("startDate"));
-        Date endDate = Date.valueOf(request.getParameter("endDate"));
-        String description = request.getParameter("description");
         Vouchers voucher = new Vouchers();
         VoucherDAO voucherDao = new VoucherDAO();
-
-        voucher.setCode(code);
-        voucher.setTypeId(typeId);
-        voucher.setDiscountPercent(discountPercent);
-        voucher.setDiscountAmount(discountAmount);
-        voucher.setMinOrderAmount(minOrderAmount);
-        voucher.setStartDate(startDate);
-        voucher.setEndDate(endDate);
-        voucher.setDescription(description);
         
+        //voucher.setVoucherId(Integer.parseInt(request.getParameter("voucherId")));
+        voucher.setCode(request.getParameter("code"));
+        voucher.setDescription(request.getParameter("description"));
+        voucher.setDiscountPercent(Integer.parseInt(request.getParameter("discountPercent")));
+        voucher.setStartDate(Date.valueOf(request.getParameter("startDate")));
+        voucher.setEndDate(Date.valueOf(request.getParameter("endDate")));
+        voucher.setMinOrderAmount(new BigDecimal(request.getParameter("minOrderAmount")));
+        voucher.setQuantity(Integer.parseInt(request.getParameter("quantity")));
+        boolean isActive = request.getParameter("isActive") != null;
+        voucher.setIsActive(isActive);
         
         voucherDao.insertVoucher(voucher);
 
-        response.sendRedirect("VouchersDashBoard"); // chuyển về danh sách
+        response.sendRedirect("VouchersDashBoard");
     }
 
     /**

@@ -67,9 +67,9 @@ public class ViewVouchers extends HttpServlet {
         HttpSession session = request.getSession();
         int customerId = Integer.parseInt(session.getAttribute("cusstomerId").toString()); // từ session hoặc form
         VoucherDAO voucherDao = new VoucherDAO();
-        List<Vouchers> list = voucherDao.selectAllVouchers();
+        List list = voucherDao.selectAllVouchers();
 
-        List<Vouchers> list1 = voucherDao.checkVoucherById(customerId);
+        List list1 = voucherDao.checkVoucherById(customerId);
 
         request.setAttribute("voucherCustomer", list1);
         request.setAttribute("vouchers", list);

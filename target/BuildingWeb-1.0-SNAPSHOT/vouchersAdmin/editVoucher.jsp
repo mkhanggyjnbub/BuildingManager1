@@ -4,7 +4,9 @@
     Author     : CE180441_Dương Đinh Thế Vinh
 --%>
 
+<%@page import="models.Vouchers"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -112,7 +114,7 @@
 
     </head>
     <body>
-        
+
         <form action="/EditVoucher" method="post">
             <h2>Sửa Voucher</h2>
             <input type="hidden" name="voucherId" value="${voucher.voucherId}" />
@@ -121,14 +123,12 @@
                 <label>Mã voucher:</label>
                 <input type="text" name="code" value="${voucher.code}" />
 
-                <label>Loại:</label>
-                <input type="number" name="typeId" value="${voucher.typeId}" />
+                <label>Số lượng:</label>
+                <input type="number" name="quantity" value="${voucher.quantity}" />
 
                 <label>Phần trăm giảm (%):</label>
                 <input type="number" min ="0" name="discountPercent" value="${voucher.discountPercent}" />
 
-                <label>Số tiền giảm (đ):</label>
-                <input type="number" name="discountAmount" value="${voucher.discountAmount}" />
 
                 <label>Đơn hàng tối thiểu:</label>
                 <input type="number" name="minOrderAmount" value="${voucher.minOrderAmount}" />
@@ -138,13 +138,17 @@
 
                 <label>Ngày kết thúc:</label>
                 <input type="date" name="endDate" value="${voucher.endDate}" />
-                
-                <label>Số lượng:</label>
-                <input type="int" name="quantity" value="${voucher.quantity}" />
+
+
             </div>
 
             <label>Mô tả:</label>
             <textarea name="description">${voucher.description}</textarea>
+
+            <label>Trạng thái: hoạt động</label>
+            <input type="checkbox" name="isActive"
+                   <c:if test="${voucher.isActive}"> checked </c:if>/> 
+
 
             <div class="button-group">
                 <button type="submit">Cập nhật</button>
