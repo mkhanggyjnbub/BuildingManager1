@@ -27,16 +27,15 @@ body {
     justify-content: center;
 }
 
+/* Base voucher card styling */
 .voucher-card {
-    background: white;
-    border: 1px solid #eee;
-    border-left: 5px solid #ee4d2d;
-    width: 350px;
     display: flex;
     justify-content: space-between;
+    border-radius: 10px;
     padding: 16px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    margin: 12px 0;
+    color: #fff;
+    font-family: Arial, sans-serif;
 }
 
 .voucher-left {
@@ -75,17 +74,56 @@ body {
     color: #ee4d2d;
 }
 
+/* Optional: button styling */
 .save-btn {
-    background: #ee4d2d;
-    color: white;
+    background-color: #fff;
+    color: #333;
+    padding: 6px 12px;
     border: none;
-    padding: 6px 10px;
-    font-size: 14px;
+    border-radius: 6px;
     cursor: pointer;
-    border-radius: 4px;
-    transition: background 0.3s ease;
+    font-weight: bold;
 }
 
 .save-btn:hover {
-    background: #d94424;
+    background-color: #ddd;
+}
+
+
+.voucher-card.saved {
+    background-color: #333;
+    color: white;
+}
+
+.saved-label {
+    font-weight: bold;
+    color: lightgreen;
+}
+.alert-message {
+    background-color: #f0fdf4;
+    border-left: 5px solid #10b981;
+    padding: 10px 15px;
+    margin: 10px 0;
+    color: #065f46;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.saved-label {
+    color: green;
+    font-weight: bold;
+}
+
+.out-of-stock {
+    color: red;
+    font-weight: bold;
+}
+
+.alert-message {
+    margin-top: 10px;
+    background-color: #e0f7e9;
+    color: #146c43;
+    padding: 8px 12px;
+    border-left: 4px solid #198754;
+    border-radius: 4px;
 }

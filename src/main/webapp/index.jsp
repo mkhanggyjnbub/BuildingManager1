@@ -26,7 +26,44 @@
     </head>
     <body>
 
+<<<<<<< HEAD
+        <header>
+            <div class="logo">🏨 HotelManager</div>
+            <nav id="nav-menu">
+                <a href="Equipment">Equipment</a>
+                <a href="Index">Trang chủ</a>
+                <a href="ListRooms">Phòng</a>
+
+                <a href="#">Đặt phòng</a>
+                <a href="#">Liên hệ</a>
+                <a href="UpImage">Up ảnh</a>
+                <a href="VouchersDashBoard">VouchersDashBoard</a>
+                <a href="ViewVouchers" > ViewVouchers </a> <br>
+                <c:choose  > 
+                    <c:when test="${ empty accountType   }">  
+                        <a href="Login">Đăng nhập</a> 
+                    </c:when>
+                    <c:when test="${ accountType eq 'option1'   }">  
+                        <c:choose> 
+                            <c:when test="${role == 1}">
+                                <a href="Admin">Admin</a> 
+                                <a href="?id=${adminId}">${userName}</a> 
+                            </c:when>
+                            <c:when test="${role == 2}">
+                                <a href="?id=${managerId}">${userName}</a> 
+                            </c:when>
+                            <c:when  test="${role == 3}">
+                                <a href="?id=${staffId}">${userName}</a> 
+                            </c:when>
+                            <c:when test="${role == 4}">
+                                <a href="?id=${onsumablesId}">${userName}</a> 
+                            </c:when>
+                            <c:when test="${role == 5}">
+                                <a href="?id=${equipmentId}">${userName}</a> 
+                            </c:when>
+=======
         <%@include file="header/header.jsp" %> 
+>>>>>>> cfebfc22ee12a619d334010639fb4861f884ea02
 
 
         <!-- banner -->

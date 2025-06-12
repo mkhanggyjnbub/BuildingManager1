@@ -4,6 +4,7 @@
  */
 package dao;
 
+import com.nimbusds.openid.connect.sdk.assurance.evidences.Voucher;
 import db.ConnectData;
 import models.Vouchers;
 import java.sql.Connection;
@@ -39,16 +40,17 @@ public class VoucherDAO {
             rs = st.executeQuery(sql);
 
             while (rs.next()) {
-                Vouchers voucher = new Vouchers(); // ✅ tạo mới mỗi vòng lặp
+                Vouchers voucher = new Vouchers();
                 voucher.setVoucherId(rs.getInt("VoucherId"));
                 voucher.setCode(rs.getString("Code"));
-                voucher.setTypeId(rs.getInt("TypeId"));
                 voucher.setDiscountPercent(rs.getInt("DiscountPercent"));
-                voucher.setDiscountAmount(rs.getInt("DiscountAmount"));
-                voucher.setMinOrderAmount(rs.getInt("MinOrderAmount"));
+                voucher.setMinOrderAmount(rs.getBigDecimal("MinOrderAmount"));
                 voucher.setStartDate(rs.getDate("StartDate"));
                 voucher.setEndDate(rs.getDate("EndDate"));
                 voucher.setDescription(rs.getString("Description"));
+                voucher.setQuantity(rs.getInt("Quantity"));
+                voucher.setIsActive(rs.getBoolean("isActive"));
+                voucher.setUserId(rs.getString("userId"));
                 list.add(voucher);
             }
         } catch (SQLException ex) {
@@ -57,54 +59,59 @@ public class VoucherDAO {
         return list;
     }
 
-    public void insertVoucher(Vouchers voucher) {
-        String sql = "INSERT INTO Vouchers (Code, TypeId, DiscountPercent, DiscountAmount, MinOrderAmount, StartDate, EndDate, Description) "
+    public int insertVoucher(Vouchers voucher) {
+        int dem = 0;
+        String sql = "INSERT INTO Vouchers (Code, DiscountPercent, MinOrderAmount, StartDate, EndDate, Description, Quantity, IsActive) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try ( PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, voucher.getCode());
-            ps.setInt(2, voucher.getTypeId());
-            ps.setObject(3, voucher.getDiscountPercent());
-            ps.setObject(4, voucher.getDiscountAmount());
-            ps.setInt(5, voucher.getMinOrderAmount());
-            ps.setDate(6, voucher.getStartDate());
-            ps.setDate(7, voucher.getEndDate());
-            ps.setString(8, voucher.getDescription());
-            ps.executeUpdate();
+            ps.setObject(2, voucher.getDiscountPercent());
+            ps.setBigDecimal(3, voucher.getMinOrderAmount());
+            ps.setDate(4, voucher.getStartDate());
+            ps.setDate(5, voucher.getEndDate());
+            ps.setString(6, voucher.getDescription());
+            ps.setInt(7, voucher.getQuantity());
+            ps.setBoolean(8, voucher.getIsActive());
+            dem = ps.executeUpdate();
+            return dem;
         } catch (SQLException ex) {
             Logger.getLogger(VoucherDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return dem;
+
     }
 
-    public void deleteVoucher(int voucherId) {
+    public int deleteVoucher(int voucherId) {
+        int dem = 0;
         String sql = "DELETE FROM Vouchers WHERE VoucherId = ?";
         try ( PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, voucherId);
-            ps.executeUpdate();
+            dem = ps.executeUpdate();
+            return dem;
         } catch (SQLException ex) {
             Logger.getLogger(VoucherDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return dem;
     }
 
     public Vouchers getVoucherById(int id) {
-        Vouchers v = null;
+        Vouchers v = new Vouchers();
         try {
             String sql = "SELECT * FROM Vouchers WHERE VoucherId = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                v = new Vouchers(
-                        rs.getInt("VoucherId"),
-                        rs.getString("Code"),
-                        rs.getInt("TypeId"),
-                        rs.getInt("DiscountPercent"),
-                        rs.getInt("DiscountAmount"),
-                        rs.getInt("MinOrderAmount"),
-                        rs.getDate("StartDate"),
-                        rs.getDate("EndDate"),
-                        rs.getString("Description")
-                );
+                v.setVoucherId(rs.getInt("voucherId"));
+                v.setCode(rs.getString("Code"));
+                v.setDiscountPercent(rs.getInt("DiscountPercent"));
+                v.setMinOrderAmount(rs.getBigDecimal("MinOrderAmount"));
+                v.setStartDate(rs.getDate("StartDate"));
+                v.setEndDate(rs.getDate("EndDate"));
+                v.setDescription(rs.getString("Description"));
+                v.setQuantity(rs.getInt("Quantity"));
+                v.setIsActive(rs.getBoolean("IsActive"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -115,22 +122,46 @@ public class VoucherDAO {
     public int updateVoucher(Vouchers v) {
         int dem = 0;
         try {
-            String sql = "UPDATE Vouchers SET Code=?, TypeId=?, DiscountPercent=?, DiscountAmount=?, MinOrderAmount=?, StartDate=?, EndDate=?, Description=? WHERE VoucherId=?";
+            String sql = "UPDATE Vouchers SET Code=?, DiscountPercent=?, MinOrderAmount=?, StartDate=?, EndDate=?, Quantity=?, Description=?, IsActive=? WHERE VoucherId=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, v.getCode());
-            ps.setInt(2, v.getTypeId());
-            ps.setInt(3, v.getDiscountPercent());
-            ps.setInt(4, v.getDiscountAmount());
-            ps.setInt(5, v.getMinOrderAmount());
-            ps.setDate(6, v.getStartDate());
-            ps.setDate(7, v.getEndDate());
-            ps.setString(8, v.getDescription());
+            ps.setInt(2, v.getDiscountPercent());
+            ps.setBigDecimal(3, v.getMinOrderAmount());
+            ps.setDate(4, v.getStartDate());
+            ps.setDate(5, v.getEndDate());
+            ps.setInt(6, v.getQuantity());
+            ps.setString(7, v.getDescription());
+            ps.setBoolean(8, v.getIsActive());
             ps.setInt(9, v.getVoucherId());
+
             dem = ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return dem;
+    }
+
+    public List<Vouchers> checkVoucherById(int customerId) {
+        List<Vouchers> list = new ArrayList<>();
+        ResultSet rs = null;
+
+        try {
+            String sql = "SELECT voucherId FROM CustomerVoucher WHERE CustomerId = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, customerId);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Vouchers voucher = new Vouchers();
+                voucher.setVoucherId(rs.getInt("voucherId"));
+                list.add(voucher);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
 
 }

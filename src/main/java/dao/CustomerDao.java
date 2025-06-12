@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import models.CustomerStatus;
 import models.Customers;
 
 /**
@@ -43,5 +44,33 @@ public class CustomerDao {
 
         return 0;
 
+    }
+        public Customers getCustomerById(int id) {
+        Customers customer = null;
+        String sql = "SELECT UserName, FullName, Email, Phone, StatusName, AvatarUrl, Address, Gender, DateOfBirth \n"
+                + "FROM Customers c \n"
+                + "INNER JOIN CustomerStatus cs ON c.StatusId = cs.StatusId \n"
+                + "WHERE CustomerID = ?";
+
+        try ( PreparedStatement pst = conn.prepareStatement(sql)) {
+            pst.setInt(1, id);
+            try ( ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    customer = new Customers();
+                    customer.setUserName(rs.getString("UserName"));
+                    customer.setFullName(rs.getString("FullName"));
+                    customer.setEmail(rs.getString("Email"));
+                    customer.setPhone(rs.getString("Phone"));
+                    customer.setAvatarUrl(rs.getString("AvatarUrl"));
+                    customer.setAddress(rs.getString("Address")); // có thể là null
+                    customer.setGender(rs.getString("Gender")); // có thể là null
+                    customer.setDateOfBirth(rs.getDate("DateOfBirth")); // có thể là null (java.sql.Date)
+                   
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return customer;
     }
 }

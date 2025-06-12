@@ -1,4 +1,6 @@
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 models\Roles.class
 controllers\room\ViewRooms.class
 db\ConnectData.class
@@ -6,22 +8,31 @@ db\ConnectData.class
 <<<<<<< HEAD
 controllers\voucher\Vouchers.class
 =======
+>>>>>>> cfebfc22ee12a619d334010639fb4861f884ea02
 controllers\asset\AssetModel.class
->>>>>>> origin
 models\Roles.class
 db\ConnectData.class
+<<<<<<< HEAD
+=======
 models\Booking.class
 >>>>>>> 957432600c6c7715ada7cef82b399c8a40ba6d57
+>>>>>>> cfebfc22ee12a619d334010639fb4861f884ea02
 controllers\Index.class
 controllers\UpImage.class
 dao\RoomDao.class
 dao\UserDao.class
+models\Equipment.class
 dao\PaginationDao.class
-cloudImages\cloudImage.class
+controllers\voucher\AdminViewVoucher.class
 controllers\admin\Decentralization.class
+models\MaintenanceStatuses.class
 controllers\admin\Admin.class
 models\Users.class
 controllers\Account\Login.class
+<<<<<<< HEAD
+models\MaintenanceSchedule.class
+controllers\Equipment.class
+=======
 <<<<<<< HEAD
 Websocket\TakeNotification.class
 dao\CustomerDao.class
@@ -40,25 +51,35 @@ models\RoomReviews.class
 controllers\room\ViewRoomDetail.class
 =======
 <<<<<<< HEAD
+>>>>>>> cfebfc22ee12a619d334010639fb4861f884ea02
 dao\VoucherDAO.class
 controllers\voucher\VouchersDashBoard.class
+dao\CustomerDao.class
 controllers\voucher\EditVoucher.class
-=======
->>>>>>> origin
 controllers\Account\SignUp.class
+dao\EquipmentDao.class
+dao\CustomerVoucherDao.class
 models\Floors.class
 controllers\admin\DashboardUser.class
 controllers\admin\AdminView.class
+models\Bookings.class
 models\Buildings.class
+models\Employees.class
 controllers\room\ListRooms.class
-<<<<<<< HEAD
+models\Customers.class
+controllers\voucher\ViewVouchers.class
+models\CustomerStatus.class
 controllers\voucher\AddVoucher.class
 models\Vouchers.class
 controllers\voucher\DeleteVoucher.class
-=======
+models\string.class
+models\RoomEquipment.class
 controllers\asset\Assets.class
+<<<<<<< HEAD
+=======
 >>>>>>> origin
 >>>>>>> 957432600c6c7715ada7cef82b399c8a40ba6d57
+>>>>>>> cfebfc22ee12a619d334010639fb4861f884ea02
 models\AccountStatus.class
 models\Rooms.class
 models\Amenities.class

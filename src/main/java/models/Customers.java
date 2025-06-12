@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
  * @author Kiều Hoàng Mạnh Khang - ce180749
  */
 public class Customers {
+
     private int customerId;
     private String  userName;
     private String  password;
@@ -29,6 +30,7 @@ public class Customers {
 
     public Customers() {
     }
+
 
     public int getCustomerId() {
         return customerId;
@@ -134,7 +136,5 @@ public class Customers {
         this.lastLogin = lastLogin;
     }
 
-   
 
-  
 }
