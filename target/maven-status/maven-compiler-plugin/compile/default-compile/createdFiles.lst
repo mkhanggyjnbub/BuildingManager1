@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 models\Roles.class
 controllers\NewsAdmin\NewsAdminU.class
 models\News.class
@@ -27,3 +28,25 @@ controllers\UserCustomer\EditCustomerInfomation.class
 models\AccountStatus.class
 models\Rooms.class
 models\ServiceOptions.class
+=======
+controllers\Account\SignUp.class
+models\Roles.class
+models\Floors.class
+db\ConnectData.class
+controllers\admin\DashboardUser.class
+controllers\admin\AdminView.class
+models\Buildings.class
+models\Booking.class
+controllers\Index.class
+controllers\UpImage.class
+dao\RoomDao.class
+dao\UserDao.class
+controllers\room\ListRooms.class
+dao\PaginationDao.class
+controllers\admin\Decentralization.class
+controllers\admin\Admin.class
+models\Users.class
+controllers\Account\Login.class
+models\AccountStatus.class
+models\Rooms.class
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1

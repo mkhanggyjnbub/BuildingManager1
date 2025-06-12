@@ -3,8 +3,12 @@
     Created on : Apr 29, 2025, 4:23:56 PM
     Author     : Kiều Hoàng Mạnh Khang - ce180749 
 --%>
+<<<<<<< HEAD
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+=======
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -21,6 +25,7 @@
             });
 
         </script>
+<<<<<<< HEAD
         <style>
             /* Phần container dịch vụ khách hàng */
             .dichvukhachhang {
@@ -59,6 +64,11 @@
                 display: block;
             }
         </style>
+=======
+
+
+
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1
     </head>
     <body>
 
@@ -66,6 +76,7 @@
             <div class="logo">🏨 HotelManager</div>
             <nav id="nav-menu">
                 <a href="Index">Trang chủ</a>
+<<<<<<< HEAD
                 <a href="#">Phòng</a>
                 <a href="#">Đặt phòng</a>
                 <a href="#">Liên hệ</a>
@@ -89,6 +100,20 @@
                 </div>
                 <a href="news">News</a>
                 <a href="NewsAdminR">NAdmin</a>
+=======
+                <a href="ListRooms">Phòng</a>
+                <a href="#">Đặt phòng</a>
+                <a href="#">Liên hệ</a>
+                <a href="UpImage">Up ảnh</a>
+                <c:choose  > 
+                    <c:when test="${customerName==null  }">  
+                        <a href="Login">Đăng nhập</a> </c:when>
+                    <c:otherwise>
+                        <a href="?id=${customerId}">${customerName}</a>
+                    </c:otherwise>
+                </c:choose>
+
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1
             </nav>
             <button id="menu-toggle">☰</button>
         </header>
@@ -108,6 +133,7 @@
         </section>
         <!-- end banner -->
 
+<<<<<<< HEAD
         <!-- first body -->
         <section>
             <div class="hotel_booking_area position">
@@ -179,6 +205,11 @@
                 </div>
             </div>
         </section>
+=======
+        <jsp:include  page="menuSearch.jsp"/>
+
+
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1
         <!-- end first body -->
         <section class="features">
             <div class="feature-box">

@@ -9,8 +9,14 @@ package models;
  * @author Kiều Hoàng Mạnh Khang - ce180749
  */
 public class AccountStatus {
+<<<<<<< HEAD
     private int StatusId;
     private String  StatusName;
+=======
+
+    private int StatusId;
+    private String StatusName;
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1
 
     public AccountStatus() {
     }
@@ -35,5 +41,9 @@ public class AccountStatus {
     public void setStatusName(String StatusName) {
         this.StatusName = StatusName;
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1
 }

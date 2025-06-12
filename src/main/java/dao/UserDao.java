@@ -95,7 +95,10 @@ public class UserDao {
 
         return role;
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1
     public List<Users> getFullOfDashBoard(int page) {
         List<Users> listUser = new ArrayList<>();
 
@@ -160,6 +163,11 @@ public class UserDao {
 
     }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1
     public Users getUserById(int id) {
         ResultSet rs = null;
         Users user = new Users();
@@ -191,8 +199,14 @@ public class UserDao {
         }
         return user;
     }
+<<<<<<< HEAD
 
     public Users getRoleUserById(int id) {
+=======
+    
+    
+     public Users getRoleUserById(int id) {
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1
         ResultSet rs = null;
         Users user = new Users();
         try {
@@ -210,13 +224,21 @@ public class UserDao {
                 user.setFullName(rs.getString("FullName"));
                 user.setUserId(rs.getInt("UserId"));
                 user.setRole(role);
+<<<<<<< HEAD
             }
+=======
+          }
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1
         } catch (SQLException ex) {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return user;
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1
     public int UpdateRole(int RoleId, int UserId) {
         int cnt = 0;
 
@@ -226,13 +248,18 @@ public class UserDao {
             pst.setInt(1, RoleId);
             pst.setInt(2, UserId);
             cnt = pst.executeUpdate();
+<<<<<<< HEAD
 
+=======
+              
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1
         } catch (SQLException ex) {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return cnt;
     }
 
+<<<<<<< HEAD
     public int UpdateInfomationById(int id, Users user) {
         int cnt = 0;
         try {
@@ -284,5 +311,8 @@ public class UserDao {
 
         return listStaff;
     }
+=======
+   
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1
 
 }

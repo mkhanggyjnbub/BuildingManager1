@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\dodan\Downloads\BuildingWeb\src\main\java\dao\UserDao.java
 C:\Users\dodan\Downloads\BuildingWeb\src\main\java\controllers\NewsAdmin\NewsAdminC.java
 C:\Users\dodan\Downloads\BuildingWeb\src\main\java\controllers\UserCustomer\EditCustomerInfomation.java
@@ -27,3 +28,25 @@ C:\Users\dodan\Downloads\BuildingWeb\src\main\java\models\RoomServices.java
 C:\Users\dodan\Downloads\BuildingWeb\src\main\java\models\Services.java
 C:\Users\dodan\Downloads\BuildingWeb\src\main\java\models\Rooms.java
 C:\Users\dodan\Downloads\BuildingWeb\src\main\java\controllers\Index.java
+=======
+D:\fouderPrj\BuildingWeb\src\main\java\controllers\UpImage.java
+D:\fouderPrj\BuildingWeb\src\main\java\controllers\admin\Decentralization.java
+D:\fouderPrj\BuildingWeb\src\main\java\models\Buildings.java
+D:\fouderPrj\BuildingWeb\src\main\java\models\Floors.java
+D:\fouderPrj\BuildingWeb\src\main\java\dao\UserDao.java
+D:\fouderPrj\BuildingWeb\src\main\java\models\Users.java
+D:\fouderPrj\BuildingWeb\src\main\java\controllers\room\ListRooms.java
+D:\fouderPrj\BuildingWeb\src\main\java\controllers\Account\SignUp.java
+D:\fouderPrj\BuildingWeb\src\main\java\controllers\admin\Admin.java
+D:\fouderPrj\BuildingWeb\src\main\java\dao\RoomDao.java
+D:\fouderPrj\BuildingWeb\src\main\java\models\AccountStatus.java
+D:\fouderPrj\BuildingWeb\src\main\java\controllers\admin\DashboardUser.java
+D:\fouderPrj\BuildingWeb\src\main\java\controllers\admin\AdminView.java
+D:\fouderPrj\BuildingWeb\src\main\java\db\ConnectData.java
+D:\fouderPrj\BuildingWeb\src\main\java\models\Rooms.java
+D:\fouderPrj\BuildingWeb\src\main\java\controllers\Account\Login.java
+D:\fouderPrj\BuildingWeb\src\main\java\dao\PaginationDao.java
+D:\fouderPrj\BuildingWeb\src\main\java\models\Roles.java
+D:\fouderPrj\BuildingWeb\src\main\java\controllers\Index.java
+D:\fouderPrj\BuildingWeb\src\main\java\models\Booking.java
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1

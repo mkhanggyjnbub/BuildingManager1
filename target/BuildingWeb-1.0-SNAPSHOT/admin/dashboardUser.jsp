@@ -12,6 +12,7 @@
         <title>JSP Page</title>
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<<<<<<< HEAD
         <style>
 
             .pagination{
@@ -29,6 +30,9 @@
 
 
         </style>
+=======
+        <link rel="stylesheet" href="../css/dashboardUser.css"/>
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1
     </head>
     <body>
 
@@ -41,7 +45,11 @@
             <thead>
                 <tr>
                     <th>STT</th>
+<<<<<<< HEAD
                     <th>HỌ TÊN </th>
+=======
+                    <th>Tên Tài Khoản</th>
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1
                     <th>EMAIL</th>
                     <th>VAI TRÒ</th>
                     <th>THAO TÁC</th>

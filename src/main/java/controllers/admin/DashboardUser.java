@@ -97,6 +97,11 @@ public class DashboardUser extends HttpServlet {
             }
         }
         request.setAttribute("finalPage", finalPage);
+<<<<<<< HEAD
+=======
+        
+
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1
         request.getRequestDispatcher("admin/dashboardUser.jsp").forward(request, response);
 
     }

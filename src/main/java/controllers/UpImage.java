@@ -84,7 +84,11 @@ public class UpImage extends HttpServlet {
         String uploadPath = "D:\\fouderPrj\\BuildingWeb\\src\\main\\webapp\\images"; 
         if (!Files.exists(Paths.get(uploadPath))) {
            Files.createDirectories(Paths.get(uploadPath)); 
+<<<<<<< HEAD
         }        
+=======
+        }         
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1
         part.write(uploadPath+ "/" + fileName);
         response.getWriter().println("Upload thành công!"+fileName);   
     }

@@ -26,8 +26,11 @@ public class Users {
     private Roles role;
     private AccountStatus accountStatus;
 
+<<<<<<< HEAD
     private Roles roles;
 
+=======
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1
     public Users() {
     }
 
@@ -46,6 +49,12 @@ public class Users {
         this.accountStatus = accountStatus;
     }
 
+<<<<<<< HEAD
+=======
+   
+    
+
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1
     public AccountStatus getAccountStatus() {
         return accountStatus;
     }
@@ -62,6 +71,15 @@ public class Users {
         this.avatarUrl = avatarUrl;
     }
 
+<<<<<<< HEAD
+=======
+   
+
+    
+
+    
+
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1
     public Date getLast_Login() {
         return last_Login;
     }
@@ -142,6 +160,7 @@ public class Users {
         this.role = role;
     }
 
+<<<<<<< HEAD
     public void setRoles(Roles roles) {
         this.roles = roles;
     }
@@ -151,4 +170,6 @@ public class Users {
     }
     
     
+=======
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1
 }

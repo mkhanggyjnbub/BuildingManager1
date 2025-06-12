@@ -14,15 +14,22 @@
     </head>
     <body>
         <table border ="1" cellpadding="10" cellspacing="0" style="width: 100%; text-align: left; border-collapse: collapse;">
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1
             <tr>
                 <th colspan="4" style="font-size: 18px; text-align: center;">👤 THÔNG TIN CHI TIẾT: ${user.userName} <a href="DashboardUser">Đóng</a> </th>
             </tr>
             <tr>
                 <td colspan="1" style="width: 30%;"> Ảnh đại diện: </td>
                 <td>🔹 Họ tên:</td>
+<<<<<<< HEAD
                 <td colspan="2" >${user.fullName}</td>
+=======
+                <td colspan="2" >${user.fullName} </td>
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1
 
             </tr>
             <tr>

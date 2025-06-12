@@ -109,8 +109,15 @@ public class Login extends HttpServlet {
                     response.addCookie(c);
                     session.setAttribute("customerName", userName);
                     session.setAttribute("customerId", userId);
+<<<<<<< HEAD
                     response.sendRedirect("Index");
                 }
+=======
+
+                    response.sendRedirect("Index");
+                }
+
+>>>>>>> 38f31009fab4d97f8c5093cf65233883ffc34ef1
             } else {
                 response.sendRedirect("Login");
             }
