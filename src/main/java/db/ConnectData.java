@@ -19,11 +19,8 @@ public class ConnectData {
     public static Connection getConnection(){
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-<<<<<<< HEAD
-            String url = "jdbc:sqlserver://LAPTOP-C36OHGQN:1433;databaseName=building_management2;user=sa;password=vinhddtce180441;encryt=true;trustServerCertificate=true;    ";
-=======
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=building_management23;user=sa;password=123456;encryt=true;trustServerCertificate=true;    ";
->>>>>>> origin
+            String url = "jdbc:sqlserver://MKHANGDZ1ST:1433;databaseName=building_management27;user=sa;password=mkhang123abc;encryt=true;trustServerCertificate=true;    ";
+
             conn = DriverManager.getConnection(url);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ConnectData.class.getName()).log(Level.SEVERE, null, ex);
