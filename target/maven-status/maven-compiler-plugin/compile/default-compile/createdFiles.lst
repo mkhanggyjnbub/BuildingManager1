@@ -1,6 +1,22 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+models\Roles.class
+controllers\room\ViewRooms.class
+db\ConnectData.class
+=======
+<<<<<<< HEAD
+controllers\voucher\Vouchers.class
+=======
+>>>>>>> cfebfc22ee12a619d334010639fb4861f884ea02
 controllers\asset\AssetModel.class
 models\Roles.class
 db\ConnectData.class
+<<<<<<< HEAD
+=======
+models\Booking.class
+>>>>>>> 957432600c6c7715ada7cef82b399c8a40ba6d57
+>>>>>>> cfebfc22ee12a619d334010639fb4861f884ea02
 controllers\Index.class
 controllers\UpImage.class
 dao\RoomDao.class
@@ -13,8 +29,29 @@ models\MaintenanceStatuses.class
 controllers\admin\Admin.class
 models\Users.class
 controllers\Account\Login.class
+<<<<<<< HEAD
 models\MaintenanceSchedule.class
 controllers\Equipment.class
+=======
+<<<<<<< HEAD
+Websocket\TakeNotification.class
+dao\CustomerDao.class
+controllers\Account\SignUp.class
+Websocket\Notification.class
+Websocket\HttpSessionConfigurator.class
+models\Floors.class
+controllers\admin\DashboardUser.class
+Websocket\WebSocket.class
+controllers\admin\AdminView.class
+models\Bookings.class
+models\Buildings.class
+models\Employees.class
+models\Customers.class
+models\RoomReviews.class
+controllers\room\ViewRoomDetail.class
+=======
+<<<<<<< HEAD
+>>>>>>> cfebfc22ee12a619d334010639fb4861f884ea02
 dao\VoucherDAO.class
 controllers\voucher\VouchersDashBoard.class
 dao\CustomerDao.class
@@ -38,5 +75,11 @@ controllers\voucher\DeleteVoucher.class
 models\string.class
 models\RoomEquipment.class
 controllers\asset\Assets.class
+<<<<<<< HEAD
+=======
+>>>>>>> origin
+>>>>>>> 957432600c6c7715ada7cef82b399c8a40ba6d57
+>>>>>>> cfebfc22ee12a619d334010639fb4861f884ea02
 models\AccountStatus.class
 models\Rooms.class
+models\Amenities.class

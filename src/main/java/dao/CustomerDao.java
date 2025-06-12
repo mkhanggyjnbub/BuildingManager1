@@ -42,7 +42,7 @@ public class CustomerDao {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, "Lỗi truy vấn đăng nhập", ex);
         }
 
-        return -1;
+        return 0;
 
     }
         public Customers getCustomerById(int id) {
@@ -65,9 +65,7 @@ public class CustomerDao {
                     customer.setAddress(rs.getString("Address")); // có thể là null
                     customer.setGender(rs.getString("Gender")); // có thể là null
                     customer.setDateOfBirth(rs.getDate("DateOfBirth")); // có thể là null (java.sql.Date)
-                    CustomerStatus cs = new CustomerStatus();
-                    cs.setStatusName(rs.getString("StatusName"));
-                    customer.setCustomerStatus(cs);
+                   
                 }
             }
         } catch (SQLException ex) {

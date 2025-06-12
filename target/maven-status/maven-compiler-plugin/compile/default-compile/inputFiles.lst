@@ -1,3 +1,40 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+D:\fouderPrj\BuildingWeb\src\main\java\cloudImages\cloudImage.java
+D:\fouderPrj\BuildingWeb\src\main\java\controllers\UpImage.java
+D:\fouderPrj\BuildingWeb\src\main\java\controllers\admin\Decentralization.java
+D:\fouderPrj\BuildingWeb\src\main\java\controllers\room\ViewRooms.java
+D:\fouderPrj\BuildingWeb\src\main\java\models\RoomReviews.java
+D:\fouderPrj\BuildingWeb\src\main\java\Websocket\HttpSessionConfigurator.java
+D:\fouderPrj\BuildingWeb\src\main\java\models\Buildings.java
+D:\fouderPrj\BuildingWeb\src\main\java\models\Customers.java
+D:\fouderPrj\BuildingWeb\src\main\java\models\Floors.java
+D:\fouderPrj\BuildingWeb\src\main\java\models\Users.java
+D:\fouderPrj\BuildingWeb\src\main\java\Websocket\TakeNotification.java
+D:\fouderPrj\BuildingWeb\src\main\java\dao\CustomerDao.java
+D:\fouderPrj\BuildingWeb\src\main\java\Websocket\Notification.java
+D:\fouderPrj\BuildingWeb\src\main\java\controllers\admin\Admin.java
+D:\fouderPrj\BuildingWeb\src\main\java\models\AccountStatus.java
+D:\fouderPrj\BuildingWeb\src\main\java\Websocket\WebSocket.java
+D:\fouderPrj\BuildingWeb\src\main\java\models\Rooms.java
+D:\fouderPrj\BuildingWeb\src\main\java\models\Amenities.java
+D:\fouderPrj\BuildingWeb\src\main\java\dao\PaginationDao.java
+D:\fouderPrj\BuildingWeb\src\main\java\models\Roles.java
+D:\fouderPrj\BuildingWeb\src\main\java\controllers\room\ViewRoomDetail.java
+D:\fouderPrj\BuildingWeb\src\main\java\models\Employees.java
+D:\fouderPrj\BuildingWeb\src\main\java\dao\UserDao.java
+D:\fouderPrj\BuildingWeb\src\main\java\controllers\Account\SignUp.java
+D:\fouderPrj\BuildingWeb\src\main\java\dao\RoomDao.java
+D:\fouderPrj\BuildingWeb\src\main\java\models\Bookings.java
+D:\fouderPrj\BuildingWeb\src\main\java\controllers\admin\DashboardUser.java
+D:\fouderPrj\BuildingWeb\src\main\java\controllers\admin\AdminView.java
+D:\fouderPrj\BuildingWeb\src\main\java\db\ConnectData.java
+D:\fouderPrj\BuildingWeb\src\main\java\controllers\Account\Login.java
+D:\fouderPrj\BuildingWeb\src\main\java\controllers\Index.java
+=======
+<<<<<<< HEAD
+>>>>>>> cfebfc22ee12a619d334010639fb4861f884ea02
 D:\projectSWP\BuildingManager\BuildingManager1\src\main\java\models\Roles.java
 D:\projectSWP\BuildingManager\BuildingManager1\src\main\java\models\string.java
 D:\projectSWP\BuildingManager\BuildingManager1\src\main\java\controllers\admin\DashboardUser.java
@@ -38,5 +75,40 @@ D:\projectSWP\BuildingManager\BuildingManager1\src\main\java\dao\EquipmentDao.ja
 D:\projectSWP\BuildingManager\BuildingManager1\src\main\java\dao\UserDao.java
 D:\projectSWP\BuildingManager\BuildingManager1\src\main\java\models\CustomerStatus.java
 D:\projectSWP\BuildingManager\BuildingManager1\src\main\java\controllers\voucher\AddVoucher.java
+<<<<<<< HEAD
 D:\projectSWP\BuildingManager\BuildingManager1\src\main\java\controllers\voucher\AdminViewVoucher.java
 D:\projectSWP\BuildingManager\BuildingManager1\src\main\java\dao\CustomerDao.java
+=======
+=======
+D:\SWP\BuildingManager1\src\main\java\models\Floors.java
+D:\SWP\BuildingManager1\src\main\java\dao\RoomDao.java
+D:\SWP\BuildingManager1\src\main\java\models\Booking.java
+D:\SWP\BuildingManager1\src\main\java\controllers\Account\SignUp.java
+D:\SWP\BuildingManager1\src\main\java\controllers\admin\Decentralization.java
+D:\SWP\BuildingManager1\src\main\java\models\MaintenanceStatuses.java
+D:\SWP\BuildingManager1\src\main\java\controllers\admin\DashboardUser.java
+D:\SWP\BuildingManager1\src\main\java\controllers\asset\Assets.java
+D:\SWP\BuildingManager1\src\main\java\controllers\UpImage.java
+D:\SWP\BuildingManager1\src\main\java\models\Buildings.java
+D:\SWP\BuildingManager1\src\main\java\controllers\Index.java
+D:\SWP\BuildingManager1\src\main\java\dao\UserDao.java
+D:\SWP\BuildingManager1\src\main\java\models\string.java
+D:\SWP\BuildingManager1\src\main\java\controllers\admin\Admin.java
+D:\SWP\BuildingManager1\src\main\java\models\RoomEquipment.java
+D:\SWP\BuildingManager1\src\main\java\dao\EquipmentDao.java
+D:\SWP\BuildingManager1\src\main\java\models\Users.java
+D:\SWP\BuildingManager1\src\main\java\controllers\admin\AdminView.java
+D:\SWP\BuildingManager1\src\main\java\controllers\room\ListRooms.java
+D:\SWP\BuildingManager1\src\main\java\controllers\Account\Login.java
+D:\SWP\BuildingManager1\src\main\java\models\AccountStatus.java
+D:\SWP\BuildingManager1\src\main\java\controllers\asset\AssetModel.java
+D:\SWP\BuildingManager1\src\main\java\models\MaintenanceSchedule.java
+D:\SWP\BuildingManager1\src\main\java\models\Roles.java
+D:\SWP\BuildingManager1\src\main\java\db\ConnectData.java
+D:\SWP\BuildingManager1\src\main\java\controllers\Equipment.java
+D:\SWP\BuildingManager1\src\main\java\dao\PaginationDao.java
+D:\SWP\BuildingManager1\src\main\java\models\Equipment.java
+D:\SWP\BuildingManager1\src\main\java\models\Rooms.java
+>>>>>>> origin
+>>>>>>> 957432600c6c7715ada7cef82b399c8a40ba6d57
+>>>>>>> cfebfc22ee12a619d334010639fb4861f884ea02

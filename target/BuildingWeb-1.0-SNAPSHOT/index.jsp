@@ -26,6 +26,7 @@
     </head>
     <body>
 
+<<<<<<< HEAD
         <header>
             <div class="logo">🏨 HotelManager</div>
             <nav id="nav-menu">
@@ -60,18 +61,10 @@
                             <c:when test="${role == 5}">
                                 <a href="?id=${equipmentId}">${userName}</a> 
                             </c:when>
+=======
+        <%@include file="header/header.jsp" %> 
+>>>>>>> cfebfc22ee12a619d334010639fb4861f884ea02
 
-                        </c:choose>
-                    </c:when>
-                    <c:otherwise >  
-                        <a href="?id=${cusstomerId}">${userName}</a> 
-                    </c:otherwise>
-
-                </c:choose>
-
-            </nav>
-            <button id="menu-toggle">☰</button>
-        </header>
 
         <!-- banner -->
         <section class="hero">

@@ -14,151 +14,127 @@ import java.time.LocalDateTime;
  */
 public class Customers {
 
-    private int CustomerID;
-    private String UserName;
-    private String Password;
-    private String FullName;
-    private String Phone;
-    private String Email;
-    private String Address;
-    private String Gender;
-    private Date DateOfBirth;
-    private int StatusId;
-    private String AvatarUrl;
-    private LocalDateTime CreationDate;
-    private LocalDateTime LastLogin;
-    private CustomerStatus customerStatus;
+    private int customerId;
+    private String  userName;
+    private String  password;
+    private String  fullName;
+    private String  phone;
+    private String  email;
+    private String  address;
+    private String  gender;
+    private Date  dateOfBirth;
+    private int  statusId;
+    private String  avatarUrl;
+    private LocalDateTime  creationDate;
+    private LocalDateTime  lastLogin;
 
     public Customers() {
     }
 
-    public Customers(int CustomerID, String UserName, String Password, String FullName, String Phone, String Email, String Address, String Gender, Date DateOfBirth, int StatusId, String AvatarUrl, LocalDateTime CreationDate, LocalDateTime LastLogin, CustomerStatus customerStatus) {
-        this.CustomerID = CustomerID;
-        this.UserName = UserName;
-        this.Password = Password;
-        this.FullName = FullName;
-        this.Phone = Phone;
-        this.Email = Email;
-        this.Address = Address;
-        this.Gender = Gender;
-        this.DateOfBirth = DateOfBirth;
-        this.StatusId = StatusId;
-        this.AvatarUrl = AvatarUrl;
-        this.CreationDate = CreationDate;
-        this.LastLogin = LastLogin;
-        this.customerStatus = customerStatus;
+
+    public int getCustomerId() {
+        return customerId;
     }
 
-    public int getCustomerID() {
-        return CustomerID;
-    }
-
-    public void setCustomerID(int CustomerID) {
-        this.CustomerID = CustomerID;
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
     public String getUserName() {
-        return UserName;
+        return userName;
     }
 
-    public void setUserName(String UserName) {
-        this.UserName = UserName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
-    public void setPassword(String Password) {
-        this.Password = Password;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFullName() {
-        return FullName;
+        return fullName;
     }
 
-    public void setFullName(String FullName) {
-        this.FullName = FullName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getPhone() {
-        return Phone;
+        return phone;
     }
 
-    public void setPhone(String Phone) {
-        this.Phone = Phone;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
-    public void setEmail(String Email) {
-        this.Email = Email;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getAddress() {
-        return Address;
+        return address;
     }
 
-    public void setAddress(String Address) {
-        this.Address = Address;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getGender() {
-        return Gender;
+        return gender;
     }
 
-    public void setGender(String Gender) {
-        this.Gender = Gender;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public Date getDateOfBirth() {
-        return DateOfBirth;
+        return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date DateOfBirth) {
-        this.DateOfBirth = DateOfBirth;
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public int getStatusId() {
-        return StatusId;
+        return statusId;
     }
 
-    public void setStatusId(int StatusId) {
-        this.StatusId = StatusId;
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
     }
 
     public String getAvatarUrl() {
-        return AvatarUrl;
+        return avatarUrl;
     }
 
-    public void setAvatarUrl(String AvatarUrl) {
-        this.AvatarUrl = AvatarUrl;
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
     public LocalDateTime getCreationDate() {
-        return CreationDate;
+        return creationDate;
     }
 
-    public void setCreationDate(LocalDateTime CreationDate) {
-        this.CreationDate = CreationDate;
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 
     public LocalDateTime getLastLogin() {
-        return LastLogin;
+        return lastLogin;
     }
 
-    public void setLastLogin(LocalDateTime LastLogin) {
-        this.LastLogin = LastLogin;
+    public void setLastLogin(LocalDateTime lastLogin) {
+        this.lastLogin = lastLogin;
     }
 
-    public CustomerStatus getCustomerStatus() {
-        return customerStatus;
-    }
-
-    public void setCustomerStatus(CustomerStatus customerStatus) {
-        this.customerStatus = customerStatus;
-    }
 
 }
