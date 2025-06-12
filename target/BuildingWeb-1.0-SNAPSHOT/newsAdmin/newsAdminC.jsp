@@ -1,0 +1,118 @@
+<%-- 
+    Document   : newAdminC
+    Created on : 07-May-2025, 15:27:32
+    Author     : dodan
+--%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Tạo tin tức mới</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f6f9;
+                margin: 0;
+                padding: 0;
+            }
+
+            .container {
+                max-width: 600px;
+                margin: 40px auto;
+                background-color: #ffffff;
+                padding: 30px;
+                border-radius: 12px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+
+            h1 {
+                text-align: center;
+                color: #333333;
+                margin-bottom: 30px;
+            }
+
+            label {
+                display: block;
+                margin-bottom: 6px;
+                font-weight: bold;
+                color: #444;
+            }
+
+            input[type="text"],
+            input[type="number"],
+            textarea {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 20px;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                font-size: 14px;
+            }
+
+            textarea {
+                resize: vertical;
+            }
+
+            .radio-group {
+                margin-bottom: 20px;
+            }
+
+            .radio-group label {
+                font-weight: normal;
+                margin-right: 15px;
+            }
+
+            button {
+                background-color: #007BFF;
+                color: white;
+                padding: 12px 20px;
+                font-size: 16px;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                width: 100%;
+                transition: background-color 0.3s ease;
+            }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Tạo Tin Tức Mới</h1>
+            <form action="NewsAdminC" method="post">
+                <label>Tiêu đề:</label>
+                <input type="text" name="title" required/>
+
+                <label>Tóm tắt:</label>
+                <input type="text" name="summary" required/>
+
+                <label>Đường dẫn ảnh (Image URL):</label>
+                <input type="text" name="imageURL" required/>
+
+                <label>Nội dung:</label>
+                <textarea name="content" rows="5" required></textarea>
+
+                <label>Xuất bản ngay:</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="isPublished" value="true" checked/> Có</label>
+                    <label><input type="radio" name="isPublished" value="false"/> Không</label>
+                </div>
+
+                <label>User ID:</label>
+                <input type="number" name="userId" required/>
+
+                <label>Building ID:</label>
+                <input type="number" name="buildingID" required/>
+
+                <button type="submit">Tạo tin tức</button>
+            </form>
+        </div>
+    </body>
+</html>
+
