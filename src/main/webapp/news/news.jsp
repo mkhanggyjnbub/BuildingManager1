@@ -91,6 +91,7 @@
         </style>
     </head>
     <body>
+    //khoa thich thu
         <h1>Tin Tức Mới Nhất</h1>
         <div class="news-container">
             <c:forEach items="${newsList}" var="news"> 
