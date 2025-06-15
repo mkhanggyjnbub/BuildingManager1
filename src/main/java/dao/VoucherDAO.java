@@ -141,19 +141,19 @@ public class VoucherDAO {
         return dem;
     }
 
-    public List<Vouchers> checkVoucherById(int customerId) {
-        List<Vouchers> list = new ArrayList<>();
+    public List checkVoucherById(int customerId) {
+        List list = new ArrayList<>();
         ResultSet rs = null;
 
         try {
-            String sql = "SELECT voucherId FROM CustomerVoucher WHERE CustomerId = ?";
+            String sql = "SELECT VoucherId FROM CustomerVouchers WHERE CustomerId = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, customerId);
             rs = ps.executeQuery();
 
             while (rs.next()) {
                 Vouchers voucher = new Vouchers();
-                voucher.setVoucherId(rs.getInt("voucherId"));
+                voucher.setVoucherId(rs.getInt("VoucherId"));
                 list.add(voucher);
             }
 
@@ -161,6 +161,108 @@ public class VoucherDAO {
             e.printStackTrace();
         }
 
+        return list;
+    }
+
+    public boolean hasSavedVoucher(int customerId, int voucherId) {
+        String sql = "SELECT 1 FROM CustomerVouchers WHERE CustomerId = ? AND VoucherId = ?";
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, customerId);
+            ps.setInt(2, voucherId);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+//    public boolean saveCustomerVoucher(int customerId, int voucherId) {
+//        String sql = "INSERT INTO CustomerVouchers (CustomerId, VoucherId, IsUsed, AssignedDate) "
+//                + "VALUES (?, ?, 0, GETDATE())";
+//
+//        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+//
+//            ps.setInt(1, customerId);
+//            ps.setInt(2, voucherId);
+//
+//            return ps.executeUpdate() > 0;
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
+    public boolean saveCustomerVoucher(int customerId, int voucherId, Connection conn) throws SQLException {
+        String sql = "INSERT INTO CustomerVouchers (CustomerId, VoucherId, IsUsed, AssignedDate) VALUES (?, ?, 0, GETDATE())";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, customerId);
+            ps.setInt(2, voucherId);
+            return ps.executeUpdate() > 0;
+        }
+    }
+
+    public boolean decreaseVoucherQuantity(int voucherId, Connection conn) throws SQLException {
+        String sql = "UPDATE Vouchers SET Quantity = Quantity - 1 WHERE VoucherId = ? AND Quantity > 0";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, voucherId);
+            return ps.executeUpdate() > 0;
+        }
+    }
+
+    public List getAllAvailableVouchers() {
+        List list = new ArrayList<>();
+        String sql = "SELECT * FROM Vouchers "
+                + "WHERE EndDate >= GETDATE() AND Quantity > 0";
+
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql);  ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Vouchers v = new Vouchers();
+                v.setVoucherId(rs.getInt("VoucherId"));
+                v.setCode(rs.getString("Code"));
+                v.setDescription(rs.getString("Description"));
+                v.setDiscountPercent(rs.getInt("DiscountPercent"));
+                v.setStartDate(rs.getDate("StartDate"));
+                v.setEndDate(rs.getDate("EndDate"));
+                v.setMinOrderAmount(rs.getBigDecimal("MinOrderAmount"));
+                v.setQuantity(rs.getInt("Quantity"));
+                list.add(v);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public List getVouchersByCustomer(int customerId) {
+        List list = new ArrayList<>();
+        String sql = "SELECT v.* FROM Vouchers v "
+                + "JOIN CustomerVouchers cv ON v.VoucherId = cv.VoucherId "
+                + "WHERE cv.CustomerId = ?";
+
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, customerId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Vouchers v = new Vouchers();
+                v.setVoucherId(rs.getInt("VoucherId"));
+                v.setCode(rs.getString("Code"));
+                v.setDescription(rs.getString("Description"));
+                v.setDiscountPercent(rs.getInt("DiscountPercent"));
+                v.setStartDate(rs.getDate("StartDate"));
+                v.setEndDate(rs.getDate("EndDate"));
+                v.setMinOrderAmount(rs.getBigDecimal("MinOrderAmount"));
+                v.setQuantity(rs.getInt("Quantity"));
+                list.add(v);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return list;
     }
 

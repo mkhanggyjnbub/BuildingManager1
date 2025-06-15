@@ -111,6 +111,8 @@
         <a href="UpImage">Up ảnh</a>
         <a href="Notification">Notification</a>
         <a href="TakeNotification">Nhận Notification</a>
+        <a href="ViewVouchers">voucher</a>
+        
         <c:choose>
             <c:when test="${empty accountType}">
                 <a href="Login">Đăng nhập</a>
