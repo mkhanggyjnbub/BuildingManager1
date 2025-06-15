@@ -147,7 +147,7 @@
                         <th>Voucher Code</th>
                         <th>Hạn sử dụng</th>
                         <th>Hành động</th>
-                    </tr>
+                    </tr>         
                 </thead>
                 <tbody>
                     <c:forEach var="v" items="${vouchers}" varStatus="status">

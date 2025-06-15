@@ -107,7 +107,7 @@ public class Login extends HttpServlet {
                     } else if (checkRole == 2) {
                         session.setAttribute("managerId", userId);
                     } else if (checkRole == 3) {
-                        session.setAttribute("staffId", userId);
+                        session.setAttribute("staffServiceId", userId);
                     } else if (checkRole == 4) {
                         session.setAttribute("onsumablesId", userId);
                     } else if (checkRole == 5) {

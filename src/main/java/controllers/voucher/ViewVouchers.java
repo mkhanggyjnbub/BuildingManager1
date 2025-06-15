@@ -5,8 +5,8 @@
 package controllers.voucher;
 
 import dao.CustomerDao;
-import dao.CustomerVoucherDao;
 import dao.VoucherDAO;
+import db.ConnectData;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,7 +15,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import models.Customers;
 import models.Vouchers;
 
@@ -64,17 +68,33 @@ public class ViewVouchers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        int customerId = Integer.parseInt(session.getAttribute("cusstomerId").toString()); // từ session hoặc form
-        VoucherDAO voucherDao = new VoucherDAO();
-        List list = voucherDao.selectAllVouchers();
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("customerId") == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
 
-        List list1 = voucherDao.checkVoucherById(customerId);
+        try {
+            int customerId = Integer.parseInt(session.getAttribute("customerId").toString());
 
-        request.setAttribute("voucherCustomer", list1);
-        request.setAttribute("vouchers", list);
+            VoucherDAO voucherDao = new VoucherDAO();
+            List<Vouchers> allVouchers = voucherDao.getAllAvailableVouchers();
+            List<Vouchers> savedVouchers = voucherDao.checkVoucherById(customerId);
+
+            Set<Integer> savedIds = new HashSet<>();
+            for (Vouchers v : savedVouchers) {
+                savedIds.add(v.getVoucherId());
+            }
+
+            request.setAttribute("vouchers", allVouchers);
+            request.setAttribute("savedIds", savedIds);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+           
+        }
+
         request.getRequestDispatcher("voucher/viewVouchers.jsp").forward(request, response);
-
     }
 
     /**
@@ -88,22 +108,111 @@ public class ViewVouchers extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        HttpSession session = request.getSession();
-        Object sessionValue = session.getAttribute("customerId");
-
-        // Kiểm tra nếu chưa đăng nhập
-//        if (sessionValue == null) {
-//            response.sendRedirect("Login.jsp"); // hoặc trang phù hợp
-//            return;
+//        try {
+//            int voucherId = Integer.parseInt(request.getParameter("voucherId"));
+//            System.out.println("voucherId: " + voucherId);
+//
+//            HttpSession session = request.getSession();
+//
+//            String customerId = (String) session.getAttribute("customerId");
+//
+//            int id = Integer.parseInt((String) session.getAttribute("customerId"));
+//            System.out.println("CustomerId: " + id);
+//            if (customerId == null) {
+//                request.setAttribute("message", "Bạn cần đăng nhập!");
+//                response.sendRedirect("login");
+//                return;
+//            }
+//
+//            VoucherDAO dao = new VoucherDAO();
+//            boolean alreadySaved = dao.hasSavedVoucher(id, voucherId);
+//
+//            if (!alreadySaved) {
+//                dao.saveCustomerVoucher(id, voucherId);
+//                request.setAttribute("message", "Lưu thành công!");
+//            } else {
+//                request.setAttribute("message", "Bạn đã lưu voucher này rồi!");
+//            }
+//
+//            List vouchers = dao.getAllAvailableVouchers();
+//            List saved = dao.getVouchersByCustomer(id);
+//
+//            request.setAttribute("vouchers", vouchers);
+//            request.setAttribute("voucherCustomer", saved);
+//
+//            request.getRequestDispatcher("voucher/viewVouchers.jsp").forward(request, response);
+//
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//            request.setAttribute("message", "Có lỗi xảy ra: " + ex.getMessage());
+//            response.sendRedirect("ViewVouchers");
 //        }
-        int customerId = Integer.parseInt(session.getAttribute("cusstomerId").toString());
-        int voucherId = Integer.parseInt(request.getParameter("voucherId"));
 
-        CustomerVoucherDao dao = new CustomerVoucherDao();
-        int result = dao.saveVoucher(customerId, voucherId);
+        try {
+            int voucherId = Integer.parseInt(request.getParameter("voucherId"));
+            HttpSession session = request.getSession();
+            String customerStr = (String) session.getAttribute("customerId");
 
-        response.sendRedirect("ViewVouchers");
+            if (customerStr == null) {
+                response.sendRedirect("login");
+                return;
+            }
+
+            int customerId = Integer.parseInt(customerStr);
+
+            VoucherDAO dao = new VoucherDAO();
+
+            // Nếu đã lưu rồi thì báo luôn
+            if (dao.hasSavedVoucher(customerId, voucherId)) {
+                //request.setAttribute("message", "Bạn đã lưu voucher này rồi!");
+            } else {
+                Connection conn = null;
+                try {
+                    conn = ConnectData.getConnection();
+                    conn.setAutoCommit(false); // Bắt đầu transaction
+
+                    boolean inserted = dao.saveCustomerVoucher(customerId, voucherId, conn);
+                    boolean updated = dao.decreaseVoucherQuantity(voucherId, conn);
+
+                    if (inserted && updated) {
+                        conn.commit();
+                       // request.setAttribute("message", "Lưu thành công!");
+                    } else {
+                        conn.rollback();
+                      //request.setAttribute("message", "Lưu thất bại. Vui lòng thử lại.");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    if (conn != null) {
+                        conn.rollback();
+                    }
+                    //request.setAttribute("message", "Lỗi: " + e.getMessage());
+                } finally {
+                    if (conn != null) {
+                        try {
+                            conn.setAutoCommit(true);
+                            conn.close();
+                        } catch (SQLException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            // Load lại danh sách vouchers và vouchers đã lưu
+            List vouchers = dao.getAllAvailableVouchers();
+            List saved = dao.getVouchersByCustomer(customerId);
+
+            request.setAttribute("vouchers", vouchers);
+            request.setAttribute("voucherCustomer", saved);
+
+            request.getRequestDispatcher("voucher/viewVouchers.jsp").forward(request, response);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            //request.setAttribute("message", "Lỗi: " + ex.getMessage());
+            response.sendRedirect("ViewVouchers");
+        }
     }
 
     /**

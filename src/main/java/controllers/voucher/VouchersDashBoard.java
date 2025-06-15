@@ -61,7 +61,7 @@ public class VouchersDashBoard extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         VoucherDAO dao = new VoucherDAO();
-        List<Vouchers> list = dao.selectAllVouchers();
+        List list = dao.selectAllVouchers();
         request.setAttribute("vouchers", list);
         request.getRequestDispatcher("vouchersAdmin/vouchersDashBoard.jsp").forward(request, response);
     }
