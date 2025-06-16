@@ -105,15 +105,15 @@
 <header>
     <div class="logo">HotelManager</div>
     <nav id="nav-menu">
-        <a href="Index">Trang chủ</a>
-        <a href="ViewRooms">Phòng</a>
-        <a href="#">Liên hệ</a>
-        <a href="UpImage">Up ảnh</a>
-        <a href="Notification">Notification</a>
-        <a href="TakeNotification">Nhận Notification</a>
+        <a href="Index">Home</a>
+        <a href="ViewRooms">Rooms</a>
+                <a href="#">Liên hệ</a>
+                <a href="UpImage">Up ảnh</a>
+                <a href="Notification">Notification</a>
+                <a href="TakeNotification">Nhận Notification</a>
         <c:choose>
             <c:when test="${empty accountType}">
-                <a href="Login">Đăng nhập</a>
+                <a href="Login">Login</a>
             </c:when>
             <c:when test="${accountType eq 'option1'}">
                 <c:choose>

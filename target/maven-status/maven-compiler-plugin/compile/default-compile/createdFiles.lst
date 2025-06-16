@@ -1,64 +1,49 @@
-<<<<<<< HEAD
-models\Roles.class
-controllers\room\ViewRooms.class
-db\ConnectData.class
-=======
-<<<<<<< HEAD
-controllers\voucher\Vouchers.class
-=======
 controllers\asset\AssetModel.class
->>>>>>> origin
 models\Roles.class
+dao\UserDao.class
+controllers\admin\Decentralization.class
+models\MaintenanceStatuses.class
+Websocket\TakeNotification.class
+controllers\voucher\VouchersDashBoard.class
+dao\CustomerDao.class
+controllers\voucher\EditVoucher.class
+dao\RoomReviewDao.class
+dao\EquipmentDao.class
+Websocket\WebSocket.class
+models\Bookings.class
+models\Employees.class
+models\Vouchers.class
+models\RoomReviews.class
+models\string.class
+controllers\asset\Assets.class
+models\Rooms.class
+controllers\voucher\Vouchers.class
+controllers\room\ViewRooms.class
+controllers\account\SignUp.class
 db\ConnectData.class
-models\Booking.class
->>>>>>> 957432600c6c7715ada7cef82b399c8a40ba6d57
 controllers\Index.class
 controllers\UpImage.class
 dao\RoomDao.class
-dao\UserDao.class
+models\Equipment.class
 dao\PaginationDao.class
-cloudImages\cloudImage.class
-controllers\admin\Decentralization.class
 controllers\admin\Admin.class
 models\Users.class
-controllers\Account\Login.class
-<<<<<<< HEAD
-Websocket\TakeNotification.class
-dao\CustomerDao.class
-controllers\Account\SignUp.class
+models\MaintenanceSchedule.class
+controllers\Equipment.class
+dao\VoucherDAO.class
+controllers\booking\ConfirmBooking.class
 Websocket\Notification.class
 Websocket\HttpSessionConfigurator.class
 models\Floors.class
 controllers\admin\DashboardUser.class
-Websocket\WebSocket.class
 controllers\admin\AdminView.class
-models\Bookings.class
 models\Buildings.class
-models\Employees.class
+controllers\account\Login.class
 models\Customers.class
-models\RoomReviews.class
-controllers\room\ViewRoomDetail.class
-=======
-<<<<<<< HEAD
-dao\VoucherDAO.class
-controllers\voucher\VouchersDashBoard.class
-controllers\voucher\EditVoucher.class
-=======
->>>>>>> origin
-controllers\Account\SignUp.class
-models\Floors.class
-controllers\admin\DashboardUser.class
-controllers\admin\AdminView.class
-models\Buildings.class
-controllers\room\ListRooms.class
-<<<<<<< HEAD
+db\SendOTPEmail.class
 controllers\voucher\AddVoucher.class
-models\Vouchers.class
 controllers\voucher\DeleteVoucher.class
-=======
-controllers\asset\Assets.class
->>>>>>> origin
->>>>>>> 957432600c6c7715ada7cef82b399c8a40ba6d57
-models\AccountStatus.class
-models\Rooms.class
+models\RoomEquipment.class
+controllers\room\ViewRoomDetail.class
 models\Amenities.class
+db\SendOTPEmail$1.class
