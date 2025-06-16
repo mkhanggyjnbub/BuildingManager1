@@ -13,14 +13,15 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-   
+
     </head>
     <body>
         <a href="Index">Quay về trang chủ</a>
-         <a href="DashboardUser">DashBoardUser</a>
-       
-         
+        <a href="DashboardUser">DashBoardUser</a>
+        <a href="VouchersDashBoard">voucher</a>
+        <a href="ViewNewsDashboard">NewsDb</a>
 
 
-</body>
+
+    </body>
 </html>

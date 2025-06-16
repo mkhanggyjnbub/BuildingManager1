@@ -95,7 +95,7 @@ public class Login extends HttpServlet {
                 user.setUserName(userName);
                 user.setPassword(passWord);
                 checkLoginUser = userDao.loginAdminForId(user);
-                if (checkLoginUser !=0 ) {
+                if (checkLoginUser != 0) {
                     String userId = checkLoginUser + "";
 
                     int checkRole = userDao.getRoleById(checkLoginUser);
@@ -107,7 +107,7 @@ public class Login extends HttpServlet {
                     } else if (checkRole == 2) {
                         session.setAttribute("managerId", userId);
                     } else if (checkRole == 3) {
-                        session.setAttribute("staffId", userId);
+                        session.setAttribute("staffServiceId", userId);
                     } else if (checkRole == 4) {
                         session.setAttribute("onsumablesId", userId);
                     } else if (checkRole == 5) {
@@ -123,9 +123,11 @@ public class Login extends HttpServlet {
                 customer.setUserName(userName);
                 customer.setPassword(passWord);
                 checkLoginCuss = customerDao.loginCussForId(customer);
-                if (checkLoginCuss !=0 ) {
-                    String cusstomerId = checkLoginCuss + "";
-                    session.setAttribute("cusstomerId", cusstomerId);
+                if (checkLoginCuss != 0) {
+                    CustomerDao dao = new CustomerDao();
+                    dao.updateLoginTimestamps(checkLoginCuss);
+                    String customerId = checkLoginCuss + "";
+                    session.setAttribute("customerId", customerId);
                     response.sendRedirect("Index");
                 } else {
                     response.sendRedirect("Login");
