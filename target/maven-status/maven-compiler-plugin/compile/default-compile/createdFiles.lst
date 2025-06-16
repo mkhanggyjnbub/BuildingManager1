@@ -1,5 +1,14 @@
 controllers\asset\AssetModel.class
 models\Roles.class
+<<<<<<< HEAD
+controllers\voucher\UserVouchers.class
+controllers\room\ViewRooms.class
+db\ConnectData.class
+controllers\Index.class
+controllers\UpImage.class
+dao\RoomDao.class
+=======
+>>>>>>> 80dbcb19c95f6c3e5f8ade6dd3d12fdfb114e247
 dao\UserDao.class
 controllers\admin\Decentralization.class
 controllers\customer\EditCustomerProfile.class
@@ -10,6 +19,10 @@ controllers\voucher\VouchersDashBoard.class
 dao\CustomerDao.class
 controllers\voucher\EditVoucher.class
 controllers\Account\SignUp.class
+<<<<<<< HEAD
+dao\RoomReviewDao.class
+dao\EquipmentDao.class
+=======
 dao\NewsDao.class
 dao\RoomReviewDao.class
 dao\EquipmentDao.class
@@ -40,6 +53,7 @@ dao\VoucherDAO.class
 controllers\customer\ViewCustomerProfile.class
 controllers\news\AddNewsDashboard.class
 controllers\news\ViewNewsDetail.class
+>>>>>>> 80dbcb19c95f6c3e5f8ade6dd3d12fdfb114e247
 models\Floors.class
 controllers\admin\DashboardUser.class
 controllers\admin\AdminView.class

@@ -30,9 +30,9 @@ public class VoucherDAO {
         conn = ConnectData.getConnection();
     }
 
-    public List<Vouchers> selectAllVouchers() {
+    public List selectAllVouchers() {
         ResultSet rs = null;
-        List<Vouchers> list = new ArrayList<>();
+        List list = new ArrayList<>();
 
         try {
             String sql = "SELECT * FROM Vouchers";
@@ -215,7 +215,7 @@ public class VoucherDAO {
     public List getAllAvailableVouchers() {
         List list = new ArrayList<>();
         String sql = "SELECT * FROM Vouchers "
-                + "WHERE EndDate >= GETDATE() AND Quantity > 0";
+                + "WHERE EndDate >= GETDATE() AND Quantity > 0 AND IsActive = 1";
 
         try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql);  ResultSet rs = ps.executeQuery()) {
 
