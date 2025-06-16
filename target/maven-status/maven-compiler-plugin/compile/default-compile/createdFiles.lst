@@ -1,5 +1,6 @@
 controllers\asset\AssetModel.class
 models\Roles.class
+controllers\voucher\UserVouchers.class
 controllers\room\ViewRooms.class
 db\ConnectData.class
 controllers\Index.class
@@ -21,8 +22,8 @@ controllers\voucher\VouchersDashBoard.class
 dao\CustomerDao.class
 controllers\voucher\EditVoucher.class
 controllers\Account\SignUp.class
+dao\RoomReviewDao.class
 dao\EquipmentDao.class
-dao\CustomerVoucherDao.class
 models\Floors.class
 controllers\admin\DashboardUser.class
 controllers\admin\AdminView.class

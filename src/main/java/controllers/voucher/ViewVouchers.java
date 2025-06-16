@@ -68,33 +68,39 @@ public class ViewVouchers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("customerId") == null) {
-            response.sendRedirect("login.jsp");
-            return;
+        HttpSession session = (HttpSession) request.getSession();
+        if (session.getAttribute("customerId") == null) {
+            response.sendRedirect("Login");
         }
 
+        String customerId = session.getAttribute("customerId").toString();
         try {
-            int customerId = Integer.parseInt(session.getAttribute("customerId").toString());
-
+            int id = Integer.parseInt(customerId);
             VoucherDAO voucherDao = new VoucherDAO();
+
+            // Lấy tất cả các voucher còn hiệu lực
             List<Vouchers> allVouchers = voucherDao.getAllAvailableVouchers();
-            List<Vouchers> savedVouchers = voucherDao.checkVoucherById(customerId);
 
-            Set<Integer> savedIds = new HashSet<>();
-            for (Vouchers v : savedVouchers) {
-                savedIds.add(v.getVoucherId());
-            }
+            // Lấy các voucher mà user đã lưu
+            List<Vouchers> savedVouchers = voucherDao.checkVoucherById(id);
 
+            // Dùng Set để check nhanh voucherId nào đã lưu
+//            Set<Integer> savedIds = new HashSet<>();
+//            for (Vouchers v : savedVouchers) {
+//                savedIds.add(v.getVoucherId());
+//                System.out.println(v.getVoucherId());
+//            }
+
+            // Gửi dữ liệu sang JSP
             request.setAttribute("vouchers", allVouchers);
-            request.setAttribute("savedIds", savedIds);
+            request.setAttribute("savedIds", savedVouchers);
+
+            request.getRequestDispatcher("voucher/viewVouchers.jsp").forward(request, response);
 
         } catch (Exception ex) {
             ex.printStackTrace();
-           
-        }
 
-        request.getRequestDispatcher("voucher/viewVouchers.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -154,39 +160,33 @@ public class ViewVouchers extends HttpServlet {
             String customerStr = (String) session.getAttribute("customerId");
 
             if (customerStr == null) {
-                response.sendRedirect("login");
+                response.sendRedirect("Login");
                 return;
             }
 
             int customerId = Integer.parseInt(customerStr);
-
             VoucherDAO dao = new VoucherDAO();
 
-            // Nếu đã lưu rồi thì báo luôn
-            if (dao.hasSavedVoucher(customerId, voucherId)) {
-                //request.setAttribute("message", "Bạn đã lưu voucher này rồi!");
-            } else {
+            // Nếu chưa lưu thì mới xử lý
+            if (!dao.hasSavedVoucher(customerId, voucherId)) {
                 Connection conn = null;
                 try {
                     conn = ConnectData.getConnection();
-                    conn.setAutoCommit(false); // Bắt đầu transaction
+                    conn.setAutoCommit(false);
 
                     boolean inserted = dao.saveCustomerVoucher(customerId, voucherId, conn);
                     boolean updated = dao.decreaseVoucherQuantity(voucherId, conn);
 
                     if (inserted && updated) {
-                        conn.commit();
-                       // request.setAttribute("message", "Lưu thành công!");
+                        conn.commit(); // thành công
                     } else {
-                        conn.rollback();
-                      //request.setAttribute("message", "Lưu thất bại. Vui lòng thử lại.");
+                        conn.rollback(); // thất bại
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                     if (conn != null) {
                         conn.rollback();
                     }
-                    //request.setAttribute("message", "Lỗi: " + e.getMessage());
                 } finally {
                     if (conn != null) {
                         try {
@@ -199,19 +199,12 @@ public class ViewVouchers extends HttpServlet {
                 }
             }
 
-            // Load lại danh sách vouchers và vouchers đã lưu
-            List vouchers = dao.getAllAvailableVouchers();
-            List saved = dao.getVouchersByCustomer(customerId);
-
-            request.setAttribute("vouchers", vouchers);
-            request.setAttribute("voucherCustomer", saved);
-
-            request.getRequestDispatcher("voucher/viewVouchers.jsp").forward(request, response);
+            // Sau khi xử lý xong thì gọi lại chính servlet này bằng GET để load lại dữ liệu và hiển thị mới
+            response.sendRedirect("ViewVouchers");
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            //request.setAttribute("message", "Lỗi: " + ex.getMessage());
-            response.sendRedirect("ViewVouchers");
+            response.sendRedirect("ViewVouchers"); // fallback
         }
     }
 

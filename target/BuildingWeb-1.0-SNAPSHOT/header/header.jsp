@@ -112,6 +112,8 @@
         <a href="Notification">Notification</a>
         <a href="TakeNotification">Nhận Notification</a>
         <a href="ViewVouchers">voucher</a>
+        <a href="UserVouchers">User voucher</a>
+        
         
         <c:choose>
             <c:when test="${empty accountType}">
