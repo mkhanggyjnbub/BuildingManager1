@@ -4,6 +4,7 @@
  */
 package models;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
@@ -11,30 +12,19 @@ import java.sql.Date;
  * @author CE180441_Dương Đinh Thế Vinh
  */
 public class Vouchers {
+
     private int voucherId;
     private String code;
-    private int typeId;
+    private String description;
     private Integer discountPercent;
-    private Integer discountAmount;
-    private int minOrderAmount;
     private Date startDate;
     private Date endDate;
-    private String description;
+    private BigDecimal minOrderAmount;
+    private int quantity;
+    private boolean IsActive;
+    private String UserId;
 
     public Vouchers() {
-    }
-
- 
-    public Vouchers(int voucherId, String code, int typeId, Integer discountPercent, Integer discountAmount, int minOrderAmount, Date startDate, Date endDate, String description) {
-        this.voucherId = voucherId;
-        this.code = code;
-        this.typeId = typeId;
-        this.discountPercent = discountPercent;
-        this.discountAmount = discountAmount;
-        this.minOrderAmount = minOrderAmount;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.description = description;
     }
 
     public int getVoucherId() {
@@ -53,12 +43,12 @@ public class Vouchers {
         this.code = code;
     }
 
-    public int getTypeId() {
-        return typeId;
+    public String getDescription() {
+        return description;
     }
 
-    public void setTypeId(int typeId) {
-        this.typeId = typeId;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getDiscountPercent() {
@@ -67,22 +57,6 @@ public class Vouchers {
 
     public void setDiscountPercent(Integer discountPercent) {
         this.discountPercent = discountPercent;
-    }
-
-    public Integer getDiscountAmount() {
-        return discountAmount;
-    }
-
-    public void setDiscountAmount(Integer discountAmount) {
-        this.discountAmount = discountAmount;
-    }
-
-    public int getMinOrderAmount() {
-        return minOrderAmount;
-    }
-
-    public void setMinOrderAmount(int minOrderAmount) {
-        this.minOrderAmount = minOrderAmount;
     }
 
     public Date getStartDate() {
@@ -101,12 +75,38 @@ public class Vouchers {
         this.endDate = endDate;
     }
 
-    public String getDescription() {
-        return description;
+    public BigDecimal getMinOrderAmount() {
+        return minOrderAmount;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setMinOrderAmount(BigDecimal minOrderAmount) {
+        this.minOrderAmount = minOrderAmount;
     }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public boolean getIsActive() {
+        return IsActive;
+    }
+
+    public void setIsActive(boolean IsActive) {
+        this.IsActive = IsActive;
+    }
+
+    public String getUserId() {
+        return UserId;
+    }
+
+    public void setUserId(String UserId) {
+        this.UserId = UserId;
+    }
+
     
+
 }

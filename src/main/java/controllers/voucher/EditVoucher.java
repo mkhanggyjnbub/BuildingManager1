@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
@@ -62,13 +63,11 @@ public class EditVoucher extends HttpServlet {
             throws ServletException, IOException {
         int voucherId = Integer.parseInt(request.getParameter("voucherId"));
         Vouchers vouchers = new Vouchers();
-        
+
         VoucherDAO dao = new VoucherDAO();
         vouchers = dao.getVoucherById(voucherId);
         request.setAttribute("voucher", vouchers);
         request.getRequestDispatcher("vouchersAdmin/editVoucher.jsp").forward(request, response);
-        
-   
 
     }
 
@@ -83,32 +82,30 @@ public class EditVoucher extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("voucherId"));
-        
-        String code = request.getParameter("code");
-        int typeId = Integer.parseInt(request.getParameter("typeId"));
-        int discountPercent = Integer.parseInt(request.getParameter("discountPercent"));
-        int discountAmount = Integer.parseInt(request.getParameter("discountAmount"));
-        int minOrderAmount = Integer.parseInt(request.getParameter("minOrderAmount"));
-        Date startDate = Date.valueOf(request.getParameter("startDate"));
-        Date endDate = Date.valueOf(request.getParameter("endDate"));
-        String description = request.getParameter("description");
 
-        Vouchers v = new Vouchers(id, code, typeId, discountPercent, discountAmount,
-                minOrderAmount, startDate, endDate, description);
+        Vouchers v = new Vouchers();
+
+        int id = Integer.parseInt(request.getParameter("voucherId"));
+        v.setVoucherId(id);
+        v.setVoucherId(Integer.parseInt(request.getParameter("voucherId")));
+        v.setCode(request.getParameter("code"));
+        v.setDiscountPercent(Integer.parseInt(request.getParameter("discountPercent")));
+        v.setStartDate(Date.valueOf(request.getParameter("startDate")));
+        v.setEndDate(Date.valueOf(request.getParameter("endDate")));
+        v.setMinOrderAmount(new BigDecimal(request.getParameter("minOrderAmount")));
+        v.setDescription(request.getParameter("description"));
+        v.setQuantity(Integer.parseInt(request.getParameter("quantity")));
+        boolean isActive = request.getParameter("isActive") != null;
+        v.setIsActive(isActive);
 
         VoucherDAO dao = new VoucherDAO();
-        
-        int cnt = dao.updateVoucher(v); // Phải có phương thức này trong DAO
+        int cnt = dao.updateVoucher(v);
 
-        
-        if(cnt != 0){
+        if (cnt != 0) {
             response.sendRedirect("VouchersDashBoard");
+        } else {
+            response.sendRedirect("EditVoucher?voucherId=" + id + "&error=1");
         }
-        else {
-            response.sendRedirect("...");
-        }
-        
     }
 
     /**

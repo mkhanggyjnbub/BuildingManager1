@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
+import models.Vouchers;
 
 /**
  *
@@ -60,7 +61,7 @@ public class VouchersDashBoard extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         VoucherDAO dao = new VoucherDAO();
-        List<models.Vouchers> list = dao.selectAllVouchers();
+        List list = dao.selectAllVouchers();
         request.setAttribute("vouchers", list);
         request.getRequestDispatcher("vouchersAdmin/vouchersDashBoard.jsp").forward(request, response);
     }

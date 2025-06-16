@@ -111,6 +111,10 @@
                 <a href="UpImage">Up ảnh</a>
                 <a href="Notification">Notification</a>
                 <a href="TakeNotification">Nhận Notification</a>
+        <a href="ViewVouchers">voucher</a>
+        <a href="UserVouchers">User voucher</a>
+        <a href="ViewNews">News</a>
+
         <c:choose>
             <c:when test="${empty accountType}">
                 <a href="Login">Login</a>
@@ -136,8 +140,19 @@
                 </c:choose>
             </c:when>
             <c:otherwise>
-                <a href="?id=${cusstomerId}">${userName}</a>
+                <div class="dichvukhachhang">
+                    <div class="dichvukhachhang-name">${userName}</div>
+                    <div class="dichvukhachhang-content">
+                        <a href="ViewCustomerProfile?id=${customerId}">🔹 Tài khoản của tôi</a>
+                        <a href="#">🔹 Đơn đặt phòng</a>
+                        <a href="#">🔹 Lịch sử thanh toán</a>
+                        <a href="#">🔹 Ưu đãi thành viên</a>
+                        <a href="#">🔹 Trợ giúp</a>
+                        <a href="Logout">🔹 Đăng xuất</a>
+                    </div>
+                </div>
             </c:otherwise>
+
         </c:choose>
     </nav>
     <button id="menu-toggle">☰</button>
