@@ -19,24 +19,42 @@ public class Users {
     private String avatarUrl;
     private Date lastLogin;
     private int roleId;
-    private int status;
+    private String status;
     private Roles role;
     private LocalDateTime CreationDate;
-    private Employees employees;
+    private String email;
+    private String fullName;
+    private String phone;
     
 
     public Users() {
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
  
-
-    public Employees getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(Employees employees) {
-        this.employees = employees;
-    }
 
     
 
@@ -88,13 +106,15 @@ public class Users {
         this.roleId = roleId;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
+
+  
 
     public Roles getRole() {
         return role;

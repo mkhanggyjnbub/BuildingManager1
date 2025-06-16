@@ -1,12 +1,47 @@
 controllers\asset\AssetModel.class
 models\Roles.class
 <<<<<<< HEAD
+dao\UserDao.class
+controllers\admin\Decentralization.class
+models\MaintenanceStatuses.class
+Websocket\TakeNotification.class
+controllers\voucher\VouchersDashBoard.class
+dao\CustomerDao.class
+controllers\voucher\EditVoucher.class
+dao\RoomReviewDao.class
+dao\EquipmentDao.class
+Websocket\WebSocket.class
+models\Bookings.class
+models\Employees.class
+models\Vouchers.class
+models\RoomReviews.class
+models\string.class
+controllers\asset\Assets.class
+models\Rooms.class
+controllers\voucher\Vouchers.class
+controllers\room\ViewRooms.class
+controllers\account\SignUp.class
+=======
+<<<<<<< HEAD
 controllers\voucher\UserVouchers.class
 controllers\room\ViewRooms.class
+>>>>>>> a45747f2c0871714d1fb63a000fba3c8a086ab7a
 db\ConnectData.class
 controllers\Index.class
 controllers\UpImage.class
 dao\RoomDao.class
+<<<<<<< HEAD
+models\Equipment.class
+dao\PaginationDao.class
+controllers\admin\Admin.class
+models\Users.class
+models\MaintenanceSchedule.class
+controllers\Equipment.class
+dao\VoucherDAO.class
+controllers\booking\ConfirmBooking.class
+Websocket\Notification.class
+Websocket\HttpSessionConfigurator.class
+=======
 =======
 >>>>>>> 80dbcb19c95f6c3e5f8ade6dd3d12fdfb114e247
 dao\UserDao.class
@@ -54,15 +89,26 @@ controllers\customer\ViewCustomerProfile.class
 controllers\news\AddNewsDashboard.class
 controllers\news\ViewNewsDetail.class
 >>>>>>> 80dbcb19c95f6c3e5f8ade6dd3d12fdfb114e247
+>>>>>>> a45747f2c0871714d1fb63a000fba3c8a086ab7a
 models\Floors.class
 controllers\admin\DashboardUser.class
 controllers\admin\AdminView.class
 models\Buildings.class
+<<<<<<< HEAD
+controllers\account\Login.class
+models\Customers.class
+db\SendOTPEmail.class
+=======
 models\Customers.class
 controllers\voucher\ViewVouchers.class
+>>>>>>> a45747f2c0871714d1fb63a000fba3c8a086ab7a
 controllers\voucher\AddVoucher.class
 controllers\voucher\DeleteVoucher.class
 models\RoomEquipment.class
 controllers\room\ViewRoomDetail.class
+<<<<<<< HEAD
+=======
 controllers\news\DeleteNewsDashboard.class
+>>>>>>> a45747f2c0871714d1fb63a000fba3c8a086ab7a
 models\Amenities.class
+db\SendOTPEmail$1.class
