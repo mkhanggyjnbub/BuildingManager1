@@ -111,6 +111,8 @@
         <a href="UpImage">Up ảnh</a>
         <a href="Notification">Notification</a>
         <a href="TakeNotification">Nhận Notification</a>
+        <a href="ViewAmenitiesDashboard">Xem danh sách tiện ích</a>
+        
         <c:choose>
             <c:when test="${empty accountType}">
                 <a href="Login">Đăng nhập</a>
@@ -133,12 +135,18 @@
                     <c:when test="${role == 5}">
                         <a href="?id=${equipmentId}">${userName}</a>
                     </c:when>
-                </c:choose>
+                    <c:when test="${role == 6}">
+                        <a href="?id=${cusstomerId}">${userName}</a>
+                        </c:when>
+                </c:choose> 
+                        
             </c:when>
             <c:otherwise>
-                <a href="?id=${cusstomerId}">${userName}</a>
+                
             </c:otherwise>
         </c:choose>
+                
+                
     </nav>
     <button id="menu-toggle">☰</button>
 </header>
