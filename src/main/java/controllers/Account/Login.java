@@ -95,7 +95,7 @@ public class Login extends HttpServlet {
                 user.setUserName(userName);
                 user.setPassword(passWord);
                 checkLoginUser = userDao.loginAdminForId(user);
-                if (checkLoginUser !=0 ) {
+                if (checkLoginUser != 0) {
                     String userId = checkLoginUser + "";
 
                     int checkRole = userDao.getRoleById(checkLoginUser);
@@ -123,7 +123,9 @@ public class Login extends HttpServlet {
                 customer.setUserName(userName);
                 customer.setPassword(passWord);
                 checkLoginCuss = customerDao.loginCussForId(customer);
-                if (checkLoginCuss !=0 ) {
+                if (checkLoginCuss != 0) {
+                    CustomerDao dao = new CustomerDao();
+                    dao.updateLoginTimestamps(checkLoginCuss);
                     String customerId = checkLoginCuss + "";
                     session.setAttribute("customerId", customerId);
                     response.sendRedirect("Index");
