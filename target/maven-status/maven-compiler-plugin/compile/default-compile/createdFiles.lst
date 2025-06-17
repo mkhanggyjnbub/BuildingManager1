@@ -51,7 +51,6 @@ dao\PaginationDao.class
 controllers\voucher\AdminViewVoucher.class
 controllers\customer\ViewCustomerDetailDashboard.class
 controllers\news\EditNewsDashboard.class
-controllers\admin\Admin.class
 models\Users.class
 models\MaintenanceSchedule.class
 controllers\customer\EditCustomerDashboard.class
@@ -63,8 +62,12 @@ controllers\amenities\DeleteAmenitiesDashboard.class
 controllers\customer\ViewAllCustomersDashboard.class
 controllers\news\ViewNewsDetail.class
 <<<<<<< HEAD
+<<<<<<< HEAD
 controllers\services\ViewServicesDashboard.class
 dao\ServicesDao.class
+=======
+controllers\admin\Dashboard.class
+>>>>>>> 020fa5400cd8bd4f1e04b12fde41e098b92079ea
 =======
 >>>>>>> 1f31b8a5db73165c3897f264b0f7867d2d13dc93
 models\Floors.class
