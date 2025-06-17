@@ -6,6 +6,7 @@ package models;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
@@ -15,22 +16,22 @@ import java.time.LocalDateTime;
 public class Customers {
 
     private int customerId;
-    private String  userName;
-    private String  password;
-    private String  fullName;
-    private String  phone;
-    private String  email;
-    private String  address;
-    private String  gender;
-    private Date  dateOfBirth;
-    private int  statusId;
-    private String  avatarUrl;
-    private LocalDateTime  creationDate;
-    private LocalDateTime  lastLogin;
+    private String userName;
+    private String password;
+    private String fullName;
+    private String phone;
+    private String email;
+    private String address;
+    private String gender;
+    private Date dateOfBirth;
+    private String status;
+    private String avatarUrl;
+    private Timestamp creationDate;
+    private Timestamp lastLogin;
+    private String identityNumber;
+    private Date joinDate;
 
-    public Customers() {
-    }
-
+    // Getter and Setter
 
     public int getCustomerId() {
         return customerId;
@@ -104,12 +105,12 @@ public class Customers {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public int getStatusId() {
-        return statusId;
+    public String getStatus() {
+        return status;
     }
 
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getAvatarUrl() {
@@ -120,21 +121,35 @@ public class Customers {
         this.avatarUrl = avatarUrl;
     }
 
-    public LocalDateTime getCreationDate() {
+    public Timestamp getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(LocalDateTime creationDate) {
+    public void setCreationDate(Timestamp creationDate) {
         this.creationDate = creationDate;
     }
 
-    public LocalDateTime getLastLogin() {
+    public Timestamp getLastLogin() {
         return lastLogin;
     }
 
-    public void setLastLogin(LocalDateTime lastLogin) {
+    public void setLastLogin(Timestamp lastLogin) {
         this.lastLogin = lastLogin;
     }
 
+    public String getIdentityNumber() {
+        return identityNumber;
+    }
 
+    public void setIdentityNumber(String identityNumber) {
+        this.identityNumber = identityNumber;
+    }
+
+    public Date getJoinDate() {
+        return joinDate;
+    }
+
+    public void setJoinDate(Date joinDate) {
+        this.joinDate = joinDate;
+    }
 }
