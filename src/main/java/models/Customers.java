@@ -6,6 +6,7 @@ package models;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
@@ -31,6 +32,13 @@ public class Customers {
 
     public Customers() {
     }
+
+    private String status;
+ 
+    private String identityNumber;
+    private Date joinDate;
+
+    // Getter and Setter
 
     public int getCustomerId() {
         return customerId;
@@ -104,12 +112,12 @@ public class Customers {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public int getStatusId() {
-        return statusId;
+    public String getStatus() {
+        return status;
     }
 
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getAvatarUrl() {
@@ -120,21 +128,7 @@ public class Customers {
         this.avatarUrl = avatarUrl;
     }
 
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
 
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public LocalDateTime getLastLogin() {
-        return lastLogin;
-    }
-
-    public void setLastLogin(LocalDateTime lastLogin) {
-        this.lastLogin = lastLogin;
-    }
 
     public LocalDateTime getCurrenrLastLogin() {
         return currenrLastLogin;
@@ -143,5 +137,19 @@ public class Customers {
     public void setCurrenrLastLogin(LocalDateTime currenrLastLogin) {
         this.currenrLastLogin = currenrLastLogin;
     }
+    public String getIdentityNumber() {
+        return identityNumber;
+    }
 
+    public void setIdentityNumber(String identityNumber) {
+        this.identityNumber = identityNumber;
+    }
+
+    public Date getJoinDate() {
+        return joinDate;
+    }
+
+    public void setJoinDate(Date joinDate) {
+        this.joinDate = joinDate;
+    }
 }
