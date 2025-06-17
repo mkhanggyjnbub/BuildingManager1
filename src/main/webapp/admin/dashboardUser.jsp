@@ -173,5 +173,13 @@
         </ul>
     </nav>
 
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <c:forEach  begin="1" end="${finalPage}" var ="i">
+                    <li><a href="DashboardUser?Page=${i}">${i}</a></li>
+                    </c:forEach>
+            </ul>
+        </nav>
+    </body>
 </body>
 </html>

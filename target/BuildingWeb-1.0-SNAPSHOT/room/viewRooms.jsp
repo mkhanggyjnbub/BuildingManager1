@@ -26,8 +26,8 @@
                 <label for="location">Location</label>
                 <select onchange="search()" id="location" name="location">
                     <option value="">-- Select Location --</option>
-                    <option value="Cần Thơ">Cần Thơ</option>
-                    <option value="Vũng Tàu">Vũng Tàu</option>
+                    <option value="Can Tho">Cần Thơ</option>
+                    <option value="Vung Tau">Vũng Tàu</option>
                 </select>
             </div>
 

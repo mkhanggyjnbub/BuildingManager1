@@ -156,11 +156,7 @@
         <a href="DashboardUser">DashBoardUser</a>
         <a href="VouchersDashBoard">voucher</a>
         <a href="ViewNewsDashboard">NewsDb</a>
-        <a href="BookingConfirmation">List Bookings</a>
-        
 
-        <a href="ViewAllCustomersDashboard">ViewCustomers</a>
-        
 
         <!-- Navbar -->
         <div class="navbar">
@@ -179,6 +175,12 @@
                 <li><a href="VouchersDashBoard"><i class="fa-solid fa-ticket"></i><span>Vouchers</span></a></li>
                 <li><a href="ViewNewsDashboard"><i class="fa-solid fa-newspaper"></i><span>News</span></a></li>
                 <li><a href="Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
+                <li>         <a href="BookingConfirmation">List Bookings</a>
+                </li>
+                <li>         <a href="ViewAmenitiesDashboard">List Amenities</a>
+                </li>
+                <li>         <a href="ViewAllCustomersDashboard">List Customers</a>
+                </li>
             </ul>
         </div>
 

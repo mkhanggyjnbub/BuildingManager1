@@ -100,6 +100,46 @@
             display: flex;
         }
     }
+    /* Dropdown menu */
+    .dichvukhachhang {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .dichvukhachhang-name {
+        font-weight: bold;
+        color: #fff;
+        padding: 8px 12px;
+    }
+
+    .dichvukhachhang-content {
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        min-width: 220px;
+        box-shadow: 0px 8px 16px rgba(0,0,0,0.15);
+        z-index: 10;
+        right: 0;
+        border-radius: 6px;
+        padding: 8px 0;
+    }
+
+    .dichvukhachhang-content a {
+        color: #333;
+        padding: 10px 16px;
+        text-decoration: none;
+        display: block;
+        font-size: 14px;
+    }
+
+    .dichvukhachhang-content a:hover {
+        background-color: #f7f7f7;
+    }
+
+    .dichvukhachhang:hover .dichvukhachhang-content {
+        display: block;
+    }
 </style>
 
 <header>
@@ -107,14 +147,15 @@
     <nav id="nav-menu">
         <a href="Index">Home</a>
         <a href="ViewRooms">Rooms</a>
-                <a href="#">Liên hệ</a>
-                <a href="UpImage">Up ảnh</a>
-                <a href="Notification">Notification</a>
-                <a href="TakeNotification">Nhận Notification</a>
-        <a href="ViewVouchers">voucher</a>
+        <!--                <a href="#">Liên hệ</a>
+                        <a href="UpImage">Up ảnh</a>
+                        <a href="Notification">Notification</a>
+                        <a href="TakeNotification">Nhận Notification</a>-->
+        <!--        <a href="ViewVouchers">voucher</a>-->
         <a href="UserVouchers">User voucher</a>
         <a href="ViewNews">News</a>
-        <a href="ViewAmenitiesDashboard">Xem danh sách tiện ích</a>
+<!--  <a href="CloudinaryUpload">🔹Cloudinary</a>-->
+  
         
 
         <c:choose>
@@ -124,7 +165,7 @@
             <c:when test="${accountType eq 'option1'}">
                 <c:choose>
                     <c:when test="${role == 1}">
-                        <a href="Admin">Admin</a>
+                        <a href="Dashboard">Admin</a>
                         <a href="?id=${adminId}">${userName}</a>
                     </c:when>
                     <c:when test="${role == 2}">
@@ -150,11 +191,12 @@
                     <div class="dichvukhachhang-name">${userName}</div>
                     <div class="dichvukhachhang-content">
                         <a href="ViewCustomerProfile?id=${customerId}">🔹 Tài khoản của tôi</a>
-                        <a href="#">🔹 Đơn đặt phòng</a>
-                        <a href="#">🔹 Lịch sử thanh toán</a>
-                        <a href="#">🔹 Ưu đãi thành viên</a>
-                        <a href="#">🔹 Trợ giúp</a>
-                        <a href="Logout">🔹 Đăng xuất</a>
+                        <!--                        <a href="#">🔹 Đơn đặt phòng</a>
+                                                <a href="#">🔹 Lịch sử thanh toán</a>
+                                                <a href="#">🔹 Ưu đãi thành viên</a>
+                                                <a href="#">🔹 Trợ giúp</a>-->
+                        <!--                        <a href="Logout">🔹 Đăng xuất</a>-->
+                      
                     </div>
                 </div>
 

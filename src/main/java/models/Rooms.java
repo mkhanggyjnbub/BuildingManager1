@@ -14,28 +14,24 @@ public class Rooms {
     private int floorId;
     private String roomNumber;
     private String roomType;
-     private String bedType;
+    private String bedType;
     private String description;
     private long price;
     private long quantity;
-    private int statusId;
+    private String status;
     private int maxOccupancy;
     private String imageUrl;
+    private int floorNumber;
 
     public Rooms() {
     }
 
-    public Rooms(int roomId, int floorId, String roomNumber, String roomType, String description, long price, long quantity, int statusId, int maxOccupancy, String imageUrl) {
-        this.roomId = roomId;
-        this.floorId = floorId;
-        this.roomNumber = roomNumber;
-        this.roomType = roomType;
-        this.description = description;
-        this.price = price;
-        this.quantity = quantity;
-        this.statusId = statusId;
-        this.maxOccupancy = maxOccupancy;
-        this.imageUrl = imageUrl;
+    public int getFloorNumber() {
+        return floorNumber;
+    }
+
+    public void setFloorNumber(int floorNumber) {
+        this.floorNumber = floorNumber;
     }
 
     public String getImageUrl() {
@@ -45,8 +41,6 @@ public class Rooms {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
-
-  
 
     public String getDescription() {
         return description;
@@ -104,14 +98,13 @@ public class Rooms {
         this.quantity = quantity;
     }
 
-    public int getStatusId() {
-        return statusId;
+    public String getStatus() {
+        return status;
     }
 
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
+    public void setStatus(String status) {
+        this.status = status;
     }
-
     public int getMaxOccupancy() {
         return maxOccupancy;
     }
