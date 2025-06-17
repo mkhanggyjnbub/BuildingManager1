@@ -4,6 +4,8 @@
  */
 package models;
 
+import java.sql.Date;
+
 /**
  *
  * @author Kiều Hoàng Mạnh Khang - ce180749
@@ -12,23 +14,26 @@ public class Bookings {
 
     private int bookingId;
     private int roomId;
+    private int customerId;
     private int userId;
-    private int startDate;
-    private int endDate;
-    private String Status;
-
-    public Bookings() {
+    private Date startDate;
+    private Date endDate;
+    private boolean status;
+    private String roomNumber;
+    private String userName;
+    
+    public Bookings(){
+        
     }
 
-    public Bookings(int bookingId, int roomId, int userId, int startDate, int endDate, String Status) {
-        this.bookingId = bookingId;
-        this.roomId = roomId;
-        this.userId = userId;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.Status = Status;
+    public boolean isStatus() {
+        return status;
     }
 
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+    
     public int getBookingId() {
         return bookingId;
     }
@@ -45,6 +50,14 @@ public class Bookings {
         this.roomId = roomId;
     }
 
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
     public int getUserId() {
         return userId;
     }
@@ -53,27 +66,39 @@ public class Bookings {
         this.userId = userId;
     }
 
-    public int getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(int startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public int getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(int endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
-    public String getStatus() {
-        return Status;
+    public String getRoomNumber() {
+        return roomNumber;
     }
 
-    public void setStatus(String Status) {
-        this.Status = Status;
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
     }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+    
+    
 }
+
+    
