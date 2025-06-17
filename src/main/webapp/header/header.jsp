@@ -100,10 +100,7 @@
             display: flex;
         }
     }
-<<<<<<< HEAD
 
-=======
->>>>>>> 020fa5400cd8bd4f1e04b12fde41e098b92079ea
     /* Dropdown menu */
     .dichvukhachhang {
         position: relative;
