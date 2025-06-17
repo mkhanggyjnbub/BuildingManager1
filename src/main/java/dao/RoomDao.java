@@ -301,7 +301,16 @@ public class RoomDao {
         return list;
     }
 
-    public Rooms getInformationRoomBooking(int id) {
+    public void clearRoomCustomerInfo(int roomId) throws SQLException {
+        String sql = "UPDATE Rooms SET Status = 0 WHERE RoomId = ?";
+        try ( Connection conn = ConnectData.getConnection();  
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, roomId);
+            stmt.executeUpdate();
+        }
+
+        }
+        public Rooms getInformationRoomBooking(int id) {
         ResultSet rs = null;
         Rooms room = new Rooms();
         try {

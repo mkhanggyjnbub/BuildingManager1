@@ -155,6 +155,9 @@
         <a href="UserVouchers">User voucher</a>
         <a href="ViewNews">News</a>
 <!--  <a href="CloudinaryUpload">🔹Cloudinary</a>-->
+  
+        
+
         <c:choose>
             <c:when test="${empty accountType}">
                 <a href="Login">Login</a>
@@ -162,7 +165,7 @@
             <c:when test="${accountType eq 'option1'}">
                 <c:choose>
                     <c:when test="${role == 1}">
-                        <a href="Admin">Admin</a>
+                        <a href="Dashboard">Admin</a>
                         <a href="?id=${adminId}">${userName}</a>
                     </c:when>
                     <c:when test="${role == 2}">
@@ -177,7 +180,11 @@
                     <c:when test="${role == 5}">
                         <a href="?id=${equipmentId}">${userName}</a>
                     </c:when>
-                </c:choose>
+                    <c:when test="${role == 6}">
+                        <a href="?id=${cusstomerId}">${userName}</a>
+                        </c:when>
+                </c:choose> 
+                        
             </c:when>
             <c:otherwise>
                 <div class="dichvukhachhang">
@@ -192,9 +199,12 @@
                       
                     </div>
                 </div>
+
             </c:otherwise>
 
         </c:choose>
+                
+                
     </nav>
     <button id="menu-toggle">☰</button>
 </header>

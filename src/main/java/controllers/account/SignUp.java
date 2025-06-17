@@ -4,7 +4,7 @@
  */
 package controllers.account;
 
-import db.SendOTPEmail;
+//import db.SendOTPEmail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -75,7 +75,7 @@ public class SignUp extends HttpServlet {
             throws ServletException, IOException {
         String email = request.getParameter("email");
         String otp = String.valueOf((int) (Math.random() * 900000 + 100000)); 
-        SendOTPEmail.send(email, otp);
+//        SendOTPEmail.send(email, otp);
         HttpSession session =request.getSession();
         session.setAttribute("otp", otp);
     }
