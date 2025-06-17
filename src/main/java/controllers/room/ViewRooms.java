@@ -100,7 +100,7 @@ public class ViewRooms extends HttpServlet {
                             + "        <h2 class=\"room-title\">" + room.getRoomType() + "</h2>\n"
                             + "        <p class=\"room-desc\">" + room.getDescription() + "</p>\n"
                             + "        <div class=\"price\">" + room.getPrice() + " / Room</div>\n"
-                            + "        <button class=\"btn-book\" aria-label=\"\">Đặt Phòng</button>\n"
+                            + "        <button class=\"btn-book\" aria-label=\"\">View Details</button>\n"
                             + "      </div>\n"
                             + "    </a>\n"
                             + "  </article>");
@@ -113,6 +113,12 @@ public class ViewRooms extends HttpServlet {
             LocalDate checkOut = LocalDate.parse(request.getParameter("checkOutSearch"));
             int adults = Integer.parseInt(request.getParameter("adultsSearch"));
             int children = Integer.parseInt(request.getParameter("childrenSearch"));
+            HttpSession session = request.getSession();
+            session.setAttribute("location", location);
+            session.setAttribute("checkIn", checkIn);
+            session.setAttribute("checkOut", checkOut);
+            session.setAttribute("adults", adults);
+            session.setAttribute("children", children);
             int people = adults + children;
             List<Rooms> list1 = roomDao.getSearchRooms(location, checkIn, checkOut, people, totalCard);
             totalRooms = roomDao.getCountRoomsSearch(location, checkIn, checkOut, people);
@@ -130,16 +136,16 @@ public class ViewRooms extends HttpServlet {
             PrintWriter out = response.getWriter();
             for (Rooms room : list1) {
                 out.println("  <article class=\"card\" role=\"listitem\" tabindex=\"0\" aria-label=\"\">\n"
-                            + "    <a href=\"ViewRoomDetail?id=" + room.getRoomId() + "\" style=\"text-decoration: none;\">\n"
-                            + "      <img src=\"" + room.getImageUrl() + "\" alt=\"\" />\n"
-                            + "      <div class=\"card-content\">\n"
-                            + "        <h2 class=\"room-title\">" + room.getRoomType() + "</h2>\n"
-                            + "        <p class=\"room-desc\">" + room.getDescription() + "</p>\n"
-                            + "        <div class=\"price\">" + room.getPrice() + " / Room</div>\n"
-                            + "        <button class=\"btn-book\" aria-label=\"\">Đặt Phòng</button>\n"
-                            + "      </div>\n"
-                            + "    </a>\n"
-                            + "  </article>");
+                        + "    <a href=\"ViewRoomDetail?id=" + room.getRoomId() + "\" style=\"text-decoration: none;\">\n"
+                        + "      <img src=\"" + room.getImageUrl() + "\" alt=\"\" />\n"
+                        + "      <div class=\"card-content\">\n"
+                        + "        <h2 class=\"room-title\">" + room.getRoomType() + "</h2>\n"
+                        + "        <p class=\"room-desc\">" + room.getDescription() + "</p>\n"
+                        + "        <div class=\"price\">" + room.getPrice() + " / Room</div>\n"
+                        + "        <button class=\"btn-book\" aria-label=\"\">View Details</button>\n"
+                        + "      </div>\n"
+                        + "    </a>\n"
+                        + "  </article>");
 
             }
             out.println("<div id='remaining-rooms' style='display:none;'>" + finalRooms + "</div>");

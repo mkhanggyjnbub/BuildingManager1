@@ -10,7 +10,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Tạo tin tức mới</title>
+    <title>Create New News</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -109,24 +109,24 @@
 </head>
 <body>
     <div class="container">
-        <h1>📝 Tạo Tin Tức Mới</h1>
+        <h1>📝 Create New News</h1>
         <form action="AddNewsDashboard" method="post">
-            <label for="title">Tiêu đề:</label>
+            <label for="title">Title:</label>
             <input type="text" id="title" name="title" required/>
 
-            <label for="summary">Tóm tắt:</label>
+            <label for="summary">Summary:</label>
             <input type="text" id="summary" name="summary" required/>
 
-            <label for="imageURL">Đường dẫn ảnh (Image URL):</label>
+            <label for="imageURL">Image URL:</label>
             <input type="text" id="imageURL" name="imageURL" required/>
 
-            <label for="content">Nội dung:</label>
+            <label for="content">Content:</label>
             <textarea id="content" name="content" rows="5" required></textarea>
 
-            <label>Xuất bản ngay:</label>
+            <label>Publish Now:</label>
             <div class="radio-group">
-                <label><input type="radio" name="isPublished" value="true" checked/> Có</label>
-                <label><input type="radio" name="isPublished" value="false"/> Không</label>
+                <label><input type="radio" name="isPublished" value="true" checked/> Yes</label>
+                <label><input type="radio" name="isPublished" value="false"/> No</label>
             </div>
 
             <label for="userId">User ID:</label>
@@ -135,7 +135,7 @@
             <label for="buildingID">Building ID:</label>
             <input type="number" id="buildingID" name="buildingID" required/>
 
-            <button type="submit">✅ Tạo Tin Tức</button>
+            <button type="submit">✅ Create News</button>
         </form>
     </div>
 </body>

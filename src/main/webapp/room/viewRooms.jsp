@@ -11,7 +11,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> 
-        <script src="../js/viewRooms.js"></script>
         <link rel="stylesheet" href="../css/viewRooms.css"/>
     </head>
     <body>
@@ -24,37 +23,37 @@
         <br>
         <div class="form-row">
             <div class="form-group">
-                <label for="location">Vị Trí­</label>
+                <label for="location">Location</label>
                 <select onchange="search()" id="location" name="location">
-                    <option value="">-- Chọn Vị Trí --</option>
+                    <option value="">-- Select Location --</option>
                     <option value="Cần Thơ">Cần Thơ</option>
                     <option value="Vũng Tàu">Vũng Tàu</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label for="checkin">Check-in</label>
+                <label for="checkIn">Check-in</label>
                 <input oninput="search()" type="date" id="checkIn" name="checkIn" >
             </div>
 
             <div class="form-group">
-                <label for="checkout">Check-out</label>
+                <label for="checkOut">Check-out</label>
                 <input oninput="search()" type="date" id="checkOut" name="checkOut" >
             </div>
 
             <div class="form-group">
-                <label for="adults">Người Lớn</label>
+                <label for="adults">Adults</label>
                 <input  oninput="search()" type="number" id="adults" name="adults" min="1" value="1">
             </div>
 
             <div class="form-group">
-                <label for="children">Trẻ Em</label>
+                <label for="children">Childrens</label>
                 <input  oninput="search()" type="number" id="children" name="children" min="0" value="0">
             </div>
 
         </div>
 
-        <h1>Các Phòng Khách Sạn Nổi Bật</h1>
+        <h1>Hotel Rooms</h1>
         <div class="product-grid" id="product" role="list">
             <c:forEach var="room" items="${list}">
                 <a href="ViewRoomDetail?id=${room.roomId}"  style="text-decoration: none;">
@@ -63,15 +62,18 @@
                         <div class="card-content">
                             <h2 class="room-title">${room.roomType}</h2>
                             <p class="room-desc">${room.description}</p>
-                            <div class="price">${room.price} / Room</div>
-                            <button class="btn-book" aria-label="">Đặt Phòng</button>
+                            <div class="price">${room.price} / Night</div>
+                            <button class="btn-book" aria-label="">View Details</button>
                         </div>
                     </article>
                 </a>
             </c:forEach>
         </div>
         <div>
-            <button id="loadmore-btn" onclick="loadMore()">Xem Thêm ${finalRooms} Phòng</button>
+            <button id="loadmore-btn" onclick="loadMore()">See More ${finalRooms} Rooms</button>
         </div>
+                <script src="../js/viewRooms.js"></script>
+
     </body>
+
 </html>

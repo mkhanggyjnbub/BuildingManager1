@@ -3,8 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controllers.Account;
+package controllers.services;
 
+import dao.ServicesDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,10 +16,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Kiều Hoàng Mạnh Khang - ce180749 
+ * @author dodan
  */
-@WebServlet(name="SignUp", urlPatterns={"/SignUp"})
-public class SignUp extends HttpServlet {
+@WebServlet(name="DeleteServiceDashboard", urlPatterns={"/DeleteServiceDashboard"})
+public class DeleteServiceDashboard extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,10 +36,10 @@ public class SignUp extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SignUp</title>");  
+            out.println("<title>Servlet DeleteServiceDashboard</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SignUp at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet DeleteServiceDashboard at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -55,7 +56,14 @@ public class SignUp extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-     request.getRequestDispatcher("Account/signUp.jsp").forward(request, response);
+        int id = Integer.parseInt(request.getParameter("id"));
+        ServicesDao dao = new ServicesDao();
+        int check = dao.deleteServiceByIdDashboard(id);
+        if (check != 0) {
+            response.sendRedirect("ViewServicesDashboard");
+        } else {
+            response.sendRedirect("Error");
+        }
     } 
 
     /** 
@@ -68,7 +76,7 @@ public class SignUp extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-     
+        processRequest(request, response);
     }
 
     /** 

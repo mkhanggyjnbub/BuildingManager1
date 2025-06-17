@@ -5,6 +5,8 @@
  */
 package dao;
 
+import com.nimbusds.jose.crypto.impl.AAD;
+
 import com.nimbusds.oauth2.sdk.Role;
 import com.nimbusds.openid.connect.sdk.assurance.claims.ISO3166_1Alpha2CountryCode;
 import db.ConnectData;
@@ -100,11 +102,21 @@ public class UserDao {
 
         ResultSet rs = null;
         try {
-            String sql = "select UserId, Username,Email,Rolename \n"
-                    + "FROM Users  inner join Roles on Users.RoleId = Roles.RoleId\n"
-                    + "WHERE   UserId  >1  \n"
-                    + "ORDER BY UserName  \n"
-                    + "OFFSET (? - 1)*10 ROWS FETCH NEXT 10 ROWS ONLY; ";
+            String sql = "	SELECT  \n"
+                    + "		u.UserId,\n"
+                    + "		UserName,\n"
+                    + "		Email,\n"
+                    + "		r.RoleName\n"
+                    + "	FROM    \n"
+                    + "		Users AS u\n"
+                    + "	INNER JOIN    \n"
+                    + "		Roles AS r ON u.RoleId = r.RoleId\n"
+                    + "	WHERE   \n"
+                    + "		u.UserId > 1\n"
+                    + "	ORDER BY \n"
+                    + "		u.UserName\n"
+                    + "	OFFSET (?- 1) * 10 ROWS\n"
+                    + "	FETCH NEXT 10 ROWS ONLY";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, page);
             rs = st.executeQuery();
@@ -112,7 +124,6 @@ public class UserDao {
                 Users user = new Users();
                 Roles role = new Roles();
                 user.setUserId(rs.getInt("UserId"));
-
                 user.setUserName(rs.getString("UserName"));
                 user.setEmail(rs.getString("email"));
                 role.setRoleName(rs.getString("RoleName"));
@@ -132,11 +143,17 @@ public class UserDao {
 
         ResultSet rs = null;
         try {
-            String sql = "select UserId, Username,Email,Rolename \n"
-                    + "FROM Users  inner join Roles on Users.RoleId = Roles.RoleId\n"
-                    + "WHERE   UserId  >1 and UserName LIKE ?  \n"
-                    + "ORDER BY UserName  \n"
-                    + "OFFSET (? - 1)*10 ROWS FETCH NEXT 10 ROWS ONLY; ";
+            String sql = "SELECT  u.UserId,\n"
+                    + "        u.UserName,\n"
+                    + "    Email,\n"
+                    + "        r.RoleName\n"
+                    + "FROM    Users      AS u\n"
+                    + "JOIN    Roles      AS r ON u.RoleId  = r.RoleId\n"
+                    + "WHERE   u.UserId  > 1\n"
+                    + "  AND   u.UserName LIKE ? \n"
+                    + "ORDER BY u.UserName\n"
+                    + "OFFSET  (? - 1) * 10 ROWS\n"
+                    + "FETCH NEXT 10 ROWS ONLY";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, "%" + name + "%");
             st.setInt(2, page);
@@ -163,11 +180,10 @@ public class UserDao {
         ResultSet rs = null;
         Users user = new Users();
         try {
-            String sql = "SELECT Username, FullName, Email,Phone, RoleName, StatusName, AvatarUrl "
-                    + "FROM Users "
-                    + "INNER JOIN Roles ON Users.RoleId = Roles.RoleId "
-                    + "INNER JOIN AccountStatus ON AccountStatus.StatusId = Users.StatusId "
-                    + "WHERE UserId = ?";
+            String sql = "SELECT Username, FullName, Email,Phone, RoleName, Status,AvatarUrl \n"
+                    + "                              FROM Users \n"
+                    + "                                INNER JOIN Roles ON Users.RoleId = Roles.RoleId \n"
+                    + "                               WHERE Users.UserId = ?";
 
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setInt(1, id);
@@ -178,8 +194,8 @@ public class UserDao {
                 user.setUserName(rs.getString("Username"));
                 user.setFullName(rs.getString("FullName"));
                 user.setEmail(rs.getString("Email"));
+                user.setStatus(rs.getString("Status"));
                 user.setPhone(rs.getString("Phone"));
-                user.setStatus(rs.getInt("StatusId"));
                 user.setRole(role);
                 user.setAvatarUrl(rs.getString("AvatarUrl"));
             }
@@ -194,10 +210,10 @@ public class UserDao {
         ResultSet rs = null;
         Users user = new Users();
         try {
-            String sql = "SELECT UserId, FullName, RoleName "
-                    + "FROM Users "
-                    + "INNER JOIN Roles ON Users.RoleId = Roles.RoleId "
-                    + "WHERE UserId = ?";
+            String sql = "SELECT Users.UserId, FullName, RoleName \n"
+                    + "                FROM Users \n"
+                    + "               INNER JOIN Roles ON Users.RoleId = Roles.RoleId \n"
+                    + "                WHERE Users.UserId = ?";
 
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setInt(1, id);
@@ -270,7 +286,7 @@ public class UserDao {
                 user.setEmail(rs.getString("Email"));
                 user.setPhone(rs.getString("Phone"));
                 user.setRole(roles);
-                user.setStatus(rs.getInt("StatusId"));
+                user.setStatus(rs.getString("Status"));
                 user.setAvatarUrl(rs.getString("AvatarUrl"));
                 listStaff.add(user);
             }

@@ -100,22 +100,68 @@
             display: flex;
         }
     }
+
+    /* Dropdown menu */
+    .dichvukhachhang {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .dichvukhachhang-name {
+        font-weight: bold;
+        color: #fff;
+        padding: 8px 12px;
+    }
+
+    .dichvukhachhang-content {
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        min-width: 220px;
+        box-shadow: 0px 8px 16px rgba(0,0,0,0.15);
+        z-index: 10;
+        right: 0;
+        border-radius: 6px;
+        padding: 8px 0;
+    }
+
+    .dichvukhachhang-content a {
+        color: #333;
+        padding: 10px 16px;
+        text-decoration: none;
+        display: block;
+        font-size: 14px;
+    }
+
+    .dichvukhachhang-content a:hover {
+        background-color: #f7f7f7;
+    }
+
+    .dichvukhachhang:hover .dichvukhachhang-content {
+        display: block;
+    }
+
 </style>
 
 <header>
     <div class="logo">HotelManager</div>
     <nav id="nav-menu">
-        <a href="Index">Trang chủ</a>
-        <a href="ViewRooms">Phòng</a>
-        <a href="#">Liên hệ</a>
+        <a href="Index">Home</a>
+        <a href="ViewRooms">Rooms</a>
+        <!--<a href="#">Liên hệ</a>
         <a href="UpImage">Up ảnh</a>
         <a href="Notification">Notification</a>
         <a href="TakeNotification">Nhận Notification</a>
+        -->       
         <a href="ViewVouchers">voucher</a>
+        <a href="UserVouchers">User voucher</a>
         <a href="ViewNews">News</a>
+        <a href="ViewServices">Services</a>
+
         <c:choose>
             <c:when test="${empty accountType}">
-                <a href="Login">Đăng nhập</a>
+                <a href="Login">Login</a>
             </c:when>
             <c:when test="${accountType eq 'option1'}">
                 <c:choose>

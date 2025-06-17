@@ -19,7 +19,6 @@ public class Users {
     private Date lastLogin;
     private Roles role;
     private int roleId;
-    private int status;
     private LocalDateTime CreationDate;
     private String avatarUrl;
     private String fullName;
@@ -30,6 +29,7 @@ public class Users {
     private String address;
     private String idenityNumber;
     private Employees employees;
+    private String status;
 
     public Users() {
     }
@@ -40,6 +40,30 @@ public class Users {
 
     public void setEmployees(Employees employees) {
         this.employees = employees;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getUserId() {
@@ -90,11 +114,11 @@ public class Users {
         this.roleId = roleId;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -114,14 +138,6 @@ public class Users {
         this.CreationDate = CreationDate;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
     public String getGender() {
         return gender;
     }
@@ -136,22 +152,6 @@ public class Users {
 
     public void setDayOfBirth(Date dayOfBirth) {
         this.dayOfBirth = dayOfBirth;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getAddress() {
