@@ -5,7 +5,6 @@
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@page import="dao.PaginationDao"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -158,6 +157,7 @@
         <a href="ViewNewsDashboard">NewsDb</a>
 
 
+
         <!-- Navbar -->
         <div class="navbar">
             <h1>Admin Dashboard</h1>
@@ -175,6 +175,8 @@
                 <li><a href="VouchersDashBoard"><i class="fa-solid fa-ticket"></i><span>Vouchers</span></a></li>
                 <li><a href="ViewNewsDashboard"><i class="fa-solid fa-newspaper"></i><span>News</span></a></li>
                 <li><a href="Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
+                <li>         <a href="ViewServicesDashboard">Services</a>
+  </li>
                 <li>         <a href="BookingConfirmation">List Bookings</a>
                 </li>
                 <li>         <a href="ViewAmenitiesDashboard">List Amenities</a>

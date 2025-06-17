@@ -150,7 +150,6 @@ public class NewsDao {
 
         try {
             String sql = "UPDATE News SET title=?, summary=?, imageURL=?, isPublished=?, userId=?, buildingID=?, content=? WHERE newsID=?";
-            Connection conn = db.ConnectData.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
 
             ps.setString(1, newInfo.getTitle());

@@ -100,6 +100,7 @@
             display: flex;
         }
     }
+
     /* Dropdown menu */
     .dichvukhachhang {
         position: relative;
@@ -140,6 +141,7 @@
     .dichvukhachhang:hover .dichvukhachhang-content {
         display: block;
     }
+
 </style>
 
 <header>
@@ -147,6 +149,15 @@
     <nav id="nav-menu">
         <a href="Index">Home</a>
         <a href="ViewRooms">Rooms</a>
+        <!--<a href="#">Liên hệ</a>
+        <a href="UpImage">Up ảnh</a>
+        <a href="Notification">Notification</a>
+        <a href="TakeNotification">Nhận Notification</a>
+        -->       
+        <a href="ViewVouchers">voucher</a>
+        <a href="UserVouchers">User voucher</a>
+        <a href="ViewNews">News</a>
+        <a href="ViewServices">Services</a>
         <!--                <a href="#">Liên hệ</a>
                         <a href="UpImage">Up ảnh</a>
                         <a href="Notification">Notification</a>

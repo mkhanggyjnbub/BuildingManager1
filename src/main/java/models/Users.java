@@ -16,18 +16,30 @@ public class Users {
     private int userId;
     private String userName;
     private String password;
-    private String avatarUrl;
     private Date lastLogin;
-    private int roleId;
-    private String status;
     private Roles role;
+    private int roleId;
     private LocalDateTime CreationDate;
-    private String email;
+    private String avatarUrl;
     private String fullName;
+    private String gender;
+    private Date dayOfBirth;
     private String phone;
-    
+    private String email;
+    private String address;
+    private String idenityNumber;
+    private Employees employees;
+    private String status;
 
     public Users() {
+    }
+
+    public Employees getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(Employees employees) {
+        this.employees = employees;
     }
 
     public String getFullName() {
@@ -53,10 +65,6 @@ public class Users {
     public void setEmail(String email) {
         this.email = email;
     }
-
- 
-
-    
 
     public int getUserId() {
         return userId;
@@ -114,8 +122,6 @@ public class Users {
         this.status = status;
     }
 
-  
-
     public Roles getRole() {
         return role;
     }
@@ -132,9 +138,35 @@ public class Users {
         this.CreationDate = CreationDate;
     }
 
- 
-  
-   
-    
+    public String getGender() {
+        return gender;
+    }
 
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public Date getDayOfBirth() {
+        return dayOfBirth;
+    }
+
+    public void setDayOfBirth(Date dayOfBirth) {
+        this.dayOfBirth = dayOfBirth;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getIdenityNumber() {
+        return idenityNumber;
+    }
+
+    public void setIdenityNumber(String idenityNumber) {
+        this.idenityNumber = idenityNumber;
+    }
 }

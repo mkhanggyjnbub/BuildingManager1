@@ -1,5 +1,8 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
 D:\fouderPrj\BuildingWeb\src\main\java\models\CustomerStatus.java
+>>>>>>> 020fa5400cd8bd4f1e04b12fde41e098b92079ea
 =======
 <<<<<<< HEAD
 D:\up\BuildingManager1\src\main\java\controllers\account\SignUp.java
@@ -210,10 +213,11 @@ D:\SWP_Project\BuildingManager1-main\src\main\java\models\Vouchers.java
 <<<<<<< HEAD
 =======
 =======
+>>>>>>> 1f31b8a5db73165c3897f264b0f7867d2d13dc93
 F:\SWP\BuildingManager1\src\main\java\models\CustomerStatus.java
 F:\SWP\BuildingManager1\src\main\java\models\Equipment.java
 F:\SWP\BuildingManager1\src\main\java\controllers\voucher\AddVoucher.java
-F:\SWP\BuildingManager1\src\main\java\controllers\Account\Login.java
+F:\SWP\BuildingManager1\src\main\java\controllers\account\Login.java
 F:\SWP\BuildingManager1\src\main\java\dao\EquipmentDao.java
 F:\SWP\BuildingManager1\src\main\java\db\ConnectData.java
 F:\SWP\BuildingManager1\src\main\java\models\Floors.java
@@ -222,6 +226,7 @@ F:\SWP\BuildingManager1\src\main\java\Websocket\TakeNotification.java
 F:\SWP\BuildingManager1\src\main\java\controllers\voucher\AdminViewVoucher.java
 F:\SWP\BuildingManager1\src\main\java\controllers\voucher\VouchersDashBoard.java
 F:\SWP\BuildingManager1\src\main\java\controllers\admin\Admin.java
+F:\SWP\BuildingManager1\src\main\java\controllers\services\AddServiceDashboard.java
 F:\SWP\BuildingManager1\src\main\java\controllers\customer\EditCustomerProfile.java
 F:\SWP\BuildingManager1\src\main\java\controllers\voucher\ViewVouchers.java
 F:\SWP\BuildingManager1\src\main\java\controllers\asset\Assets.java
@@ -231,15 +236,19 @@ F:\SWP\BuildingManager1\src\main\java\models\RoomReviews.java
 F:\SWP\BuildingManager1\src\main\java\dao\PaginationDao.java
 F:\SWP\BuildingManager1\src\main\java\models\Amenities.java
 F:\SWP\BuildingManager1\src\main\java\controllers\news\ViewNewsDashboard.java
+F:\SWP\BuildingManager1\src\main\java\db\SendOTPEmail.java
+F:\SWP\BuildingManager1\src\main\java\dao\ServicesDao.java
+F:\SWP\BuildingManager1\src\main\java\controllers\booking\ConfirmBooking.java
 F:\SWP\BuildingManager1\src\main\java\dao\RoomDao.java
 F:\SWP\BuildingManager1\src\main\java\models\Customers.java
 F:\SWP\BuildingManager1\src\main\java\dao\NewsDao.java
 F:\SWP\BuildingManager1\src\main\java\models\Buildings.java
+F:\SWP\BuildingManager1\src\main\java\controllers\voucher\UserVouchers.java
 F:\SWP\BuildingManager1\src\main\java\models\RoomEquipment.java
 F:\SWP\BuildingManager1\src\main\java\Websocket\HttpSessionConfigurator.java
 F:\SWP\BuildingManager1\src\main\java\models\Users.java
 F:\SWP\BuildingManager1\src\main\java\controllers\news\AddNewsDashboard.java
-F:\SWP\BuildingManager1\src\main\java\models\string.java
+F:\SWP\BuildingManager1\src\main\java\controllers\services\ViewServiceDetailDashboard.java
 F:\SWP\BuildingManager1\src\main\java\controllers\admin\DashboardUser.java
 F:\SWP\BuildingManager1\src\main\java\models\Vouchers.java
 F:\SWP\BuildingManager1\src\main\java\dao\UserDao.java
@@ -252,21 +261,26 @@ F:\SWP\BuildingManager1\src\main\java\controllers\Index.java
 F:\SWP\BuildingManager1\src\main\java\controllers\news\ViewNewsDetail.java
 F:\SWP\BuildingManager1\src\main\java\controllers\asset\AssetModel.java
 F:\SWP\BuildingManager1\src\main\java\controllers\customer\ViewCustomerProfile.java
+F:\SWP\BuildingManager1\src\main\java\controllers\services\ViewServicesDashboard.java
 F:\SWP\BuildingManager1\src\main\java\models\Employees.java
 F:\SWP\BuildingManager1\src\main\java\controllers\news\ViewNews.java
 F:\SWP\BuildingManager1\src\main\java\dao\VoucherDAO.java
+F:\SWP\BuildingManager1\src\main\java\models\Services.java
 F:\SWP\BuildingManager1\src\main\java\Websocket\Notification.java
 F:\SWP\BuildingManager1\src\main\java\models\Bookings.java
 F:\SWP\BuildingManager1\src\main\java\models\Roles.java
-F:\SWP\BuildingManager1\src\main\java\controllers\Account\SignUp.java
+F:\SWP\BuildingManager1\src\main\java\controllers\account\SignUp.java
 F:\SWP\BuildingManager1\src\main\java\controllers\admin\Decentralization.java
 F:\SWP\BuildingManager1\src\main\java\dao\RoomReviewDao.java
+F:\SWP\BuildingManager1\src\main\java\controllers\account\Logout.java
 F:\SWP\BuildingManager1\src\main\java\controllers\voucher\DeleteVoucher.java
 F:\SWP\BuildingManager1\src\main\java\controllers\voucher\EditVoucher.java
 F:\SWP\BuildingManager1\src\main\java\controllers\room\ViewRooms.java
 F:\SWP\BuildingManager1\src\main\java\dao\CustomerDao.java
 F:\SWP\BuildingManager1\src\main\java\models\MaintenanceStatuses.java
 F:\SWP\BuildingManager1\src\main\java\Websocket\WebSocket.java
+<<<<<<< HEAD
+=======
 >>>>>>> 80dbcb19c95f6c3e5f8ade6dd3d12fdfb114e247
 <<<<<<< HEAD
 =======

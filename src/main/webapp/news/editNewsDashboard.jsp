@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Cập nhật tin tức</title>
+        <title>Update News</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -78,25 +78,25 @@
     </head>
     <body>
         <div class="container">
-            <h1>Cập Nhật Tin Tức</h1>
+            <h1>Update News</h1>
             <form action="${pageContext.request.contextPath}/EditNewsDashboard" method="post">
                 <input type="hidden" name="newsID" value="${news.newsID}" />
 
-                <label>Tiêu đề:</label>
+                <label>Title:</label>
                 <input type="text" name="title" value="${news.title}" required />
 
-                <label>Tóm tắt:</label>
+                <label>Summary:</label>
                 <input type="text" name="summary" value="${news.summary}" required />
 
-                <label>Đường dẫn ảnh (Image URL):</label>
+                <label>Image URL:</label>
                 <input type="text" name="imageURL" value="${news.imageURL}" required />
 
-                <label>Nội dung:</label>
+                <label>Content:</label>
                 <textarea name="content" rows="5" required>${news.content}</textarea>
 
-                <label>Xuất bản:</label>
+                <label>Publish:</label>
                 <div class="checkbox-group">
-                    <input type="checkbox" name="isPublished" value="true" ${news.isPublished ? 'checked' : ''} /> Có
+                    <input type="checkbox" name="isPublished" value="true" ${news.isPublished ? 'checked' : ''} /> Yes
                 </div>
 
                 <label>User ID:</label>
@@ -105,10 +105,10 @@
                 <label>Building ID:</label>
                 <input type="number" name="buildingID" value="${news.buildingID}" required />
 
-                <label>Lượt xem:</label>
+                <label>Viewcount:</label>
                 <input type="number" name="viewcount" value="${news.viewcount}" readonly />
 
-                <button type="submit">Cập nhật</button>
+                <button type="submit">Update</button>
             </form>
         </div>
     </body>

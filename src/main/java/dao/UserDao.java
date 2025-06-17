@@ -6,9 +6,9 @@
 package dao;
 
 import com.nimbusds.jose.crypto.impl.AAD;
+
 import com.nimbusds.oauth2.sdk.Role;
 import com.nimbusds.openid.connect.sdk.assurance.claims.ISO3166_1Alpha2CountryCode;
-
 import db.ConnectData;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.spi.DirStateFactory;
-import models.Customers;
-import models.Employees;
 import models.Roles;
 import models.Users;
 
@@ -62,7 +60,7 @@ public class UserDao {
         }
     }
 
-    public int loginAdminForId(Users acc) {
+    public int loginForId(Users acc) {
         try {
             String sql = "Select * from Users where UserName=? and Password=?";
             PreparedStatement pst = conn.prepareStatement(sql);
@@ -77,7 +75,7 @@ public class UserDao {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, "Lỗi truy vấn đăng nhập", ex);
         }
 
-        return 0;
+        return -1;
 
     }
 
@@ -125,7 +123,6 @@ public class UserDao {
             while (rs.next()) {
                 Users user = new Users();
                 Roles role = new Roles();
-                Employees employees = new Employees();
                 user.setUserId(rs.getInt("UserId"));
                 user.setUserName(rs.getString("UserName"));
                 user.setEmail(rs.getString("email"));
@@ -193,7 +190,6 @@ public class UserDao {
             rs = pst.executeQuery();
             if (rs.next()) {
                 Roles role = new Roles();
-
                 role.setRoleName(rs.getString("RoleName"));
                 user.setUserName(rs.getString("Username"));
                 user.setFullName(rs.getString("FullName"));
@@ -209,7 +205,8 @@ public class UserDao {
         return user;
     }
 
-    public Users getRoleUserById(int id) {
+    
+     public Users getRoleUserById(int id) {
         ResultSet rs = null;
         Users user = new Users();
         try {
@@ -223,11 +220,11 @@ public class UserDao {
             rs = pst.executeQuery();
             if (rs.next()) {
                 Roles role = new Roles();
-                Employees employees = new Employees();
                 role.setRoleName(rs.getString("RoleName"));
                 user.setFullName(rs.getString("FullName"));
                 user.setUserId(rs.getInt("UserId"));
                 user.setRole(role);
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -244,11 +241,60 @@ public class UserDao {
             pst.setInt(1, RoleId);
             pst.setInt(2, UserId);
             cnt = pst.executeUpdate();
-
         } catch (SQLException ex) {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return cnt;
     }
 
+
+    public int UpdateInfomationById(int id, Users user) {
+        int cnt = 0;
+        try {
+            String sql = "Update Users set Phone=?, FullName=? where UserId=?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, user.getPhone());
+            pst.setString(2, user.getFullName());
+            pst.setInt(3, id);
+            cnt = pst.executeUpdate();
+        } catch (Exception e) {
+        }
+        return cnt;
+    }
+
+    public List<Users> GetAllStaff() {
+        List<Users> listStaff = new ArrayList<>();
+        String sql = "SELECT Username, FullName, Email, Phone, RoleName, StatusName, AvatarUrl "
+                + "FROM Users "
+                + "INNER JOIN Roles ON Users.RoleId = Roles.RoleId "
+                + "INNER JOIN AccountStatus ON AccountStatus.StatusId = Users.StatusId "
+                + "WHERE RoleName IN (?, ?, ?)";
+
+        try ( Connection conn = db.ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, "Quản lý");
+            ps.setString(2, "Lễ tân");
+            ps.setString(3, "Nhân viên");
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Users user = new Users();
+                Roles roles = new Roles();
+                roles.setRoleName(rs.getString("RoleName"));
+                user.setUserName(rs.getString("UserName"));
+                user.setFullName(rs.getString("FullName"));
+                user.setEmail(rs.getString("Email"));
+                user.setPhone(rs.getString("Phone"));
+                user.setRole(roles);
+                user.setStatus(rs.getString("Status"));
+                user.setAvatarUrl(rs.getString("AvatarUrl"));
+                listStaff.add(user);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return listStaff;
+    }
 }

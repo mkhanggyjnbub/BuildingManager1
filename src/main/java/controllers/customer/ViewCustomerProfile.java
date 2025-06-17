@@ -63,7 +63,6 @@ public class ViewCustomerProfile extends HttpServlet {
         Customers cus = new Customers();
         CustomerDao dao = new CustomerDao();
         cus = dao.getCustomerById(id);
-        System.out.println(cus.getFullName());
         request.setAttribute("userProfile", cus);
         request.setAttribute("customerId", id);
         request.getRequestDispatcher("customer/viewCustomerProfile.jsp").forward(request, response);
