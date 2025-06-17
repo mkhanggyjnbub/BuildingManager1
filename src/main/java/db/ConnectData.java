@@ -1,4 +1,5 @@
 /*
+package db;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -22,6 +23,7 @@ public class ConnectData {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             String url = "jdbc:sqlserver://MEONGUYENTU;databaseName=building_management27;user=sa;password=1234567890;encrypt=true;trustServerCertificate=true;";
+
             conn = DriverManager.getConnection(url);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ConnectData.class.getName()).log(Level.SEVERE, null, ex);

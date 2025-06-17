@@ -14,6 +14,7 @@ public class Rooms {
     private int floorId;
     private String roomNumber;
     private String roomType;
+     private String bedType;
     private String description;
     private long price;
     private long quantity;
@@ -117,6 +118,14 @@ public class Rooms {
 
     public void setMaxOccupancy(int maxOccupancy) {
         this.maxOccupancy = maxOccupancy;
+    }
+
+    public String getBedType() {
+        return bedType;
+    }
+
+    public void setBedType(String bedType) {
+        this.bedType = bedType;
     }
 
 }

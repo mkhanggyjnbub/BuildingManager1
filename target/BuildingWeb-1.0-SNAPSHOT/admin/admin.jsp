@@ -23,6 +23,8 @@
         <a href="BookingConfirmation">List Bookings</a>
         
 
+        <a href="ViewAllCustomersDashboard">ViewCustomers</a>
+        
 
 
     </body>

@@ -308,6 +308,28 @@ public class RoomDao {
             stmt.setInt(1, roomId);
             stmt.executeUpdate();
         }
-    }
 
+        }
+        public Rooms getInformationRoomBooking(int id) {
+        ResultSet rs = null;
+        Rooms room = new Rooms();
+        try {
+            String sql = "select RoomId,RoomNumber,RoomType,Price,ImageUrl,BedType from Rooms where RoomId=?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, id);
+            rs = st.executeQuery();
+            if (rs.next()) {
+                room.setRoomId(rs.getInt("RoomId"));
+                room.setRoomNumber(rs.getString("RoomNumber"));
+                room.setRoomType(rs.getString("RoomType"));
+                room.setPrice(rs.getInt("Price"));
+                room.setImageUrl(rs.getString("ImageUrl"));
+                room.setBedType(rs.getString("BedType"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomDao.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        return room;
+    }
 }
