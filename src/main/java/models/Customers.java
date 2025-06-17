@@ -15,22 +15,22 @@ import java.time.LocalDateTime;
 public class Customers {
 
     private int customerId;
-    private String  userName;
-    private String  password;
-    private String  fullName;
-    private String  phone;
-    private String  email;
-    private String  address;
-    private String  gender;
-    private Date  dateOfBirth;
-    private int  statusId;
-    private String  avatarUrl;
-    private LocalDateTime  creationDate;
-    private LocalDateTime  lastLogin;
+    private String userName;
+    private String password;
+    private String fullName;
+    private String phone;
+    private String email;
+    private String address;
+    private String gender;
+    private Date dateOfBirth;
+    private int statusId;
+    private String avatarUrl;
+    private LocalDateTime creationDate;
+    private LocalDateTime lastLogin;
+    private LocalDateTime currenrLastLogin;
 
     public Customers() {
     }
-
 
     public int getCustomerId() {
         return customerId;
@@ -136,5 +136,12 @@ public class Customers {
         this.lastLogin = lastLogin;
     }
 
+    public LocalDateTime getCurrenrLastLogin() {
+        return currenrLastLogin;
+    }
+
+    public void setCurrenrLastLogin(LocalDateTime currenrLastLogin) {
+        this.currenrLastLogin = currenrLastLogin;
+    }
 
 }

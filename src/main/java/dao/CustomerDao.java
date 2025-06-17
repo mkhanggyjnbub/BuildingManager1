@@ -51,9 +51,8 @@ public class CustomerDao {
 
     public Customers getCustomerById(int id) {
         Customers customer = null;
-        String sql = "SELECT UserName, FullName, Email, Phone, StatusName, AvatarUrl, Address, Gender, DateOfBirth \n"
-                + "FROM Customers c \n"
-                + "INNER JOIN CustomerStatus cs ON c.StatusId = cs.StatusId \n"
+        String sql = "SELECT UserName, FullName, Email, Phone, Status, AvatarUrl, Address, Gender, DateOfBirth, LastLogin\n"
+                + "FROM Customers\n"
                 + "WHERE CustomerID = ?";
 
         try ( PreparedStatement pst = conn.prepareStatement(sql)) {
@@ -65,17 +64,24 @@ public class CustomerDao {
                     customer.setFullName(rs.getString("FullName"));
                     customer.setEmail(rs.getString("Email"));
                     customer.setPhone(rs.getString("Phone"));
+                    customer.setStatusId(rs.getInt("Status"));
                     customer.setAvatarUrl(rs.getString("AvatarUrl"));
                     customer.setAddress(rs.getString("Address")); // có thể là null
                     customer.setGender(rs.getString("Gender")); // có thể là null
                     customer.setDateOfBirth(rs.getDate("DateOfBirth")); // có thể là null (java.sql.Date)
-
+                    Timestamp ts = rs.getTimestamp("LastLogin");
+                    if (ts != null) {
+                        customer.setLastLogin(ts.toLocalDateTime());
+                    } else {
+                        customer.setLastLogin(null);
+                    }
+                    return customer;
                 }
             }
         } catch (SQLException ex) {
             Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return customer;
+        return null;
     }
 
     public int updateCustomerProfileById(int id, Customers customer) {
@@ -94,7 +100,7 @@ public class CustomerDao {
         }
         return cmt;
     }
-    
+
     public void updateLoginTimestamps(int customerId) {
         String sql = "UPDATE Customers SET LastLogin = CurrentLastLogin, CurrentLastLogin = ? WHERE CustomerId = ?";
 

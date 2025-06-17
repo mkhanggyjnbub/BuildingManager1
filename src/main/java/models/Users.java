@@ -16,19 +16,23 @@ public class Users {
     private int userId;
     private String userName;
     private String password;
-    private String avatarUrl;
     private Date lastLogin;
+    private Roles role;
     private int roleId;
     private int status;
-    private Roles role;
     private LocalDateTime CreationDate;
+    private String avatarUrl;
+    private String fullName;
+    private String gender;
+    private Date dayOfBirth;
+    private String phone;
+    private String email;
+    private String address;
+    private String idenityNumber;
     private Employees employees;
-    
 
     public Users() {
     }
-
- 
 
     public Employees getEmployees() {
         return employees;
@@ -37,8 +41,6 @@ public class Users {
     public void setEmployees(Employees employees) {
         this.employees = employees;
     }
-
-    
 
     public int getUserId() {
         return userId;
@@ -112,9 +114,59 @@ public class Users {
         this.CreationDate = CreationDate;
     }
 
- 
-  
-   
-    
+    public String getFullName() {
+        return fullName;
+    }
 
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public Date getDayOfBirth() {
+        return dayOfBirth;
+    }
+
+    public void setDayOfBirth(Date dayOfBirth) {
+        this.dayOfBirth = dayOfBirth;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getIdenityNumber() {
+        return idenityNumber;
+    }
+
+    public void setIdenityNumber(String idenityNumber) {
+        this.idenityNumber = idenityNumber;
+    }
 }

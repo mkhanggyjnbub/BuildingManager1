@@ -94,7 +94,7 @@ public class Login extends HttpServlet {
                 Users user = new Users();
                 user.setUserName(userName);
                 user.setPassword(passWord);
-                checkLoginUser = userDao.loginAdminForId(user);
+                checkLoginUser = userDao.loginForId(user);
                 if (checkLoginUser != 0) {
                     String userId = checkLoginUser + "";
 
