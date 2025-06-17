@@ -6,42 +6,38 @@ package models;
 
 /**
  *
- * @author Kiều Hoàng Mạnh Khang - ce180749
+ * @author KHANH
  */
 public class Amenities {
-    private int amenityId;
-    private String name;
-    private String description;
+     private int AmenityId;
+     private String Name;
+     private String Description;
 
     public Amenities() {
     }
-  
 
     public int getAmenityId() {
-        return amenityId;
+        return AmenityId;
     }
 
-    public void setAmenityId(int amenityId) {
-        this.amenityId = amenityId;
+    public void setAmenityId(int AmenityId) {
+        this.AmenityId = AmenityId;
     }
 
     public String getName() {
-        return name;
+        return Name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String Name) {
+        this.Name = Name;
     }
 
     public String getDescription() {
-        return description;
+        return Description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescription(String Description) {
+        this.Description = Description;
     }
-
-
-    
-    
+     
 }
