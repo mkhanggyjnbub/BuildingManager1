@@ -1,6 +1,7 @@
 controllers\asset\AssetModel.class
 models\Roles.class
 <<<<<<< HEAD
+<<<<<<< HEAD
 controllers\voucher\UserVouchers.class
 controllers\room\ViewRooms.class
 db\ConnectData.class
@@ -14,11 +15,19 @@ controllers\admin\Decentralization.class
 controllers\customer\EditCustomerProfile.class
 models\MaintenanceStatuses.class
 controllers\news\ViewNewsDashboard.class
+=======
+controllers\amenities\ViewAmenitiesDashboard.class
+dao\UserDao.class
+controllers\admin\Decentralization.class
+controllers\amenities\EditAmenitiesDashboard.class
+models\MaintenanceStatuses.class
+>>>>>>> khoi_phuc_code_tu_223a00c
 Websocket\TakeNotification.class
 controllers\voucher\VouchersDashBoard.class
 dao\CustomerDao.class
 controllers\voucher\EditVoucher.class
 controllers\Account\SignUp.class
+<<<<<<< HEAD
 <<<<<<< HEAD
 dao\RoomReviewDao.class
 dao\EquipmentDao.class
@@ -26,6 +35,12 @@ dao\EquipmentDao.class
 dao\NewsDao.class
 dao\RoomReviewDao.class
 dao\EquipmentDao.class
+=======
+dao\RoomReviewDao.class
+dao\EquipmentDao.class
+controllers\amenities\AddAmenitiesDashboard.class
+dao\CustomerVoucherDao.class
+>>>>>>> khoi_phuc_code_tu_223a00c
 models\Bookings.class
 models\Employees.class
 models\CustomerStatus.class
@@ -34,9 +49,14 @@ models\RoomReviews.class
 models\string.class
 controllers\asset\Assets.class
 models\Rooms.class
+<<<<<<< HEAD
 controllers\news\ViewNews.class
 controllers\room\ViewRooms.class
 models\News.class
+=======
+dao\AmenitiesDao.class
+controllers\room\ViewRooms.class
+>>>>>>> khoi_phuc_code_tu_223a00c
 db\ConnectData.class
 controllers\Index.class
 controllers\UpImage.class
@@ -44,16 +64,23 @@ dao\RoomDao.class
 models\Equipment.class
 dao\PaginationDao.class
 controllers\voucher\AdminViewVoucher.class
+<<<<<<< HEAD
 controllers\news\EditNewsDashboard.class
+=======
+>>>>>>> khoi_phuc_code_tu_223a00c
 controllers\admin\Admin.class
 models\Users.class
 controllers\Account\Login.class
 models\MaintenanceSchedule.class
 dao\VoucherDAO.class
+<<<<<<< HEAD
 controllers\customer\ViewCustomerProfile.class
 controllers\news\AddNewsDashboard.class
 controllers\news\ViewNewsDetail.class
 >>>>>>> 80dbcb19c95f6c3e5f8ade6dd3d12fdfb114e247
+=======
+controllers\amenities\DeleteAmenitiesDashboard.class
+>>>>>>> khoi_phuc_code_tu_223a00c
 models\Floors.class
 controllers\admin\DashboardUser.class
 controllers\admin\AdminView.class
@@ -64,5 +91,8 @@ controllers\voucher\AddVoucher.class
 controllers\voucher\DeleteVoucher.class
 models\RoomEquipment.class
 controllers\room\ViewRoomDetail.class
+<<<<<<< HEAD
 controllers\news\DeleteNewsDashboard.class
+=======
+>>>>>>> khoi_phuc_code_tu_223a00c
 models\Amenities.class

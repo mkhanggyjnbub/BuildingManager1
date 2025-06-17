@@ -114,6 +114,8 @@
         <a href="ViewVouchers">voucher</a>
         <a href="UserVouchers">User voucher</a>
         <a href="ViewNews">News</a>
+        <a href="ViewAmenitiesDashboard">Xem danh sách tiện ích</a>
+        
         <c:choose>
             <c:when test="${empty accountType}">
                 <a href="Login">Đăng nhập</a>
@@ -136,9 +138,14 @@
                     <c:when test="${role == 5}">
                         <a href="?id=${equipmentId}">${userName}</a>
                     </c:when>
-                </c:choose>
+                    <c:when test="${role == 6}">
+                        <a href="?id=${cusstomerId}">${userName}</a>
+                        </c:when>
+                </c:choose> 
+                        
             </c:when>
             <c:otherwise>
+<<<<<<< HEAD
                 <div class="dichvukhachhang">
                     <div class="dichvukhachhang-name">${userName}</div>
                     <div class="dichvukhachhang-content">
@@ -150,9 +157,14 @@
                         <a href="Logout">🔹 Đăng xuất</a>
                     </div>
                 </div>
+=======
+                
+>>>>>>> khoi_phuc_code_tu_223a00c
             </c:otherwise>
 
         </c:choose>
+                
+                
     </nav>
     <button id="menu-toggle">☰</button>
 </header>
