@@ -24,7 +24,6 @@ public class Customers {
     private String address;
     private String gender;
     private Date dateOfBirth;
-    private int statusId;
     private String avatarUrl;
     private LocalDateTime creationDate;
     private LocalDateTime lastLogin;
@@ -34,12 +33,11 @@ public class Customers {
     }
 
     private String status;
- 
+
     private String identityNumber;
     private Date joinDate;
 
     // Getter and Setter
-
     public int getCustomerId() {
         return customerId;
     }
@@ -128,8 +126,6 @@ public class Customers {
         this.avatarUrl = avatarUrl;
     }
 
-
-
     public LocalDateTime getCurrenrLastLogin() {
         return currenrLastLogin;
     }
@@ -137,6 +133,7 @@ public class Customers {
     public void setCurrenrLastLogin(LocalDateTime currenrLastLogin) {
         this.currenrLastLogin = currenrLastLogin;
     }
+
     public String getIdentityNumber() {
         return identityNumber;
     }
@@ -152,4 +149,21 @@ public class Customers {
     public void setJoinDate(Date joinDate) {
         this.joinDate = joinDate;
     }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public LocalDateTime getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(LocalDateTime lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
 }

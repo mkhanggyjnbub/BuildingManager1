@@ -66,7 +66,7 @@ public class CustomerDao {
                     customer.setFullName(rs.getString("FullName"));
                     customer.setEmail(rs.getString("Email"));
                     customer.setPhone(rs.getString("Phone"));
-                    customer.setStatusId(rs.getInt("Status"));
+                    customer.setStatus(rs.getString("Status"));
                     customer.setAvatarUrl(rs.getString("AvatarUrl"));
                     customer.setAddress(rs.getString("Address")); // có thể là null
                     customer.setGender(rs.getString("Gender")); // có thể là null
@@ -135,8 +135,8 @@ public class CustomerDao {
                 customer.setDateOfBirth(rs.getDate("DateOfBirth"));
                 customer.setStatus(rs.getString("Status"));
                 customer.setAvatarUrl(rs.getString("AvatarUrl"));
-                customer.setCreationDate(rs.getTimestamp("CreationDate"));
-                customer.setLastLogin(rs.getTimestamp("LastLogin"));
+                customer.setCreationDate(rs.getTimestamp("CreationDate").toLocalDateTime());
+                customer.setLastLogin(rs.getTimestamp("LastLogin").toLocalDateTime());
                 customer.setIdentityNumber(rs.getString("IdentityNumber"));
                 customer.setJoinDate(rs.getDate("JoinDate"));
 
@@ -168,8 +168,8 @@ public class CustomerDao {
                 c.setDateOfBirth(rs.getDate("DateOfBirth"));
                 c.setStatus(rs.getString("Status"));
                 c.setAvatarUrl(rs.getString("AvatarUrl"));
-                c.setCreationDate(rs.getTimestamp("CreationDate"));
-                c.setLastLogin(rs.getTimestamp("LastLogin"));
+                c.setCreationDate(rs.getTimestamp("CreationDate").toLocalDateTime());
+                c.setLastLogin(rs.getTimestamp("LastLogin").toLocalDateTime());
                 c.setIdentityNumber(rs.getString("IdentityNumber"));
                 c.setJoinDate(rs.getDate("JoinDate"));
 
@@ -198,8 +198,8 @@ public class CustomerDao {
                     c.setDateOfBirth(rs.getDate("DateOfBirth"));
                     c.setStatus(rs.getString("Status"));
                     c.setAvatarUrl(rs.getString("AvatarUrl"));
-                    c.setCreationDate(rs.getTimestamp("CreationDate"));
-                    c.setLastLogin(rs.getTimestamp("LastLogin"));
+                    c.setCreationDate(rs.getTimestamp("CreationDate").toLocalDateTime());
+                    c.setLastLogin(rs.getTimestamp("LastLogin").toLocalDateTime());
                     c.setIdentityNumber(rs.getString("IdentityNumber"));
                     c.setJoinDate(rs.getDate("JoinDate"));
                 }
@@ -209,21 +209,21 @@ public class CustomerDao {
     }
 
     // Cập nhật thông tin khách hàng
-   public int updateCustomer(Customers customer) throws SQLException {
-    String sql = "UPDATE Customers SET UserName=?, FullName=?, Email=?, Phone=?, Address=?, Gender=?, Status=?, IdentityNumber=? WHERE CustomerId=?";
-    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-        stmt.setString(1, customer.getUserName());
-        stmt.setString(2, customer.getFullName());
-        stmt.setString(3, customer.getEmail());
-        stmt.setString(4, customer.getPhone());
-        stmt.setString(5, customer.getAddress());
-        stmt.setString(6, customer.getGender());
-        stmt.setString(7, customer.getStatus());
-        stmt.setString(8, customer.getIdentityNumber());
-        stmt.setInt(9, customer.getCustomerId());
+    public int updateCustomer(Customers customer) throws SQLException {
+        String sql = "UPDATE Customers SET UserName=?, FullName=?, Email=?, Phone=?, Address=?, Gender=?, Status=?, IdentityNumber=? WHERE CustomerId=?";
+        try ( PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, customer.getUserName());
+            stmt.setString(2, customer.getFullName());
+            stmt.setString(3, customer.getEmail());
+            stmt.setString(4, customer.getPhone());
+            stmt.setString(5, customer.getAddress());
+            stmt.setString(6, customer.getGender());
+            stmt.setString(7, customer.getStatus());
+            stmt.setString(8, customer.getIdentityNumber());
+            stmt.setInt(9, customer.getCustomerId());
 
-        return stmt.executeUpdate();  // trả về số dòng cập nhật thành công
+            return stmt.executeUpdate();  // trả về số dòng cập nhật thành công
+        }
     }
-}
-    
+
 }
