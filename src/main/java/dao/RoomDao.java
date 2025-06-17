@@ -60,14 +60,14 @@ public class RoomDao {
                     + "FROM Rooms R\n"
                     + "JOIN Buildings B ON R.BuildingId = B.BuildingId\n"
                     + "WHERE R.MaxOccupancy = ?\n"
-                    + "AND R.Status  =N'Còn trống'\n"
+                    + "AND R.Status  =N'Active'\n"
                     + "AND B.Location = ?\n"
                     + "AND NOT EXISTS (\n"
                     + "    SELECT 1\n"
                     + "    FROM Bookings B\n"
                     + "    WHERE B.RoomId = R.RoomId\n"
                     + "    AND B.StartDate < ? AND B.EndDate >? \n"
-                    + "   AND B.Status IN (N'Ðã nhận phòng', N'Ðã xác nhận', N'Chờ xử lý')\n"
+                    + "   AND B.Status IN (N'Checked in', N'Confirmed', N'Waiting for processing')\n"
                     + ")";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, people);
@@ -125,14 +125,14 @@ public class RoomDao {
                     + "FROM Rooms R\n"
                     + "JOIN Buildings B ON R.BuildingId = B.BuildingId\n"
                     + "WHERE R.MaxOccupancy = ?\n"
-                    + "AND R.Status  =N'Còn trống'\n"
+                    + "AND R.Status  =N'Active'\n"
                     + "AND B.Location = ?\n"
                     + "AND NOT EXISTS (\n"
                     + "    SELECT 1\n"
                     + "    FROM Bookings B\n"
                     + "    WHERE B.RoomId = R.RoomId\n"
                     + "    AND B.StartDate < ? AND B.EndDate >? \n"
-                    + "  AND  B.Status IN (N'Đã đặt', N'Đang sử dụng', N'Bảo trì', N'Ngưng hoạt động')\n"
+                    + "   AND B.Status IN (N'Checked in', N'Confirmed', N'Waiting for processing')\n"
                     + ")   order by RoomId offset ? Rows Fetch NEXT 6 Rows Only";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, people);
@@ -324,4 +324,59 @@ public class RoomDao {
         return room;
     }
 
+    public List<Rooms> getFullRoomsForDashboard(int page) {
+        ResultSet rs = null;
+        List<Rooms> list = new ArrayList();
+
+        try {
+            String sql = "select RoomId, FloorNumber,RoomNumber,RoomType, Price , status from Rooms order by RoomNumber offset (?-1) *10 Rows Fetch NEXT 10 row only";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, page);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                Rooms room = new Rooms();
+                room.setRoomId(rs.getInt("RoomId"));
+                room.setFloorNumber(rs.getInt("FloorNumber"));
+                room.setRoomNumber(rs.getString("RoomNumber"));
+                room.setRoomType(rs.getString("RoomType"));
+                room.setPrice(rs.getInt("Price"));
+                room.setStatus(rs.getString("Status"));
+                list.add(room);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomDao.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public List<Rooms> getSearchOfDashBoard(int page, int roomNumber) {
+        List<Rooms> list = new ArrayList<>();
+
+        ResultSet rs = null;
+        try {
+            String sql = "select RoomId,FloorNumber,RoomNumber,RoomType, Price , status from Rooms\n"
+                    + "where RoomNumber like ?\n"
+                    + "order by RoomNumber offset (?-1) *10 Rows Fetch NEXT 10 row only";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setString(1, "%" + roomNumber + "%");
+            st.setInt(2, page);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                Rooms room = new Rooms();
+                room.setRoomId(rs.getInt("RoomId"));
+                room.setFloorNumber(rs.getInt("FloorNumber"));
+                room.setRoomNumber(rs.getString("RoomNumber"));
+                room.setRoomType(rs.getString("RoomType"));
+                room.setPrice(rs.getInt("Price"));
+                room.setStatus(rs.getString("Status"));
+                list.add(room);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+
+    }
 }

@@ -20,6 +20,7 @@
         <a href="DashboardUser">DashBoardUser</a>
         <a href="VouchersDashBoard">voucher</a>
         <a href="ViewNewsDashboard">NewsDb</a>
+        <a href="ViewAllRoomsForDashboard">ViewAllRoomsForDashboard</a>
 
 
 
