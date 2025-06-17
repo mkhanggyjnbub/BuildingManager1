@@ -152,6 +152,16 @@
     </head>
     <body>
 
+        <a href="Index">Quay về trang chủ</a>
+        <a href="DashboardUser">DashBoardUser</a>
+        <a href="VouchersDashBoard">voucher</a>
+        <a href="ViewNewsDashboard">NewsDb</a>
+        <a href="BookingConfirmation">List Bookings</a>
+        
+
+        <a href="ViewAllCustomersDashboard">ViewCustomers</a>
+        
+
         <!-- Navbar -->
         <div class="navbar">
             <h1>Admin Dashboard</h1>

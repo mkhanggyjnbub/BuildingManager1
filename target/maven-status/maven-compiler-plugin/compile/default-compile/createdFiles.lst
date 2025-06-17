@@ -1,11 +1,19 @@
 controllers\asset\AssetModel.class
 models\Roles.class
 controllers\voucher\UserVouchers.class
+<<<<<<< HEAD
+dao\BookingDao.class
+dao\UserDao.class
+controllers\admin\Decentralization.class
+controllers\customer\EditCustomerProfile.class
+controllers\Account\Logout.class
+=======
 controllers\amenities\ViewAmenitiesDashboard.class
 dao\UserDao.class
 controllers\admin\Decentralization.class
 controllers\customer\EditCustomerProfile.class
 controllers\amenities\EditAmenitiesDashboard.class
+>>>>>>> 7258521ddc1543bfc648eeaea5d48af8332ec4a3
 models\MaintenanceStatuses.class
 controllers\news\ViewNewsDashboard.class
 Websocket\TakeNotification.class

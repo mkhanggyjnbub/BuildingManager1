@@ -2,9 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.account;
+package controllers.booking;
 
-//import db.SendOTPEmail;
+import controllers.voucher.*;
+import dao.BookingDao;
+import dao.VoucherDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,14 +14,19 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import models.Bookings;
+import models.Vouchers;
 
 /**
  *
- * @author Kiều Hoàng Mạnh Khang - ce180749
+ * @author CE180441_Dương Đinh Thế Vinh
  */
-@WebServlet(name = "SignUp", urlPatterns = {"/SignUp"})
-public class SignUp extends HttpServlet {
+@WebServlet(name = "BookingConfirmation", urlPatterns = {"/BookingConfirmation"})
+public class BookingConfirmation extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +45,10 @@ public class SignUp extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SignUp</title>");
+            out.println("<title>Servlet VouchersDashBoard</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SignUp at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet VouchersDashBoard at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,7 +66,14 @@ public class SignUp extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("account/signUp.jsp").forward(request, response);
+        try {
+            BookingDao dao = new BookingDao();
+            List<Bookings> list = dao.getAllBookings();
+            request.setAttribute("booking", list);
+            request.getRequestDispatcher("booking/bookingConfirmation.jsp").forward(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(BookingConfirmation.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -71,13 +85,19 @@ public class SignUp extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String otp = String.valueOf((int) (Math.random() * 900000 + 100000)); 
-//        SendOTPEmail.send(email, otp);
-        HttpSession session =request.getSession();
-        session.setAttribute("otp", otp);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int bookingId = Integer.parseInt(request.getParameter("bookingId"));
+        boolean status = Boolean.parseBoolean(request.getParameter("status"));
+
+        BookingDao dao = new BookingDao();
+        try {
+            dao.updateBookingStatus(bookingId, status);
+            // Sau khi update xong, chuyển hướng quay lại trang danh sách
+            response.sendRedirect("BookingConfirmation");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**

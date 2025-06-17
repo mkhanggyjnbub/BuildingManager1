@@ -106,7 +106,6 @@
             th {
                 display: none;
             }
-        
     </style>
 </head>
 <body>
