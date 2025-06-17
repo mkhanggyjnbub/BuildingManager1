@@ -40,32 +40,15 @@
                 <p>If you are looking at blank cassettes on the web, you may be very confused <br>at the
                     difference in price. You may see some for as low as $.17 each.</p>
                 <br>
-                <a href="#" class="btn">Đặt phòng</a>
+                <a href="ViewRooms" class="btn">Booking</a>
             </div>
         </section>
         <!-- end banner -->
 
-        <jsp:include  page="menuSearch.jsp"/>
-
-
-        <!-- end first body -->
-        <section class="features">
-            <div class="feature-box">
-                <h2>Quản lý phòng</h2>
-                <p>Thêm, sửa, xóa và theo dõi tình trạng phòng.</p>
-            </div>
-            <div class="feature-box">
-                <h2>Quản lý khách hàng</h2>
-                <p>Lưu trữ thông tin và lịch sử đặt phòng.</p>
-            </div>
-            <div class="feature-box">
-                <h2>Báo cáo doanh thu</h2>
-                <p>Thống kê, xuất báo cáo nhanh chóng.</p>
-            </div>
-        </section>
+        <%--<jsp:include  page="menuSearch.jsp"/>--%>
 
         <footer>
-            <p>© 2025 HotelManager. Thiết kế bởi bạn.</p>
+            <p>© 2025 HotelManager.</p>
         </footer>
 
         <script src="script.js"></script>
