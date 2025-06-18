@@ -1,6 +1,11 @@
 controllers\asset\AssetModel.class
+controllers\services\ViewServiceDetailDashboard.class
 models\Roles.class
 controllers\voucher\UserVouchers.class
+<<<<<<< HEAD
+=======
+controllers\services\ViewServiceDetail.class
+>>>>>>> e912fc88fdc52352d7a53ea41a405c8e878a14c1
 controllers\amenities\ViewAmenitiesDashboard.class
 dao\BookingDao.class
 dao\UserDao.class
@@ -22,10 +27,12 @@ controllers\amenities\AddAmenitiesDashboard.class
 models\Bookings.class
 controllers\booking\BookingConfirmation.class
 models\Employees.class
+models\Services.class
+controllers\services\ViewServices.class
 models\CustomerStatus.class
 models\Vouchers.class
 models\RoomReviews.class
-models\string.class
+controllers\services\DeleteServiceDashboard.class
 controllers\asset\Assets.class
 models\Rooms.class
 controllers\account\Logout.class
@@ -54,13 +61,21 @@ controllers\news\AddNewsDashboard.class
 controllers\amenities\DeleteAmenitiesDashboard.class
 controllers\customer\ViewAllCustomersDashboard.class
 controllers\news\ViewNewsDetail.class
+<<<<<<< HEAD
 controllers\admin\Dashboard.class
+=======
+controllers\services\ViewServicesDashboard.class
+controllers\admin\Dashboard.class
+dao\ServicesDao.class
+>>>>>>> e912fc88fdc52352d7a53ea41a405c8e878a14c1
 models\Floors.class
 controllers\admin\DashboardUser.class
 controllers\admin\AdminView.class
 models\Buildings.class
+controllers\services\EditServiceDashboard.class
 controllers\account\Login.class
 models\Customers.class
+controllers\services\AddServiceDashboard.class
 controllers\voucher\ViewVouchers.class
 controllers\voucher\AddVoucher.class
 controllers\booking\DeleteBookingProcessing.class

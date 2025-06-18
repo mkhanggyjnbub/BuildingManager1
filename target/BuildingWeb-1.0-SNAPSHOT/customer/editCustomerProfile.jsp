@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Cập nhật thông tin người dùng</title>
+        <title>Update User Profile</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -72,26 +72,26 @@
     <body>
         <br>
         <div class="form-container">
-            <h2>Cập nhật thông tin</h2>
+            <h2>Update Profile</h2>
             <form action="EditCustomerProfile" method="post">
                 <!-- Ẩn ID để gửi cùng form -->
                 <input type="hidden" name="id" value="${customerId}" />
 
-                <label>Họ và tên:</label>
+                <label>Full Name:</label>
                 <input type="text" name="fullName" value="${userInfomation.fullName}" required />
 
-                <label>Địa chỉ:</label>
+                <label>Address:</label>
                 <input type="text" name="address" value="${userInfomation.address}" />
 
-                <label>Giới tính:</label>
+                <label>Gender:</label>
                 <select name="gender">
-                    <option value="Nam" ${userInfomation.gender == 'Male' ? 'selected' : ''}>Nam</option>
-                    <option value="Nữ" ${userInfomation.gender == 'Female' ? 'selected' : ''}>Nữ</option>
-                    <option value="Khác" ${userInfomation.gender == 'Other' ? 'selected' : ''}>Khác</option>
+                    <option value="Male" ${userInfomation.gender == 'Male' ? 'selected' : ''}>Male</option>
+                    <option value="Female" ${userInfomation.gender == 'Female' ? 'selected' : ''}>Female</option>
+                    <option value="Other" ${userInfomation.gender == 'Other' ? 'selected' : ''}>Other</option>
                 </select>
 
                 <br><br>
-                <button type="submit">Lưu cập nhật</button>
+                <button type="submit">Save</button>
             </form>
         </div>
     </body>

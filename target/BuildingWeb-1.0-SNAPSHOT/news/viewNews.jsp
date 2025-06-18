@@ -12,7 +12,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Tin Tức</title>
+    <title>News</title>
     <style>
         * {
             box-sizing: border-box;
@@ -123,7 +123,7 @@
     </style>
 </head>
 <body>
-    <h1>Tin Tức Mới Nhất</h1>
+    <h1>Latest News</h1>
     <div class="news-container">
         <c:forEach items="${newsList}" var="news"> 
             <a href="ViewNewsDetail?id=${news.newsID}">
@@ -131,8 +131,8 @@
                     <img src="${news.imageURL}" alt="Ảnh tin tức">
                     <div class="news-title">${news.title}</div>
                     <div class="news-summary">${news.summary}</div>
-                    <div class="news-view">👁️ ${news.viewcount} lượt xem</div>
-                    <div class="news-meta">🗓️ Ngày đăng: ${news.datePosted}</div>
+                    <div class="news-view">👁️ ${news.viewcount} Viewcount</div>
+                    <div class="news-meta">🗓️ Posted Date: ${news.datePosted}</div>
                 </div>
             </a>
         </c:forEach>

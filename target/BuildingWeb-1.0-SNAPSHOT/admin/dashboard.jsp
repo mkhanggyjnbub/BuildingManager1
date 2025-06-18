@@ -5,7 +5,6 @@
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@page import="dao.PaginationDao"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -185,10 +184,26 @@
         </a>
     </div>
 
+<<<<<<< HEAD
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="toggle-btn" onclick="toggleSidebar()">
             <i class="fa-solid fa-bars"></i>
+=======
+        <a href="Index">Quay về trang chủ</a>
+        <a href="DashboardUser">DashBoardUser</a>
+        <a href="VouchersDashBoard">voucher</a>
+        <a href="ViewNewsDashboard">NewsDb</a>
+
+
+
+        <!-- Navbar -->
+        <div class="navbar">
+            <h1>Admin Dashboard</h1>
+            <a href="ViewAllCustomersDashboard" class="customer-link">
+                <i class="fa-solid fa-user"></i> Customer
+            </a>
+>>>>>>> e912fc88fdc52352d7a53ea41a405c8e878a14c1
         </div>
         <ul class="menu">
             <li><a href="Index"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
@@ -202,11 +217,33 @@
         </ul>
     </div>
 
+<<<<<<< HEAD
     <!-- Main Content -->
     <div class="content">
         <h2>Welcome to the Admin Dashboard</h2>
         <p>Click the menu icon ☰ to expand or collapse the sidebar.</p>
     </div>
+=======
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="toggle-btn" onclick="toggleSidebar()">☰</div>
+            <ul class="menu">
+                <li><a href="Index"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+                <li><a href="DashboardUser"><i class="fa-solid fa-user"></i><span>Users</span></a></li>
+                <li><a href="VouchersDashBoard"><i class="fa-solid fa-ticket"></i><span>Vouchers</span></a></li>
+                <li><a href="ViewNewsDashboard"><i class="fa-solid fa-newspaper"></i><span>News</span></a></li>
+                <li><a href="Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
+                <li>         <a href="ViewServicesDashboard">Services</a>
+  </li>
+                <li>         <a href="BookingConfirmation">List Bookings</a>
+                </li>
+                <li>         <a href="ViewAmenitiesDashboard">List Amenities</a>
+                </li>
+                <li>         <a href="ViewAllCustomersDashboard">List Customers</a>
+                </li>
+            </ul>
+        </div>
+>>>>>>> e912fc88fdc52352d7a53ea41a405c8e878a14c1
 
     <script>
         function toggleSidebar() {
