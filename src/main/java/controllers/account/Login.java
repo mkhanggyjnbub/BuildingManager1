@@ -65,15 +65,8 @@ public class Login extends HttpServlet {
       request.getRequestDispatcher("account/login.jsp").forward(request, response);
     } 
 
-    /** 
-=======
-            throws ServletException, IOException {
-        request.getRequestDispatcher("account/login.jsp").forward(request, response);
-
-    }
 
     /**
->>>>>>> 020fa5400cd8bd4f1e04b12fde41e098b92079ea
      * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request

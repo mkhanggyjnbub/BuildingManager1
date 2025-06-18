@@ -1,7 +1,7 @@
 <%-- 
     Document   : bookingConfirmation
     Created on : Jun 18, 2025, 1:00:51 AM
-    Author     : Dương Đinh Thế Vinh
+    Author     : Dương Đinh Thế Vinh CE180441
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -66,73 +66,58 @@
                 transform: translateX(25px);
             }
         </style>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                document.querySelectorAll("input[name='statusSwitch']").forEach(function (checkbox) {
-                    checkbox.addEventListener('change', function () {
-                        const form = this.closest('form');
-                        const hiddenStatus = form.querySelector('input[name="status"]');
-                        const action = this.checked ? 'booking confirmation' : 'transfer to processing';
 
-                        if (confirm("You definitely want to " + action + "?")) {
-                            // Cập nhật giá trị status
-                            hiddenStatus.value = this.checked ? 'true' : 'false';
-                            form.submit();
-                        } else {
-                            // Nếu không xác nhận thì trả lại checkbox như cũ
-                            this.checked = !this.checked;
-                        }
-                    });
-                });
-            });
 
-        </script>
     </head>
     <body>
 
         <h1>booking confirmation list</h1>
 
-        <table>
+        <table border="1">
             <tr>
                 <th>BookingId</th>
                 <th>RoomNumber</th>
                 <th>UserName</th>
                 <th>Check-in Date</th>
-                <th>check-out Date</th>
+                <th>Check-out Date</th>
                 <th>Status</th>
                 <th>Cancel Booking</th>
+
             </tr>
 
             <c:forEach var="booking" items="${booking}">
                 <tr>
                     <td>${booking.bookingId}</td>
-                    <td>${booking.roomNumber}</td>
-                    <td>${booking.userName}</td>
+                    <td>${booking.rooms.roomNumber}</td>
+                    <td>${booking.customers.fullName}</td>
                     <td>${booking.startDate}</td>
                     <td>${booking.endDate}</td>
-
-
                     <td>
-                        <span style="margin-right:10px;">
-                            <c:choose>
-                                <c:when test="${booking.status == true}">
-                                    Confirmed
-                                </c:when>
-                                <c:otherwise>
-                                    Processing
-                                </c:otherwise>
-                            </c:choose>
-                        </span>
-
-                        <form action="BookingConfirmation" method="post" style="display:inline;">
+                        <form action="BookingConfirmation" method="post" style="display:inline;" 
+                              onsubmit="return confirm('Bạn có chắc muốn xác nhận booking này?');">
                             <input type="hidden" name="bookingId" value="${booking.bookingId}" />
+                            <input type="hidden" name="status" value="Confirmed" />
 
-                            <input type="hidden" name="status" value="${booking.status}" />
-                            <label class="switch">
-                                <input type="checkbox" ${booking.status ? 'checked' : ''} name="statusSwitch">
-                                <span class="slider"></span>
-                            </label>
+                            <c:choose>
+                                <c:when test="${booking.status == 'Waiting for processing'}">
+                                    <form action="BookingConfirmation" method="post" style="display:inline;" 
+                                          onsubmit="return confirm('Bạn có chắc muốn xác nhận booking này?');">
+                                        <input type="hidden" name="bookingId" value="${booking.bookingId}" />
+                                        <input type="hidden" name="status" value="Confirmed" />
+                                        <button type="submit" style="background-color: gold; color: black; border: none; padding: 5px 10px;">
+                                            Waiting
+                                        </button>
+                                    </form>
+                                </c:when>
+                                <c:when test="${booking.status == 'Confirmed'}">
+                                    <button type="button" style="background-color: limegreen; color: white; border: none; padding: 5px 10px;" disabled>
+                                        Confirmed
+                                    </button>
+                                </c:when>
+                            </c:choose>
+
                         </form>
+
                     </td>
 
                     <td>

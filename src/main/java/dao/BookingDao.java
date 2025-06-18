@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Bookings;
+import models.Customers;
+import models.Rooms;
 import models.Vouchers;
 
 /**
@@ -34,25 +36,31 @@ public class BookingDao {
         List<Bookings> list = new ArrayList<>();
         Connection conn = ConnectData.getConnection();
 
-        String sql = "SELECT b.BookingId, b.StartDate, b.EndDate, b.Status, "
-                + "r.RoomNumber, c.FullName AS UserName "
-                + "FROM Bookings b "
-                + "JOIN Rooms r ON b.RoomId = r.RoomId "
-                + "JOIN Customers c ON b.CustomerId = c.CustomerId "
-                + "ORDER BY b.BookingId";
+         String sql = "SELECT b.BookingId, b.RoomId, b.CustomerId, b.StartDate, b.EndDate, b.Status, b.UserId, " +
+                 "r.RoomNumber, c.FullName " +
+                 "FROM Bookings b " +
+                 "JOIN Rooms r ON b.RoomId = r.RoomId " +
+                 "JOIN Customers c ON b.CustomerId = c.CustomerId " +
+                 "WHERE b.Status IN ('Waiting for processing', 'Confirmed')";
+        
 
         PreparedStatement ps = conn.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
             Bookings booking = new Bookings();
-
             booking.setBookingId(rs.getInt("BookingId"));
             booking.setStartDate(rs.getDate("StartDate"));
             booking.setEndDate(rs.getDate("EndDate"));
-            booking.setStatus(rs.getBoolean("Status"));
-            booking.setRoomNumber(rs.getString("RoomNumber"));
-            booking.setUserName(rs.getString("UserName"));
+            booking.setStatus(rs.getString("Status"));
+            
+            Rooms room = new Rooms();
+            room.setRoomNumber(rs.getString("RoomNumber"));
+            booking.setRooms(room);
+            
+            Customers name = new Customers();
+            name.setFullName(rs.getString("FullName"));
+            booking.setCustomers(name);
 
             list.add(booking);
         }
@@ -62,11 +70,11 @@ public class BookingDao {
         return list;
     }
 
-    public void updateBookingStatus(int bookingId, boolean status) throws SQLException {
+    public void updateBookingStatus(int bookingId, String status) throws SQLException {
         Connection conn = ConnectData.getConnection();
         String sql = "UPDATE Bookings SET Status = ? WHERE BookingId = ?";
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setBoolean(1, status);
+        PreparedStatement ps = conn.prepareStatement(sql);  
+        ps.setString(1, status);
         ps.setInt(2, bookingId);
         ps.executeUpdate();
 
