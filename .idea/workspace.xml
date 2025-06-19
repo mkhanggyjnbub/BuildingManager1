@@ -10,141 +10,60 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2735afc1-1300-435c-9baf-bd2feedbc65f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/db/ConnectData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/ConnectData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/header/header.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/header/header.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT.war" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/META-INF/context.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/META-INF/context.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/META-INF/MANIFEST.MF" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/Tomcat.dpf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/Websocket/TakeNotification.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/Websocket/TakeNotification.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/.netbeans_automatic_build" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/Account/Login.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/Account/Login.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/Account/Logout.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/Account/Logout.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/Account/SignUp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/Account/SignUp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/Index.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/Index.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/UpImage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/UpImage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/admin/AdminView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/admin/AdminView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/admin/Dashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/admin/Dashboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/admin/DashboardUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/admin/DashboardUser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/admin/Decentralization.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/admin/Decentralization.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/amenities/AddAmenitiesDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/amenities/AddAmenitiesDashboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/amenities/DeleteAmenitiesDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/amenities/DeleteAmenitiesDashboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/amenities/EditAmenitiesDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/amenities/EditAmenitiesDashboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/amenities/ViewAmenitiesDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/amenities/ViewAmenitiesDashboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/asset/AssetModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/asset/AssetModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/asset/Assets.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/asset/Assets.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/booking/BookingConfirmation.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/booking/BookingConfirmation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/booking/ConfirmBooking.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/booking/ConfirmBooking.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/booking/DeleteBookingProcessing.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/booking/DeleteBookingProcessing.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/customer/EditCustomerDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/customer/EditCustomerDashboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/customer/EditCustomerProfile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/customer/EditCustomerProfile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/customer/ViewAllCustomersDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/customer/ViewAllCustomersDashboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/customer/ViewCustomerDetailDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/customer/ViewCustomerDetailDashboard.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/customer/ViewCustomerProfile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/customer/ViewCustomerProfile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/news/ViewNews.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/news/ViewNews.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/room/CreateRoomForDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/room/CreateRoomForDashboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/room/DeleteRoomForDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/room/DeleteRoomForDashboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/room/EditRoomForDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/room/EditRoomForDashboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/room/ViewAllRoomsForDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/room/ViewAllRoomsForDashboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/room/ViewRoomDetail.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/room/ViewRoomDetail.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/room/ViewRooms.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/room/ViewRooms.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/voucher/DeleteVoucher.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/voucher/DeleteVoucher.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/voucher/UserVouchers.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/voucher/UserVouchers.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/voucher/ViewVouchers.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/voucher/ViewVouchers.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/dao/AmenitiesDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/dao/AmenitiesDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/services/AddServiceDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/services/AddServiceDashboard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/services/DeleteServiceDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/services/DeleteServiceDashboard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/services/EditServiceDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/services/EditServiceDashboard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/services/ViewServiceDetail.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/services/ViewServiceDetail.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/services/ViewServiceDetailDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/services/ViewServiceDetailDashboard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/services/ViewServices.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/services/ViewServices.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/services/ViewServicesDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/services/ViewServicesDashboard.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/dao/BookingDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/dao/BookingDao.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/dao/CustomerDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/dao/CustomerDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/dao/EquipmentDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/dao/EquipmentDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/dao/PaginationDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/dao/PaginationDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/dao/RoomDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/dao/RoomDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/dao/RoomReviewDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/dao/RoomReviewDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/dao/ServicesDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/dao/ServicesDao.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/dao/UserDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/dao/UserDao.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/db/ConnectData.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/db/ConnectData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/Amenities.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/Amenities.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/Bookings.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/Bookings.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/Buildings.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/Buildings.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/Employees.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/Employees.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/Equipment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/Equipment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/Floors.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/Floors.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/MaintenanceSchedule.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/MaintenanceSchedule.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/MaintenanceStatuses.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/MaintenanceStatuses.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/Roles.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/Roles.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/RoomEquipment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/RoomEquipment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/RoomReviews.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/RoomReviews.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/Rooms.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/Rooms.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/Services.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/Services.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/Users.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/Users.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/string.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/string.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/account/signUp.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/account/signUp.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/admin/adminEdit.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/admin/adminEdit.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/booking/confirmBooking.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/booking/confirmBooking.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/cloudinary/cloudinaryUpload.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/cloudinary/cloudinaryUpload.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/cloudinary/result.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/cloudinary/result.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/css/dashboardUser.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/css/dashboardUser.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/css/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/css/menuSearch.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/css/menuSearch.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/menuSearch.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/menuSearch.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/room/editRoomForDashboard.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/room/editRoomForDashboard.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/room/viewAllRoomsForDashboard.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/room/viewAllRoomsForDashboard.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/.netbeans_automatic_build" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Websocket/TakeNotification.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Websocket/TakeNotification.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/header/header.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/header/header.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/controllers/Account/Login.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/Account/Login.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/controllers/Account/Logout.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/Account/Logout.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/Account/SignUp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/Account/SignUp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/Index.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/Index.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/UpImage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/UpImage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/admin/AdminView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/admin/AdminView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/admin/Dashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/admin/Dashboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/admin/DashboardUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/admin/DashboardUser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/admin/Decentralization.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/admin/Decentralization.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/amenities/AddAmenitiesDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/amenities/AddAmenitiesDashboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/amenities/DeleteAmenitiesDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/amenities/DeleteAmenitiesDashboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/amenities/EditAmenitiesDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/amenities/EditAmenitiesDashboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/amenities/ViewAmenitiesDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/amenities/ViewAmenitiesDashboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/asset/AssetModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/asset/AssetModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/asset/Assets.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/asset/Assets.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controllers/admin/Admin.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/controllers/booking/BookingConfirmation.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/booking/BookingConfirmation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/booking/ConfirmBooking.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/booking/ConfirmBooking.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/booking/DeleteBookingProcessing.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/booking/DeleteBookingProcessing.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/customer/EditCustomerDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/customer/EditCustomerDashboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/customer/EditCustomerProfile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/customer/EditCustomerProfile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/customer/ViewAllCustomersDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/customer/ViewAllCustomersDashboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/customer/ViewCustomerDetailDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/customer/ViewCustomerDetailDashboard.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/controllers/customer/ViewCustomerProfile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/customer/ViewCustomerProfile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/news/ViewNews.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/news/ViewNews.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/room/CreateRoomForDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/room/CreateRoomForDashboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/room/DeleteRoomForDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/room/DeleteRoomForDashboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/room/EditRoomForDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/room/EditRoomForDashboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/room/ViewAllRoomsForDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/room/ViewAllRoomsForDashboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/room/ViewRoomDetail.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/room/ViewRoomDetail.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/room/ViewRooms.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/room/ViewRooms.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/voucher/DeleteVoucher.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/voucher/DeleteVoucher.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/voucher/UserVouchers.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/voucher/UserVouchers.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controllers/voucher/ViewVouchers.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/voucher/ViewVouchers.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dao/AmenitiesDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/AmenitiesDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controllers/services/AddServiceDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/services/AddServiceDashboard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controllers/services/DeleteServiceDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/services/DeleteServiceDashboard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controllers/services/EditServiceDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/services/EditServiceDashboard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controllers/services/ViewServiceDetail.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/services/ViewServiceDetail.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controllers/services/ViewServiceDetailDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/services/ViewServiceDetailDashboard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controllers/services/ViewServices.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/services/ViewServices.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controllers/services/ViewServicesDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/services/ViewServicesDashboard.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/dao/BookingDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/BookingDao.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/dao/CustomerDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/CustomerDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dao/EquipmentDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/EquipmentDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dao/PaginationDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/PaginationDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dao/RoomDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/RoomDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dao/RoomReviewDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/RoomReviewDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/NewsDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/NewsDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/ServicesDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/ServicesDao.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/dao/UserDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/UserDao.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/db/ConnectData.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db/ConnectData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/models/Amenities.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/models/Amenities.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/models/Bookings.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/models/Bookings.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/models/Buildings.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/models/Buildings.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/models/Customers.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/models/Customers.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/models/Employees.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/models/Employees.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/models/Equipment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/models/Equipment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/models/Floors.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/models/Floors.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/models/MaintenanceSchedule.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/models/MaintenanceSchedule.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/models/MaintenanceStatuses.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/models/MaintenanceStatuses.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/models/Roles.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/models/Roles.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/models/RoomEquipment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/models/RoomEquipment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/models/RoomReviews.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/models/RoomReviews.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/models/Rooms.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/models/Rooms.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/models/Services.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/models/Services.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/models/Users.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/models/Users.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/models/string.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/models/string.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/.netbeans_automatic_build" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,38 +80,38 @@
     <option name="FILTER_DEBUG" value="true" />
     <option name="CUSTOM_FILTER" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2yhyPUlIztfgNFDQsl0wt2FCgvI" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JavaScript Debug.index.jsp.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "TomEE Server.TomEE 10.0.23.executor": "Run",
-    "TomEE Server.Unnamed.executor": "Run",
-    "Tomcat Server.Tomcat 10.0.23.executor": "Run",
-    "Tomcat Server.admin.jsp.executor": "Run",
-    "Tomcat Server.index.jsp.executor": "Debug",
-    "git-widget-placeholder": "nhanh__cua__Khang",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JavaScript Debug.index.jsp.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;TomEE Server.TomEE 10.0.23.executor&quot;: &quot;Run&quot;,
+    &quot;TomEE Server.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;Tomcat Server.Tomcat 10.0.23.executor&quot;: &quot;Run&quot;,
+    &quot;Tomcat Server.admin.jsp.executor&quot;: &quot;Run&quot;,
+    &quot;Tomcat Server.index.jsp.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;nhanh__cua__Khang&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunDashboard">
     <option name="excludedTypes">
       <set>
@@ -201,18 +120,6 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="TomeeConfiguration" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
-      <deployment />
-      <server-settings />
-      <predefined_log_file enabled="true" id="Tomcat" />
-      <predefined_log_file enabled="true" id="Tomcat Catalina" />
-      <predefined_log_file id="Tomcat Manager" />
-      <predefined_log_file id="Tomcat Host Manager" />
-      <predefined_log_file id="Tomcat Localhost Access" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Tomcat 10.0.23" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 10.0.23" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
@@ -318,6 +225,7 @@
       <option name="presentableId" value="Default" />
       <updated>1750301077050</updated>
       <workItem from="1750301078997" duration="599000" />
+      <workItem from="1750306111224" duration="31000" />
     </task>
     <servers />
   </component>
