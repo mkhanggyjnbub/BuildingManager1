@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Kiều Hoàng Mạnh Khang - ce180749 
+ * @author Ki?u Ho�ng M?nh Khang - ce180749 
  */
 @WebServlet(name="CreateRoomForDashboard", urlPatterns={"/CreateRoomForDashboard"})
 public class CreateRoomForDashboard extends HttpServlet {
@@ -55,7 +55,7 @@ public class CreateRoomForDashboard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        response.sendRedirect("room/createRoomForDashboard.jsp");
     } 
 
     /** 

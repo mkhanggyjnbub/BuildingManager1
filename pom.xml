@@ -16,7 +16,7 @@
   
 
     <dependencies>
-        <!-- Nếu dùng Maven -->
+   
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
@@ -82,7 +82,7 @@
             <version>1.31.4</version>
         </dependency>
 
-        <!-- Xử lý JSON -->
+        <!-- Xá»­ lÃ½ JSON -->
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
@@ -111,7 +111,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.3</version>
+                <version>3.4.0</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>

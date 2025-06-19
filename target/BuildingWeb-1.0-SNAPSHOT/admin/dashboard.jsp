@@ -1,11 +1,4 @@
-<%-- 
-    Document   : admin
-    Created on : Apr 30, 2025, 10:00:42 PM
-    Author     : Kiều Hoàng Mạnh Khang - ce180749 
---%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +27,6 @@
                 color: var(--navy);
             }
 
-            /* Navbar */
             .navbar {
                 background-color: var(--navy);
                 color: var(--white);
@@ -65,7 +57,6 @@
                 opacity: 0.85;
             }
 
-            /* Sidebar */
             .sidebar {
                 position: fixed;
                 top: 60px;
@@ -93,10 +84,6 @@
                 align-items: center;
                 justify-content: center;
                 border-bottom: 1px solid rgba(255,255,255,0.1);
-            }
-
-            .toggle-btn i {
-                font-size: 18px;
             }
 
             .menu {
@@ -137,7 +124,6 @@
                 background-color: var(--hover-bg);
             }
 
-            /* Main content */
             .content {
                 margin-left: 60px;
                 padding: 40px;
@@ -158,7 +144,6 @@
                 color: #333;
             }
 
-            /* Responsive tweaks */
             @media screen and (max-width: 768px) {
                 .navbar h1 {
                     font-size: 18px;
@@ -172,81 +157,51 @@
                     padding: 20px;
                 }
             }
+            
+        
         </style>
     </head>
     <body>
 
         <!-- Navbar -->
         <div class="navbar">
-            <h1>Admin Dashboard</h1>
+            <a   href="Dashboard" style="text-decoration: none">           <h1>Admin Dashboard</h1></a>
             <a href="ViewAllCustomersDashboard" class="customer-link">
                 <i class="fa-solid fa-user"></i> Customer
             </a>
         </div>
 
-        <!--<a href="Index">Quay về trang chủ</a>-->
-
         <!-- Sidebar -->
         <div class="sidebar" id="sidebar">
             <div class="toggle-btn" onclick="toggleSidebar()">
                 <i class="fa-solid fa-bars"></i>
-              
-
-
-
-                <!-- Navbar -->
-                <div class="navbar">
-                    <h1>Admin Dashboard</h1>
-<!--                    <a href="ViewAllCustomersDashboard" class="customer-link">
-                        <i class="fa-solid fa-user"></i> Customer
-                    </a>-->
-                </div>
-                <ul class="menu">
-                    <li><a href="Index"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
-                    <li><a href="DashboardUser"><i class="fa-solid fa-user"></i><span>Users</span></a></li>
-                    <li><a href="VouchersDashBoard"><i class="fa-solid fa-ticket"></i><span>Vouchers</span></a></li>
-                    <li><a href="ViewNewsDashboard"><i class="fa-solid fa-newspaper"></i><span>News</span></a></li>
-                    <li><a href="BookingConfirmation"><i class="fa-solid fa-calendar-check"></i><span>Bookings</span></a></li>
-                    <li><a href="ViewAmenitiesDashboard"><i class="fa-solid fa-bath"></i><span>Amenities</span></a></li>
-                    <li><a href="ViewAllCustomersDashboard"><i class="fa-solid fa-users"></i><span>Customers</span></a></li>
-                    <li><a href="Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
-                </ul>
             </div>
+           <ul class="menu">
+    <li><a href="Index"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+    <li><a href="DashboardUser"><i class="fa-solid fa-user"></i><span>Users</span></a></li>
+    <li><a href="VouchersDashBoard"><i class="fa-solid fa-ticket"></i><span>Vouchers</span></a></li>
+    <li><a href="ViewNewsDashboard"><i class="fa-solid fa-newspaper"></i><span>News</span></a></li>
+    <li><a href="BookingConfirmation"><i class="fa-solid fa-calendar-check"></i><span>Bookings</span></a></li>
+    <li><a href="ViewAllRoomsForDashboard"><i class="fa-solid fa-bed"></i><span>List Rooms</span></a></li>
+    <li><a href="ViewServicesDashboard"><i class="fa-solid fa-concierge-bell"></i><span>Services</span></a></li>
+    <li><a href="ViewAmenitiesDashboard"><i class="fa-solid fa-bath"></i><span>Amenities</span></a></li>
+    <li><a href="ViewAllCustomersDashboard"><i class="fa-solid fa-users"></i><span>Customers</span></a></li>
+    <li><a href="Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
+</ul>
 
-            <!-- Main Content -->
-            <div class="content">
-                <h2>Welcome to the Admin Dashboard</h2>
-            </div>
-            <!-- Sidebar -->
-            <div class="sidebar" id="sidebar">
-                <div class="toggle-btn" onclick="toggleSidebar()">☰</div>
-                <ul class="menu">
-                    <li><a href="Index"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
-                    <li><a href="DashboardUser"><i class="fa-solid fa-user"></i><span>Users</span></a></li>
-                    <li><a href="VouchersDashBoard"><i class="fa-solid fa-ticket"></i><span>Vouchers</span></a></li>
-                    <li><a href="ViewNewsDashboard"><i class="fa-solid fa-newspaper"></i><span>News</span></a></li>
-                    </li>
-                    <li>  <a href="ViewAllRoomsForDashboard">List Rooms</a>
-                    </li>
-                    <li>         <a href="ViewServicesDashboard">Services</a>
-                    </li>
-                    <li>         <a href="BookingConfirmation">List Bookings</a>
-                    </li>
-                    <li>         <a href="ViewAmenitiesDashboard">List Amenities</a>
-                    </li>
-                    <li>         <a href="ViewAllCustomersDashboard">List Customers</a>
-                    </li>
-                                        <li><a href="Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
+        </div>
 
-                </ul>
-            </div>
+        <!-- Main Content -->
+        <div class="content">
+            <h2>Welcome to the Admin Dashboard</h2>
+            <p>Use the sidebar to manage users, bookings, amenities, and more.</p>
+        </div>
 
-            <script>
-                function toggleSidebar() {
-                    document.getElementById('sidebar').classList.toggle('open');
-                }
-            </script>
+        <script>
+            function toggleSidebar() {
+                document.getElementById('sidebar').classList.toggle('open');
+            }
+        </script>
 
     </body>
 </html>
-

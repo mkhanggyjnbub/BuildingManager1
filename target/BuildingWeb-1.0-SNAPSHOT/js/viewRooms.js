@@ -136,25 +136,4 @@ $(document).ready(function () {
         checkOut.min = this.value;
     });
 });
-document.addEventListener('DOMContentLoaded', function () {
-    const prices = document.getElementsByClassName("price");
-    for (let i = 0; i < prices.length; i++) {
-        const raw = prices[i].textContent.trim();
-        const number = parseInt(raw);
-        if (!isNaN(number)) {
-            prices[i].textContent = number.toLocaleString("vi-VN") + " VNĐ / Night";
-        }
-    }
-});
 
-
-function formatAfterAjax() {
-    const prices = document.getElementsByClassName("price");
-    for (let i = 0; i < prices.length; i++) {
-        const raw = prices[i].textContent.trim();
-        const number = parseInt(raw);
-        if (!isNaN(number)) {
-            prices[i].textContent = number.toLocaleString("vi-VN") + " VNĐ / Night";
-        }
-    }
-}
