@@ -97,6 +97,6 @@
         </c:otherwise>
     </c:choose>
 
-    <a href="ViewVouchers">← Quay lại kho voucher</a>
+    <a href="Index">← Back to Home</a>
 </body>
 </html>

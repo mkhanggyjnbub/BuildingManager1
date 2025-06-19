@@ -22,7 +22,7 @@ public class ConnectData {
     public static Connection getConnection() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-           String url = "jdbc:sqlserver://LAPTOP-SJ6AII7D\\SQLEXPRESS:1433;databaseName=building_management27;user=sa;password=123456;encryt=true;trustServerCertificate=true;    ";
+            String url = "jdbc:sqlserver://MKHANGDZ1ST:1433;databaseName=building_management27;user=sa;password=mkhang123abc;encrypt=true;trustServerCertificate=true;";
 
 
             conn = DriverManager.getConnection(url);

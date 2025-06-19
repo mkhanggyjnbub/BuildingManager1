@@ -155,15 +155,13 @@
         <a href="TakeNotification">Nhận Notification</a>
         -->       
         <a href="ViewVouchers">voucher</a>
-        <a href="UserVouchers">User voucher</a>
-        <a href="ViewNews">News</a>
         <a href="ViewServices">Services</a>
         <!--                <a href="#">Liên hệ</a>
                         <a href="UpImage">Up ảnh</a>
                         <a href="Notification">Notification</a>
                         <a href="TakeNotification">Nhận Notification</a>-->
         <!--        <a href="ViewVouchers">voucher</a>-->
-        <a href="UserVouchers">User voucher</a>
+        <c:if test="${not empty customerId}">   <a href="UserVouchers">User voucher</a></c:if>
         <a href="ViewNews">News</a>
 <!--  <a href="CloudinaryUpload">🔹Cloudinary</a>-->
   
