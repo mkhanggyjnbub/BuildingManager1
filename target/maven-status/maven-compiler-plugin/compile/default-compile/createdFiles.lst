@@ -1,33 +1,26 @@
 controllers\asset\AssetModel.class
 models\Roles.class
 controllers\voucher\UserVouchers.class
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-dao\BookingDao.class
->>>>>>> 1f31b8a5db73165c3897f264b0f7867d2d13dc93
-dao\UserDao.class
-controllers\admin\Decentralization.class
-controllers\customer\EditCustomerProfile.class
-controllers\Account\Logout.class
-=======
 controllers\amenities\ViewAmenitiesDashboard.class
+dao\BookingDao.class
 dao\UserDao.class
+controllers\room\ViewAllRoomsForDashboard.class
 controllers\admin\Decentralization.class
 controllers\customer\EditCustomerProfile.class
 controllers\amenities\EditAmenitiesDashboard.class
->>>>>>> 7258521ddc1543bfc648eeaea5d48af8332ec4a3
 models\MaintenanceStatuses.class
 controllers\news\ViewNewsDashboard.class
 Websocket\TakeNotification.class
 controllers\voucher\VouchersDashBoard.class
 dao\CustomerDao.class
 controllers\voucher\EditVoucher.class
+controllers\room\CreateRoomForDashboard.class
 dao\NewsDao.class
 dao\RoomReviewDao.class
 dao\EquipmentDao.class
 controllers\amenities\AddAmenitiesDashboard.class
 models\Bookings.class
+controllers\booking\BookingConfirmation.class
 models\Employees.class
 models\CustomerStatus.class
 models\Vouchers.class
@@ -35,6 +28,8 @@ models\RoomReviews.class
 models\string.class
 controllers\asset\Assets.class
 models\Rooms.class
+controllers\account\Logout.class
+controllers\room\EditRoomForDashboard.class
 controllers\news\ViewNews.class
 dao\AmenitiesDao.class
 controllers\room\ViewRooms.class
@@ -59,10 +54,7 @@ controllers\news\AddNewsDashboard.class
 controllers\amenities\DeleteAmenitiesDashboard.class
 controllers\customer\ViewAllCustomersDashboard.class
 controllers\news\ViewNewsDetail.class
-<<<<<<< HEAD
 controllers\admin\Dashboard.class
-=======
->>>>>>> 1f31b8a5db73165c3897f264b0f7867d2d13dc93
 models\Floors.class
 controllers\admin\DashboardUser.class
 controllers\admin\AdminView.class
@@ -70,11 +62,11 @@ models\Buildings.class
 controllers\account\Login.class
 models\Customers.class
 controllers\voucher\ViewVouchers.class
-db\SendOTPEmail.class
 controllers\voucher\AddVoucher.class
+controllers\booking\DeleteBookingProcessing.class
 controllers\voucher\DeleteVoucher.class
 models\RoomEquipment.class
+controllers\room\DeleteRoomForDashboard.class
 controllers\room\ViewRoomDetail.class
 controllers\news\DeleteNewsDashboard.class
 models\Amenities.class
-db\SendOTPEmail$1.class
