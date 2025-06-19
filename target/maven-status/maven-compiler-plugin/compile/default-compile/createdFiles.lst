@@ -2,10 +2,7 @@ controllers\asset\AssetModel.class
 controllers\services\ViewServiceDetailDashboard.class
 models\Roles.class
 controllers\voucher\UserVouchers.class
-<<<<<<< HEAD
-=======
 controllers\services\ViewServiceDetail.class
->>>>>>> e912fc88fdc52352d7a53ea41a405c8e878a14c1
 controllers\amenities\ViewAmenitiesDashboard.class
 dao\BookingDao.class
 dao\UserDao.class
@@ -61,13 +58,9 @@ controllers\news\AddNewsDashboard.class
 controllers\amenities\DeleteAmenitiesDashboard.class
 controllers\customer\ViewAllCustomersDashboard.class
 controllers\news\ViewNewsDetail.class
-<<<<<<< HEAD
-controllers\admin\Dashboard.class
-=======
 controllers\services\ViewServicesDashboard.class
 controllers\admin\Dashboard.class
 dao\ServicesDao.class
->>>>>>> e912fc88fdc52352d7a53ea41a405c8e878a14c1
 models\Floors.class
 controllers\admin\DashboardUser.class
 controllers\admin\AdminView.class
