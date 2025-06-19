@@ -61,10 +61,10 @@ public class Login extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        request.getRequestDispatcher("account/login.jsp").forward(request, response);
+    throws ServletException, IOException {
+      request.getRequestDispatcher("account/login.jsp").forward(request, response);
+    } 
 
-    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -94,7 +94,7 @@ public class Login extends HttpServlet {
                 Users user = new Users();
                 user.setUserName(userName);
                 user.setPassword(passWord);
-                checkLoginUser = userDao.loginAdminForId(user);
+                checkLoginUser = userDao.loginForId(user);
                 if (checkLoginUser != 0) {
                     String userId = checkLoginUser + "";
 

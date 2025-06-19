@@ -5,21 +5,26 @@
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@page import="dao.PaginationDao"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8" />
-        <title>Sidebar Toggle Admin</title>
+        <meta charset="UTF-8">
+        <title>Admin Dashboard</title>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
         <style>
             :root {
-                --navy: #5a7ec7;
-                --navy-dark: #3d5fa3;
+                --navy: #4a6fa5;
+                --navy-dark: #3a5c88;
                 --white: #ffffff;
                 --light-bg: #f4f6f9;
+                --hover-bg: #3a5c88;
+                --transition: 0.3s ease;
+            }
+
+            * {
+                box-sizing: border-box;
             }
 
             body {
@@ -33,28 +38,45 @@
             .navbar {
                 background-color: var(--navy);
                 color: var(--white);
-                padding: 16px 30px;
+                padding: 0 30px;
                 display: flex;
                 align-items: center;
                 height: 60px;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                justify-content: space-between;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             }
 
             .navbar h1 {
-                font-size: 20px;
+                font-size: 22px;
                 margin: 0;
+            }
+
+            .customer-link {
+                color: var(--white);
+                text-decoration: none;
+                font-size: 16px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                transition: var(--transition);
+            }
+
+            .customer-link:hover {
+                opacity: 0.85;
             }
 
             /* Sidebar */
             .sidebar {
                 position: fixed;
+                top: 60px;
                 left: 0;
                 height: calc(100% - 60px);
                 width: 60px;
                 background-color: var(--navy);
-                transition: width 0.3s ease;
+                transition: width var(--transition);
                 overflow-x: hidden;
-                box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+                box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+                z-index: 999;
             }
 
             .sidebar.open {
@@ -67,11 +89,14 @@
                 font-size: 20px;
                 cursor: pointer;
                 height: 50px;
-                width: 100%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+
+            .toggle-btn i {
+                font-size: 18px;
             }
 
             .menu {
@@ -88,7 +113,7 @@
                 color: var(--white);
                 font-size: 16px;
                 white-space: nowrap;
-                transition: background 0.3s ease;
+                transition: background-color var(--transition);
             }
 
             .menu li a i {
@@ -101,7 +126,7 @@
 
             .menu li a span {
                 display: none;
-                transition: opacity 0.3s ease;
+                transition: opacity var(--transition);
             }
 
             .sidebar.open .menu li a span {
@@ -109,14 +134,14 @@
             }
 
             .menu li a:hover {
-                background-color: var(--navy-dark);
+                background-color: var(--hover-bg);
             }
 
             /* Main content */
             .content {
                 margin-left: 60px;
                 padding: 40px;
-                transition: margin-left 0.3s ease;
+                transition: margin-left var(--transition);
             }
 
             .sidebar.open ~ .content {
@@ -133,28 +158,23 @@
                 color: #333;
             }
 
-            .customer-link {
-                margin-left: auto;
-                color: var(--white);
-                font-size: 20px;
-                font-weight: normal;
-                text-decoration: none; /* bỏ gạch chân */
-                display: flex;
-                align-items: center;
-                gap: 8px;
-            }
+            /* Responsive tweaks */
+            @media screen and (max-width: 768px) {
+                .navbar h1 {
+                    font-size: 18px;
+                }
 
-            .customer-link i {
-                font-size: 18px;
-            }
+                .customer-link {
+                    font-size: 14px;
+                }
 
+                .content {
+                    padding: 20px;
+                }
+            }
         </style>
     </head>
     <body>
-
-        <!--<a href="Index">Quay về trang chủ</a>-->
-  
-
 
         <!-- Navbar -->
         <div class="navbar">
@@ -164,38 +184,68 @@
             </a>
         </div>
 
+        <!--<a href="Index">Quay về trang chủ</a>-->
+
         <!-- Sidebar -->
         <div class="sidebar" id="sidebar">
-            <div class="toggle-btn" onclick="toggleSidebar()">☰</div>
-            <ul class="menu">
-                <li><a href="Index"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
-                <li><a href="DashboardUser"><i class="fa-solid fa-user"></i><span>Users</span></a></li>
-                <li><a href="VouchersDashBoard"><i class="fa-solid fa-ticket"></i><span>Vouchers</span></a></li>
-                <li><a href="ViewNewsDashboard"><i class="fa-solid fa-newspaper"></i><span>News</span></a></li>
-                <li><a href="BookingConfirmation">List Bookings</a>
-                </li>
-                <li>  <a href="ViewAmenitiesDashboard">List Amenities</a>
-                <li>  <a href="ViewAllRoomsForDashboard">List Rooms</a>
-                </li>
-                 <li><a href="ViewAllCustomersDashboard">List Customers</a>
-                </li>
-                </li>
-                <li><a href="Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
+            <div class="toggle-btn" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+              
 
-            </ul>
-        </div>
 
-        <!-- Main Content -->
-        <div class="content">
-            <h2>Welcome to the Admin Dashboard</h2>
-            <p>Click the menu icon to expand or collapse the navigation.</p>
-        </div>
 
-        <script>
-            function toggleSidebar() {
-                document.getElementById('sidebar').classList.toggle('open');
-            }
-        </script>
+                <!-- Navbar -->
+                <div class="navbar">
+                    <h1>Admin Dashboard</h1>
+<!--                    <a href="ViewAllCustomersDashboard" class="customer-link">
+                        <i class="fa-solid fa-user"></i> Customer
+                    </a>-->
+                </div>
+                <ul class="menu">
+                    <li><a href="Index"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+                    <li><a href="DashboardUser"><i class="fa-solid fa-user"></i><span>Users</span></a></li>
+                    <li><a href="VouchersDashBoard"><i class="fa-solid fa-ticket"></i><span>Vouchers</span></a></li>
+                    <li><a href="ViewNewsDashboard"><i class="fa-solid fa-newspaper"></i><span>News</span></a></li>
+                    <li><a href="BookingConfirmation"><i class="fa-solid fa-calendar-check"></i><span>Bookings</span></a></li>
+                    <li><a href="ViewAmenitiesDashboard"><i class="fa-solid fa-bath"></i><span>Amenities</span></a></li>
+                    <li><a href="ViewAllCustomersDashboard"><i class="fa-solid fa-users"></i><span>Customers</span></a></li>
+                    <li><a href="Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
+                </ul>
+            </div>
+
+            <!-- Main Content -->
+            <div class="content">
+                <h2>Welcome to the Admin Dashboard</h2>
+            </div>
+            <!-- Sidebar -->
+            <div class="sidebar" id="sidebar">
+                <div class="toggle-btn" onclick="toggleSidebar()">☰</div>
+                <ul class="menu">
+                    <li><a href="Index"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+                    <li><a href="DashboardUser"><i class="fa-solid fa-user"></i><span>Users</span></a></li>
+                    <li><a href="VouchersDashBoard"><i class="fa-solid fa-ticket"></i><span>Vouchers</span></a></li>
+                    <li><a href="ViewNewsDashboard"><i class="fa-solid fa-newspaper"></i><span>News</span></a></li>
+                    </li>
+                    <li>  <a href="ViewAllRoomsForDashboard">List Rooms</a>
+                    </li>
+                    <li>         <a href="ViewServicesDashboard">Services</a>
+                    </li>
+                    <li>         <a href="BookingConfirmation">List Bookings</a>
+                    </li>
+                    <li>         <a href="ViewAmenitiesDashboard">List Amenities</a>
+                    </li>
+                    <li>         <a href="ViewAllCustomersDashboard">List Customers</a>
+                    </li>
+                                        <li><a href="Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
+
+                </ul>
+            </div>
+
+            <script>
+                function toggleSidebar() {
+                    document.getElementById('sidebar').classList.toggle('open');
+                }
+            </script>
 
     </body>
 </html>

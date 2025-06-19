@@ -12,7 +12,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Chi Tiết Tin Tức</title>
+    <title>News Details</title>
     <style>
         * {
             box-sizing: border-box;
@@ -113,17 +113,17 @@
         <div class="news-title">${news.title}</div>
 
         <div class="news-meta">
-            <span>🕒 Ngày đăng: <strong>${news.datePosted}</strong></span>
-            <span>👤 Người đăng: <strong>${news.userId}</strong></span>
-            <span>👁️ Lượt xem: <strong>${news.viewcount}</strong></span>
+            <span>🕒 Posted Date: <strong>${news.datePosted}</strong></span>
+            <span>👤 Posted by: <strong>${news.userId}</strong></span>
+            <span>👁️ View: <strong>${news.viewcount}</strong></span>
         </div>
 
         <img class="news-image" src="${news.imageURL}" alt="Ảnh tin tức">
 
-        <div class="news-summary"><strong>Tóm tắt:</strong> ${news.summary}</div>
+        <div class="news-summary"><strong>Summery:</strong> ${news.summary}</div>
 
         <div class="news-content">
-            <strong>Nội dung:</strong><br><br>
+            <strong>Content:</strong><br><br>
             ${news.content}
         </div>
     </div>

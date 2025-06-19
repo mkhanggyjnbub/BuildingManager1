@@ -11,10 +11,11 @@ import java.time.LocalDateTime;
  * @author KHANH
  */
 public class MaintenanceSchedule {
+
     private int maintenanceID;
     private int consumableID;
     private int equipmentID;
-    private string note;
+    private String note;
     private LocalDateTime date;
     private int userID;
     private int statusID;
@@ -22,11 +23,11 @@ public class MaintenanceSchedule {
     private Equipment equipment;
     private MaintenanceStatuses maintenanceStatuses;
     private Users users;
- 
+
     public MaintenanceSchedule() {
     }
 
-    public MaintenanceSchedule(int maintenanceID, int consumableID, int equipmentID, string note, LocalDateTime date, int userID, int statusID, Rooms rooms, Equipment equipment, MaintenanceStatuses maintenanceStatuses, Users users) {
+    public MaintenanceSchedule(int maintenanceID, int consumableID, int equipmentID, String note, LocalDateTime date, int userID, int statusID, Rooms rooms, Equipment equipment, MaintenanceStatuses maintenanceStatuses, Users users) {
         this.maintenanceID = maintenanceID;
         this.consumableID = consumableID;
         this.equipmentID = equipmentID;
@@ -47,8 +48,6 @@ public class MaintenanceSchedule {
     public void setUsers(Users users) {
         this.users = users;
     }
-
-    
 
     public int getMaintenanceID() {
         return maintenanceID;
@@ -74,11 +73,11 @@ public class MaintenanceSchedule {
         this.equipmentID = equipmentID;
     }
 
-    public string getNote() {
+    public String getNote() {
         return note;
     }
 
-    public void setNote(string note) {
+    public void setNote(String note) {
         this.note = note;
     }
 
@@ -132,19 +131,12 @@ public class MaintenanceSchedule {
 
     private String formattedDate;
 
-public String getFormattedDate() {
-    return formattedDate;
+    public String getFormattedDate() {
+        return formattedDate;
+    }
+
+    public void setFormattedDate(String formattedDate) {
+        this.formattedDate = formattedDate;
+    }
+
 }
-
-public void setFormattedDate(String formattedDate) {
-    this.formattedDate = formattedDate;
-}
-
-}
- 
-
-
-
-
-
-

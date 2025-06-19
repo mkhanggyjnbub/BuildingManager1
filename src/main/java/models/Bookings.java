@@ -18,22 +18,38 @@ public class Bookings {
     private int userId;
     private Date startDate;
     private Date endDate;
-    private boolean status;
-    private String roomNumber;
-    private String userName;
-    
-    public Bookings(){
-        
+    private String status;
+    private Rooms rooms;
+    private Customers customers;
+
+    public Bookings() {
+
     }
 
-    public boolean isStatus() {
+    public Rooms getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(Rooms rooms) {
+        this.rooms = rooms;
+    }
+
+    public Customers getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(Customers customers) {
+        this.customers = customers;
+    }
+
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
-    
+
     public int getBookingId() {
         return bookingId;
     }
@@ -82,23 +98,4 @@ public class Bookings {
         this.endDate = endDate;
     }
 
-    public String getRoomNumber() {
-        return roomNumber;
-    }
-
-    public void setRoomNumber(String roomNumber) {
-        this.roomNumber = roomNumber;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-    
-    
 }
-
-    
