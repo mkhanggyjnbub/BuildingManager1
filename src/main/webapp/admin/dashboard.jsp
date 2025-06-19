@@ -152,10 +152,8 @@
     </head>
     <body>
 
-        <a href="Index">Quay về trang chủ</a>
-        <a href="DashboardUser">DashBoardUser</a>
-        <a href="VouchersDashBoard">voucher</a>
-        <a href="ViewNewsDashboard">NewsDb</a>
+        <!--<a href="Index">Quay về trang chủ</a>-->
+  
 
 
         <!-- Navbar -->
@@ -174,13 +172,16 @@
                 <li><a href="DashboardUser"><i class="fa-solid fa-user"></i><span>Users</span></a></li>
                 <li><a href="VouchersDashBoard"><i class="fa-solid fa-ticket"></i><span>Vouchers</span></a></li>
                 <li><a href="ViewNewsDashboard"><i class="fa-solid fa-newspaper"></i><span>News</span></a></li>
+                <li><a href="BookingConfirmation">List Bookings</a>
+                </li>
+                <li>  <a href="ViewAmenitiesDashboard">List Amenities</a>
+                <li>  <a href="ViewAllRoomsForDashboard">List Rooms</a>
+                </li>
+                 <li><a href="ViewAllCustomersDashboard">List Customers</a>
+                </li>
+                </li>
                 <li><a href="Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
-                <li>         <a href="BookingConfirmation">List Bookings</a>
-                </li>
-                <li>         <a href="ViewAmenitiesDashboard">List Amenities</a>
-                </li>
-                <li>         <a href="ViewAllCustomersDashboard">List Customers</a>
-                </li>
+
             </ul>
         </div>
 
