@@ -4,7 +4,6 @@
  */
 package dao;
 
-import com.nimbusds.openid.connect.sdk.assurance.evidences.Voucher;
 import db.ConnectData;
 import models.Vouchers;
 import java.sql.Connection;

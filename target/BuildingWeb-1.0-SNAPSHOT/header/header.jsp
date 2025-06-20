@@ -90,11 +90,72 @@
     <nav id="nav-menu">
         <a href="Index">Home</a>
         <a href="ViewRooms">Rooms</a>
-        <a href="ViewVouchers">Vouchers</a>
-        <a href="UserVouchers">My Vouchers</a>
-        <a href="ViewNews">News</a>
+
+        <!--<a href="#">Liên hệ</a>
+        <a href="UpImage">Up ảnh</a>
+        <a href="Notification">Notification</a>
+        <a href="TakeNotification">Nhận Notification</a>
+        -->       
+        <a href="ViewVouchers">voucher</a>
         <a href="ViewServices">Services</a>
-        <a href="Login">Login</a>
+        <!--                <a href="#">Liên hệ</a>
+                        <a href="UpImage">Up ảnh</a>
+                        <a href="Notification">Notification</a>
+                        <a href="TakeNotification">Nhận Notification</a>-->
+        <!--        <a href="ViewVouchers">voucher</a>-->
+        <c:if test="${not empty customerId  }">   <a href="UserVouchers">User voucher</a></c:if>
+        <a href="ViewNews">News</a>
+<!--  <a href="CloudinaryUpload">🔹Cloudinary</a>-->
+  
+        
+
+        <c:choose>
+            <c:when test="${empty accountType}">
+                <a href="Login">Login</a>
+            </c:when>
+            <c:when test="${accountType eq 'option1'}">
+                <c:choose>
+                    <c:when test="${role == 1}">
+                        <a href="Dashboard">Go To Dashboard</a>
+                        <a href="?id=${adminId}">${userName}</a>
+                    </c:when>
+                    <c:when test="${role == 2}">
+                        <a href="?id=${managerId}">${userName}</a>
+                    </c:when>
+                    <c:when test="${role == 3}">
+                        <a href="?id=${staffId}">${userName}</a>
+                    </c:when>
+                    <c:when test="${role == 4}">
+                        <a href="?id=${consumablesId}">${userName}</a>
+                    </c:when>
+                    <c:when test="${role == 5}">
+                        <a href="?id=${equipmentId}">${userName}</a>
+                    </c:when>
+                    <c:when test="${role == 6}">
+                        <a href="?id=${cusstomerId}">${userName}</a>
+                        </c:when>
+                </c:choose> 
+                        
+            </c:when>
+            <c:otherwise>
+                <div class="dichvukhachhang">
+                    <div class="dichvukhachhang-name">${userName}</div>
+                    <div class="dichvukhachhang-content">
+                        <a href="ViewCustomerProfile?id=${customerId}">🔹 Tài khoản của tôi</a>
+                        <!--                        <a href="#">🔹 Đơn đặt phòng</a>
+                                                <a href="#">🔹 Lịch sử thanh toán</a>
+                                                <a href="#">🔹 Ưu đãi thành viên</a>
+                                                <a href="#">🔹 Trợ giúp</a>-->
+                        <!--                        <a href="Logout">🔹 Đăng xuất</a>-->
+                      
+                    </div>
+                </div>
+
+            </c:otherwise>
+
+        </c:choose>
+                
+                
     </nav>
     <button id="menu-toggle">☰</button>
 </header>

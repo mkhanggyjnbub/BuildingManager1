@@ -356,7 +356,6 @@
         <%@include file="../header/header.jsp" %>
         <br>
         <br>
-
         <main>
             <div class="flex">
                 <section style="flex: 2">

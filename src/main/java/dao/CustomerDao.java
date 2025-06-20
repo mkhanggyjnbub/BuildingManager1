@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.CustomerStatus;
 import models.Customers;
 
 /**
@@ -152,7 +151,7 @@ public class CustomerDao {
 
     public List<Customers> getAllCustomers() throws SQLException {
         List<Customers> list = new ArrayList<>();
-        String sql = "SELECT * FROM Customers";
+            String sql = "SELECT * FROM Customers";
         try ( PreparedStatement pst = conn.prepareStatement(sql);  ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
@@ -172,7 +171,6 @@ public class CustomerDao {
                 c.setLastLogin(rs.getTimestamp("LastLogin").toLocalDateTime());
                 c.setIdentityNumber(rs.getString("IdentityNumber"));
                 c.setJoinDate(rs.getDate("JoinDate"));
-
                 list.add(c);
             }
         }

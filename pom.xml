@@ -16,7 +16,7 @@
   
 
     <dependencies>
-        <!-- Nếu dùng Maven -->
+   
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
@@ -82,7 +82,7 @@
             <version>1.31.4</version>
         </dependency>
 
-        <!-- Xử lý JSON -->
+        <!-- Xá»­ lÃ½ JSON -->
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>

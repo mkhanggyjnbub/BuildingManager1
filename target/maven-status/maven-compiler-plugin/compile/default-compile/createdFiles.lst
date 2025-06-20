@@ -26,7 +26,6 @@ controllers\booking\BookingConfirmation.class
 models\Employees.class
 models\Services.class
 controllers\services\ViewServices.class
-models\CustomerStatus.class
 models\Vouchers.class
 models\RoomReviews.class
 controllers\services\DeleteServiceDashboard.class

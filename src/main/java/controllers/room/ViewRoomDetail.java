@@ -25,7 +25,7 @@ import models.Rooms;
  *
  * @author Kiều Hoàng Mạnh Khang - ce180749
  */
-@WebServlet(name = "ViewRoomDetail", urlPatterns = {"/ViewRoomDetail"})
+@WebServlet(name = "ViewRoom", urlPatterns = {"/ViewRoomDetail"})
 public class ViewRoomDetail extends HttpServlet {
 
     /**
