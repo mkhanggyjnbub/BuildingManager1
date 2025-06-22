@@ -5,6 +5,7 @@
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -126,27 +127,54 @@
             }
 
             .voucher-table th:nth-child(4),
-.voucher-table td:nth-child(4) {
-    text-align: center;
-}
+            .voucher-table td:nth-child(4) {
+                text-align: center;
+            }
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1000;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgba(0,0,0,0.5);
+            }
+
+            .modal-content {
+                background-color: #fff;
+                margin: 10% auto;
+                padding: 20px;
+                width: 50%;
+                border-radius: 10px;
+                position: relative;
+            }
+
+            .close {
+                position: absolute;
+                top: 10px;
+                right: 15px;
+                font-size: 24px;
+                cursor: pointer;
+            }
 
         </style>
-    </head>
-    <body>
-        <h1 class="title">Quản lý Voucher</h1>
-        <a href="AddVoucher" class="btn btn-add"> Thêm Voucher </a> <br>
         
 
-
+    </head>
+    <body>
+        <h1 class="title">Voucher Management</h1>
+        <a href="AddVoucher" class="btn btn-add">Add Voucher</a> <br>
 
         <div class="voucher-list">
             <table class="voucher-table">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>Numerical order</th>
                         <th>Voucher Code</th>
-                        <th>Hạn sử dụng</th>
-                        <th>Hành động</th>
+                        <th>Expiry</th>
+                        <th>Action</th>
                     </tr>         
                 </thead>
                 <tbody>
@@ -154,14 +182,15 @@
                         <tr>
                             <td>${status.index + 1}</td>
                             <td>${v.code}</td>
-                            <td>${v.endDate}</td>
+                            <td>${v.formattedEndDate}</td>
+
                             <td>
                                 <div class="action-buttons">
-                                    <a href="AdminViewVoucher?voucherId=${v.voucherId}" class="btn btn-view">xem</a>
-                                    <a href="EditVoucher?voucherId=${v.voucherId}" class="btn btn-edit">sửa</a>
-                                    <form action="DeleteVoucher" method="get" onsubmit="return confirm('Bạn có chắc muốn xóa voucher này?')">
+                                    <a href="AdminViewVoucher?voucherId=${v.voucherId}" class="btn btn-view">View</a>
+                                    <a href="EditVoucher?voucherId=${v.voucherId}" class="btn btn-edit">Edit</a>
+                                    <form action="DeleteVoucher" method="get" onsubmit="return confirm('Are you sure you want to delete this voucher?')">
                                         <input type="hidden" name="id" value="${v.voucherId}" />
-                                        <button type="submit" class="btn btn-delete">xóa</button>
+                                        <button type="submit" class="btn btn-delete">Delete</button>
                                     </form>
                                 </div>
                             </td>

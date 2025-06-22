@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -68,38 +69,29 @@ public class ViewVouchers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = (HttpSession) request.getSession();
-        if (session.getAttribute("customerId") == null) {
-            response.sendRedirect("Login");
-        }
+        HttpSession session = request.getSession();
+        Object id = session.getAttribute("customerId");
 
-        String customerId = session.getAttribute("customerId").toString();
         try {
-            int id = Integer.parseInt(customerId);
             VoucherDAO voucherDao = new VoucherDAO();
 
-            // Lấy tất cả các voucher còn hiệu lực
+         
             List<Vouchers> allVouchers = voucherDao.getAllAvailableVouchers();
-
-            // Lấy các voucher mà user đã lưu
-            List<Vouchers> savedVouchers = voucherDao.checkVoucherById(id);
-
-            // Dùng Set để check nhanh voucherId nào đã lưu
-//            Set<Integer> savedIds = new HashSet<>();
-//            for (Vouchers v : savedVouchers) {
-//                savedIds.add(v.getVoucherId());
-//                System.out.println(v.getVoucherId());
-//            }
-
-            // Gửi dữ liệu sang JSP
             request.setAttribute("vouchers", allVouchers);
+
+            // Nếu đã login thì lấy thêm danh sách voucher đã lưu
+            List<Vouchers> savedVouchers = new ArrayList<>();
+            if (id != null) {
+                int customerId = Integer.parseInt(id.toString());
+                savedVouchers = voucherDao.checkVoucherById(customerId);
+            }
             request.setAttribute("savedIds", savedVouchers);
 
             request.getRequestDispatcher("voucher/viewVouchers.jsp").forward(request, response);
 
         } catch (Exception ex) {
             ex.printStackTrace();
-
+            response.sendRedirect("ViewVouchers");  // quay về nếu lỗi
         }
     }
 
@@ -114,98 +106,39 @@ public class ViewVouchers extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        try {
-//            int voucherId = Integer.parseInt(request.getParameter("voucherId"));
-//            System.out.println("voucherId: " + voucherId);
-//
-//            HttpSession session = request.getSession();
-//
-//            String customerId = (String) session.getAttribute("customerId");
-//
-//            int id = Integer.parseInt((String) session.getAttribute("customerId"));
-//            System.out.println("CustomerId: " + id);
-//            if (customerId == null) {
-//                request.setAttribute("message", "Bạn cần đăng nhập!");
-//                response.sendRedirect("login");
-//                return;
-//            }
-//
-//            VoucherDAO dao = new VoucherDAO();
-//            boolean alreadySaved = dao.hasSavedVoucher(id, voucherId);
-//
-//            if (!alreadySaved) {
-//                dao.saveCustomerVoucher(id, voucherId);
-//                request.setAttribute("message", "Lưu thành công!");
-//            } else {
-//                request.setAttribute("message", "Bạn đã lưu voucher này rồi!");
-//            }
-//
-//            List vouchers = dao.getAllAvailableVouchers();
-//            List saved = dao.getVouchersByCustomer(id);
-//
-//            request.setAttribute("vouchers", vouchers);
-//            request.setAttribute("voucherCustomer", saved);
-//
-//            request.getRequestDispatcher("voucher/viewVouchers.jsp").forward(request, response);
-//
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//            request.setAttribute("message", "Có lỗi xảy ra: " + ex.getMessage());
-//            response.sendRedirect("ViewVouchers");
-//        }
 
-        try {
-            int voucherId = Integer.parseInt(request.getParameter("voucherId"));
-            HttpSession session = request.getSession();
-            String customerStr = (String) session.getAttribute("customerId");
+        int voucherId = Integer.parseInt(request.getParameter("voucherId"));
+        HttpSession session = request.getSession();
+        String customerStr = (String) session.getAttribute("customerId");
 
-            if (customerStr == null) {
-                response.sendRedirect("Login");
-                return;
-            }
-
-            int customerId = Integer.parseInt(customerStr);
-            VoucherDAO dao = new VoucherDAO();
-
-            // Nếu chưa lưu thì mới xử lý
-            if (!dao.hasSavedVoucher(customerId, voucherId)) {
-                Connection conn = null;
-                try {
-                    conn = ConnectData.getConnection();
-                    conn.setAutoCommit(false);
-
-                    boolean inserted = dao.saveCustomerVoucher(customerId, voucherId, conn);
-                    boolean updated = dao.decreaseVoucherQuantity(voucherId, conn);
-
-                    if (inserted && updated) {
-                        conn.commit(); // thành công
-                    } else {
-                        conn.rollback(); // thất bại
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    if (conn != null) {
-                        conn.rollback();
-                    }
-                } finally {
-                    if (conn != null) {
-                        try {
-                            conn.setAutoCommit(true);
-                            conn.close();
-                        } catch (SQLException ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                }
-            }
-
-            // Sau khi xử lý xong thì gọi lại chính servlet này bằng GET để load lại dữ liệu và hiển thị mới
-            response.sendRedirect("ViewVouchers");
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            response.sendRedirect("ViewVouchers"); // fallback
+        if (customerStr == null) {
+            response.sendRedirect("Login");
+            return;
         }
+
+        int customerId = Integer.parseInt(customerStr);
+        VoucherDAO dao = new VoucherDAO();
+
+        try ( Connection conn = ConnectData.getConnection()) {
+            conn.setAutoCommit(false);
+
+            if (!dao.hasSavedVoucher(customerId, voucherId)) {
+                boolean inserted = dao.saveCustomerVoucher(customerId, voucherId, conn);
+                boolean updated = dao.decreaseVoucherQuantity(voucherId, conn);
+
+                if (inserted && updated) {
+                    conn.commit();
+                } else {
+                    conn.rollback();
+                }
+            } else {
+                conn.rollback();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        response.sendRedirect("ViewVouchers");
     }
 
     /**

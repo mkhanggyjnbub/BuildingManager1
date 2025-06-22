@@ -132,12 +132,7 @@
         </style>
     </head>
     <body>
-        <h1 class="title">🎁 Kho Voucher</h1>
-        <%-- 
-        <c:if test="${not empty message}">
-            <div class="alert">${message}</div>
-        </c:if>
-        --%>
+        <h1 class="title">🎁 Voucher warehouse</h1>
 
         <div class="voucher-list">
             <c:forEach var="v" items="${vouchers}">
@@ -153,9 +148,9 @@
                     <div class="voucher-content">
                         <div class="voucher-info">
                             <h2 class="voucher-code">${v.code}</h2>
-                            <p class="voucher-desc">Đơn tối thiểu: ${v.minOrderAmount} VNĐ</p>
+                            <p class="voucher-desc">Minimum application: ${v.minOrderAmount} VNĐ</p>
                             <p class="voucher-desc">${v.description}</p>
-                            <p class="voucher-time">HSD: ${v.endDate}</p>
+                            <p class="voucher-time">Expiry ${v.endDate}</p>
                         </div>
 
                         <div class="voucher-action">
@@ -167,15 +162,15 @@
 
                             <c:choose>
                                 <c:when test="${isSaved}">
-                                    <p class="saved-label">Đã nhận</p>
+                                    <p class="saved-label">Received</p>
                                 </c:when>
                                 <c:when test="${v.quantity == 0}">
-                                    <p class="status-label out-label">Đã hết</p>
+                                    <p class="status-label out-label">Voucher has expired</p>
                                 </c:when>
                                 <c:otherwise>
                                     <form action="ViewVouchers" method="post">
                                         <input type="hidden" name="voucherId" value="${v.voucherId}" />
-                                        <button class="save-btn">Lưu voucher</button>
+                                        <button class="save-btn">Save voucher</button>
                                     </form>
                                 </c:otherwise>
                             </c:choose>

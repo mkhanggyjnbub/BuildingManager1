@@ -4,7 +4,6 @@
  */
 package dao;
 
-import com.nimbusds.openid.connect.sdk.assurance.evidences.Voucher;
 import db.ConnectData;
 import models.Vouchers;
 import java.sql.Connection;
@@ -12,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -30,9 +30,9 @@ public class VoucherDAO {
         conn = ConnectData.getConnection();
     }
 
-    public List selectAllVouchers() {
+    public List<Vouchers> selectAllVouchers() {
         ResultSet rs = null;
-        List list = new ArrayList<>();
+        List<Vouchers> list = new ArrayList<>();
 
         try {
             String sql = "SELECT * FROM Vouchers";
@@ -45,8 +45,8 @@ public class VoucherDAO {
                 voucher.setCode(rs.getString("Code"));
                 voucher.setDiscountPercent(rs.getInt("DiscountPercent"));
                 voucher.setMinOrderAmount(rs.getBigDecimal("MinOrderAmount"));
-                voucher.setStartDate(rs.getDate("StartDate"));
-                voucher.setEndDate(rs.getDate("EndDate"));
+                voucher.setStartDate(rs.getTimestamp("StartDate").toLocalDateTime());
+                voucher.setEndDate(rs.getTimestamp("EndDate").toLocalDateTime());
                 voucher.setDescription(rs.getString("Description"));
                 voucher.setQuantity(rs.getInt("Quantity"));
                 voucher.setIsActive(rs.getBoolean("isActive"));
@@ -68,8 +68,8 @@ public class VoucherDAO {
             ps.setString(1, voucher.getCode());
             ps.setObject(2, voucher.getDiscountPercent());
             ps.setBigDecimal(3, voucher.getMinOrderAmount());
-            ps.setDate(4, voucher.getStartDate());
-            ps.setDate(5, voucher.getEndDate());
+            ps.setTimestamp(4, Timestamp.valueOf(voucher.getStartDate()));
+            ps.setTimestamp(5, Timestamp.valueOf(voucher.getEndDate()));
             ps.setString(6, voucher.getDescription());
             ps.setInt(7, voucher.getQuantity());
             ps.setBoolean(8, voucher.getIsActive());
@@ -107,8 +107,8 @@ public class VoucherDAO {
                 v.setCode(rs.getString("Code"));
                 v.setDiscountPercent(rs.getInt("DiscountPercent"));
                 v.setMinOrderAmount(rs.getBigDecimal("MinOrderAmount"));
-                v.setStartDate(rs.getDate("StartDate"));
-                v.setEndDate(rs.getDate("EndDate"));
+                v.setStartDate(rs.getTimestamp("StartDate").toLocalDateTime());
+                v.setEndDate(rs.getTimestamp("EndDate").toLocalDateTime());
                 v.setDescription(rs.getString("Description"));
                 v.setQuantity(rs.getInt("Quantity"));
                 v.setIsActive(rs.getBoolean("IsActive"));
@@ -127,8 +127,8 @@ public class VoucherDAO {
             ps.setString(1, v.getCode());
             ps.setInt(2, v.getDiscountPercent());
             ps.setBigDecimal(3, v.getMinOrderAmount());
-            ps.setDate(4, v.getStartDate());
-            ps.setDate(5, v.getEndDate());
+            ps.setTimestamp(4, Timestamp.valueOf(v.getStartDate()));
+            ps.setTimestamp(5, Timestamp.valueOf(v.getEndDate()));
             ps.setInt(6, v.getQuantity());
             ps.setString(7, v.getDescription());
             ps.setBoolean(8, v.getIsActive());
@@ -179,31 +179,6 @@ public class VoucherDAO {
         }
     }
 
-//    public boolean saveCustomerVoucher(int customerId, int voucherId) {
-//        String sql = "INSERT INTO CustomerVouchers (CustomerId, VoucherId, IsUsed, AssignedDate) "
-//                + "VALUES (?, ?, 0, GETDATE())";
-//
-//        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
-//
-//            ps.setInt(1, customerId);
-//            ps.setInt(2, voucherId);
-//
-//            return ps.executeUpdate() > 0;
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//    }
-    public boolean saveCustomerVoucher(int customerId, int voucherId, Connection conn) throws SQLException {
-        String sql = "INSERT INTO CustomerVouchers (CustomerId, VoucherId, IsUsed, AssignedDate) VALUES (?, ?, 0, GETDATE())";
-        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, customerId);
-            ps.setInt(2, voucherId);
-            return ps.executeUpdate() > 0;
-        }
-    }
-
     public boolean decreaseVoucherQuantity(int voucherId, Connection conn) throws SQLException {
         String sql = "UPDATE Vouchers SET Quantity = Quantity - 1 WHERE VoucherId = ? AND Quantity > 0";
         try ( PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -225,8 +200,8 @@ public class VoucherDAO {
                 v.setCode(rs.getString("Code"));
                 v.setDescription(rs.getString("Description"));
                 v.setDiscountPercent(rs.getInt("DiscountPercent"));
-                v.setStartDate(rs.getDate("StartDate"));
-                v.setEndDate(rs.getDate("EndDate"));
+                v.setStartDate(rs.getTimestamp("StartDate").toLocalDateTime());
+                v.setEndDate(rs.getTimestamp("EndDate").toLocalDateTime());
                 v.setMinOrderAmount(rs.getBigDecimal("MinOrderAmount"));
                 v.setQuantity(rs.getInt("Quantity"));
                 list.add(v);
@@ -254,8 +229,8 @@ public class VoucherDAO {
                 v.setCode(rs.getString("Code"));
                 v.setDescription(rs.getString("Description"));
                 v.setDiscountPercent(rs.getInt("DiscountPercent"));
-                v.setStartDate(rs.getDate("StartDate"));
-                v.setEndDate(rs.getDate("EndDate"));
+                v.setStartDate(rs.getTimestamp("StartDate").toLocalDateTime());
+                v.setEndDate(rs.getTimestamp("EndDate").toLocalDateTime());
                 v.setMinOrderAmount(rs.getBigDecimal("MinOrderAmount"));
                 v.setQuantity(rs.getInt("Quantity"));
                 list.add(v);
@@ -264,6 +239,16 @@ public class VoucherDAO {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public boolean saveCustomerVoucher(int customerId, int voucherId, Connection conn) throws SQLException {
+
+        String sql = "INSERT INTO CustomerVouchers (CustomerId, VoucherId, IsUsed, AssignedDate) VALUES (?, ?, 0, GETDATE())";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, customerId);
+            ps.setInt(2, voucherId);
+            return ps.executeUpdate() > 0;
+        }
     }
 
 }

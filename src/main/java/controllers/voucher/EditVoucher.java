@@ -15,6 +15,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -90,8 +92,17 @@ public class EditVoucher extends HttpServlet {
         v.setVoucherId(Integer.parseInt(request.getParameter("voucherId")));
         v.setCode(request.getParameter("code"));
         v.setDiscountPercent(Integer.parseInt(request.getParameter("discountPercent")));
-        v.setStartDate(Date.valueOf(request.getParameter("startDate")));
-        v.setEndDate(Date.valueOf(request.getParameter("endDate")));
+        
+        String startDateStr = request.getParameter("startDate");
+        String endDateStr = request.getParameter("endDate");
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        LocalDateTime startDateTime = LocalDateTime.parse(startDateStr, formatter);
+        LocalDateTime endDateTime = LocalDateTime.parse(endDateStr, formatter);
+        v.setStartDate(startDateTime);
+        v.setEndDate(endDateTime);
+        
         v.setMinOrderAmount(new BigDecimal(request.getParameter("minOrderAmount")));
         v.setDescription(request.getParameter("description"));
         v.setQuantity(Integer.parseInt(request.getParameter("quantity")));

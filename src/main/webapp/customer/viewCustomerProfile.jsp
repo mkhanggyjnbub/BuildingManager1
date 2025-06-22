@@ -121,15 +121,8 @@
                     </p>
                     <p>
                         <strong>Status: </strong>
-                        <span class="status-indicator ${userProfile.statusId == 1 ? 'active' : 'inactive'}"></span>
-                        <c:choose>
-                            <c:when test="${userProfile.statusId == 1}">
-                                Active
-                            </c:when>
-                            <c:otherwise>
-                                Inactive
-                            </c:otherwise>
-                        </c:choose>
+                        <span class="status-indicator "></span>
+                        ${userProfile.status}
                     </p>
                     <p><strong>Last Login:</strong> 
                         <c:choose>

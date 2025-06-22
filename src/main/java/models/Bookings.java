@@ -5,6 +5,7 @@
 package models;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -15,15 +16,99 @@ public class Bookings {
     private int bookingId;
     private int roomId;
     private int customerId;
-    private int userId;
-    private Date startDate;
-    private Date endDate;
+    private int ConfirmedBy;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private String status;
     private Rooms rooms;
     private Customers customers;
+    private LocalDateTime RequestTime;
+    private LocalDateTime ConfirmationTime;
+    private LocalDateTime CheckInTime;
+    private LocalDateTime CheckOutTime;
+    private LocalDateTime CancelTime;
+    private int CanceledBy;
+    private LocalDateTime DeletedTime;
+    private String DeletedBy;
+    private String Notes;
+
+    private String formattedStartDate;
+    private String formattedEndDate;
 
     public Bookings() {
 
+    }
+
+    public int getCanceledBy() {
+        return CanceledBy;
+    }
+
+    public void setCanceledBy(int CanceledBy) {
+        this.CanceledBy = CanceledBy;
+    }
+
+    public LocalDateTime getRequestTime() {
+        return RequestTime;
+    }
+
+    public void setRequestTime(LocalDateTime RequestTime) {
+        this.RequestTime = RequestTime;
+    }
+
+    public LocalDateTime getConfirmationTime() {
+        return ConfirmationTime;
+    }
+
+    public void setConfirmationTime(LocalDateTime ConfirmationTime) {
+        this.ConfirmationTime = ConfirmationTime;
+    }
+
+    public LocalDateTime getCheckInTime() {
+        return CheckInTime;
+    }
+
+    public void setCheckInTime(LocalDateTime CheckInTime) {
+        this.CheckInTime = CheckInTime;
+    }
+
+    public LocalDateTime getCheckOutTime() {
+        return CheckOutTime;
+    }
+
+    public void setCheckOutTime(LocalDateTime CheckOutTime) {
+        this.CheckOutTime = CheckOutTime;
+    }
+
+    public LocalDateTime getCancelTime() {
+        return CancelTime;
+    }
+
+    public void setCancelTime(LocalDateTime CancelTime) {
+        this.CancelTime = CancelTime;
+    }
+
+    public LocalDateTime getDeletedTime() {
+        return DeletedTime;
+    }
+
+    public void setDeletedTime(LocalDateTime DeletedTime) {
+        this.DeletedTime = DeletedTime;
+    }
+
+    public String getDeletedBy() {
+        return DeletedBy;
+    }
+
+    public void setDeletedBy(String DeletedBy) {
+        this.DeletedBy = DeletedBy;
+    }
+
+    public String getNotes() {
+        return Notes;
+    }
+
+    public void setNotes(String Notes) {
+        this.Notes = Notes;
     }
 
     public Rooms getRooms() {
@@ -74,28 +159,46 @@ public class Bookings {
         this.customerId = customerId;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getConfirmedBy() {
+        return ConfirmedBy;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setConfirmedBy(int ConfirmedBy) {
+        this.ConfirmedBy = ConfirmedBy;
     }
 
-    public Date getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
+
+    public String getFormattedStartDate() {
+        return formattedStartDate;
+    }
+
+    public void setFormattedStartDate(String formattedStartDate) {
+        this.formattedStartDate = formattedStartDate;
+    }
+
+    public String getFormattedEndDate() {
+        return formattedEndDate;
+    }
+
+    public void setFormattedEndDate(String formattedEndDate) {
+        this.formattedEndDate = formattedEndDate;
+    }
+    
+    
 
 }

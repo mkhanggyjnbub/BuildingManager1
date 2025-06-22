@@ -76,27 +76,27 @@
     </style>
     </head>
     <body>
-        <h1>🎁 Danh sách voucher bạn đã lưu</h1>
+        <h1>🎁 Your voucher(s)</h1>
 
     <c:choose>
         <c:when test="${empty savedVouchers}">
-            <p>Bạn chưa lưu voucher nào.</p>
+            <p>You have not saved any vouchers yet.</p>
         </c:when>
         <c:otherwise>
             <div class="voucher-list">
                 <c:forEach var="v" items="${savedVouchers}">
                     <div class="voucher-card">
                         <h3>${v.code}</h3>                        
-                        <p>Giảm ${v.discountPercent}%</p>
-                        <p>Đơn tối thiểu: ${v.minOrderAmount} VNĐ</p>
+                        <p>Reduce ${v.discountPercent}%</p>
+                        <p>Minimum application: ${v.minOrderAmount} VNĐ</p>
                         <p>${v.description}</p>
-                        <p>HSD: ${v.endDate}</p>
+                        <p>Expiry: ${v.endDate}</p>
                     </div>
                 </c:forEach>
             </div>
         </c:otherwise>
     </c:choose>
 
-    <a href="ViewVouchers">← Quay lại kho voucher</a>
+    <a href="ViewVouchers">← Return to voucher warehouse</a>
 </body>
 </html>

@@ -12,149 +12,160 @@
     <head>
         <title>Sửa Voucher</title>
         <style>
+            * {
+                box-sizing: border-box;
+            }
+
             body {
                 margin: 0;
                 padding: 0;
-                font-family: 'Segoe UI', sans-serif;
-                background-color: #f4f6f8;
+                font-family: "Segoe UI", sans-serif;
+                background-color: #f1f3f5;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                height: 100vh;
-            }
-
-            h2 {
-                text-align: center;
-                margin-bottom: 10px;
-                color: #333;
+                min-height: 100vh;
             }
 
             form {
-                background-color: #fff;
-                padding: 24px;
-                border-radius: 12px;
-                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-                max-width: 600px;
                 width: 100%;
+                max-width: 700px;
+                background: #fff;
+                border-radius: 16px;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+                padding: 2rem;
+                display: flex;
+                flex-direction: column;
             }
 
-            .form-grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 12px 16px;
-                margin-bottom: 16px;
+            h2 {
+                margin: 0;
+                text-align: center;
+                font-size: 1.8rem;
+                color: #333;
+            }
+
+            .form-group {
+                display: flex;
+                flex-direction: column;
             }
 
             label {
-                font-size: 13px;
-                font-weight: 500;
-                color: #444;
-                align-self: center;
+                font-weight: 600;
+                margin-bottom: 0.3rem;
+                color: #555;
             }
 
-            input[type="text"],
-            input[type="number"],
-            input[type="date"],
-            textarea {
-                font-size: 13px;
-                padding: 8px 10px;
+            input, select, textarea {
+                padding: 0.6rem;
+                font-size: 1rem;
                 border: 1px solid #ccc;
-                border-radius: 6px;
+                border-radius: 8px;
                 width: 100%;
             }
 
             textarea {
                 resize: vertical;
-                min-height: 60px;
-                width: 100%;
-                margin-top: 4px;
-                margin-bottom: 12px;
-            }
-
-            input:focus,
-            textarea:focus {
-                outline: none;
-                border-color: #007bff;
+                min-height: 80px;
             }
 
             .button-group {
                 display: flex;
-                justify-content: flex-end;
-                gap: 10px;
-                margin-top: 10px;
+                justify-content: space-between;
+                gap: 1rem;
+                margin-top: 1rem;
             }
 
-            button[type="submit"] {
-                padding: 8px 16px;
-                background-color: #007bff;
-                color: white;
+            button, .cancel-btn {
+                flex: 1;
+                padding: 0.75rem;
                 border: none;
-                border-radius: 6px;
-                font-size: 13px;
+                border-radius: 8px;
+                font-size: 1rem;
                 cursor: pointer;
+                text-align: center;
             }
 
-            button[type="submit"]:hover {
-                background-color: #0056b3;
+            button {
+                background-color: #28a745;
+                color: white;
             }
 
             .cancel-btn {
-                padding: 8px 16px;
-                font-size: 13px;
-                color: #555;
-                border: 1px solid #ccc;
-                border-radius: 6px;
+                background-color: #e0e0e0;
+                color: #333;
                 text-decoration: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            button:hover {
+                background-color: #218838;
             }
 
             .cancel-btn:hover {
-                background-color: #eee;
+                background-color: #ccc;
             }
         </style>
 
     </head>
     <body>
 
+    <body>
         <form action="/EditVoucher" method="post">
-            <h2>Sửa Voucher</h2>
+            <h2>Edit Voucher</h2>
             <input type="hidden" name="voucherId" value="${voucher.voucherId}" />
 
-            <div class="form-grid">
-                <label>Mã voucher:</label>
-                <input type="text" name="code" value="${voucher.code}" />
-
-                <label>Số lượng:</label>
-                <input type="number" name="quantity" value="${voucher.quantity}" />
-
-                <label>Phần trăm giảm (%):</label>
-                <input type="number" min ="0" name="discountPercent" value="${voucher.discountPercent}" />
-
-
-                <label>Đơn hàng tối thiểu:</label>
-                <input type="number" name="minOrderAmount" value="${voucher.minOrderAmount}" />
-
-                <label>Ngày bắt đầu:</label>
-                <input type="date" name="startDate" value="${voucher.startDate}" />
-
-                <label>Ngày kết thúc:</label>
-                <input type="date" name="endDate" value="${voucher.endDate}" />
-
-
+            <div class="form-group">
+                <label for="code">Voucher code</label>
+                <input type="text" id="code" name="code" value="${voucher.code}" required />
             </div>
 
-            <label>Mô tả:</label>
-            <textarea name="description">${voucher.description}</textarea>
+            <div class="form-group">
+                <label for="quantity">Quantity</label>
+                <input type="number" id="quantity" name="quantity" value="${voucher.quantity}" required />
+            </div>
 
-            <label>Trạng thái: hoạt động</label>
-            <input type="checkbox" name="isActive"
-                   <c:if test="${voucher.isActive}"> checked </c:if>/> 
+            <div class="form-group">
+                <label for="discountPercent">Percentage reduction (%)</label>
+                <input type="number" min="0" id="discountPercent" name="discountPercent" value="${voucher.discountPercent}" />
+            </div>
 
+            <div class="form-group">
+                <label for="minOrderAmount">Minimum order</label>
+                <input type="number" id="minOrderAmount" name="minOrderAmount" value="${voucher.minOrderAmount}" required />
+            </div>
+
+            <div class="form-group">
+                <label for="startDate">Start date</label>
+                <input type="date" id="startDate" name="startDate" value="${voucher.startDate}" required />
+            </div>
+
+            <div class="form-group">
+                <label for="endDate">End date</label>
+                <input type="date" id="endDate" name="endDate" value="${voucher.endDate}" required />
+            </div>
+
+            <div class="form-group">
+                <label for="description">Describe</label>
+                <textarea id="description" name="description">${voucher.description}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="isActive">Status</label>
+                <select id="isActive" name="isActive">
+                    <option value="false" ${!voucher.isActive ? 'selected' : ''}>Inactive</option>
+                    <option value="true" ${voucher.isActive ? 'selected' : ''}>Active</option>
+                </select>
+            </div>
 
             <div class="button-group">
-                <button type="submit">Cập nhật</button>
-                <a href="VouchersDashBoard" class="cancel-btn">Hủy</a>
+                <button type="submit">Update</button>
+                <a href="VouchersDashBoard" class="cancel-btn">Cancel</a>
             </div>
         </form>
     </body>
+
 
 </html>
