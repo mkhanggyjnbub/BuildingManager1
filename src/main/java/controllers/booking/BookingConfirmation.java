@@ -4,9 +4,7 @@
  */
 package controllers.booking;
 
-import controllers.voucher.*;
 import dao.BookingDao;
-import dao.VoucherDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,12 +13,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import models.Bookings;
-import models.Vouchers;
 
 /**
  *
@@ -129,6 +123,25 @@ public class BookingConfirmation extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        String actionType = request.getParameter("actionType");
+
+        if ("confirmBooking".equals(actionType)) {
+            int bookingId = Integer.parseInt(request.getParameter("bookingId"));
+            int confirmedBy = 3; // ví dụ hardcoded tạm thời
+
+            try {
+                BookingDao dao = new BookingDao();
+                dao.confirmBooking(bookingId, confirmedBy); // cập nhật trạng thái trong DB
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // Sau khi cập nhật xong thì redirect để hiển thị lại
+            response.sendRedirect("BookingConfirmation");
+            return;
+        }
+
+        // Xử lý tìm kiếm như cũ
         String roomNumber = request.getParameter("roomNumber");
         String fullName = request.getParameter("fullName");
         String startDate = request.getParameter("startDate");
@@ -142,7 +155,6 @@ public class BookingConfirmation extends HttpServlet {
         session.setAttribute("search_end", endDate);
         session.setAttribute("search_status", status);
 
-        // Redirect sang GET để tránh lỗi reload/resubmit
         response.sendRedirect("BookingConfirmation");
     }
 

@@ -5,6 +5,7 @@
 package dao;
 
 import db.ConnectData;
+import java.math.BigDecimal;
 import models.Vouchers;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,8 +44,8 @@ public class VoucherDAO {
                 Vouchers voucher = new Vouchers();
                 voucher.setVoucherId(rs.getInt("VoucherId"));
                 voucher.setCode(rs.getString("Code"));
-                voucher.setDiscountPercent(rs.getInt("DiscountPercent"));
-                voucher.setMinOrderAmount(rs.getBigDecimal("MinOrderAmount"));
+                voucher.setDiscountPercent(rs.getBigDecimal("discountPercent"));
+                voucher.setMinOrderAmount(rs.getLong("MinOrderAmount"));
                 voucher.setStartDate(rs.getTimestamp("StartDate").toLocalDateTime());
                 voucher.setEndDate(rs.getTimestamp("EndDate").toLocalDateTime());
                 voucher.setDescription(rs.getString("Description"));
@@ -66,8 +67,8 @@ public class VoucherDAO {
 
         try ( PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, voucher.getCode());
-            ps.setObject(2, voucher.getDiscountPercent());
-            ps.setBigDecimal(3, voucher.getMinOrderAmount());
+            ps.setBigDecimal(2, voucher.getDiscountPercent());
+            ps.setLong(3, voucher.getMinOrderAmount());
             ps.setTimestamp(4, Timestamp.valueOf(voucher.getStartDate()));
             ps.setTimestamp(5, Timestamp.valueOf(voucher.getEndDate()));
             ps.setString(6, voucher.getDescription());
@@ -105,8 +106,8 @@ public class VoucherDAO {
             if (rs.next()) {
                 v.setVoucherId(rs.getInt("voucherId"));
                 v.setCode(rs.getString("Code"));
-                v.setDiscountPercent(rs.getInt("DiscountPercent"));
-                v.setMinOrderAmount(rs.getBigDecimal("MinOrderAmount"));
+                v.setDiscountPercent(rs.getBigDecimal("discountPercent"));
+                v.setMinOrderAmount(rs.getLong("MinOrderAmount"));
                 v.setStartDate(rs.getTimestamp("StartDate").toLocalDateTime());
                 v.setEndDate(rs.getTimestamp("EndDate").toLocalDateTime());
                 v.setDescription(rs.getString("Description"));
@@ -125,8 +126,8 @@ public class VoucherDAO {
             String sql = "UPDATE Vouchers SET Code=?, DiscountPercent=?, MinOrderAmount=?, StartDate=?, EndDate=?, Quantity=?, Description=?, IsActive=? WHERE VoucherId=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, v.getCode());
-            ps.setInt(2, v.getDiscountPercent());
-            ps.setBigDecimal(3, v.getMinOrderAmount());
+            ps.setBigDecimal(2, v.getDiscountPercent());
+            ps.setLong(3, v.getMinOrderAmount());
             ps.setTimestamp(4, Timestamp.valueOf(v.getStartDate()));
             ps.setTimestamp(5, Timestamp.valueOf(v.getEndDate()));
             ps.setInt(6, v.getQuantity());
@@ -199,10 +200,10 @@ public class VoucherDAO {
                 v.setVoucherId(rs.getInt("VoucherId"));
                 v.setCode(rs.getString("Code"));
                 v.setDescription(rs.getString("Description"));
-                v.setDiscountPercent(rs.getInt("DiscountPercent"));
+                v.setMinOrderAmount(rs.getLong("MinOrderAmount"));
                 v.setStartDate(rs.getTimestamp("StartDate").toLocalDateTime());
                 v.setEndDate(rs.getTimestamp("EndDate").toLocalDateTime());
-                v.setMinOrderAmount(rs.getBigDecimal("MinOrderAmount"));
+                v.setDiscountPercent(rs.getBigDecimal("DiscountPercent"));
                 v.setQuantity(rs.getInt("Quantity"));
                 list.add(v);
             }
@@ -228,10 +229,10 @@ public class VoucherDAO {
                 v.setVoucherId(rs.getInt("VoucherId"));
                 v.setCode(rs.getString("Code"));
                 v.setDescription(rs.getString("Description"));
-                v.setDiscountPercent(rs.getInt("DiscountPercent"));
+                v.setDiscountPercent(rs.getBigDecimal("DiscountPercent"));
                 v.setStartDate(rs.getTimestamp("StartDate").toLocalDateTime());
                 v.setEndDate(rs.getTimestamp("EndDate").toLocalDateTime());
-                v.setMinOrderAmount(rs.getBigDecimal("MinOrderAmount"));
+                v.setMinOrderAmount(rs.getLong("MinOrderAmount"));
                 v.setQuantity(rs.getInt("Quantity"));
                 list.add(v);
             }
@@ -249,6 +250,29 @@ public class VoucherDAO {
             ps.setInt(2, voucherId);
             return ps.executeUpdate() > 0;
         }
+    }
+
+    public void updateExpiredVouchers() {
+        String sql = "UPDATE Vouchers SET IsActive = 0 WHERE EndDate < GETDATE() AND IsActive = 1";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int updateVoucherStatusOnly(Vouchers v) {
+        int result = 0;
+        try ( Connection conn = ConnectData.getConnection()) {
+            String sql = "UPDATE Vouchers SET IsActive = ? WHERE VoucherId = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setBoolean(1, v.getIsActive());
+            ps.setInt(2, v.getVoucherId());
+            result = ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
 }

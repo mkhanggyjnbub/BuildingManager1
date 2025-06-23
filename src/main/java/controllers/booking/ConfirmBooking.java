@@ -86,6 +86,11 @@ public class ConfirmBooking extends HttpServlet {
         request.setAttribute("numberNight", numberNight);
         request.setAttribute("adults", adults);
         request.setAttribute("children", children);
+
+        String voucherId = request.getParameter("voucherId");
+        if (voucherId != null && !voucherId.isEmpty()) {
+            request.setAttribute("voucherId", voucherId);
+        }
         request.getRequestDispatcher("booking/confirmBooking.jsp").forward(request, response);
     }
 

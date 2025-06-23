@@ -14,7 +14,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -85,38 +84,38 @@ public class EditVoucher extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        Vouchers v = new Vouchers();
-
         int id = Integer.parseInt(request.getParameter("voucherId"));
-        v.setVoucherId(id);
-        v.setVoucherId(Integer.parseInt(request.getParameter("voucherId")));
-        v.setCode(request.getParameter("code"));
-        v.setDiscountPercent(Integer.parseInt(request.getParameter("discountPercent")));
-        
-        String startDateStr = request.getParameter("startDate");
-        String endDateStr = request.getParameter("endDate");
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-        LocalDateTime startDateTime = LocalDateTime.parse(startDateStr, formatter);
-        LocalDateTime endDateTime = LocalDateTime.parse(endDateStr, formatter);
-        v.setStartDate(startDateTime);
-        v.setEndDate(endDateTime);
-        
-        v.setMinOrderAmount(new BigDecimal(request.getParameter("minOrderAmount")));
-        v.setDescription(request.getParameter("description"));
-        v.setQuantity(Integer.parseInt(request.getParameter("quantity")));
-        boolean isActive = request.getParameter("isActive") != null;
-        v.setIsActive(isActive);
+        boolean isActiveNew = Boolean.parseBoolean(request.getParameter("isActive"));
 
         VoucherDAO dao = new VoucherDAO();
-        int cnt = dao.updateVoucher(v);
+        Vouchers current = dao.getVoucherById(id); // Lấy voucher hiện tại từ DB
 
-        if (cnt != 0) {
-            response.sendRedirect("VouchersDashBoard");
+        // Nếu voucher đang active → chỉ cho update trạng thái
+        if (current.getIsActive()) {
+            current.setIsActive(isActiveNew); // chỉ đổi trạng thái
+            dao.updateVoucherStatusOnly(current); // viết riêng 1 hàm chỉ update IsActive
         } else {
-            response.sendRedirect("EditVoucher?voucherId=" + id + "&error=1");
+            // Nếu chưa active, thì cho chỉnh toàn bộ
+            Vouchers v = new Vouchers();
+            v.setVoucherId(id);
+            v.setCode(request.getParameter("code"));
+            v.setDiscountPercent(new BigDecimal(request.getParameter("discountPercent")));
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+            LocalDateTime startDateTime = LocalDateTime.parse(request.getParameter("startDate"), formatter);
+            LocalDateTime endDateTime = LocalDateTime.parse(request.getParameter("endDate"), formatter);
+
+            v.setStartDate(startDateTime);
+            v.setEndDate(endDateTime);
+            v.setMinOrderAmount(Long.parseLong(request.getParameter("minOrderAmount")));
+            v.setDescription(request.getParameter("description"));
+            v.setQuantity(Integer.parseInt(request.getParameter("quantity")));
+            v.setIsActive(isActiveNew);
+
+            dao.updateVoucher(v); // update toàn bộ
         }
+
+        response.sendRedirect("VouchersDashBoard");
     }
 
     /**

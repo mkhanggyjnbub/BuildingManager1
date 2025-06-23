@@ -11,92 +11,146 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Voucher đã lưu</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f7f7f7;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
-        }
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #f4f6fa;
+                color: #2c3e50;
+                margin: 0;
+                padding: 20px;
+            }
 
-        h1 {
-            color: #333;
-            margin-bottom: 30px;
-        }
+            h1 {
+                font-size: 28px;
+                margin-bottom: 20px;
+                color: #1a202c;
+            }
 
-        .voucher-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-        }
+            .voucher-list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+            }
 
-        .voucher-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 20px;
-            width: 300px;
-            text-align: left;
-            transition: transform 0.3s ease;
-        }
+            .voucher-card {
+                background-color: #ffffff;
+                border: 2px solid #4a90e2;
+                border-left: 6px solid #4a90e2;
+                color: #2c3e50;
+                border-radius: 10px;
+                padding: 16px 20px;
+                width: 280px;
+                box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+                transition: transform 0.2s ease;
+            }
 
-        .voucher-card:hover {
-            transform: scale(1.03);
-        }
+            .voucher-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            }
 
-        .voucher-card h3 {
-            color: #e91e63;
-            margin: 0 0 10px;
-        }
+            .voucher-card h3 {
+                margin-top: 0;
+                color: #2d3748;
+                font-size: 18px;
+                font-weight: 600;
+                margin-bottom: 10px;
+            }
 
-        .voucher-card p {
-            margin: 5px 0;
-            color: #555;
-        }
+            .voucher-card p {
+                margin: 6px 0;
+                font-size: 14px;
+                line-height: 1.4;
+            }
 
-        .back-link {
-            display: inline-block;
-            margin-top: 30px;
-            text-decoration: none;
-            color: #2196f3;
-            font-weight: bold;
-        }
+            .voucher-card p:last-child {
+                font-weight: bold;
+                color: #e74c3c;
+            }
 
-        .back-link:hover {
-            text-decoration: underline;
-        }
+            .btn-back {
+                display: inline-block;
+                margin: 10px 0 20px 0;
+                padding: 8px 16px;
+                background-color: #4a90e2;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                font-size: 14px;
+                text-decoration: none;
+                transition: background-color 0.2s ease;
+            }
 
-        .empty-message {
-            font-size: 18px;
-            color: #777;
-            margin-top: 50px;
-        }
-    </style>
+            .btn-back:hover {
+                background-color: #357ab8;
+            }
+
+            .voucher-card.expired {
+                background-color: #e0e0e0;
+                color: #888;
+                border: 1px dashed #aaa;
+            }
+
+            .expired-text {
+                color: #d9534f;
+                font-weight: bold;
+            }
+
+            .use-button {
+                margin-top: 10px;
+                padding: 8px 16px;
+                background-color: #28a745;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                font-weight: bold;
+                transition: background-color 0.3s ease;
+            }
+
+            .use-button:hover {
+                background-color: #218838;
+            }
+
+        </style>
+
     </head>
     <body>
-        <h1>🎁 Your voucher(s)</h1>
+        <h1 class="page-title">🎁 Your Voucher(s)</h1>
+        <a href="ViewVouchers" class="btn-back">← Return to voucher warehouse</a>
+        <c:choose>
+            <c:when test="${empty savedVouchers}">
+                <p class="empty-text">You have not saved any vouchers yet.</p>
+            </c:when>
+            <c:otherwise>
+                <div class="voucher-list">
+                    <c:forEach var="v" items="${savedVouchers}">
+                        <c:set var="expired" value="${v.endDate lt now}" />
 
-    <c:choose>
-        <c:when test="${empty savedVouchers}">
-            <p>You have not saved any vouchers yet.</p>
-        </c:when>
-        <c:otherwise>
-            <div class="voucher-list">
-                <c:forEach var="v" items="${savedVouchers}">
-                    <div class="voucher-card">
-                        <h3>${v.code}</h3>                        
-                        <p>Reduce ${v.discountPercent}%</p>
-                        <p>Minimum application: ${v.minOrderAmount} VNĐ</p>
-                        <p>${v.description}</p>
-                        <p>Expiry: ${v.endDate}</p>
-                    </div>
-                </c:forEach>
-            </div>
-        </c:otherwise>
-    </c:choose>
+                        <div class="voucher-card ${expired ? 'expired' : ''}">
+                            <h3>${v.code}</h3>
+                            <p>Reduce ${v.discountPercent}%</p>
+                            <p>Minimum application: ${v.minOrderAmount} VNĐ</p>
+                            <p>${v.description}</p>
+                            <p>Expiry: ${v.formattedEndDate}</p>
 
-    <a href="ViewVouchers">← Return to voucher warehouse</a>
-</body>
+                            <c:if test="${expired}">
+                                <p class="expired-text">Expired</p>
+                            </c:if>
+
+                            <c:if test="${!expired}">
+                                <form action="ConfirmBooking" method="get">
+                                     <input type="hidden" name="voucherId" value="${v.voucherId}" />
+                                    <button type="submit" class="use-button">Use Voucher</button>
+                                    <a href="${v.voucherId}" > class  </a>
+                                </form>
+                            </c:if>
+                        </div>
+                    </c:forEach>
+
+                </div>
+            </c:otherwise>
+        </c:choose>
+    </body>
+
 </html>

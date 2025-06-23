@@ -14,130 +14,131 @@
 
         <style>
             body {
-                font-family: 'Segoe UI', sans-serif;
-                background-color: #f5f7fa;
+                font-family: 'Segoe UI', Tahoma, sans-serif;
+                background-color: #f7f9fc;
                 padding: 20px;
+                margin: 0;
                 color: #333;
             }
 
             .title {
-                font-size: 32px;
-                font-weight: 600;
+                font-size: 24px;
+                color: #2c3e50;
+                margin-bottom: 20px;
                 text-align: center;
-                color: #2b3e50;
-                margin-bottom: 30px;
             }
 
             .voucher-list {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 20px;
-                justify-content: center;
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+                gap: 15px;
             }
 
             .voucher-card {
-                background-color: white;
-                border-radius: 12px;
-                box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-                width: 300px;
-                padding: 20px;
-                transition: transform 0.2s ease;
-            }
-
-            .voucher-card:hover {
-                transform: translateY(-5px);
-            }
-
-            .voucher-content {
+                background-color: #fff;
+                border-radius: 8px;
+                padding: 14px 16px;
+                box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
                 display: flex;
+                flex-direction: column;
                 justify-content: space-between;
-                align-items: center;
+                transition: transform 0.2s;
+                border-left: 5px solid #3498db;
             }
 
-            .voucher-info {
-                flex: 1;
-            }
-
-            .voucher-code {
-                font-size: 20px;
-                font-weight: bold;
-                color: #1a73e8;
-                margin: 0;
-            }
-
-            .voucher-desc {
-                font-size: 14px;
-                color: #555;
-                margin: 5px 0;
-            }
-
-            .voucher-time {
-                font-size: 12px;
-                color: #888;
-            }
-
-            .voucher-action {
-                text-align: right;
-                margin-left: 10px;
-            }
-
-            .voucher-discount .discount {
-                font-size: 22px;
-                color: #e53935;
-                font-weight: bold;
-            }
-
-            .save-btn {
-                background-color: #1a73e8;
-                color: white;
-                padding: 8px 12px;
-                border: none;
-                border-radius: 8px;
-                cursor: pointer;
-                font-size: 14px;
-            }
-
-            .save-btn:hover {
-                background-color: #0f5ec9;
-            }
-
-            .status-label {
-                font-size: 14px;
-                font-weight: bold;
-                padding: 6px 10px;
-                border-radius: 8px;
-                display: inline-block;
-                margin-top: 8px;
-            }
-
-            .saved-label {
-                background-color: #4caf50;
-                color: white;
-            }
-
-            .out-label {
-                background-color: #f44336;
-                color: white;
-            }
-
-            .voucher-card.saved .save-btn {
-                display: none;
+            .voucher-card.saved {
+                border-left-color: #28a745;
             }
 
             .voucher-card.out-of-stock {
-                opacity: 0.6;
-                pointer-events: none;
+                border-left-color: #e74c3c;
+                opacity: 0.75;
             }
 
+            .voucher-card:hover {
+                transform: translateY(-3px);
+            }
+
+            .voucher-code {
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 4px;
+                color: #2c3e50;
+            }
+
+            .voucher-desc,
+            .voucher-time {
+                font-size: 13px;
+                margin: 3px 0;
+                color: #555;
+            }
+
+            .voucher-discount .discount {
+                font-size: 18px;
+                font-weight: bold;
+                color: #e67e22;
+            }
+
+            .voucher-action {
+                margin-top: 10px;
+            }
+
+            .save-btn {
+                background-color: #3498db;
+                color: #fff;
+                border: none;
+                padding: 6px 12px;
+                border-radius: 4px;
+                font-size: 13px;
+                cursor: pointer;
+                transition: background-color 0.2s;
+                width: 100%;
+            }
+
+            .save-btn:hover {
+                background-color: #2980b9;
+            }
+
+            .saved-label,
+            .out-label {
+                font-size: 13px;
+                font-weight: 600;
+                text-align: center;
+                margin-top: 4px;
+            }
+
+            .saved-label {
+                color: #28a745;
+            }
+
+            .out-label {
+                color: #c0392b;
+            }
+
+            @media (max-width: 480px) {
+                .voucher-code {
+                    font-size: 16px;
+                }
+
+                .discount {
+                    font-size: 16px;
+                }
+
+                .voucher-desc,
+                .voucher-time {
+                    font-size: 12px;
+                }
+            }
         </style>
+
+
     </head>
     <body>
-        <h1 class="title">🎁 Voucher warehouse</h1>
+        <h1 class="title">🎁 Voucher Warehouse</h1>
 
         <div class="voucher-list">
             <c:forEach var="v" items="${vouchers}">
                 <c:set var="isSaved" value="false" />
-
                 <c:forEach var="saved" items="${savedIds}">
                     <c:if test="${v.voucherId == saved.voucherId}">
                         <c:set var="isSaved" value="true" />
@@ -150,7 +151,7 @@
                             <h2 class="voucher-code">${v.code}</h2>
                             <p class="voucher-desc">Minimum application: ${v.minOrderAmount} VNĐ</p>
                             <p class="voucher-desc">${v.description}</p>
-                            <p class="voucher-time">Expiry ${v.endDate}</p>
+                            <p class="voucher-time">Expiry: ${v.formattedEndDate}</p>
                         </div>
 
                         <div class="voucher-action">
@@ -162,7 +163,7 @@
 
                             <c:choose>
                                 <c:when test="${isSaved}">
-                                    <p class="saved-label">Received</p>
+                                    <p class="saved-label">✔ Received</p>
                                 </c:when>
                                 <c:when test="${v.quantity == 0}">
                                     <p class="status-label out-label">Voucher has expired</p>
@@ -178,9 +179,9 @@
                     </div>
                 </div>
             </c:forEach>
-
         </div>
     </body>
+
 
 
 </html>

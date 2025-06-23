@@ -17,10 +17,10 @@ public class Vouchers {
     private int voucherId;
     private String code;
     private String description;
-    private Integer discountPercent;
+    private BigDecimal discountPercent;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private BigDecimal minOrderAmount;
+    private Long minOrderAmount;
     private int quantity;
     private boolean IsActive;
     private String UserId;
@@ -31,6 +31,10 @@ public class Vouchers {
     public Vouchers() {
     }
 
+    public String getFormattedDiscountPercent() {
+    return String.format("%.2f", this.discountPercent);
+}
+
     public String getFormattedStartDate() {
         return formattedStartDate;
     }
@@ -40,7 +44,6 @@ public class Vouchers {
     }
     
     
-
     public String getFormattedEndDate() {
         return formattedEndDate;
     }
@@ -75,11 +78,11 @@ public class Vouchers {
         this.description = description;
     }
 
-    public Integer getDiscountPercent() {
+    public BigDecimal getDiscountPercent() {
         return discountPercent;
     }
 
-    public void setDiscountPercent(Integer discountPercent) {
+    public void setDiscountPercent(BigDecimal discountPercent) {
         this.discountPercent = discountPercent;
     }
 
@@ -99,11 +102,11 @@ public class Vouchers {
         this.endDate = endDate;
     }
 
-    public BigDecimal getMinOrderAmount() {
+    public Long getMinOrderAmount() {
         return minOrderAmount;
     }
 
-    public void setMinOrderAmount(BigDecimal minOrderAmount) {
+    public void setMinOrderAmount(Long minOrderAmount) {
         this.minOrderAmount = minOrderAmount;
     }
 

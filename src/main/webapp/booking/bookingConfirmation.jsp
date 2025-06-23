@@ -35,7 +35,7 @@
                 flex-wrap: wrap;
                 justify-content: center;
                 gap: 10px;
-                margin-bottom: 25px;
+
             }
 
             input[type="text"],
@@ -190,36 +190,33 @@
 
         <script>
             function openCancelModal(bookingId) {
-                document.getElementById("cancelModal-" + bookingId).style.display = "flex";
+                const modal = document.getElementById("cancelModal-" + bookingId);
+                if (modal) {
+                    modal.style.display = "flex";
+                } else {
+                    console.error("Modal not found for ID: " + bookingId);
+                }
             }
 
             function closeCancelModal(bookingId) {
-                document.getElementById("cancelModal-" + bookingId).style.display = "none";
+                const modal = document.getElementById("cancelModal-" + bookingId);
+                if (modal) {
+                    modal.style.display = "none";
+                }
             }
 
             function confirmReason(bookingId) {
-                const textarea = document.getElementById("notesTextarea-" + bookingId);
-                const hiddenInput = document.getElementById("notesInput-" + bookingId);
-                const reason = textarea.value.trim();
-
-                if (reason === "") {
+                const reason = document.getElementById("notesTextarea-" + bookingId).value.trim();
+                if (!reason) {
                     alert("Please enter a reason for cancellation.");
                     return;
                 }
 
-                hiddenInput.value = reason;
-                closeCancelModal(bookingId);
-            }
-
-            function validateReason(bookingId) {
-                const hiddenInput = document.getElementById("notesInput-" + bookingId);
-                if (!hiddenInput.value.trim()) {
-                    openCancelModal(bookingId);
-                    return false;
-                }
-                return true;
+                document.getElementById("notesInput-" + bookingId).value = reason;
+                document.getElementById("cancelForm-" + bookingId).submit();
             }
         </script>
+
 
     </head>
     <body>
@@ -255,9 +252,10 @@
             </tr>
 
             <tbody>
-                <c:forEach var="booking" items="${booking}">
+                <c:forEach var="booking" items="${booking}">    
                     <tr>
 
+                        <%--<td>${booking.bookingId}</td> --%>
                         <td>${booking.rooms.roomNumber}</td>
                         <td>${booking.customers.fullName}</td>
                         <td>${booking.formattedStartDate}</td>
@@ -267,10 +265,11 @@
                             <c:choose>
                                 <c:when test="${booking.status == 'Waiting for processing'}">
                                     <form action="BookingConfirmation" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to confirm this booking?');">
+                                        <input type="hidden" name="actionType" value="confirmBooking" />
                                         <input type="hidden" name="bookingId" value="${booking.bookingId}" />
-                                        <input type="hidden" name="status" value="Confirmed" />
                                         <button type="submit" class="waiting">Waiting</button>
                                     </form>
+
                                 </c:when>
 
                                 <c:when test="${booking.status == 'Confirmed'}">
@@ -280,15 +279,13 @@
                         </td>
 
                         <td>
-                            <form id="cancelForm-${booking.bookingId}" action="BookingCancel" method="post" onsubmit="return validateReason(${booking.bookingId})" style="display: flex; align-items: center; gap: 10px;">
+                            <!-- Form cancel -->
+                            <form id="cancelForm-${booking.bookingId}" action="BookingCancel" method="post">
                                 <input type="hidden" name="bookingId" value="${booking.bookingId}" />
                                 <input type="hidden" name="notes" id="notesInput-${booking.bookingId}" />
 
-                                <!-- Icon bút -->
-                                <button type="button" class="icon-button" onclick="openCancelModal(${booking.bookingId})">✏️</button>
-
-                                <!-- Nút Cancel chính -->
-                                <button type="submit" class="cancel">Cancel</button>
+                                <!-- Nút Cancel duy nhất -->
+                                <button type="button" class="cancel" onclick="openCancelModal(${booking.bookingId})">Cancel</button>
                             </form>
 
                             <!-- Modal nhập lý do -->
@@ -302,8 +299,8 @@
                                     </div>
                                 </div>
                             </div>
-
                         </td>
+
 
                     </tr>
                 </c:forEach>

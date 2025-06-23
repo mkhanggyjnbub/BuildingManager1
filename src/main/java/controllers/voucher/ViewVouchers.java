@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -74,9 +75,16 @@ public class ViewVouchers extends HttpServlet {
 
         try {
             VoucherDAO voucherDao = new VoucherDAO();
-
-         
+            voucherDao.updateExpiredVouchers();
             List<Vouchers> allVouchers = voucherDao.getAllAvailableVouchers();
+
+            // Định dạng thời gian
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+            for (Vouchers v : allVouchers) {
+                if (v.getEndDate() != null) {
+                    v.setFormattedEndDate(v.getEndDate().format(formatter));
+                }
+            }
             request.setAttribute("vouchers", allVouchers);
 
             // Nếu đã login thì lấy thêm danh sách voucher đã lưu

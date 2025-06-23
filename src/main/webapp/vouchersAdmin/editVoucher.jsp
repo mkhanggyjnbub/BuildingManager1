@@ -107,49 +107,125 @@
             .cancel-btn:hover {
                 background-color: #ccc;
             }
+
+            input[readonly], textarea[readonly] {
+                background-color: #e0e0e0;
+                cursor: not-allowed;
+            }
+
         </style>
+        <script>
+            function pad(n) {
+                return n.toString().padStart(2, '0');
+            }
 
+            function getFormattedDateTimeLocal(date) {
+                return date.getFullYear() + '-' +
+                        pad(date.getMonth() + 1) + '-' +
+                        pad(date.getDate()) + 'T' +
+                        pad(date.getHours()) + ':' +
+                        pad(date.getMinutes());
+            }
+
+            function validateForm() {
+                const discount = parseFloat(document.getElementById("discountPercent").value);
+                if (isNaN(discount) || discount < 0.01 || discount > 100) {
+                    alert("Discount percent must be between 1.00 and 100.00.");
+                    return false;
+                }
+
+                const decimalPlaces = (discount.toString().split('.')[1] || '').length;
+                if (decimalPlaces > 2) {
+                    alert("Discount percent must not have more than 2 decimal places.");
+                    return false;
+                }
+
+                return true;
+            }
+
+            window.addEventListener("DOMContentLoaded", function () {
+                const startInput = document.getElementById('startDate');
+                const endInput = document.getElementById('endDate');
+
+                if (!startInput || !endInput)
+                    return;
+
+                const now = new Date();
+                const nowFormatted = getFormattedDateTimeLocal(now);
+
+                // Nếu đang tạo mới (startInput chưa có giá trị)
+                if (!startInput.value) {
+                    startInput.value = nowFormatted;
+                    startInput.min = nowFormatted;
+                }
+
+                // Nếu đang tạo mới (endInput chưa có giá trị)
+                if (!endInput.value) {
+                    endInput.value = nowFormatted;
+                    endInput.min = nowFormatted;
+                } else {
+                    // Nếu đang chỉnh sửa, endDate phải sau hoặc bằng startDate
+                    endInput.min = startInput.value;
+                }
+
+                // Khi thay đổi startDate → cập nhật min của endDate
+                startInput.addEventListener('change', function () {
+                    endInput.min = startInput.value;
+                    if (endInput.value < startInput.value) {
+                        endInput.value = startInput.value;
+                    }
+                });
+            });
+        </script>
     </head>
-    <body>
 
     <body>
-        <form action="/EditVoucher" method="post">
+        <form action="/EditVoucher" method="post" onsubmit="return validateForm()">
             <h2>Edit Voucher</h2>
             <input type="hidden" name="voucherId" value="${voucher.voucherId}" />
 
+            <c:set var="isLocked" value="${voucher.isActive}" />
+
             <div class="form-group">
                 <label for="code">Voucher code</label>
-                <input type="text" id="code" name="code" value="${voucher.code}" required />
+                <input type="text" id="code" name="code" maxlength="50" value="${voucher.code}" required placeholder="Maximum 50 characters"
+                       ${isLocked ? 'readonly' : ''} />
             </div>
 
             <div class="form-group">
                 <label for="quantity">Quantity</label>
-                <input type="number" id="quantity" name="quantity" value="${voucher.quantity}" required />
+                <input type="number" id="quantity" name="quantity" min="1" value="${voucher.quantity}" required
+                       ${isLocked ? 'readonly' : ''} />
             </div>
 
             <div class="form-group">
                 <label for="discountPercent">Percentage reduction (%)</label>
-                <input type="number" min="0" id="discountPercent" name="discountPercent" value="${voucher.discountPercent}" />
+                <input type="number" step="0.01" min="1" max="100" id="discountPercent" name="discountPercent"
+                       value="${voucher.discountPercent}" required ${isLocked ? 'readonly' : ''} />
             </div>
 
             <div class="form-group">
                 <label for="minOrderAmount">Minimum order</label>
-                <input type="number" id="minOrderAmount" name="minOrderAmount" value="${voucher.minOrderAmount}" required />
+                <input type="number" id="minOrderAmount" name="minOrderAmount" min="1" value="${voucher.minOrderAmount}" required
+                       ${isLocked ? 'readonly' : ''} />
             </div>
 
             <div class="form-group">
                 <label for="startDate">Start date</label>
-                <input type="date" id="startDate" name="startDate" value="${voucher.startDate}" required />
+                <input type="datetime-local" id="startDate" name="startDate" value="${voucher.formattedStartDate}" required
+                       ${isLocked ? 'readonly' : ''} />
             </div>
 
             <div class="form-group">
                 <label for="endDate">End date</label>
-                <input type="date" id="endDate" name="endDate" value="${voucher.endDate}" required />
+                <input type="datetime-local" id="endDate" name="endDate" value="${voucher.formattedEndDate}" required
+                       ${isLocked ? 'readonly' : ''} />
             </div>
 
             <div class="form-group">
                 <label for="description">Describe</label>
-                <textarea id="description" name="description">${voucher.description}</textarea>
+                <textarea id="description" name="description" maxlength="200" placeholder="Maximum 200 characters"
+                          ${isLocked ? 'readonly' : ''}>${voucher.description}</textarea>
             </div>
 
             <div class="form-group">

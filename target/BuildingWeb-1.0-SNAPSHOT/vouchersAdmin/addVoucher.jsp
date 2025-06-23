@@ -40,7 +40,6 @@
                 padding: 2rem;
                 display: flex;
                 flex-direction: column;
-                gap: 1.2rem;
             }
 
             h1 {
@@ -212,49 +211,52 @@
                     <input type="text" id="code" name="code" maxlength="50" placeholder="Maximum 50 characters" required>
                 </div>
 
-                <label for="quantity">Quantity</label>
-                <input type="number" id="quantity" name="quantity" min="1" required>
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" id="quantity" name="quantity" min="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="discountPercent">Reduce %</label>
+                    <input type="number" step="0.01" min="1" max="100" name="discountPercent" required placeholder="e.g. 10.50%">
+                </div>
+
+                <div class="form-group">
+                    <label for="minOrderAmount">Minimum application</label>
+                    <input type="number" id="minOrderAmount" name="minOrderAmount" min="1" step="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="startDate">Start Date</label>
+                    <input type="datetime-local" id="startDate" name="startDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="endDate">End Date</label>
+                    <input type="datetime-local" id="endDate" name="endDate" required>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="description">Describe</label>
+                    <textarea id="description" name="description" maxlength="200" placeholder="Maximum 200 characters"></textarea>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="isActive">Status</label>
+                    <select id="isActive" name="isActive">
+                        <option value="false" selected>Inactive</option>
+                        <option value="true">Active</option>
+                    </select>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit">Add voucher</button>
+                    <a href="VouchersDashBoard" class="cancel-btn">Cancel</a>
+                </div>
+
             </div>
-
-            <div class="form-group">
-                <label for="discountPercent">Reduce %</label>
-                <input type="number" id="discountPercent" name="discountPercent" min="1" required>
-            </div>
-
-            <div class="form-group">
-                <label for="minOrderAmount">Minimum application</label>
-                <input type="number" id="minOrderAmount" name="minOrderAmount" min="1" step="0.01" required>
-            </div>
-
-            <div class="form-group">
-                <label for="startDate">Start Date</label>
-                <input type="datetime-local" id="startDate" name="startDate" required>
-            </div>
-
-            <div class="form-group">
-                <label for="endDate">End Date</label>
-                <input type="datetime-local" id="endDate" name="endDate" required>
-            </div>
-
-
-            <div class="form-group">
-                <label for="description">Describe</label>
-                <textarea id="description" name="description" maxlength="200" placeholder="Maximum 200 characters"></textarea>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="isActive">Status</label>
-            <select id="isActive" name="isActive">
-                <option value="false" selected>Inactive</option>
-                <option value="true">Active</option>
-            </select>
-        </div>
-
-        <div class="button-group">
-            <button type="submit">Add voucher</button>
-            <a href="VouchersDashBoard" class="cancel-btn">Cancel</a>
-        </div>
-    </form>
-</body>
+        </form>
+    </body>
 </html>

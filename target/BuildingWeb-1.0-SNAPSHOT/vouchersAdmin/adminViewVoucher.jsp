@@ -97,7 +97,7 @@
 
             <div class="detail-row">
                 <span class="detail-label">Discount (%):</span>
-                <span class="detail-value">${voucher.discountPercent}%</span>
+                <span class="detail-value">${voucher.formattedDiscountPercent}%</span>
             </div>
 
             <div class="detail-row">
@@ -130,7 +130,7 @@
                 <span class="detail-value">
                     <c:choose>
                         <c:when test="${voucher.isActive}">
-                            Action
+                            Active
                         </c:when>
                         <c:otherwise>
                             Inactive

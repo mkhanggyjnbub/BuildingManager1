@@ -86,8 +86,16 @@ public class AddVoucher extends HttpServlet {
         // Nhận các dữ liệu cơ bản
         voucher.setCode(request.getParameter("code"));
         voucher.setDescription(request.getParameter("description"));
-        voucher.setDiscountPercent(Integer.parseInt(request.getParameter("discountPercent")));
-        voucher.setMinOrderAmount(new BigDecimal(request.getParameter("minOrderAmount")));
+        BigDecimal discount = new BigDecimal(request.getParameter("discountPercent"));
+
+        if (discount.scale() > 2 || discount.compareTo(BigDecimal.valueOf(0.01)) < 0 || discount.compareTo(BigDecimal.valueOf(100)) > 0) {
+            request.setAttribute("error", "Discount must be between 0.01 and 100.00 with up to 2 decimal places.");
+            return;
+        }
+
+        voucher.setDiscountPercent(discount);
+
+        voucher.setMinOrderAmount(Long.parseLong(request.getParameter("minOrderAmount")));
         voucher.setQuantity(Integer.parseInt(request.getParameter("quantity")));
 
         // Lấy startDate (định dạng từ datetime-local: yyyy-MM-ddTHH:mm)
