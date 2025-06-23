@@ -47,6 +47,7 @@
             .btn-add {
                 background-color: #007bff;
                 color: #fff;
+
             }
 
             .btn-add:hover {
@@ -179,6 +180,29 @@
                 font-size: 24px;
                 cursor: pointer;
             }
+
+            .btn-back {
+                background-color: #bdc3c7;
+                color: #fff;
+                padding: 8px 14px;
+                text-decoration: none;
+                border-radius: 6px;
+                font-weight: 500;
+                margin-right: 10px;
+                display: inline-block;
+            }
+
+            .btn-back:hover {
+                background-color: #95a5a6;
+            }
+            
+            .top-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
         </style>
 
 
@@ -186,7 +210,10 @@
     </head>
     <body>
         <h1 class="title">Voucher Management</h1>
-        <a href="AddVoucher" class="btn btn-add">Add Voucher</a> <br>
+        <div class="top-actions">
+            <a href="Dashboard" class="btn btn-back">← Back to Dashboard</a>
+            <a href="AddVoucher" class="btn btn-add">Add Voucher</a>
+        </div>
 
         <div class="voucher-list">
             <table class="voucher-table">

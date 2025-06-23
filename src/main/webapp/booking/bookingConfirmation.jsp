@@ -186,6 +186,40 @@
                     padding: 10px;
                 }
             }
+
+            <%--popup  --%>
+            .popup-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+            }
+            .popup-box {
+                background: white;
+                padding: 20px 30px;
+                border-radius: 8px;
+                text-align: center;
+                font-size: 16px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            }
+            .popup-box button {
+                margin-top: 15px;
+                padding: 8px 16px;
+                border: none;
+                background: #3498db;
+                color: white;
+                border-radius: 6px;
+                cursor: pointer;
+            }
+            .popup-box button:hover {
+                background: #2980b9;
+            }
         </style>
 
         <script>
@@ -215,6 +249,17 @@
                 document.getElementById("notesInput-" + bookingId).value = reason;
                 document.getElementById("cancelForm-" + bookingId).submit();
             }
+
+            function showNoResultsPopup() {
+                document.getElementById("noResultsPopup").style.display = "flex";
+            }
+            function closePopup() {
+                document.getElementById("noResultsPopup").style.display = "none";
+            }
+
+            function removeNumbers(input) {
+                input.value = input.value.replace(/[0-9]/g, ''); // Xóa toàn bộ chữ số
+            }
         </script>
 
 
@@ -223,9 +268,32 @@
 
         <h1>booking confirmation list</h1>
 
+        <c:if test="${empty booking}">
+            <script>
+                window.onload = function () {
+                    showNoResultsPopup();
+                };
+            </script>
+        </c:if>
+
         <form action="BookingConfirmation" method="post" style="margin-bottom: 20px;">
-            Room Number: <input type="text" name="roomNumber" value="${param.roomNumber}">
-            Full Name: <input type="text" name="fullName" value="${param.fullName}">
+            Room Number: 
+            <input type="number"
+                   name="roomNumber"
+                   id="roomNumber"
+                   min="1"
+                   max="999"
+                   oninput="this.value = this.value.slice(0, 3)"
+                   placeholder="Up to 3 digits"
+                   title="Only digits allowed (1–999)" 
+                   style="width: 120px;" />
+
+            Full Name: 
+            <input type="text" name="fullName" id="fullName" maxlength="30" 
+                   pattern="[A-Za-zÀ-ỹ\s]+" 
+                   title="Only letters allowed (max 30 characters)" 
+                   oninput="removeNumbers(this)" />
+
             Start Date: <input type="date" name="startDate" value="${param.startDate}">
             End Date: <input type="date" name="endDate" value="${param.endDate}">
 
@@ -242,7 +310,7 @@
             <tr>
 
                 <th>Room Number</th>
-                <th>User Name</th>
+                <th>Full Name Customers</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Status</th>
@@ -306,5 +374,12 @@
                 </c:forEach>
             </tbody>
         </table>
+        <div id="noResultsPopup" class="popup-overlay" style="display: none;">
+            <div class="popup-box">
+                <p>🔍 No matching results found!</p>
+                <button onclick="closePopup()">OK</button>
+            </div>
+        </div>
+
     </body>
 </html>

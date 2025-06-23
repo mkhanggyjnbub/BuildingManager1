@@ -8,7 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>Sửa Voucher</title>
         <style>
@@ -176,6 +176,7 @@
                     }
                 });
             });
+
         </script>
     </head>
 
@@ -194,21 +195,31 @@
 
             <div class="form-group">
                 <label for="quantity">Quantity</label>
-                <input type="number" id="quantity" name="quantity" min="1" value="${voucher.quantity}" required
-                       ${isLocked ? 'readonly' : ''} />
+                <input type="number" id="quantity" name="quantity"
+                       min="1" max="1000"
+                       value="${voucher.quantity}" required
+                       ${isLocked ? 'readonly' : ''} 
+                       required placeholder="Quantity max = 1000"/>
             </div>
 
+
+
             <div class="form-group">
-                <label for="discountPercent">Percentage reduction (%)</label>
-                <input type="number" step="0.01" min="1" max="100" id="discountPercent" name="discountPercent"
-                       value="${voucher.discountPercent}" required ${isLocked ? 'readonly' : ''} />
+                <label for="discountPercent">Reduce (%)</label>
+                <input type="number" step="0.1" min="1" max="100" id="discountPercent" name="discountPercent"                       
+                       value="${voucher.discountPercent}" required ${isLocked ? 'readonly' : ''}
+                       required placeholder="e.g. 10.5%, max 100%"/>
             </div>
 
             <div class="form-group">
                 <label for="minOrderAmount">Minimum order</label>
-                <input type="number" id="minOrderAmount" name="minOrderAmount" min="1" value="${voucher.minOrderAmount}" required
-                       ${isLocked ? 'readonly' : ''} />
+                <input type="number" id="minOrderAmount" name="minOrderAmount"
+                       min="1" max="10000000"
+                       value="${voucher.minOrderAmount}" required
+                       ${isLocked ? 'readonly' : ''} 
+                       required placeholder="Maximun 10.000.000"/>
             </div>
+
 
             <div class="form-group">
                 <label for="startDate">Start date</label>

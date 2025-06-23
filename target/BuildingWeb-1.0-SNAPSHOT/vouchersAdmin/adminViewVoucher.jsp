@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page import="java.text.DecimalFormat" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -102,7 +103,9 @@
 
             <div class="detail-row">
                 <span class="detail-label">Minimum application:</span>
-                <span class="detail-value">${voucher.minOrderAmount}đ</span>
+                <span class="detail-value">
+                    <fmt:formatNumber value="${voucher.minOrderAmount}" type="number" groupingUsed="true" />đ
+                </span>
             </div>
 
             <div class="detail-row">

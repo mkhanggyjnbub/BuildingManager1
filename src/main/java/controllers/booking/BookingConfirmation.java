@@ -103,6 +103,10 @@ public class BookingConfirmation extends HttpServlet {
             request.setAttribute("status", status);
             request.setAttribute("booking", list);
 
+            if (list.isEmpty()) {
+                request.setAttribute("noResult", true);
+            }
+
             request.getRequestDispatcher("booking/bookingConfirmation.jsp").forward(request, response);
 
         } catch (Exception e) {

@@ -32,7 +32,7 @@ public class Vouchers {
     }
 
     public String getFormattedDiscountPercent() {
-    return String.format("%.2f", this.discountPercent);
+    return String.format("%.1f", this.discountPercent);
 }
 
     public String getFormattedStartDate() {

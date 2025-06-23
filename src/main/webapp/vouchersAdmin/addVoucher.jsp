@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <title>Thêm Voucher Mới</title>
@@ -188,15 +188,41 @@
             });
 
 
-            cript >
+            window.addEventListener('DOMContentLoaded', () => {
+                const today = new Date();
+                const yyyy = today.getFullYear();
+                const mm = String(today.getMonth() + 1).padStart(2, '0');
+                const dd = String(today.getDate()).padStart(2, '0');
+                const currentDate = `${yyyy}-${mm}-${dd}`;
+                        document.getElementById('startDate').value = currentDate;
+                    });
+
+
+                    function validateMax(input) {
+                        if (parseInt(input.value) > 1000) {
+                            input.value = 1000;
+                        }
+                    }
+
+                    function validateMaxOrder(input) {
+                        const max = 10000000;
+                        if (parseInt(input.value) > max) {
+                            input.value = max;
+                        }
+                    }
+
+                    function updateCurrentTime() {
+                        const now = new Date();
+                        now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); // Điều chỉnh theo múi giờ
+                        const localDatetime = now.toISOString().slice(0, 16); // yyyy-MM-ddTHH:mm
+                        document.getElementById('startDate').value = localDatetime;
+                    }
+
                     window.addEventListener('DOMContentLoaded', () => {
-                        const today = new Date();
-                        const yyyy = today.getFullYear();
-                        const mm = String(today.getMonth() + 1).padStart(2, '0');
-                        const dd = String(today.getDate()).padStart(2, '0');
-                        const currentDate = `${yyyy}-${mm}-${dd}`;
-                                        document.getElementById('startDate').value = currentDate;
-                                    });
+                        updateCurrentTime(); // Gọi ngay khi trang load
+                        setInterval(updateCurrentTime, 60000); // Cập nhật mỗi phút
+                    });
+
         </script>
 
 
@@ -213,23 +239,29 @@
 
                 <div class="form-group">
                     <label for="quantity">Quantity</label>
-                    <input type="number" id="quantity" name="quantity" min="1" required>
+                    <input type="number" id="quantity" name="quantity" min="1" max="1000" required placeholder="Quantity max = 1000"
+                           oninput="validateMax(this)" />
                 </div>
+
 
                 <div class="form-group">
                     <label for="discountPercent">Reduce %</label>
-                    <input type="number" step="0.01" min="1" max="100" name="discountPercent" required placeholder="e.g. 10.50%">
+                    <input type="number" step="0.1" min="1" max="100" name="discountPercent" required placeholder="e.g. 10.5%, max 100%">
                 </div>
 
                 <div class="form-group">
                     <label for="minOrderAmount">Minimum application</label>
-                    <input type="number" id="minOrderAmount" name="minOrderAmount" min="1" step="1" required>
+                    <input type="number" id="minOrderAmount" name="minOrderAmount" 
+                           min="1" max="10000000" step="1" required placeholder="Maximun 10.000.000"
+                           oninput="validateMaxOrder(this)">
                 </div>
+
 
                 <div class="form-group">
                     <label for="startDate">Start Date</label>
                     <input type="datetime-local" id="startDate" name="startDate" required>
                 </div>
+
 
                 <div class="form-group">
                     <label for="endDate">End Date</label>
