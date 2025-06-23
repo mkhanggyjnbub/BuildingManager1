@@ -164,33 +164,10 @@
     <body>
 
         <!-- Navbar -->
-        <div class="navbar">
-            <a   href="Dashboard" style="text-decoration: none">           <h1>Admin Dashboard</h1></a>
-            <a href="ViewAllCustomersDashboard" class="customer-link">
-                <i class="fa-solid fa-user"></i> Customer
-            </a>
-        </div>
+        <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
 
         <!-- Sidebar -->
-        <div class="sidebar" id="sidebar">
-            <div class="toggle-btn" onclick="toggleSidebar()">
-                <i class="fa-solid fa-bars"></i>
-            </div>
-           <ul class="menu">
-    <li><a href="Index"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
-    <li><a href="DashboardUser"><i class="fa-solid fa-user"></i><span>Users</span></a></li>
-    <li><a href="VouchersDashBoard"><i class="fa-solid fa-ticket"></i><span>Vouchers</span></a></li>
-    <li><a href="ViewNewsDashboard"><i class="fa-solid fa-newspaper"></i><span>News</span></a></li>
-    <li><a href="BookingConfirmation"><i class="fa-solid fa-calendar-check"></i><span>Bookings</span></a></li>
-    <li><a href="ViewAllRoomsForDashboard"><i class="fa-solid fa-bed"></i><span>List Rooms</span></a></li>
-    <li><a href="ViewServicesDashboard"><i class="fa-solid fa-concierge-bell"></i><span>Services</span></a></li>
-    <li><a href="ViewAmenitiesDashboard"><i class="fa-solid fa-bath"></i><span>Amenities</span></a></li>
-    <li><a href="ViewAllCustomersDashboard"><i class="fa-solid fa-users"></i><span>Customers</span></a></li>
-    <li><a href="Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
-</ul>
-
-        </div>
-
+        <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
         <!-- Main Content -->
         <div class="content">
             <h2>Welcome to the Admin Dashboard</h2>

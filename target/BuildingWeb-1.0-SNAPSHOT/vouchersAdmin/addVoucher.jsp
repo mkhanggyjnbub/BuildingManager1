@@ -8,154 +8,165 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="vi">
-    <head>
-        <meta charset="UTF-8">
-        <title>Thêm Voucher Mới</title>
-        <style>
-            body {
-                margin: 0;
-                padding: 0;
-                font-family: 'Segoe UI', sans-serif;
-                background-color: #f4f6f8;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-            }
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm Voucher Mới</title>
 
-            form {
-                background-color: #fff;
-                padding: 24px;
-                border-radius: 12px;
-                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-                max-width: 600px;
-                width: 100%;
-            }
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-            h1 {
-                font-size: 20px;
-                margin-bottom: 20px;
-                color: #333;
-                text-align: center;
-            }
+    <!-- Giao diện chung -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f6f8;
+        }
 
-            .form-grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 12px 16px;
-                margin-bottom: 16px;
-            }
+        .main-content {
+            margin-left: 60px;
+            padding: 80px 20px;
+            transition: margin-left 0.3s ease;
+        }
 
-            label {
-                font-size: 13px;
-                font-weight: 500;
-                color: #444;
-                align-self: center;
-            }
+        .sidebar.open ~ .main-content {
+            margin-left: 220px;
+        }
 
-            input[type="text"],
-            input[type="number"],
-            input[type="date"],
-            textarea {
-                font-size: 13px;
-                padding: 8px 10px;
-                border: 1px solid #ccc;
-                border-radius: 6px;
-                width: 100%;
-            }
+        form {
+            background-color: #fff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            max-width: 600px;
+            width: 100%;
+            margin: auto;
+        }
 
-            textarea {
-                resize: vertical;
-                min-height: 60px;
-                width: 100%;
-                margin-top: 4px;
-                margin-bottom: 12px;
-            }
+        h1 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #002b5c;
+            text-align: center;
+        }
 
-            input:focus,
-            textarea:focus {
-                outline: none;
-                border-color: #007bff;
-            }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 16px;
+            margin-bottom: 16px;
+        }
 
-            .button-group {
-                display: flex;
-                justify-content: flex-end;
-                gap: 10px;
-                margin-top: 10px;
-            }
+        label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #002b5c;
+            align-self: center;
+        }
 
-            button[type="submit"] {
-                padding: 8px 16px;
-                background-color: #007bff;
-                color: white;
-                border: none;
-                border-radius: 6px;
-                font-size: 13px;
-                cursor: pointer;
-            }
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        textarea {
+            font-size: 13px;
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            width: 100%;
+        }
 
-            button[type="submit"]:hover {
-                background-color: #0056b3;
-            }
+        textarea {
+            resize: vertical;
+            min-height: 60px;
+            width: 100%;
+            margin-top: 4px;
+            margin-bottom: 12px;
+        }
 
-            .cancel-btn {
-                padding: 8px 16px;
-                font-size: 13px;
-                color: #555;
-                border: 1px solid #ccc;
-                border-radius: 6px;
-                text-decoration: none;
-            }
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #007bff;
+        }
 
-            .cancel-btn:hover {
-                background-color: #eee;
-            }
-        </style>
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 10px;
+        }
 
+        button[type="submit"] {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+        }
 
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
 
-    </head>
-    <body>
-        <form action="AddVoucher" method="post">
-            <h1>Thêm Voucher Mới</h1>
-            <div class="form-grid">
-                <label>Mã voucher:</label>
-                <input type="text" name="code" required />
-                
-                <label>Số lượng:</label>
-                <input type="number" name="quantity" required/>
+        .cancel-btn {
+            padding: 8px 16px;
+            font-size: 13px;
+            color: #555;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            text-decoration: none;
+        }
 
-                <label>Giảm %:</label>
-                <input type="number" name="discountPercent" />
+        .cancel-btn:hover {
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
 
-                <label>Đơn tối thiểu:</label>
-                <input type="number" name="minOrderAmount" required />
+<%@ include file="../navbarDashboard/navbarDashboard.jsp" %>
+<%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
 
-                <label>Ngày bắt đầu:</label>
-                <input type="date" name="startDate" required />
+<div class="main-content">
+    <form action="AddVoucher" method="post">
+        <h1><i class="fa-solid fa-ticket"></i> Thêm Voucher Mới</h1>
 
-                <label>Ngày kết thúc:</label>
-                <input type="date" name="endDate" required />
-                
-               
-            </div>
+        <div class="form-grid">
+            <label><i class="fa-solid fa-barcode"></i> Mã voucher:</label>
+            <input type="text" name="code" required/>
 
-            <label>Mô tả:</label>
-            <textarea name="description"></textarea>
-            
-            <label>Trạng thái: hoạt động</label>
-            <input type="checkbox" name="isActive"
-                   <c:if test="${voucher.isActive}"> 
-            checked 
-            </c:if>
-            /> 
+            <label><i class="fa-solid fa-layer-group"></i> Số lượng:</label>
+            <input type="number" name="quantity" required/>
 
-            <div class="button-group">
-                <button type="submit">Thêm voucher</button>
-                <a href="VouchersDashBoard" class="cancel-btn">Hủy</a>
-            </div>
-        </form>
+            <label><i class="fa-solid fa-percent"></i> Giảm %:</label>
+            <input type="number" name="discountPercent"/>
 
-    </body>
+            <label><i class="fa-solid fa-money-bill-wave"></i> Đơn tối thiểu:</label>
+            <input type="number" name="minOrderAmount" required/>
+
+            <label><i class="fa-solid fa-calendar-plus"></i> Ngày bắt đầu:</label>
+            <input type="date" name="startDate" required/>
+
+            <label><i class="fa-solid fa-calendar-minus"></i> Ngày kết thúc:</label>
+            <input type="date" name="endDate" required/>
+        </div>
+
+        <label><i class="fa-solid fa-file-lines"></i> Mô tả:</label>
+        <textarea name="description"></textarea>
+
+        <label><i class="fa-solid fa-toggle-on"></i> Trạng thái: hoạt động</label>
+        <input type="checkbox" name="isActive"
+               <c:if test="${voucher.isActive}">checked</c:if> />
+
+        <div class="button-group">
+            <button type="submit"><i class="fa-solid fa-plus"></i> Thêm voucher</button>
+            <a href="VouchersDashBoard" class="cancel-btn"><i class="fa-solid fa-xmark"></i> Hủy</a>
+        </div>
+    </form>
+</div>
+
+</body>
 </html>
