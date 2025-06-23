@@ -90,14 +90,11 @@ public class BookingConfirmation extends HttpServlet {
         String status = request.getParameter("status");
 
         BookingDao dao = new BookingDao();
-        try {
             dao.updateBookingStatus(bookingId, status);
             // Sau khi update xong, chuyển hướng quay lại trang danh sách
             response.sendRedirect("BookingConfirmation");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        }
+       
+       
     }
 
     /**

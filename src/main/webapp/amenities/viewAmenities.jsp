@@ -6,12 +6,21 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Amenities List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
     <style>
         :root {
+            --navy: #4a6fa5;
+            --navy-dark: #3a5c88;
+            --white: #ffffff;
+            --light-bg: #f4f6f9;
+            --hover-bg: #3a5c88;
+            --transition: 0.3s ease;
             --primary-color: #0a2f5c;
             --primary-hover: #0c3f7c;
             --edit-color: #007bff;
@@ -28,15 +37,25 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--background);
             margin: 0;
-            padding: 40px 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--navy);
         }
 
+        .main-content {
+            margin-left: 60px;
+            padding: 40px;
+            transition: margin-left var(--transition);
+        }
+
+        .sidebar.open ~ .main-content {
+            margin-left: 220px;
+        }
+
+        /* Amenities Table */
         h2 {
             color: var(--primary-color);
-            text-align: center;
             margin-bottom: 30px;
             font-size: 28px;
         }
@@ -120,7 +139,12 @@
             background-color: var(--delete-hover);
         }
 
+        /* Responsive */
         @media (max-width: 768px) {
+            .main-content {
+                padding: 20px;
+            }
+
             th, td {
                 padding: 10px;
                 font-size: 14px;
@@ -138,35 +162,46 @@
 </head>
 <body>
 
-    <h2>Amenities List</h2>
+    <%@ include file="../navbarDashboard/navbarDashboard.jsp" %>
+    <%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
 
-    <div class="top-bar">
-        <a class="btn" href="AddAmenitiesDashboard">+ Add Amenity</a>
+    <div class="main-content">
+        <h2>Amenities List</h2>
+
+        <div class="top-bar">
+            <a class="btn" href="AddAmenitiesDashboard">+ Add Amenity</a>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Amenity Name</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="a" items="${amenitiesList}">
+                    <tr>
+                        <td>${a.amenityId}</td>
+                        <td>${a.name}</td>
+                        <td>${a.description}</td>
+                        <td class="action-links">
+                            <a class="edit-btn" href="EditAmenitiesDashboard?id=${a.amenityId}">Edit</a>
+                            <a class="delete-btn" href="DeleteAmenitiesDashboard?id=${a.amenityId}" onclick="return confirm('Are you sure you want to delete this amenity?');">Delete</a>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Amenity Name</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <c:forEach var="a" items="${amenitiesList}">
-                <tr>
-                    <td>${a.amenityId}</td>
-                    <td>${a.name}</td>
-                    <td>${a.description}</td>
-                    <td class="action-links">
-                        <a class="edit-btn" href="EditAmenitiesDashboard?id=${a.amenityId}">Edit</a>
-                        <a class="delete-btn" href="DeleteAmenitiesDashboard?id=${a.amenityId}" onclick="return confirm('Are you sure you want to delete this amenity?');">Delete</a>
-                    </td>
-                </tr>
-            </c:forEach>
-        </tbody>
-    </table>
+    <script>
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("open");
+        }
+    </script>
 
 </body>
 </html>
