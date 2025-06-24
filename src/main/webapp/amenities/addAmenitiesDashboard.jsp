@@ -152,7 +152,7 @@
 </head>
 <body>
 
-    <%@ include file="../navbarDashboard/navbarDashboard.jsp" %>
+ <%@ include file="../navbarDashboard/navbarDashboard.jsp" %>
 <%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
 <div class="main-content">
     <div class="form-wrapper">

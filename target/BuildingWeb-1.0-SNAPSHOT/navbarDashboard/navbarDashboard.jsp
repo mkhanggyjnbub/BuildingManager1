@@ -10,7 +10,7 @@
         <h1 class="dashboard-title">Admin Dashboard</h1>
     </a>
     <a href="ViewAllCustomersDashboard" class="customer-link">
-        <i class="fa-solid fa-user"></i> Customer
+       
     </a>
 </div>
 

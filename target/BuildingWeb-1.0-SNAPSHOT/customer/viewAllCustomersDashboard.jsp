@@ -13,114 +13,167 @@
     <title>Customer List</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f0f4f8;
-            margin: 0;
-            padding: 0;
-            color: #333;
-            animation: fadeInBody 0.6s ease-in-out;
+        :root {
+            --primary: #1e88e5;
+            --primary-dark: #0d47a1;
+            --white: #ffffff;
+            --gray-light: #f3f6fa;
+            --gray-medium: #e0e6ed;
+            --text-color: #2b2b2b;
+            --shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            --radius: 12px;
         }
 
-        @keyframes fadeInBody {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(to bottom right, #eef3fc, #f9fbff);
+            margin: 0;
+            color: var(--text-color);
         }
 
         .main-content {
-            margin-left: 60px;
-            padding: 80px 30px 40px;
-            transition: margin-left 0.3s ease;
-            animation: slideInMain 0.6s ease forwards;
-            opacity: 0;
-        }
-
-        .sidebar.open ~ .main-content {
-            margin-left: 220px;
-        }
-
-        @keyframes slideInMain {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            margin-left: 240px;
+            padding: 60px 40px 40px;
         }
 
         h2 {
-            text-align: center;
-            color: #002b5c;
+            font-size: 32px;
+            font-weight: 800;
             margin-bottom: 30px;
-            font-size: 30px;
-            font-weight: 600;
+            color: var(--primary-dark);
+            border-left: 6px solid var(--primary-dark);
+            padding-left: 15px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            background-color: #fff;
-            border-radius: 10px;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
             overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0, 43, 92, 0.1);
         }
 
         th, td {
             padding: 16px 12px;
             text-align: center;
             font-size: 15px;
-            border-bottom: 1px solid #e6e6e6;
         }
 
         th {
-            background-color: #002b5c;
+            background-color: var(--primary-dark);
             color: white;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             font-size: 13px;
         }
 
+        tr:nth-child(even) {
+            background-color: var(--gray-light);
+        }
+
         tr:hover {
-            background-color: #eef6fb;
+            background-color: var(--gray-medium);
         }
 
         .actions a {
             margin: 0 6px;
             font-size: 16px;
-            color: #002b5c;
-            transition: 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 8px;
+            color: white;
+            transition: all 0.3s ease;
+            text-decoration: none;
         }
 
-        .actions a:hover {
-            color: #004080;
-            transform: scale(1.15);
+        .actions a.fa-eye {
+            background-color: #4caf50;
         }
 
+        .actions a.fa-eye:hover {
+            background-color: #388e3c;
+        }
+
+        .actions a.fa-pencil {
+            background-color: #2196f3;
+        }
+
+        .actions a.fa-pencil:hover {
+            background-color: #1565c0;
+        }
+
+        .navbar {
+            background-color: var(--primary-dark);
+            color: var(--white);
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .navbar h1 {
+            font-size: 22px;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .navbar a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
             table, thead, tbody, th, td, tr {
                 display: block;
             }
 
+            thead {
+                display: none;
+            }
+
             tr {
-                margin-bottom: 15px;
-                background: #fff;
-                border-radius: 8px;
-                box-shadow: 0 0 10px rgba(0,0,0,0.05);
+                margin-bottom: 20px;
+                border-radius: 10px;
+                box-shadow: var(--shadow);
+                background: white;
+                overflow: hidden;
             }
 
             td {
+                padding: 14px 20px;
                 text-align: right;
-                padding-left: 50%;
                 position: relative;
             }
 
             td::before {
                 content: attr(data-label);
                 position: absolute;
-                left: 15px;
+                left: 20px;
+                top: 14px;
                 font-weight: bold;
-                color: #002b5c;
+                color: var(--primary-dark);
                 text-align: left;
             }
 
-            th {
-                display: none;
+            .actions {
+                text-align: center;
             }
         }
     </style>

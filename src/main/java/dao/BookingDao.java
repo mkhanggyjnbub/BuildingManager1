@@ -292,6 +292,18 @@ public class BookingDao {
         return booked;
 
     }
+//<<<<<<< HEAD
+//     public Bookings getBookingById(int id) {
+//        Bookings b = null;
+//        String sql = "SELECT b.BookingID, b.Status, b.StartDate, b.EndDate, b.CheckInTime, b.CheckOutTime, " +
+//               
+//                "r.RoomNumber, c.FullName, c.Email, c.Phone " +
+//                     "FROM Bookings b " +
+//                     "JOIN Rooms r ON b.RoomID = r.RoomID " +
+//                     "JOIN Customers c ON b.CustomerID = c.CustomerID " +
+//                     "WHERE b.BookingID = ?";
+//=======
+//>>>>>>> 370bb7c8c639a75ba05f4d93eca96f78b62245a0
 
     public Bookings getBookingById(int id) {
         Bookings b = null;
