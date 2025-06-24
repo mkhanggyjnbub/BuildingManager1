@@ -81,10 +81,10 @@ public class SignUp extends HttpServlet {
             String email = request.getParameter("email");
             String otp = String.valueOf((int) (Math.random() * 900000 + 100000));
             EmailSender mail = new EmailSender();
-           
-            
+            mail.sendSimpleEmail(email, otp, otp);
 //            HttpSession session =request.getSession();
 //            session.setAttribute("otp", otp);
+//           
         } catch (MessagingException ex) {
             Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -5,6 +5,7 @@
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,106 +13,108 @@
         <style>
             body {
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                background-color: #f5f6f8;
-                color: #333;
+                background-color: #f2f4f7;
+                color: #222;
                 margin: 0;
                 padding: 20px;
             }
 
             .title {
-                font-size: 28px;
-                font-weight: 600;
+                font-size: 30px;
+                font-weight: 700;
                 margin-bottom: 20px;
-                color: #2c3e50;
+                color: #1f2d3d;
             }
 
-            a {
-                text-decoration: none;
-            }
+
+        .sidebar.open ~ .main-content {
+            margin-left: 220px;
+        }
 
             .btn {
                 display: inline-block;
-                padding: 8px 14px;
+                padding: 8px 16px;
                 margin: 4px 0;
                 border-radius: 6px;
                 font-size: 14px;
                 border: none;
                 cursor: pointer;
+                font-weight: 500;
                 transition: background-color 0.2s;
+                min-width: 70px;
+                text-align: center;
             }
 
             .btn-add {
-                background-color: #e0e0e0;
-                color: #333;
+                background-color: #007bff;
+                color: #fff;
+
             }
 
             .btn-add:hover {
-                background-color: #d5d5d5;
+                background-color: #0069d9;
             }
 
             .btn-view {
-                background-color: #dce6f1;
-                color: #2c3e50;
+                background-color: #3498db;
+                color: #fff;
             }
 
             .btn-view:hover {
-                background-color: #c8d9ec;
+                background-color: #2d88c6;
             }
 
             .btn-edit {
-                background-color: #fdf5e6;
-                color: #7c6e4f;
+                background-color: #f39c12;
+                color: #fff;
             }
 
             .btn-edit:hover {
-                background-color: #f2e9d3;
+                background-color: #d68910;
             }
 
             .btn-delete {
-                background-color: #f5d0d0;
-                color: #8c2f2f;
-                border: none;
+                background-color: #e74c3c;
+                color: #fff;
             }
 
             .btn-delete:hover {
-                background-color: #e7bebe;
+                background-color: #c0392b;
             }
+        
 
-            .voucher-list {
-                margin-top: 20px;
-                overflow-x: auto;
-            }
+        .btn-delete {
+            background-color: #f5d0d0;
+            color: #8c2f2f;
+            border: none;
+        }
 
             .voucher-table {
                 width: 100%;
                 border-collapse: collapse;
                 background-color: #fff;
-                border-radius: 8px;
-                box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+                border-radius: 10px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
                 overflow: hidden;
             }
 
             .voucher-table th, .voucher-table td {
-                padding: 12px 16px;
+                padding: 14px 18px;
                 text-align: left;
-                border-bottom: 1px solid #e0e0e0;
+                border-bottom: 1px solid #e1e4e8;
             }
 
             .voucher-table thead {
-                background-color: #f0f0f0;
+                background-color: #e9ecef;
             }
 
             .voucher-table th {
                 font-weight: 600;
-                color: #444;
+                color: #333;
             }
 
             .voucher-table tr:hover {
-                background-color: #f9f9f9;
-            }
-
-            form {
-                display: inline;
+                background-color: #f5f8fa;
             }
 
             .action-buttons {
@@ -120,57 +123,145 @@
                 align-items: center;
                 gap: 10px;
             }
-            .btn {
-                min-width: 60px;
+
+            .voucher-table th:nth-child(4),
+            .voucher-table td:nth-child(4),
+            .voucher-table th:nth-child(5),
+            .voucher-table td:nth-child(5) {
                 text-align: center;
             }
 
-            .voucher-table th:nth-child(4),
-.voucher-table td:nth-child(4) {
-    text-align: center;
+            .status {
+                padding: 4px 10px;
+                border-radius: 12px;
+                font-weight: 500;
+                font-size: 13px;
+                display: inline-block;
+            }
+
+            .status.active {
+                background-color: #d4edda;
+                color: #155724;
+                border: 1px solid #c3e6cb;
+            }
+
+            .status.inactive {
+                background-color: #f8d7da;
+                color: #721c24;
+                border: 1px solid #f5c6cb;
+            }
+
+            form {
+                display: inline;
+            }
+
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1000;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgba(0,0,0,0.5);
+            }
+
+            .modal-content {
+                background-color: #fff;
+                margin: 10% auto;
+                padding: 20px;
+                width: 50%;
+                border-radius: 10px;
+                position: relative;
+            }
+
+            .close {
+                position: absolute;
+                top: 10px;
+                right: 15px;
+                font-size: 24px;
+                cursor: pointer;
+            }
+
+            .btn-back {
+                background-color: #bdc3c7;
+                color: #fff;
+                padding: 8px 14px;
+                text-decoration: none;
+                border-radius: 6px;
+                font-weight: 500;
+                margin-right: 10px;
+                display: inline-block;
+            }
+
+            .btn-back:hover {
+                background-color: #95a5a6;
+            }
+            
+            .top-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
         </style>
+
+
+
     </head>
     <body>
-        <h1 class="title">Quản lý Voucher</h1>
-        <a href="AddVoucher" class="btn btn-add"> Thêm Voucher </a> <br>
-        
-
-
+        <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+        <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
+        <h1 class="title">Voucher Management</h1>
+        <div class="top-actions">
+            <a href="Dashboard" class="btn btn-back">← Back to Dashboard</a>
+            <a href="AddVoucher" class="btn btn-add">Add Voucher</a>
+        </div>
 
         <div class="voucher-list">
             <table class="voucher-table">
+                <!-- Table Header -->
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>No.</th>
                         <th>Voucher Code</th>
-                        <th>Hạn sử dụng</th>
-                        <th>Hành động</th>
+                        <th>Expiry</th>
+                        <th>Status</th>
+                        <th>Action</th>
                     </tr>         
                 </thead>
+
+                <!-- Table Rows -->
                 <tbody>
                     <c:forEach var="v" items="${vouchers}" varStatus="status">
                         <tr>
                             <td>${status.index + 1}</td>
                             <td>${v.code}</td>
-                            <td>${v.endDate}</td>
+                            <td>${v.formattedEndDate}</td>
+                            <td>
+                                <span class="status ${v.isActive ? 'active' : 'inactive'}">
+                                    ${v.isActive ? 'Active' : 'Inactive'}
+                                </span>
+                            </td>
                             <td>
                                 <div class="action-buttons">
-                                    <a href="AdminViewVoucher?voucherId=${v.voucherId}" class="btn btn-view">xem</a>
-                                    <a href="EditVoucher?voucherId=${v.voucherId}" class="btn btn-edit">sửa</a>
-                                    <form action="DeleteVoucher" method="get" onsubmit="return confirm('Bạn có chắc muốn xóa voucher này?')">
+                                    <a href="AdminViewVoucher?voucherId=${v.voucherId}" class="btn btn-view">View</a>
+                                    <a href="EditVoucher?voucherId=${v.voucherId}" class="btn btn-edit">Edit</a>
+                                    <form action="DeleteVoucher" method="get" onsubmit="return confirm('Are you sure you want to delete this voucher?')">
                                         <input type="hidden" name="id" value="${v.voucherId}" />
-                                        <button type="submit" class="btn btn-delete">xóa</button>
+                                        <button type="submit" class="btn btn-delete">Delete</button>
                                     </form>
                                 </div>
                             </td>
-
                         </tr>
                     </c:forEach>
                 </tbody>
+
             </table>
         </div>
 
     </body>
+
 </html>

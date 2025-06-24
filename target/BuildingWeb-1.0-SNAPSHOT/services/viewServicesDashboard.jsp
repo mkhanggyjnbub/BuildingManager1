@@ -103,6 +103,22 @@
                 display: inline;
             }
 
+            .back-button {
+                top: -40px;
+                left: 20px;
+                width: 80px;
+                background-color: #1a73e8;
+                color: white;
+                padding: 8px 12px;
+                border-radius: 5px;
+                font-size: 14px;
+                text-decoration: none;
+                display: inline-block;
+            }
+            .back-button:hover {
+                background-color: #0c53b0;
+            }
+            
             @media (max-width: 768px) {
                 th, td {
                     font-size: 13px;
@@ -118,7 +134,7 @@
     </head>
     <body>
         <h1>List of Services</h1>
-
+        <a href="javascript:history.back()" class="back-button">← Back</a>
         <a href="AddServiceDashboard">
             <button type="button">➕ Add Service</button>
         </a>
@@ -140,7 +156,7 @@
                     <tr>
                         <td>${s.serviceId}</td>
                         <td>${s.serviceName}</td>
-                        <td>${s.serviceType}</td>
+                        <td>${s.unitType}</td>
                         <td>${s.price}</td>
                         <td><img src="${s.imageURL}" alt="Hình ảnh dịch vụ"></td>
                         <td>
@@ -152,7 +168,7 @@
                         <td>
                             <form action="ViewServiceDetailDashboard" method="get">
                                 <input type="hidden" name="id" value="${s.serviceId}" />
-                                <button type="submit" class="btn btn-update">👁️ Detail</button>
+                                <button type="submit" class="btn btn-update">👁️ View</button>
                             </form>
                             <form action="EditServiceDashboard" method="get">
                                 <input type="hidden" name="id" value="${s.serviceId}" />

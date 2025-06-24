@@ -14,6 +14,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import models.Vouchers;
 
 /**
@@ -79,20 +82,40 @@ public class AddVoucher extends HttpServlet {
 
         Vouchers voucher = new Vouchers();
         VoucherDAO voucherDao = new VoucherDAO();
-        
-        //voucher.setVoucherId(Integer.parseInt(request.getParameter("voucherId")));
+
+        // Nhận các dữ liệu cơ bản
         voucher.setCode(request.getParameter("code"));
         voucher.setDescription(request.getParameter("description"));
-        voucher.setDiscountPercent(Integer.parseInt(request.getParameter("discountPercent")));
-        voucher.setStartDate(Date.valueOf(request.getParameter("startDate")));
-        voucher.setEndDate(Date.valueOf(request.getParameter("endDate")));
-        voucher.setMinOrderAmount(new BigDecimal(request.getParameter("minOrderAmount")));
+        BigDecimal discount = new BigDecimal(request.getParameter("discountPercent"));
+
+        if (discount.scale() > 2 || discount.compareTo(BigDecimal.valueOf(0.01)) < 0 || discount.compareTo(BigDecimal.valueOf(100)) > 0) {
+            request.setAttribute("error", "Discount must be between 0.01 and 100.00 with up to 2 decimal places.");
+            return;
+        }
+
+        voucher.setDiscountPercent(discount);
+
+        voucher.setMinOrderAmount(Long.parseLong(request.getParameter("minOrderAmount")));
         voucher.setQuantity(Integer.parseInt(request.getParameter("quantity")));
-        boolean isActive = request.getParameter("isActive") != null;
+
+        // Lấy startDate (định dạng từ datetime-local: yyyy-MM-ddTHH:mm)
+        String startDateStr = request.getParameter("startDate"); // ví dụ: 2025-06-23T22:30
+        LocalDateTime startDate = LocalDateTime.parse(startDateStr);
+        voucher.setStartDate(startDate);
+
+// Lấy endDate tương tự
+        String endDateStr = request.getParameter("endDate"); // ví dụ: 2025-06-30T23:59
+        LocalDateTime endDate = LocalDateTime.parse(endDateStr);
+        voucher.setEndDate(endDate);
+
+        // Xử lý trạng thái
+        boolean isActive = Boolean.parseBoolean(request.getParameter("isActive"));
         voucher.setIsActive(isActive);
-        
+
+        // Chèn vào database
         voucherDao.insertVoucher(voucher);
 
+        // Chuyển hướng về danh sách
         response.sendRedirect("VouchersDashBoard");
     }
 

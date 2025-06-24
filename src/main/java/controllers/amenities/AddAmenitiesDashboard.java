@@ -72,7 +72,7 @@ public class AddAmenitiesDashboard extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-           response.sendRedirect("amenities/addAmenitiesDashboard.jsp");
+           request.getRequestDispatcher("amenities/addAmenitiesDashboard.jsp").forward(request, response);
 
     }
 

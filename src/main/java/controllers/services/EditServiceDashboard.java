@@ -86,14 +86,14 @@ public class EditServiceDashboard extends HttpServlet {
         String name = request.getParameter("name");
         String type = request.getParameter("type");
         String desc = request.getParameter("description");
-        BigDecimal price = new BigDecimal(request.getParameter("price"));
+        Long price = Long.parseLong(request.getParameter("price"));
         String imageURL = request.getParameter("imageURL");
         boolean isActive = Boolean.parseBoolean(request.getParameter("isActive"));
 
         Services s = new Services();
         s.setServiceId(id);
         s.setServiceName(name);
-        s.setServiceType(type);
+        s.setUnitType(type);
         s.setDescription(desc);
         s.setPrice(price);
         s.setImageURL(imageURL);

@@ -59,15 +59,16 @@ public class ViewNewsDashboard extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         NewsDao newsDao = new NewsDao();
-        List<News> newsList = newsDao.getAllAdmin();
+        List<News> newsList = newsDao.getAllNewsDashboard();
 
         if (newsList.isEmpty()) {
-            response.sendRedirect("news?erol");
+            request.setAttribute("message", "An error occurred in the system. Please wait a few minutes and log in again.");
+            request.getRequestDispatcher("news/viewNewsDashboard.jsp").forward(request, response);
         } else {
-            request.setAttribute("newsList", newsList);  // Gửi dữ liệu sang JSP
-            request.getRequestDispatcher("news/viewNewsDashboard.jsp").forward(request, response); // Chuyển sang giao diện hiển thị
+            request.setAttribute("newsList", newsList);
+            request.getRequestDispatcher("news/viewNewsDashboard.jsp").forward(request, response);
         }
-    } 
+    }
 
     /** 
      * Handles the HTTP <code>POST</code> method.

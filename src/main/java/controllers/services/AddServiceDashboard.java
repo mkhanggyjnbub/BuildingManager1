@@ -75,13 +75,13 @@ public class AddServiceDashboard extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String serviceName = request.getParameter("name");
-        String serviceType = request.getParameter("type");
+        String unitType = request.getParameter("type");
         String description = request.getParameter("description");
-        BigDecimal price = new BigDecimal(request.getParameter("price"));
+        Long price = Long.parseLong(request.getParameter("price"));
         String avataURL = request.getParameter("imageURL");
         Services s = new Services();
         s.setServiceName(serviceName);
-        s.setServiceType(serviceType);
+        s.setUnitType(unitType);
         s.setDescription(description);
         s.setPrice(price);
         s.setImageURL(avataURL);
