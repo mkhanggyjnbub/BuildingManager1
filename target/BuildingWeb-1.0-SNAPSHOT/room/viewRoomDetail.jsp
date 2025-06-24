@@ -379,6 +379,9 @@
                             </c:choose>
                             /5 <i style="color: #FBBF24" class="fas fa-star"></i> (${numberOfReview} reviews)</span>
                     </div>
+                    <p class="text-xl mt-2">
+                        <span id="area" class="text-base">Area ${room.area} (m²)</span>
+                    </p>
                     <p class="mt-6 text-gray leading-relaxed">
                         ${room.description}
                     </p>

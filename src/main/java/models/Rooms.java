@@ -22,8 +22,17 @@ public class Rooms {
     private int maxOccupancy;
     private String imageUrl;
     private int floorNumber;
+    private float area;
 
     public Rooms() {
+    }
+
+    public float getArea() {
+        return area;
+    }
+
+    public void setArea(float area) {
+        this.area = area;
     }
 
     public int getFloorNumber() {

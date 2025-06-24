@@ -633,10 +633,7 @@
                                 
                             </div>
                         </div>
-<<<<<<< HEAD
-                       
-=======
->>>>>>> 370bb7c8c639a75ba05f4d93eca96f78b62245a0
+
 
                         <!-- Hạn mức thanh toán -->
                         <div class="form-group">

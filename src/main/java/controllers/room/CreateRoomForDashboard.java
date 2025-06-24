@@ -6,6 +6,7 @@ package controllers.room;
 
 import Cloudinary.CloudinaryUtil;
 import dao.RoomDao;
+import db.FileUploader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,6 +16,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -101,37 +104,30 @@ public class CreateRoomForDashboard extends HttpServlet {
 
         }
         String description = request.getParameter("description");
-
         Part filePart = request.getPart("imageFile");
-        try {
-            if (filePart != null && filePart.getSize() > 0) {
 
-                //byte[] imageBytes = filePart.getInputStream().readAllBytes();
-                //uploadedUrl = CloudinaryUtil.upload(imageBytes);
-            } else {
-                String imageUrl = request.getParameter("imageUrl");
-                uploadedUrl = CloudinaryUtil.upload(imageUrl);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(CreateRoomForDashboard.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        String uploadPath = "D:\\fouderPrj\\BuildingWeb\\src\\main\\webapp\\images";
+        uploadedUrl = FileUploader.uploadImage(filePart, uploadPath);
+
         String status = request.getParameter("status");
         int location = Integer.parseInt(request.getParameter("location"));
+        float area = Float.parseFloat(request.getParameter("area"));
+
         RoomDao roomDao = new RoomDao();
         int checkRoom = roomDao.checkRoomOfFoor(roomNumber, floorNumber);
-//            if (checkRoom == 1) {
-//                response.sendRedirect("CreateRoomForDashboard?check=" + 1);
-//            } else {
-        int checkCreate = roomDao.createRoom(roomNumber, floorNumber, roomType, bedType, price2, maxOccupancy, description, uploadedUrl, status, location);
-        if (checkCreate > 0) {
-            response.sendRedirect("ViewAllRoomsForDashboard");
+        if (checkRoom == 1) {
+            response.sendRedirect("CreateRoomForDashboard?check=" + 1);
         } else {
-            response.sendRedirect("Error");
+            int checkCreate = roomDao.createRoom(roomNumber, floorNumber, roomType, bedType, price2, maxOccupancy,
+                    description, "images/"+uploadedUrl, status, location, area);
+            if (checkCreate > 0) {
+                response.sendRedirect("ViewAllRoomsForDashboard");
+            } else {
+                response.sendRedirect("Error");
 
-//                }
+            }
         }
 
-//            String area = request.getParameter("area");
     }
 
     /**
