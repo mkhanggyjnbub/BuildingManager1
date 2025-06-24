@@ -9,82 +9,111 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page import="java.text.DecimalFormat" %>
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Chi tiết Voucher</title>
-        <style>
-            * {
-                box-sizing: border-box;
-            }
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Voucher Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #002b5c;
+            --primary-light: #004080;
+            --background: #f4f6f9;
+            --white: #ffffff;
+            --gray: #e0e0e0;
+            --text: #333;
+            --shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
 
-            body {
-                margin: 0;
-                padding: 0;
-                font-family: "Segoe UI", sans-serif;
-                background-color: #f1f3f5;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                min-height: 100vh;
-            }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--background);
+            font-family: 'Segoe UI', sans-serif;
+            color: var(--text);
+            animation: fadeInBody 0.5s ease-in-out;
+        }
 
-            .voucher-details {
-                background-color: #fff;
-                border-radius: 16px;
-                padding: 2rem;
-                width: 100%;
-                max-width: 700px;
-                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-            }
+        @keyframes fadeInBody {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
-            h2 {
-                margin-top: 0;
-                text-align: center;
-                font-size: 1.8rem;
-                margin-bottom: 2rem;
-                color: #333;
-            }
+        .main-content {
+            margin-left: 60px;
+            padding: 80px 30px 40px;
+            transition: margin-left 0.3s ease;
+            animation: slideInMain 0.6s ease forwards;
+            opacity: 0;
+        }
 
-            .detail-row {
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-start;
-                padding: 0.75rem 0;
-                border-bottom: 1px solid #e2e2e2;
-            }
+        .sidebar.open ~ .main-content {
+            margin-left: 220px;
+        }
 
-            .detail-label {
-                font-weight: 600;
-                color: #555;
-                flex: 1;
-            }
+        @keyframes slideInMain {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-            .detail-value {
-                flex: 2;
-                text-align: right;
-                color: #222;
-            }
+        .voucher-details {
+            background-color: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: var(--shadow);
+        }
 
-            .back-btn {
-                display: inline-block;
-                margin-top: 2rem;
-                padding: 0.75rem 1.5rem;
-                background-color: #007bff;
-                color: #fff;
-                border-radius: 8px;
-                text-decoration: none;
-                font-weight: 500;
-                transition: background 0.3s ease;
-            }
+        h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+        }
 
-            .back-btn:hover {
-                background-color: #0056b3;
-            }
-        </style>
-    </head>
-    <body>
-         <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
-        <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray);
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: var(--primary);
+            flex: 1;
+        }
+
+        .detail-value {
+            flex: 2;
+            text-align: right;
+            color: var(--text);
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary);
+            color: #fff;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: var(--primary-light);
+        }
+    </style>
+</head>
+<body>
+    <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+    <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
+    <div class="main-content">
         <div class="voucher-details">
             <h2>Voucher Details</h2>
 
@@ -134,17 +163,14 @@
                 <span class="detail-label">Status:</span>
                 <span class="detail-value">
                     <c:choose>
-                        <c:when test="${voucher.isActive}">
-                            Active
-                        </c:when>
-                        <c:otherwise>
-                            Inactive
-                        </c:otherwise>
+                        <c:when test="${voucher.isActive}">Active</c:when>
+                        <c:otherwise>Inactive</c:otherwise>
                     </c:choose>
                 </span>
             </div>
 
             <a href="VouchersDashBoard" class="back-btn">← Back</a>
         </div>
-    </body>
+    </div>
+</body>
 </html>
