@@ -26,16 +26,18 @@ controllers\booking\BookingConfirmation.class
 models\Employees.class
 models\Services.class
 controllers\services\ViewServices.class
-models\CustomerStatus.class
+controllers\report\ViewAllReportsForDashboard.class
 models\Vouchers.class
 models\RoomReviews.class
 controllers\services\DeleteServiceDashboard.class
+models\Report.class
 controllers\asset\Assets.class
 models\Rooms.class
 controllers\account\Logout.class
 controllers\room\EditRoomForDashboard.class
 controllers\news\ViewNews.class
 dao\AmenitiesDao.class
+controllers\checkInOut\ViewAllCheckInOutDashboard.class
 controllers\room\ViewRooms.class
 controllers\account\SignUp.class
 models\News.class
@@ -77,3 +79,5 @@ controllers\room\DeleteRoomForDashboard.class
 controllers\room\ViewRoomDetail.class
 controllers\news\DeleteNewsDashboard.class
 models\Amenities.class
+dao\ReportDao.class
+controllers\checkInOut\CheckInOutDetail.class

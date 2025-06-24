@@ -17,6 +17,9 @@ import jakarta.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import models.Amenities;
+import models.RoomReviews;
+import models.Rooms;
 
 import models.Amenities;
 import models.RoomReviews;
@@ -27,6 +30,7 @@ import models.Rooms;
  * @author Kiều Hoàng Mạnh Khang - ce180749
  */
 @WebServlet("/ViewRoomDetail")
+
 public class ViewRoomDetail extends HttpServlet {
 
     /**

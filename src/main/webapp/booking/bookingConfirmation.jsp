@@ -265,7 +265,8 @@
 
     </head>
     <body>
-
+ <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+        <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
         <h1>booking confirmation list</h1>
 
         <c:if test="${empty booking}">

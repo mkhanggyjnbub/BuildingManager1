@@ -26,9 +26,10 @@
                 color: #1f2d3d;
             }
 
-            a {
-                text-decoration: none;
-            }
+
+        .sidebar.open ~ .main-content {
+            margin-left: 220px;
+        }
 
             .btn {
                 display: inline-block;
@@ -80,11 +81,13 @@
             .btn-delete:hover {
                 background-color: #c0392b;
             }
+        
 
-            .voucher-list {
-                margin-top: 20px;
-                overflow-x: auto;
-            }
+        .btn-delete {
+            background-color: #f5d0d0;
+            color: #8c2f2f;
+            border: none;
+        }
 
             .voucher-table {
                 width: 100%;
@@ -209,6 +212,8 @@
 
     </head>
     <body>
+        <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+        <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
         <h1 class="title">Voucher Management</h1>
         <div class="top-actions">
             <a href="Dashboard" class="btn btn-back">← Back to Dashboard</a>
@@ -258,4 +263,5 @@
         </div>
 
     </body>
+
 </html>

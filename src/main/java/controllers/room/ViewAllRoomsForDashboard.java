@@ -19,7 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author Kiều Hoàng Mạnh Khang - ce180749
  */
-@WebServlet(name = "ViewAllRoomsForDashboard", urlPatterns = {"/ViewAllRoomsForDashboard"})
+@WebServlet("/ViewAllRoomsForDashboard")
 public class ViewAllRoomsForDashboard extends HttpServlet {
 
     /**

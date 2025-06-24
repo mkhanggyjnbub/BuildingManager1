@@ -83,6 +83,8 @@
         </style>
     </head>
     <body>
+         <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+        <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
         <div class="voucher-details">
             <h2>Voucher Details</h2>
 

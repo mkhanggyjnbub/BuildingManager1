@@ -181,6 +181,9 @@
     </head>
 
     <body>
+        
+         <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+        <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
         <form action="/EditVoucher" method="post" onsubmit="return validateForm()">
             <h2>Edit Voucher</h2>
             <input type="hidden" name="voucherId" value="${voucher.voucherId}" />

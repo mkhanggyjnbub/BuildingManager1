@@ -155,15 +155,13 @@
         <a href="TakeNotification">Nhận Notification</a>
         -->       
         <a href="ViewVouchers">voucher</a>
-        <a href="UserVouchers">User voucher</a>
-        <a href="ViewNews">News</a>
         <a href="ViewServices">Services</a>
         <!--                <a href="#">Liên hệ</a>
                         <a href="UpImage">Up ảnh</a>
                         <a href="Notification">Notification</a>
                         <a href="TakeNotification">Nhận Notification</a>-->
         <!--        <a href="ViewVouchers">voucher</a>-->
-        <a href="UserVouchers">User voucher</a>
+        <c:if test="${not empty customerId  }">   <a href="UserVouchers">User voucher</a></c:if>
         <a href="ViewNews">News</a>
 <!--  <a href="CloudinaryUpload">🔹Cloudinary</a>-->
   
@@ -176,7 +174,7 @@
             <c:when test="${accountType eq 'option1'}">
                 <c:choose>
                     <c:when test="${role == 1}">
-                        <a href="Dashboard">Admin</a>
+                        <a href="Dashboard">Go To Dashboard</a>
                         <a href="?id=${adminId}">${userName}</a>
                     </c:when>
                     <c:when test="${role == 2}">

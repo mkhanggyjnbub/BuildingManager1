@@ -4,7 +4,6 @@
  */
 package controllers.voucher;
 
-import com.nimbusds.openid.connect.sdk.assurance.evidences.Voucher;
 import dao.VoucherDAO;
 import java.io.IOException;
 import java.io.PrintWriter;

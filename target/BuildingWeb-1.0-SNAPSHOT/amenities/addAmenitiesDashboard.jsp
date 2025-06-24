@@ -4,12 +4,14 @@
     Author     : KHANH
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>${a != null ? 'Edit Amenity' : 'Add New Amenity'}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
         :root {
             --main-color: #0a2f5c;
@@ -18,6 +20,7 @@
             --text-color: #333;
             --radius: 10px;
             --shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+            --transition: 0.3s ease;
         }
 
         * {
@@ -28,42 +31,22 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            animation: fadeInBody 1s ease forwards;
+            background: linear-gradient(135deg, #e4f0ff, #ffffff);
         }
 
-        @keyframes fadeInBody {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .main-content {
+            margin-left: 240px;
+            padding: 60px 20px 40px;
         }
 
         .form-wrapper {
             background-color: var(--bg-color);
             padding: 40px 30px;
             max-width: 540px;
-            width: 90%;
+            width: 100%;
+            margin: auto;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            animation: slideIn 0.7s ease-out;
-            opacity: 0;
-            transform: translateY(30px);
-            animation-fill-mode: forwards;
-        }
-
-        @keyframes slideIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .form-wrapper:hover {
-            transform: scale(1.01);
-            transition: transform 0.3s ease;
         }
 
         h2 {
@@ -96,7 +79,7 @@
         textarea {
             width: 100%;
             padding: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: var(--radius);
             font-size: 15px;
@@ -114,6 +97,13 @@
         textarea {
             resize: vertical;
             min-height: 100px;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 13px;
+            margin-bottom: 15px;
+            display: none;
         }
 
         .button-group {
@@ -162,33 +152,76 @@
 </head>
 <body>
 
-<div class="form-wrapper">
-    <h2>${a != null ? '🛠️ Edit Amenity' : '➕ Add New Amenity'}</h2>
-    <p class="description-text">
-        Please fill in the details below to ${a != null ? 'update the amenity' : 'add a new amenity'} to the system.
-    </p>
+    <%@ include file="../navbarDashboard/navbarDashboard.jsp" %>
+<%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
+<div class="main-content">
+    <div class="form-wrapper">
+        <h2>${a != null ? '🛠️ Edit Amenity' : '➕ Add New Amenity'}</h2>
+        <p class="description-text">
+            Please fill in the details below to ${a != null ? 'update the amenity' : 'add a new amenity'} to the system.
+        </p>
 
-    <form action="${pageContext.request.contextPath}/${a != null ? 'EditAmenitiesDashboard' : 'AddAmenitiesDashboard'}" method="post">
-        <c:if test="${a != null}">
-            <input type="hidden" name="id" value="${a.amenityId}" />
-        </c:if>
+        <form action="${pageContext.request.contextPath}/${a != null ? 'EditAmenitiesDashboard' : 'AddAmenitiesDashboard'}"
+              method="post" onsubmit="return validateForm()">
+            <c:if test="${a != null}">
+                <input type="hidden" name="id" value="${a.amenityId}" />
+            </c:if>
 
-        <label for="name" data-icon="🏷️">Amenity Name:</label>
-        <input type="text" id="name" name="name" maxlength="100" required value="${a != null ? a.name : ''}">
+            <label for="name" data-icon="🏷️">Amenity Name:</label>
+            <input type="text" id="name" name="name" maxlength="35" required value="${a != null ? a.name : ''}" oninput="checkNameLength(this)">
+            <div id="name-error" class="error-message">You have exceeded the 35-character limit.</div>
 
-        <label for="description" data-icon="📝">Description:</label>
-        <textarea id="description" name="description" maxlength="255">${a != null ? a.description : ''}</textarea>
+            <label for="description" data-icon="📝">Description:</label>
+            <textarea id="description" name="description" maxlength="250" oninput="checkDescriptionLength(this)">${a != null ? a.description : ''}</textarea>
+            <div id="desc-error" class="error-message">You have exceeded the 250-character limit.</div>
 
-        <div class="button-group">
-            <input type="submit" value="${a != null ? 'Update' : 'Add'}">
-            <input type="reset" value="Reset">
+            <div class="button-group">
+                <input type="submit" value="${a != null ? 'Update' : 'Add'}">
+                <input type="reset" value="Reset">
+            </div>
+        </form>
+
+        <div class="back-link">
+            <a href="${pageContext.request.contextPath}/ViewAmenitiesDashboard">← Back to Amenities List</a>
         </div>
-    </form>
-
-    <div class="back-link">
-        <a href="${pageContext.request.contextPath}/ViewAmenitiesDashboard">← Back to List</a>
     </div>
+
 </div>
+
+<script>
+    function checkNameLength(input) {
+        const errorMsg = document.getElementById("name-error");
+        errorMsg.style.display = input.value.length > 35 ? "block" : "none";
+    }
+
+    function checkDescriptionLength(input) {
+        const errorMsg = document.getElementById("desc-error");
+        errorMsg.style.display = input.value.length > 250 ? "block" : "none";
+    }
+
+    function validateForm() {
+        const name = document.getElementById("name");
+        const desc = document.getElementById("description");
+        const nameError = document.getElementById("name-error");
+        const descError = document.getElementById("desc-error");
+
+        let isValid = true;
+
+        if (name.value.length > 35) {
+            nameError.style.display = "block";
+            name.focus();
+            isValid = false;
+        }
+
+        if (desc.value.length > 250) {
+            descError.style.display = "block";
+            desc.focus();
+            isValid = false;
+        }
+
+        return isValid;
+    }
+</script>
 
 </body>
 </html>

@@ -31,9 +31,17 @@ public class Bookings {
     private LocalDateTime DeletedTime;
     private String DeletedBy;
     private String Notes;
-
+  private int  userId;
     private String formattedStartDate;
     private String formattedEndDate;
+    
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     public Bookings() {
 
