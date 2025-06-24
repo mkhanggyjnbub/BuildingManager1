@@ -54,7 +54,7 @@ public class BookingDao {
             booking.setEndDate(rs.getDate("EndDate"));
             booking.setStatus(rs.getString("Status"));
             
-            Rooms room = new Rooms();
+            Rooms room = new Rooms(); 
             room.setRoomNumber(rs.getString("RoomNumber"));
             booking.setRooms(room);
             

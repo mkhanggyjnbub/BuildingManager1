@@ -5,6 +5,7 @@
 package controllers.account;
 
 //import db.SendOTPEmail;
+import jakarta.mail.MessagingException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,6 +14,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import sendMail.EmailSender;
 
 /**
  *
@@ -73,11 +77,17 @@ public class SignUp extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String otp = String.valueOf((int) (Math.random() * 900000 + 100000)); 
-//        SendOTPEmail.send(email, otp);
-        HttpSession session =request.getSession();
-        session.setAttribute("otp", otp);
+        try {
+            String email = request.getParameter("email");
+            String otp = String.valueOf((int) (Math.random() * 900000 + 100000));
+            EmailSender mail = new EmailSender();
+           
+            
+//            HttpSession session =request.getSession();
+//            session.setAttribute("otp", otp);
+        } catch (MessagingException ex) {
+            Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

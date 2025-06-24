@@ -26,7 +26,6 @@ controllers\booking\BookingConfirmation.class
 models\Employees.class
 models\Services.class
 controllers\services\ViewServices.class
-models\CustomerStatus.class
 models\Vouchers.class
 models\RoomReviews.class
 controllers\services\DeleteServiceDashboard.class
@@ -48,6 +47,7 @@ dao\PaginationDao.class
 controllers\voucher\AdminViewVoucher.class
 controllers\customer\ViewCustomerDetailDashboard.class
 controllers\news\EditNewsDashboard.class
+Cloudinary\CloudinaryUtil.class
 models\Users.class
 models\MaintenanceSchedule.class
 controllers\customer\EditCustomerDashboard.class
@@ -62,6 +62,7 @@ controllers\services\ViewServicesDashboard.class
 controllers\admin\Dashboard.class
 dao\ServicesDao.class
 models\Floors.class
+controllers\cloudinary\CloudinaryUpload.class
 controllers\admin\DashboardUser.class
 controllers\admin\AdminView.class
 models\Buildings.class

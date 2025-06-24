@@ -3,7 +3,7 @@
     Created on : Jun 17, 2025, 8:36:17 PM
     Author     : Kiều Hoàng Mạnh Khang - ce180749 
 --%>
-<!--
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,11 +12,16 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h2>Chọn ảnh để upload:</h2>
         <form action="CloudinaryUpload" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" />
+            <p>Chọn ảnh upload (tùy chọn):</p>
+            <input type="file" name="imageFile" /><br><br>
+
+            <p>Hoặc nhập URL ảnh (tùy chọn):</p>
+            <input type="text" name="imageUrl" /><br><br>
+
             <button type="submit">Upload</button>
         </form>
 
+
     </body>
-</html>-->
+</html>

@@ -1,5 +1,4 @@
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\amenities\DeleteAmenitiesDashboard.java
-D:\fouderPrj\BuildingWeb\src\main\java\models\CustomerStatus.java
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\admin\Decentralization.java
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\news\EditNewsDashboard.java
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\room\ViewRooms.java
@@ -23,6 +22,7 @@ D:\fouderPrj\BuildingWeb\src\main\java\controllers\services\ViewServicesDashboar
 D:\fouderPrj\BuildingWeb\src\main\java\models\Amenities.java
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\services\ViewServices.java
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\voucher\AdminViewVoucher.java
+D:\fouderPrj\BuildingWeb\src\main\java\Cloudinary\CloudinaryUtil.java
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\admin\Dashboard.java
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\voucher\AddVoucher.java
 D:\fouderPrj\BuildingWeb\src\main\java\models\MaintenanceSchedule.java
