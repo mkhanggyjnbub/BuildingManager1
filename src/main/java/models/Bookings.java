@@ -4,30 +4,33 @@
  */
 package models;
 
-/**
- *
- * @author Kiều Hoàng Mạnh Khang - ce180749
- */
+import java.util.Date;
+
 public class Bookings {
 
     private int bookingId;
     private int roomId;
+    private int customerId;
     private int userId;
-    private int startDate;
-    private int endDate;
-    private String Status;
+    private Date startDate;
+    private Date endDate;
+    private String status;
+    private Date requestTime;
+    private Date confirmationTime;
+    private Date checkInTime;
+    private Date checkOutTime;
+    private Date cancelTime;
+    private int canceledBy;
+    private Date deletedTime;
+    private int deletedBy;
+    private String notes;
+    private Rooms rooms;   
+    private Customers customers;
 
     public Bookings() {
     }
 
-    public Bookings(int bookingId, int roomId, int userId, int startDate, int endDate, String Status) {
-        this.bookingId = bookingId;
-        this.roomId = roomId;
-        this.userId = userId;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.Status = Status;
-    }
+    // Getters & Setters
 
     public int getBookingId() {
         return bookingId;
@@ -45,6 +48,14 @@ public class Bookings {
         this.roomId = roomId;
     }
 
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
     public int getUserId() {
         return userId;
     }
@@ -53,27 +64,115 @@ public class Bookings {
         this.userId = userId;
     }
 
-    public int getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(int startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public int getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(int endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
     public String getStatus() {
-        return Status;
+        return status;
     }
 
-    public void setStatus(String Status) {
-        this.Status = Status;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Date getRequestTime() {
+        return requestTime;
+    }
+
+    public void setRequestTime(Date requestTime) {
+        this.requestTime = requestTime;
+    }
+
+    public Date getConfirmationTime() {
+        return confirmationTime;
+    }
+
+    public void setConfirmationTime(Date confirmationTime) {
+        this.confirmationTime = confirmationTime;
+    }
+
+    public Date getCheckInTime() {
+        return checkInTime;
+    }
+
+    public void setCheckInTime(Date checkInTime) {
+        this.checkInTime = checkInTime;
+    }
+
+    public Date getCheckOutTime() {
+        return checkOutTime;
+    }
+
+    public void setCheckOutTime(Date checkOutTime) {
+        this.checkOutTime = checkOutTime;
+    }
+
+    public Date getCancelTime() {
+        return cancelTime;
+    }
+
+    public void setCancelTime(Date cancelTime) {
+        this.cancelTime = cancelTime;
+    }
+
+    public int getCanceledBy() {
+        return canceledBy;
+    }
+
+    public void setCanceledBy(int canceledBy) {
+        this.canceledBy = canceledBy;
+    }
+
+    public Date getDeletedTime() {
+        return deletedTime;
+    }
+
+    public void setDeletedTime(Date deletedTime) {
+        this.deletedTime = deletedTime;
+    }
+
+    public int getDeletedBy() {
+        return deletedBy;
+    }
+
+    public void setDeletedBy(int deletedBy) {
+        this.deletedBy = deletedBy;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public Rooms getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(Rooms rooms) {
+        this.rooms = rooms;
+    }
+
+    public Customers getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(Customers customers) {
+        this.customers = customers;
     }
 }

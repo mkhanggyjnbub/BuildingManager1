@@ -8,64 +8,30 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
         <title>JSP Page</title>
         <link rel="stylesheet" href="css/index.css">
-        <script>
-            const menuToggle = document.getElementById('menu-toggle');
-            const navMenu = document.getElementById('nav-menu');
-
-            menuToggle.addEventListener('click', () => {
-                navMenu.classList.toggle('show');
-            });
-
-        </script>
-
-
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     </head>
     <body>
 
-        <%@include file="header/header.jsp" %> 
-
+        <%@ include file="header/header.jsp" %>
 
         <!-- banner -->
         <section class="hero">
             <div class="overlay"></div>
             <div class="content">
-                <h10>Away from monotonous life.</h10>
+                <h2>Away from monotonous life.</h2>
                 <h1>Big Resort</h1>
-
-                <p>If you are looking at blank cassettes on the web, you may be very confused <br>at the
-                    difference in price. You may see some for as low as $.17 each.</p>
+                <p>If you are looking at blank cassettes on the web, you may be very confused <br>
+                   at the difference in price. You may see some for as low as $.17 each.</p>
                 <br>
-                <a href="#" class="btn">Đặt phòng</a>
+                <a href="ViewRooms" class="btn">Booking</a>
             </div>
         </section>
         <!-- end banner -->
 
-        <jsp:include  page="menuSearch.jsp"/>
-
-
-        <!-- end first body -->
-        <section class="features">
-            <div class="feature-box">
-                <h2>Quản lý phòng</h2>
-                <p>Thêm, sửa, xóa và theo dõi tình trạng phòng.</p>
-            </div>
-            <div class="feature-box">
-                <h2>Quản lý khách hàng</h2>
-                <p>Lưu trữ thông tin và lịch sử đặt phòng.</p>
-            </div>
-            <div class="feature-box">
-                <h2>Báo cáo doanh thu</h2>
-                <p>Thống kê, xuất báo cáo nhanh chóng.</p>
-            </div>
-        </section>
-
-        <footer>
-            <p>© 2025 HotelManager. Thiết kế bởi bạn.</p>
-        </footer>
+        <%@ include file="footer/footer.jsp" %>
 
         <script src="script.js"></script>
     </body>

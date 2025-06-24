@@ -12,10 +12,18 @@
         <title>JSP Page</title>
     </head>
     <body>
-      <form action="SignUp" method="post">
+        <form action="SignUp" method="post">
             <label  >Name</label>
             <br>
             <input name="tk" type="text"> 
+            <br>
+            <label>Email</label>
+            <br>
+            <input name="email" type="text" 
+                   pattern="[a-zA-Z0-9._%+-]+@gmail\.com" 
+                   required 
+                   title="Vui lòng nhập địa chỉ Gmail hợp lệ (ví dụ: example@gmail.com)">
+
             <br>
             <label>password</label>
             <br>

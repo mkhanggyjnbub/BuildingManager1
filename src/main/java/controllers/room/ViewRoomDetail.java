@@ -17,7 +17,6 @@ import jakarta.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.util.converter.LocalDateTimeStringConverter;
 import models.Amenities;
 import models.RoomReviews;
 import models.Rooms;
@@ -26,7 +25,7 @@ import models.Rooms;
  *
  * @author Kiều Hoàng Mạnh Khang - ce180749
  */
-@WebServlet(name = "ViewRoomDetail", urlPatterns = {"/ViewRoomDetail"})
+@WebServlet(name = "ViewRoom", urlPatterns = {"/ViewRoomDetail"})
 public class ViewRoomDetail extends HttpServlet {
 
     /**

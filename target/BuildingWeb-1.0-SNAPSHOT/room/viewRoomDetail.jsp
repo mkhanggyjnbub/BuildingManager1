@@ -315,26 +315,59 @@
                 background-color: #1d4ed8;
                 transform: scale(1.05);
             }
+            .please {
+                font-size: 16px;
+                font-weight: 600;
+                color: #ff4d4d; /* Màu đỏ cảnh báo */
+                margin-bottom: 8px;
+            }
 
+            .sendMessage {
+                display: inline-block;
+                background-color: #2563eb; /* Màu xanh dương */
+                color: white;
+                font-weight: 600;
+                text-decoration: none;
+                padding: 8px 16px;
+                border-radius: 6px;
+                transition: background-color 0.3s ease, transform 0.2s ease;
+            }
+
+            .sendMessage:hover {
+                background-color: #1e40af; /* Đậm hơn khi hover */
+                transform: scale(1.05); /* Hiệu ứng phóng to nhẹ */
+            }
+
+            .checkLogin{
+                text-align: center;
+            }
         </style>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const price = document.getElementById("price");
+                if (!isNaN(parseInt(price.textContent))) {
+                    price.textContent = parseInt(price.textContent).toLocaleString("vi-VN") + " VND / Night";
+                }
+            });
+        </script>
     </head>
     <body>
         <%@include file="../header/header.jsp" %>
         <br>
         <br>
-
         <main>
             <div class="flex">
                 <section style="flex: 2">
                     <div class="rounded-lg overflow-hidden shadow-lg">
 
-                            <img class="img-cover" src="${room.imageUrl}" alt="Room"/>
+                        <img class="img-cover" src="${room.imageUrl}" alt="Room"/>
                     </div>
                 </section>
                 <section style="flex: 1; padding-left: 1rem;">
                     <h2 class="text-3xl">${room.roomType}</h2>
                     <p class="text-xl mt-2">
-                        180$ <span class="text-base">/ Night</span>
+                        <span id="price" class="text-base">${room.price} VND / Night</span>
                     </p>
                     <div class="mt-4 items-center">
                         <span class="text-gray">
@@ -366,9 +399,25 @@
                         </ul>
                     </div>
                     <div class="mt-8">
-                        <form>
+                        <form action="ConfirmBooking " method="get">
+                            <input type="hidden" name="roomId" value="${room.roomId}"> 
 
-                            <button type="submit">Book Now</button>
+                            <c:choose>
+                                <c:when test="${ not empty sessionScope.customerId}"> 
+                                    <c:choose>
+                                        <c:when test="${ not empty sessionScope.checkIn and not empty sessionScope.checkOut}">     
+                                            <button type="submit">Book Now</button>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a class="sendMessage" href="ViewRooms" style="text-decoration: none">Please Enter Value In Search Bar</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:when>
+                                <c:when test="${ empty sessionScope.customerId}"> 
+                                    <div class="checkLogin"><div class="please">  Please Login To Booking</div>
+                                        <a class="sendMessage" style="text-decoration: none;" href="Login">  Go to Login</a></div>
+                                    </c:when>
+                                </c:choose>
                         </form>
                     </div>
                 </section>
@@ -381,16 +430,15 @@
                     <c:forEach var="review" items="${customerReview}"> 
                         <article class="review">
                             <div class="flex items-center space-x-4">
-                                <img src="${review.customer.avatarUrl}" alt=""
-                                     />
+                                <img src="${review.customer.avatarUrl}" alt=""/>
                                 <div>
                                     <h4 class="text-lg">${review.customer.userName}</h4>
                                     <div class="text-yellow">
                                         <c:forEach  begin="1" end="${review.rating}" step="1" > 
-                                         <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
                                         </c:forEach>
                                     </div>
-                                    <p class="text-gray text-sm">${review.createdAt}</p>
+                                    <p class="text-gray text-sm">  ${review.createdAt}</p>
                                 </div>
                             </div>
                             <p class="mt-4 text-gray leading-relaxed">
@@ -421,7 +469,17 @@
                                 <label for="comment">Content</label>
                                 <textarea id="comment" name="comment" rows="4" required></textarea>
                             </div>
-                            <button type="submit">Send</button>
+
+                            <c:choose>
+                                <c:when test="${ not empty sessionScope.customerId}"> 
+                                    <button class="sendMessage"type="submit">Send</button>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="checkLogin"><div class="please">  Please Login To Send Messages</div>
+                                        <a class="sendMessage" style="text-decoration: none;" href="Login"> ==> Go to Login</a></div>
+                                    </c:otherwise>
+                                </c:choose>
+
                         </form>
                     </article>
                 </div>

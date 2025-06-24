@@ -6,6 +6,7 @@ package models;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
@@ -15,23 +16,28 @@ import java.time.LocalDateTime;
 public class Customers {
 
     private int customerId;
-    private String  userName;
-    private String  password;
-    private String  fullName;
-    private String  phone;
-    private String  email;
-    private String  address;
-    private String  gender;
-    private Date  dateOfBirth;
-    private int  statusId;
-    private String  avatarUrl;
-    private LocalDateTime  creationDate;
-    private LocalDateTime  lastLogin;
+    private String userName;
+    private String password;
+    private String fullName;
+    private String phone;
+    private String email;
+    private String address;
+    private String gender;
+    private Date dateOfBirth;
+    private String avatarUrl;
+    private LocalDateTime creationDate;
+    private LocalDateTime lastLogin;
+    private LocalDateTime currenrLastLogin;
 
     public Customers() {
     }
 
+    private String status;
 
+    private String identityNumber;
+    private Date joinDate;
+
+    // Getter and Setter
     public int getCustomerId() {
         return customerId;
     }
@@ -104,12 +110,12 @@ public class Customers {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public int getStatusId() {
-        return statusId;
+    public String getStatus() {
+        return status;
     }
 
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getAvatarUrl() {
@@ -118,6 +124,30 @@ public class Customers {
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+
+    public LocalDateTime getCurrenrLastLogin() {
+        return currenrLastLogin;
+    }
+
+    public void setCurrenrLastLogin(LocalDateTime currenrLastLogin) {
+        this.currenrLastLogin = currenrLastLogin;
+    }
+
+    public String getIdentityNumber() {
+        return identityNumber;
+    }
+
+    public void setIdentityNumber(String identityNumber) {
+        this.identityNumber = identityNumber;
+    }
+
+    public Date getJoinDate() {
+        return joinDate;
+    }
+
+    public void setJoinDate(Date joinDate) {
+        this.joinDate = joinDate;
     }
 
     public LocalDateTime getCreationDate() {
@@ -135,6 +165,5 @@ public class Customers {
     public void setLastLogin(LocalDateTime lastLogin) {
         this.lastLogin = lastLogin;
     }
-
 
 }

@@ -88,55 +88,55 @@
     </head>
     <body>
         <div class="user-info-container">
-            <h1>Thông tin người dùng</h1>
+            <h1>User Information</h1>
             <div class="user-card">
                 <img class="avatar" src="${userProfile.avatarUrl}" alt="Avatar người dùng">
                 <div class="info">
-                    <p><strong>Họ tên:</strong> ${userProfile.fullName}</p>
-                    <p><strong>Tên đăng nhập:</strong> ${userProfile.userName}</p>
+                    <p><strong>Full Name:</strong> ${userProfile.fullName}</p>
+                    <p><strong>UserName:</strong> ${userProfile.userName}</p>
                     <p><strong>Email:</strong> ${userProfile.email}</p>
-                    <p><strong>Số điện thoại:</strong> ${userProfile.phone}</p>
-                    <p><strong>Địa chỉ:</strong> 
+                    <p><strong>Phone:</strong> ${userProfile.phone}</p>
+                    <p><strong>Address:</strong> 
                         <c:choose>
                             <c:when test="${not empty userProfile.address}">
                                 ${userProfile.address}
                             </c:when>
-                            <c:otherwise>Chưa cập nhật</c:otherwise>
+                            <c:otherwise>Not updated yet</c:otherwise>
                         </c:choose>
                     </p>
-                    <p><strong>Giới tính:</strong> 
+                    <p><strong>Gender:</strong> 
                         <c:choose>
-                            <c:when test="${userProfile.gender == 'Nam'}">Nam</c:when>
-                            <c:when test="${userProfile.gender == 'Nữ'}">Nữ</c:when>
-                            <c:otherwise>Không xác định</c:otherwise>
+                            <c:when test="${userProfile.gender == 'Male'}">Male</c:when>
+                            <c:when test="${userProfile.gender == 'Female'}">Female</c:when>
+                            <c:otherwise>Unknown</c:otherwise>
                         </c:choose>
                     </p>
-                    <p><strong>Ngày sinh:</strong> 
+                    <p><strong>Date of Birth:</strong> 
                         <c:choose>
                             <c:when test="${not empty userProfile.dateOfBirth}">
                                 ${userProfile.dateOfBirth}
                             </c:when>
-                            <c:otherwise>Chưa cập nhật</c:otherwise>
+                            <c:otherwise>Not updated yet</c:otherwise>
                         </c:choose>
                     </p>
                     <p>
-                        <strong>Trạng thái: </strong>
+                        <strong>Status: </strong>
                         <span class="status-indicator ${userProfile.statusId == 1 ? 'active' : 'inactive'}"></span>
                         <c:choose>
                             <c:when test="${userProfile.statusId == 1}">
-                                Hoạt động
+                                Active
                             </c:when>
                             <c:otherwise>
-                                Bị khóa
+                                Inactive
                             </c:otherwise>
                         </c:choose>
                     </p>
-                    <p><strong>Lần đăng nhập cuối:</strong> 
+                    <p><strong>Last Login:</strong> 
                         <c:choose>
                             <c:when test="${not empty userProfile.lastLogin}">
                                 ${fn:replace(userProfile.lastLogin, 'T', ' ')}
                             </c:when>
-                            <c:otherwise>Chưa có dữ liệu</c:otherwise>
+                            <c:otherwise>No data available</c:otherwise>
                         </c:choose>
                     </p>
                     <a href="EditCustomerProfile?id=${customerId}">Update</a>

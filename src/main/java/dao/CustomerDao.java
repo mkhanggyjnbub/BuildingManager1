@@ -12,9 +12,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.CustomerStatus;
 import models.Customers;
 
 /**
@@ -51,9 +52,8 @@ public class CustomerDao {
 
     public Customers getCustomerById(int id) {
         Customers customer = null;
-        String sql = "SELECT UserName, FullName, Email, Phone, StatusName, AvatarUrl, Address, Gender, DateOfBirth \n"
-                + "FROM Customers c \n"
-                + "INNER JOIN CustomerStatus cs ON c.StatusId = cs.StatusId \n"
+        String sql = "SELECT UserName, FullName, Email, Phone, Status, AvatarUrl, Address, Gender, DateOfBirth, LastLogin\n"
+                + "FROM Customers\n"
                 + "WHERE CustomerID = ?";
 
         try ( PreparedStatement pst = conn.prepareStatement(sql)) {
@@ -65,17 +65,24 @@ public class CustomerDao {
                     customer.setFullName(rs.getString("FullName"));
                     customer.setEmail(rs.getString("Email"));
                     customer.setPhone(rs.getString("Phone"));
+                    customer.setStatus(rs.getString("Status"));
                     customer.setAvatarUrl(rs.getString("AvatarUrl"));
                     customer.setAddress(rs.getString("Address")); // có thể là null
                     customer.setGender(rs.getString("Gender")); // có thể là null
                     customer.setDateOfBirth(rs.getDate("DateOfBirth")); // có thể là null (java.sql.Date)
-
+                    Timestamp ts = rs.getTimestamp("LastLogin");
+                    if (ts != null) {
+                        customer.setLastLogin(ts.toLocalDateTime());
+                    } else {
+                        customer.setLastLogin(null);
+                    }
+                    return customer;
                 }
             }
         } catch (SQLException ex) {
             Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return customer;
+        return null;
     }
 
     public int updateCustomerProfileById(int id, Customers customer) {
@@ -94,7 +101,7 @@ public class CustomerDao {
         }
         return cmt;
     }
-    
+
     public void updateLoginTimestamps(int customerId) {
         String sql = "UPDATE Customers SET LastLogin = CurrentLastLogin, CurrentLastLogin = ? WHERE CustomerId = ?";
 
@@ -107,4 +114,114 @@ public class CustomerDao {
             e.printStackTrace();
         }
     }
+
+    public List<Customers> getCustomers() {
+        List<Customers> customersList = new ArrayList<>();
+        String sql = "SELECT * FROM Customers";
+
+        try ( PreparedStatement pst = conn.prepareStatement(sql);  ResultSet rs = pst.executeQuery()) {
+
+            while (rs.next()) {
+                Customers customer = new Customers();
+                customer.setCustomerId(rs.getInt("CustomerId"));
+                customer.setUserName(rs.getString("UserName"));
+                customer.setPassword(rs.getString("Password"));
+                customer.setFullName(rs.getString("FullName"));
+                customer.setPhone(rs.getString("Phone"));
+                customer.setEmail(rs.getString("Email"));
+                customer.setAddress(rs.getString("Address"));
+                customer.setGender(rs.getString("Gender")); // Có thể dùng boolean nếu cột là bit
+                customer.setDateOfBirth(rs.getDate("DateOfBirth"));
+                customer.setStatus(rs.getString("Status"));
+                customer.setAvatarUrl(rs.getString("AvatarUrl"));
+                customer.setCreationDate(rs.getTimestamp("CreationDate").toLocalDateTime());
+                customer.setLastLogin(rs.getTimestamp("LastLogin").toLocalDateTime());
+                customer.setIdentityNumber(rs.getString("IdentityNumber"));
+                customer.setJoinDate(rs.getDate("JoinDate"));
+
+                customersList.add(customer);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return customersList;
+    }
+
+    public List<Customers> getAllCustomers() throws SQLException {
+        List<Customers> list = new ArrayList<>();
+            String sql = "SELECT * FROM Customers";
+        try ( PreparedStatement pst = conn.prepareStatement(sql);  ResultSet rs = pst.executeQuery()) {
+
+            while (rs.next()) {
+                Customers c = new Customers();
+                c.setCustomerId(rs.getInt("CustomerId"));
+                c.setUserName(rs.getString("UserName"));
+                c.setPassword(rs.getString("Password"));
+                c.setFullName(rs.getString("FullName"));
+                c.setPhone(rs.getString("Phone"));
+                c.setEmail(rs.getString("Email"));
+                c.setAddress(rs.getString("Address"));
+                c.setGender(rs.getString("Gender"));
+                c.setDateOfBirth(rs.getDate("DateOfBirth"));
+                c.setStatus(rs.getString("Status"));
+                c.setAvatarUrl(rs.getString("AvatarUrl"));
+                c.setCreationDate(rs.getTimestamp("CreationDate").toLocalDateTime());
+                c.setLastLogin(rs.getTimestamp("LastLogin").toLocalDateTime());
+                c.setIdentityNumber(rs.getString("IdentityNumber"));
+                c.setJoinDate(rs.getDate("JoinDate"));
+                list.add(c);
+            }
+        }
+        return list;
+    }
+
+    public Customers getCustomerByIdDashboard(int id) throws SQLException {
+        Customers c = null;
+        String sql = "SELECT * FROM Customers WHERE CustomerId = ?";
+        try ( PreparedStatement pst = conn.prepareStatement(sql)) {
+            pst.setInt(1, id);
+            try ( ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    c = new Customers();
+                    c.setCustomerId(rs.getInt("CustomerId"));
+                    c.setUserName(rs.getString("UserName"));
+                    c.setPassword(rs.getString("Password"));
+                    c.setFullName(rs.getString("FullName"));
+                    c.setPhone(rs.getString("Phone"));
+                    c.setEmail(rs.getString("Email"));
+                    c.setAddress(rs.getString("Address"));
+                    c.setGender(rs.getString("Gender"));
+                    c.setDateOfBirth(rs.getDate("DateOfBirth"));
+                    c.setStatus(rs.getString("Status"));
+                    c.setAvatarUrl(rs.getString("AvatarUrl"));
+                    c.setCreationDate(rs.getTimestamp("CreationDate").toLocalDateTime());
+                    c.setLastLogin(rs.getTimestamp("LastLogin").toLocalDateTime());
+                    c.setIdentityNumber(rs.getString("IdentityNumber"));
+                    c.setJoinDate(rs.getDate("JoinDate"));
+                }
+            }
+        }
+        return c;
+    }
+
+    // Cập nhật thông tin khách hàng
+    public int updateCustomer(Customers customer) throws SQLException {
+        String sql = "UPDATE Customers SET UserName=?, FullName=?, Email=?, Phone=?, Address=?, Gender=?, Status=?, IdentityNumber=? WHERE CustomerId=?";
+        try ( PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, customer.getUserName());
+            stmt.setString(2, customer.getFullName());
+            stmt.setString(3, customer.getEmail());
+            stmt.setString(4, customer.getPhone());
+            stmt.setString(5, customer.getAddress());
+            stmt.setString(6, customer.getGender());
+            stmt.setString(7, customer.getStatus());
+            stmt.setString(8, customer.getIdentityNumber());
+            stmt.setInt(9, customer.getCustomerId());
+
+            return stmt.executeUpdate();  // trả về số dòng cập nhật thành công
+        }
+    }
+
 }

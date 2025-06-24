@@ -11,7 +11,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Danh sách tin tức</title>
+    <title>News List</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -118,7 +118,7 @@
     </style>
 </head>
 <body>
-    <h1>Tin Tức Mới Nhất</h1>
+    <h1>Latest News</h1>
 
     <a href="AddNewsDashboard">
         <button type="button">➕ Thêm Tin Mới</button>
@@ -128,16 +128,16 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Tiêu đề</th>
-                <th>Tóm tắt</th>
-                <th>Ảnh</th>
-                <th>Ngày đăng</th>
-                <th>Trạng thái</th>
-                <th>Người đăng</th>
-                <th>Toà nhà</th>
-                <th>Lượt xem</th>
-                <th>Nội dung</th>
-                <th>Thao tác</th>
+                <th>Title</th>
+                <th>Summary</th>
+                <th>Image</th>
+                <th>Posted Date</th>
+                <th>Status</th>
+                <th>Author</th>
+                <th>Building</th>
+                <th>Viewcount</th>
+                <th>Content</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -150,8 +150,8 @@
                     <td>${news.datePosted}</td>
                     <td>
                         <c:choose>
-                            <c:when test="${news.isPublished}"><span style="color: green;">✔ Đã đăng</span></c:when>
-                            <c:otherwise><span style="color: red;">✘ Chưa đăng</span></c:otherwise>
+                            <c:when test="${news.isPublished}"><span style="color: green;">✔ Public</span></c:when>
+                            <c:otherwise><span style="color: red;">✘ Unpublished</span></c:otherwise>
                         </c:choose>
                     </td>
                     <td>${news.userId}</td>
@@ -161,11 +161,11 @@
                     <td>
                         <form action="EditNewsDashboard" method="get">
                             <input type="hidden" name="id" value="${news.newsID}" />
-                            <button type="submit" class="btn btn-update">✏️ Sửa</button>
+                            <button type="submit" class="btn btn-update">✏️ Edit</button>
                         </form>
-                        <form action="DeleteNewsDashboard" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn xóa tin này không?');">
+                        <form action="DeleteNewsDashboard" method="post" onsubmit="return confirm('Are you sure you want to delete this news item?');">
                             <input type="hidden" name="id" value="${news.newsID}" />
-                            <button type="submit" class="btn btn-delete">🗑️ Xoá</button>
+                            <button type="submit" class="btn btn-delete">🗑️ Delete</button>
                         </form>
                     </td>
                 </tr>

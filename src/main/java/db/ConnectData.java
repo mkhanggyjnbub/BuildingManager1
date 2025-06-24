@@ -1,4 +1,5 @@
 /*
+package db;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -21,7 +22,7 @@ public class ConnectData {
     public static Connection getConnection() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String url = "jdbc:sqlserver://PC:1433;databaseName=building_management8;user=sa;password=12345;encrypt=true;trustServerCertificate=true;";
+            String url = "jdbc:sqlserver://LAPTOP-SJ6AII7D\\SQLEXPRESS:1433;databaseName=building_management30;user=sa;password=123456;trustServerCertificate=true;";
             conn = DriverManager.getConnection(url);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ConnectData.class.getName()).log(Level.SEVERE, null, ex);

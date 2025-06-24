@@ -20,7 +20,7 @@
             <tr>
                 <td colspan="1" style="width: 30%;"> Ảnh đại diện: </td>
                 <td>🔹 Họ tên:</td>
-                <td colspan="2" >${user.employees.fullName} </td>
+                <td colspan="2" >${user.fullName} </td>
 
             </tr>
             <tr>
@@ -29,11 +29,11 @@
 
             <tr>
                 <td>🔹 Email:</td>
-                <td colspan="2" >${user.employees.email}</td>
+                <td colspan="2" >${user.email}</td>
             </tr>
             <tr>
                 <td>🔹 SĐT:</td>
-                <td colspan="2" >${user.employees.phone}</td>
+                <td colspan="2" >${user.phone}</td>
             </tr>
             <tr>
                 <td>🔹 Vai trò:</td>
@@ -41,7 +41,7 @@
             </tr>
             <tr>        
                 <td>🔹 Trạng thái:</td>
-                <td colspan="2"> ${user.accountStatus.statusName}</td>
+                <td colspan="2"> ${user.status}</td>
             </tr>
             <tr>
                 <td colspan="2">📅 Ngày tạo: 01/01/2024</td>

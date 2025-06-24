@@ -143,7 +143,7 @@
             <c:forEach var="v" items="${vouchers}">
                 <c:set var="isSaved" value="false" />
 
-                <c:forEach var="saved" items="${voucherCustomer}">
+                <c:forEach var="saved" items="${savedIds}">
                     <c:if test="${v.voucherId == saved.voucherId}">
                         <c:set var="isSaved" value="true" />
                     </c:if>

@@ -78,4 +78,21 @@ public class PaginationDao {
         return allPage;
     }
 
+        public int PageFullRoomsOfDashBoard() {
+        ResultSet rs = null;
+        int allPage = 0, finalPage = 0;
+        try {
+            String sql = "select count (*) as Total from Rooms ";
+            Statement st = conn.createStatement();
+            rs = st.executeQuery(sql);
+            if (rs.next()) {
+                allPage = rs.getInt("Total");
+            }
+         
+        } catch (SQLException ex) {
+            Logger.getLogger(PaginationDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return allPage;
+    }
 }
