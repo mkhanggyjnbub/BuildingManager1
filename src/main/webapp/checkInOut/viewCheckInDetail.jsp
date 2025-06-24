@@ -15,6 +15,46 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
+        :root {
+            --navy: #4a6fa5;
+            --white: #ffffff;
+        }
+
+        /* Navbar giống như ảnh */
+        .navbar {
+            background-color: var(--navy);
+            color: var(--white);
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .navbar h1 {
+            font-size: 22px;
+            margin: 0;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .navbar a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .navbar a i {
+            font-size: 16px;
+        }
+
         body {
             font-family: 'Segoe UI', sans-serif;
             background: linear-gradient(to bottom right, #e7f0fa, #ffffff);
@@ -116,8 +156,10 @@
 </head>
 <body>
 
-<%@ include file="../navbarDashboard/navbarDashboard.jsp" %>
+
+<%@include file="../navbarDashboard/navbarDashboard.jsp" %>
 <%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
+
 
 <div class="main-content">
     <div class="container">
