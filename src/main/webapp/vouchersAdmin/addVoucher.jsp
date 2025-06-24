@@ -256,7 +256,7 @@
                 <div class="form-group">
                     <label for="minOrderAmount">Minimum application</label>
                     <input type="number" id="minOrderAmount" name="minOrderAmount" 
-                           min="1" max="10000000" step="1" required placeholder="Maximun 10.000.000"
+                           min="1000" max="10000000" step="1000" required placeholder="Maximun 10.000.000"
                            oninput="validateMaxOrder(this)">
                 </div>
 

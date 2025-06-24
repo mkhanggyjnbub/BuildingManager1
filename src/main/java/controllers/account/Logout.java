@@ -89,9 +89,16 @@ public class Logout extends HttpServlet {
             session.removeAttribute("userName");
             session.removeAttribute("accountType");
             response.sendRedirect("Index");
+            
+        }else if (session.getAttribute("staffId") != null) {
+            session.removeAttribute("adminId");
+            session.removeAttribute("role");
+            session.removeAttribute("userName");
+            session.removeAttribute("accountType");
+            response.sendRedirect("Index");
         } else {
             // Không tìm thấy người dùng để đăng xuất
-            response.sendRedirect("Error.jsp");
+            response.sendRedirect("Error");
         }
     }
 

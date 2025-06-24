@@ -16,7 +16,6 @@ Websocket\TakeNotification.class
 controllers\voucher\VouchersDashBoard.class
 dao\CustomerDao.class
 controllers\voucher\EditVoucher.class
-controllers\room\CreateRoomForDashboard.class
 dao\NewsDao.class
 dao\RoomReviewDao.class
 dao\EquipmentDao.class
@@ -26,21 +25,11 @@ controllers\booking\BookingConfirmation.class
 models\Employees.class
 models\Services.class
 controllers\services\ViewServices.class
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-models\CustomerStatus.class
->>>>>>> 91a8afea09ac24bc650ba1948c4eebd37e519379
-models\Vouchers.class
-models\RoomReviews.class
-controllers\services\DeleteServiceDashboard.class
-=======
 controllers\report\ViewAllReportsForDashboard.class
 models\Vouchers.class
 models\RoomReviews.class
 controllers\services\DeleteServiceDashboard.class
 models\Report.class
->>>>>>> c46a998896251caeadac13a3c017e60ff05c9cca
 controllers\asset\Assets.class
 models\Rooms.class
 controllers\account\Logout.class
@@ -75,7 +64,6 @@ controllers\services\ViewServicesDashboard.class
 controllers\admin\Dashboard.class
 dao\ServicesDao.class
 models\Floors.class
-controllers\cloudinary\CloudinaryUpload.class
 controllers\admin\DashboardUser.class
 controllers\admin\AdminView.class
 models\Buildings.class
@@ -91,8 +79,5 @@ controllers\room\DeleteRoomForDashboard.class
 controllers\room\ViewRoomDetail.class
 controllers\news\DeleteNewsDashboard.class
 models\Amenities.class
-<<<<<<< HEAD
-=======
 dao\ReportDao.class
 controllers\checkInOut\CheckInOutDetail.class
->>>>>>> c46a998896251caeadac13a3c017e60ff05c9cca

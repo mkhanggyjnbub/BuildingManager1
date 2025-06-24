@@ -106,8 +106,8 @@ public class CreateRoomForDashboard extends HttpServlet {
         try {
             if (filePart != null && filePart.getSize() > 0) {
 
-                byte[] imageBytes = filePart.getInputStream().readAllBytes();
-                uploadedUrl = CloudinaryUtil.upload(imageBytes);
+                //byte[] imageBytes = filePart.getInputStream().readAllBytes();
+                //uploadedUrl = CloudinaryUtil.upload(imageBytes);
             } else {
                 String imageUrl = request.getParameter("imageUrl");
                 uploadedUrl = CloudinaryUtil.upload(imageUrl);

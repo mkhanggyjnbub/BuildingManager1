@@ -265,17 +265,29 @@
 
     </head>
     <body>
- <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+        <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
         <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
+
+        <c:if test="${sessionScope.bookingConfirmed == true}">
+            <script>
+                window.onload = function () {
+                    alert("Booking has been successfully confirmed!");
+                };
+            </script>
+            <c:remove var="bookingConfirmed" scope="session"/>
+        </c:if>
+
+
         <h1>booking confirmation list</h1>
 
-        <c:if test="${empty booking}">
+        <c:if test="${searched and noResult}">
             <script>
                 window.onload = function () {
                     showNoResultsPopup();
                 };
             </script>
         </c:if>
+
 
         <form action="BookingConfirmation" method="post" style="margin-bottom: 20px;">
             Room Number: 
@@ -295,8 +307,9 @@
                    title="Only letters allowed (max 30 characters)" 
                    oninput="removeNumbers(this)" />
 
-            Start Date: <input type="date" name="startDate" value="${param.startDate}">
-            End Date: <input type="date" name="endDate" value="${param.endDate}">
+            Start Date: <input type="date" name="startDate" value="${startDate}">
+            End Date: <input type="date" name="endDate" value="${endDate}">
+
 
             Status:
             <select name="status">
