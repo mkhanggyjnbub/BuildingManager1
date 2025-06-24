@@ -109,6 +109,22 @@
                 color: #c62828;
                 font-weight: 500;
             }
+            
+            .back-button {
+                top: -40px;
+                left: 20px;
+                width: 80px;
+                background-color: #1a73e8;
+                color: white;
+                padding: 8px 12px;
+                border-radius: 5px;
+                font-size: 14px;
+                text-decoration: none;
+                display: inline-block;
+            }
+            .back-button:hover {
+                background-color: #0c53b0;
+            }
 
             @media (max-width: 768px) {
                 h1 {
@@ -133,7 +149,12 @@
 
     </head>
     <body>
+        <%@include file="../header/header.jsp"%> 
+        <br>
+        <br>
+        <br>
         <h1>Our Services</h1>
+        <a href="javascript:history.back()" class="back-button">← Back</a>
         <c:choose>
             <c:when test="${not empty servicesList}">
                 <c:set var="hasActiveService" value="false" />
@@ -145,7 +166,7 @@
                                 <div class="service-card">
                                     <img src="${s.imageURL}" alt="Ảnh dịch vụ">
                                     <div class="service-title">${s.serviceName}</div>
-                                    <div class="service-type">Loại: ${s.serviceType}</div>
+                                    <div class="service-type">Loại: ${s.unitType}</div>
                                     <div class="service-price">💰 ${s.price} VND</div>
                                 </div>
                             </a>
