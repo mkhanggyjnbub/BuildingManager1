@@ -60,12 +60,18 @@ public class ViewCustomerProfile extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        Customers cus = new Customers();
+        Customers customer = new Customers();
         CustomerDao dao = new CustomerDao();
-        cus = dao.getCustomerById(id);
-        request.setAttribute("userProfile", cus);
-        request.setAttribute("customerId", id);
-        request.getRequestDispatcher("customer/viewCustomerProfile.jsp").forward(request, response);
+        customer = dao.getCustomerByIdForCustomer(id);
+
+        if (customer != null) {
+            request.setAttribute("userProfile", customer);
+            request.setAttribute("customerId", id);
+            request.getRequestDispatcher("customer/viewCustomerProfile.jsp").forward(request, response);
+        } else {
+            request.setAttribute("message", "An error occurred in the system. Please wait a few minutes and log in again.");
+            request.getRequestDispatcher("customer/viewCustomerProfile.jsp").forward(request, response);
+        }
     }
 
     /**

@@ -26,11 +26,18 @@ controllers\booking\BookingConfirmation.class
 models\Employees.class
 models\Services.class
 controllers\services\ViewServices.class
+<<<<<<< HEAD
+models\CustomerStatus.class
+models\Vouchers.class
+models\RoomReviews.class
+controllers\services\DeleteServiceDashboard.class
+=======
 controllers\report\ViewAllReportsForDashboard.class
 models\Vouchers.class
 models\RoomReviews.class
 controllers\services\DeleteServiceDashboard.class
 models\Report.class
+>>>>>>> c46a998896251caeadac13a3c017e60ff05c9cca
 controllers\asset\Assets.class
 models\Rooms.class
 controllers\account\Logout.class
@@ -79,5 +86,8 @@ controllers\room\DeleteRoomForDashboard.class
 controllers\room\ViewRoomDetail.class
 controllers\news\DeleteNewsDashboard.class
 models\Amenities.class
+<<<<<<< HEAD
+=======
 dao\ReportDao.class
 controllers\checkInOut\CheckInOutDetail.class
+>>>>>>> c46a998896251caeadac13a3c017e60ff05c9cca

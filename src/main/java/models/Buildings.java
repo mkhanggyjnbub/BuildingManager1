@@ -18,14 +18,6 @@ public class Buildings {
     public Buildings() {
     }
 
-    public Buildings(int buildingId, String buildingName, String address, String description, String location) {
-        this.buildingId = buildingId;
-        this.buildingName = buildingName;
-        this.address = address;
-        this.description = description;
-        this.location = location;
-    }
-
     
     public int getBuildingId() {
         return buildingId;
