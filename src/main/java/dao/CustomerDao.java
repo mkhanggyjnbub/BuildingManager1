@@ -208,7 +208,7 @@ public class CustomerDao {
                 c.setStatus(rs.getString("Status"));
                 c.setAvatarUrl(rs.getString("AvatarUrl"));
                 c.setCreationDate(rs.getTimestamp("CreationDate").toLocalDateTime());
-                c.setLastLogin(rs.getTimestamp("LastLogin").toLocalDateTime());
+                c.setLastLogin(rs.getTimestamp("LastLogin").toLocalDateTime()); 
                 c.setIdentityNumber(rs.getString("IdentityNumber"));
                 c.setJoinDate(rs.getDate("JoinDate"));
                 list.add(c);

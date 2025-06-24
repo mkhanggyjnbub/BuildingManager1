@@ -27,7 +27,10 @@ models\Employees.class
 models\Services.class
 controllers\services\ViewServices.class
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 models\CustomerStatus.class
+>>>>>>> 91a8afea09ac24bc650ba1948c4eebd37e519379
 models\Vouchers.class
 models\RoomReviews.class
 controllers\services\DeleteServiceDashboard.class
@@ -57,6 +60,7 @@ dao\PaginationDao.class
 controllers\voucher\AdminViewVoucher.class
 controllers\customer\ViewCustomerDetailDashboard.class
 controllers\news\EditNewsDashboard.class
+Cloudinary\CloudinaryUtil.class
 models\Users.class
 models\MaintenanceSchedule.class
 controllers\customer\EditCustomerDashboard.class
@@ -71,6 +75,7 @@ controllers\services\ViewServicesDashboard.class
 controllers\admin\Dashboard.class
 dao\ServicesDao.class
 models\Floors.class
+controllers\cloudinary\CloudinaryUpload.class
 controllers\admin\DashboardUser.class
 controllers\admin\AdminView.class
 models\Buildings.class

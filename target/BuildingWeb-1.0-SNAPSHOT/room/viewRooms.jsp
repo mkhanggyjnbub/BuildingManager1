@@ -12,7 +12,7 @@
         <title>JSP Page</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> 
         <link rel="stylesheet" href="../css/viewRooms.css"/>
-        
+
     </head>
     <body>
 
@@ -28,7 +28,7 @@
                 <select onchange="search()" id="location" name="location">
                     <option value="">-- Select Location --</option>
                     <option value="Can Tho">Cần Thơ</option>
-<!--                    <option value="Vung Tau">Vũng Tàu</option>-->
+                    <!--                    <option value="Vung Tau">Vũng Tàu</option>-->
                 </select>
             </div>
 
@@ -73,32 +73,32 @@
         <div>
             <button id="loadmore-btn" onclick="loadMore()">See More ${finalRooms} Rooms</button>
         </div>
-                <script src="../js/viewRooms.js"></script>
-                <script>
-                    
-                    document.addEventListener('DOMContentLoaded', function () {
-    const prices = document.getElementsByClassName("price");
-    for (let i = 0; i < prices.length; i++) {
-        const raw = prices[i].textContent.trim().replace(/[^\d]/g, '');
-        const number = parseInt(raw);
-        if (!isNaN(number)) {
-            prices[i].textContent = number.toLocaleString("vi-VN") + " VNĐ / Night";
-        }
-    }
-});
+        <script src="../js/viewRooms.js"></script>
+        <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const prices = document.getElementsByClassName("price");
+            for (let i = 0; i < prices.length; i++) {
+                const raw = prices[i].textContent.trim().replace(/[^\d]/g, '');
+                const number = parseInt(raw);
+                if (!isNaN(number)) {
+                    prices[i].textContent = number.toLocaleString("vi-VN") + " VNĐ / Night";
+                }
+            }
+        });
 
 
-function formatAfterAjax() {
-    const prices = document.getElementsByClassName("price");
-    for (let i = 0; i < prices.length; i++) {
-        const raw = prices[i].textContent.trim().replace(/[^\d]/g, '');
-        const number = parseInt(raw);
-        if (!isNaN(number)) {
-            prices[i].textContent = number.toLocaleString("vi-VN") + " VNĐ / Night";
+        function formatAfterAjax() {
+            const prices = document.getElementsByClassName("price");
+            for (let i = 0; i < prices.length; i++) {
+                const raw = prices[i].textContent.trim().replace(/[^\d]/g, '');
+                const number = parseInt(raw);
+                if (!isNaN(number)) {
+                    prices[i].textContent = number.toLocaleString("vi-VN") + " VNĐ / Night";
+                }
+            }
         }
-    }
-}
-                </script>
+        </script>
 
     </body>
 

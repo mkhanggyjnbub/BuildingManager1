@@ -64,8 +64,9 @@ public class BookingDao {
             }
 
             booking.setStatus(rs.getString("Status"));
+            
+            Rooms room = new Rooms(); 
 
-            Rooms room = new Rooms();
             room.setRoomNumber(rs.getString("RoomNumber"));
             booking.setRooms(room);
 

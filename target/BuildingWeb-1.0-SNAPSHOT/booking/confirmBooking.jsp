@@ -572,7 +572,6 @@
                                     <%--<c:when test="${adults >0 and children > 0}"> ${adults} Adults and ${children} Children )</c:when>--%>
                                     <%--<c:when test="${adults >0 }"> ${adults} Adults )</c:when>--%>
                                     <%--<c:otherwise>${children} Children )</c:otherwise>--%>
-
                                 <%--</c:choose>--%>
                             </span>
                         </p>
@@ -751,6 +750,8 @@
         }
         });
         });
+        
+        
         // thêm dấu . cách 3 số 0
         document.addEventListener('DOMContentLoaded', function () {
         let price1 = document.getElementById("price1");
