@@ -168,7 +168,8 @@ public class RoomDao {
                     + "    R.RoomType,\n"
                     + "    R.Price,\n"
                     + "    R.Description,\n"
-                    + "    R.ImageUrl\n"
+                    + "    R.ImageUrl,\n"
+                    + "     R.Area\n"
                     + "FROM Rooms R\n"
                     + "where R.RoomId = ?";
             PreparedStatement st = conn.prepareStatement(sql);
@@ -180,6 +181,7 @@ public class RoomDao {
                 room.setPrice(rs.getInt("Price"));
                 room.setImageUrl(rs.getString("ImageUrl"));
                 room.setDescription(rs.getString("Description"));
+                room.setArea(rs.getFloat("Area"));
 
             }
         } catch (SQLException ex) {
@@ -408,7 +410,7 @@ public class RoomDao {
     }
 
     public int createRoom(int roomNumber, int floorNumber, String roomType, String bedType, Long price, int maxOccupancy,
-            String description, String imageUrl, String status, int buildingId) {
+            String description, String imageUrl, String status, int buildingId, float area) {
         int cnt = 0;
         try {
             String sql = "INSERT INTO Rooms \n"
@@ -416,8 +418,8 @@ public class RoomDao {
                     + "RoomType, BedType,\n"
                     + "Price, MaxOccupancy,\n"
                     + "Description, ImageUrl,\n"
-                    + "Status, BuildingId)\n"
-                    + "VALUES (?,?,?,?,?,?,?,?,?,?)";
+                    + "Status, BuildingId,Area)\n"
+                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setInt(1, roomNumber);
             pst.setInt(2, floorNumber);
@@ -429,6 +431,7 @@ public class RoomDao {
             pst.setString(8, imageUrl);
             pst.setString(9, status);
             pst.setInt(10, buildingId);
+            pst.setFloat(11, area);
 
             cnt = pst.executeUpdate();
 

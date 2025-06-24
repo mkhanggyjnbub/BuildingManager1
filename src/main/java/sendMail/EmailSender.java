@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  */
 public class EmailSender {
 
-     private final String fromEmail = "prokhang66@gmail.com";
+    private final String fromEmail = "prokhang66@gmail.com";
     private final String password = "xtqoxbwttfcxwqgt";
     private Session session;
 
