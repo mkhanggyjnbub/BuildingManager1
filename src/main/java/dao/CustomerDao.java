@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.CustomerStatus;
 import models.Customers;
 
 /**
@@ -66,7 +65,7 @@ public class CustomerDao {
                     customer.setFullName(rs.getString("FullName"));
                     customer.setEmail(rs.getString("Email"));
                     customer.setPhone(rs.getString("Phone"));
-                    customer.setStatus(rs.getString("Status"));
+                    customer.setStatus(rs.getString("Status"));                 
                     customer.setAvatarUrl(rs.getString("AvatarUrl"));
                     customer.setAddress(rs.getString("Address")); // có thể là null
                     customer.setGender(rs.getString("Gender")); // có thể là null
@@ -86,15 +85,18 @@ public class CustomerDao {
         return null;
     }
 
+    //author: KhoaDDCE181988 - Use in: ViewCustomerProfile,..
     public int updateCustomerProfileById(int id, Customers customer) {
         int cmt = 0;
         try {
-            String sql = "Update Customers set Address = ?, FullName = ?, Gender = ? where CustomerId = ? ";
+            String sql = "Update Customers set Address = ?, FullName = ?, DateOfBirth = ?, Gender = ?, AvatarUrl = ? where CustomerId = ? ";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, customer.getAddress());
             pst.setString(2, customer.getFullName());
-            pst.setString(3, customer.getGender());
-            pst.setInt(4, id);
+            pst.setDate(3, customer.getDateOfBirth());
+            pst.setString(4, customer.getGender());
+            pst.setString(5, customer.getAvatarUrl());
+            pst.setInt(6, id);
             cmt = pst.executeUpdate();
             return cmt;
         } catch (SQLException ex) {
@@ -102,7 +104,44 @@ public class CustomerDao {
         }
         return cmt;
     }
+    
+    //author: KhoaDDCE181988 - Use in: EditCustomerProfile,..
+    public Customers getCustomerByIdForCustomer(int id) {
+        Customers customer = null;
+        String sql = "SELECT UserName, FullName, Email, Phone, Status, AvatarUrl, Address, Gender, DateOfBirth, LastLogin\n"
+                + "FROM Customers\n"
+                + "WHERE CustomerID = ?";
 
+        try ( PreparedStatement pst = conn.prepareStatement(sql)) {
+            pst.setInt(1, id);
+            try ( ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    customer = new Customers();
+                    customer.setUserName(rs.getString("UserName"));
+                    customer.setFullName(rs.getString("FullName"));
+                    customer.setEmail(rs.getString("Email"));
+                    customer.setPhone(rs.getString("Phone"));
+                    customer.setStatus(rs.getString("Status"));                 
+                    customer.setAvatarUrl(rs.getString("AvatarUrl"));
+                    customer.setAddress(rs.getString("Address")); // có thể là null
+                    customer.setGender(rs.getString("Gender")); // có thể là null
+                    customer.setDateOfBirth(rs.getDate("DateOfBirth")); // có thể là null (java.sql.Date)
+                    Timestamp ts = rs.getTimestamp("LastLogin");
+                    if (ts != null) {
+                        customer.setLastLogin(ts.toLocalDateTime());
+                    } else {
+                        customer.setLastLogin(null);
+                    }
+                    return customer;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    //author: KhoaDDCE181988 - Use in: Login, ViewCustomerProfile,..
     public void updateLoginTimestamps(int customerId) {
         String sql = "UPDATE Customers SET LastLogin = CurrentLastLogin, CurrentLastLogin = ? WHERE CustomerId = ?";
 

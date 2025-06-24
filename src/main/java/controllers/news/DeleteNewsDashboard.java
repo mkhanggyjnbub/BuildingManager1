@@ -77,7 +77,7 @@ public class DeleteNewsDashboard extends HttpServlet {
 
             NewsDao dao = new NewsDao();
             dao.deleteNews(newsID);
-
+            
             // Quay lại trang admin sau khi xóa thành công
             response.sendRedirect("ViewNewsDashboard");
 

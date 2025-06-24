@@ -41,11 +41,11 @@ public class ServicesDao {
                 Services s = new Services();
                 s.setServiceId(rs.getInt("ServiceId"));
                 s.setServiceName(rs.getString("ServiceName"));
-                s.setServiceType(rs.getString("ServiceType"));
                 s.setDescription(rs.getString("Description"));
-                s.setPrice(rs.getBigDecimal("Price"));
+                s.setPrice(rs.getLong("Price"));
                 s.setImageURL(rs.getString("ImageURL"));
                 s.setIsActive(rs.getBoolean("IsActive"));  // hoặc rs.getBoolean nếu đổi sang boolean
+                s.setUnitType(rs.getString("UnitType"));
                 list.add(s);
             }
 
@@ -67,11 +67,11 @@ public class ServicesDao {
                 Services s = new Services();
                 s.setServiceId(rs.getInt("ServiceId"));
                 s.setServiceName(rs.getString("ServiceName"));
-                s.setServiceType(rs.getString("ServiceType"));
                 s.setDescription(rs.getString("Description"));
-                s.setPrice(rs.getBigDecimal("Price"));
+                s.setPrice(rs.getLong("Price"));
                 s.setImageURL(rs.getString("ImageURL"));
                 s.setIsActive(rs.getBoolean("IsActive"));  // hoặc rs.getBoolean nếu đổi sang boolean
+                s.setUnitType(rs.getString("UnitType"));
                 list.add(s);
             }
 
@@ -94,11 +94,11 @@ public class ServicesDao {
                 s = new Services();
                 s.setServiceId(rs.getInt("ServiceId"));
                 s.setServiceName(rs.getString("ServiceName"));
-                s.setServiceType(rs.getString("ServiceType"));
                 s.setDescription(rs.getString("Description"));
-                s.setPrice(rs.getBigDecimal("Price"));
+                s.setPrice(rs.getLong("Price"));
                 s.setImageURL(rs.getString("ImageURL"));
                 s.setIsActive(rs.getBoolean("IsActive"));
+                s.setUnitType(rs.getString("UnitType"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ServicesDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -107,6 +107,7 @@ public class ServicesDao {
         return s;
     }
 
+    //
     public Services getServiceById(int id) {
         String sql = "SELECT * FROM Services WHERE ServiceId = ? AND IsActive = 1";
         ResultSet rs = null;
@@ -120,11 +121,11 @@ public class ServicesDao {
                 s = new Services();
                 s.setServiceId(rs.getInt("ServiceId"));
                 s.setServiceName(rs.getString("ServiceName"));
-                s.setServiceType(rs.getString("ServiceType"));
                 s.setDescription(rs.getString("Description"));
-                s.setPrice(rs.getBigDecimal("Price"));
+                s.setPrice(rs.getLong("Price"));
                 s.setImageURL(rs.getString("ImageURL"));
                 s.setIsActive(rs.getBoolean("IsActive"));
+                s.setUnitType(rs.getString("UnitType"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ServicesDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -136,12 +137,12 @@ public class ServicesDao {
     public int addServiceDashboard(Services service) {
         int cmt = 0;
         try {
-            String sql = "insert into Services (ServiceName, ServiceType, Description, Price, ImageURL, IsActive) Values(?,?,?,?,?,?)";
+            String sql = "insert into Services (ServiceName, UnitType, Description, Price, ImageURL, IsActive) Values(?,?,?,?,?,?)";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, service.getServiceName());
-            pst.setString(2, service.getServiceType());
+            pst.setString(2, service.getUnitType());
             pst.setString(3, service.getDescription());
-            pst.setBigDecimal(4, service.getPrice());
+            pst.setLong(4, service.getPrice());
             pst.setString(5, service.getImageURL());
             pst.setBoolean(6, false);
             cmt = pst.executeUpdate();
@@ -154,12 +155,12 @@ public class ServicesDao {
     public int editServiceByIdDashboard(Services service, int id) {
         int cmt = 0;
         try {
-            String sql = "update Services Set ServiceName=?, ServiceType=?, Description=?, Price=?, ImageURL=?, IsActive=? Where ServiceId=?";
+            String sql = "update Services Set ServiceName=?, UnitType=?, Description=?, Price=?, ImageURL=?, IsActive=? Where ServiceId=?";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, service.getServiceName());
-            pst.setString(2, service.getServiceType());
+            pst.setString(2, service.getUnitType());
             pst.setString(3, service.getDescription());
-            pst.setBigDecimal(4, service.getPrice());
+            pst.setLong(4, service.getPrice());
             pst.setString(5, service.getImageURL());
             pst.setBoolean(6, service.getIsActive());
             pst.setInt(7, id);

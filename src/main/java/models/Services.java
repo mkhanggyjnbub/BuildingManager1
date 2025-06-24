@@ -14,11 +14,11 @@ public class Services {
 
     private int serviceId;
     private String serviceName;
-    private String serviceType;
     private String description;
-    private BigDecimal price;
+    private Long price;
     private String imageURL;
     private boolean isActive;
+    private String unitType;
 
     public Services() {
     }
@@ -39,12 +39,12 @@ public class Services {
         this.serviceName = serviceName;
     }
 
-    public String getServiceType() {
-        return serviceType;
+    public String getUnitType() {
+        return unitType;
     }
 
-    public void setServiceType(String serviceType) {
-        this.serviceType = serviceType;
+    public void setUnitType(String unitType) {
+        this.unitType = unitType;
     }
 
     public String getDescription() {
@@ -55,11 +55,11 @@ public class Services {
         this.description = description;
     }
 
-    public BigDecimal getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 

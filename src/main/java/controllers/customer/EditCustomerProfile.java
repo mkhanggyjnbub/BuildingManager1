@@ -13,6 +13,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.Date;
+import java.time.LocalDate;
 import models.Customers;
 import models.Users;
 
@@ -66,7 +68,13 @@ public class EditCustomerProfile extends HttpServlet {
             CustomerDao dao = new CustomerDao();
             Customers customer = new Customers();
             customer = dao.getCustomerById(id);
-            request.setAttribute("userInfomation", customer);
+
+            if (customer != null) {
+                request.setAttribute("userInfomation", customer);
+                request.setAttribute("customerId", id);
+            } else {
+                request.setAttribute("message", "An error occurred in the system. Please wait a few minutes and log in again.");
+            }
             request.getRequestDispatcher("customer/editCustomerProfile.jsp").forward(request, response);
         } catch (Exception e) {
         }
@@ -88,11 +96,13 @@ public class EditCustomerProfile extends HttpServlet {
             String fullName = request.getParameter("fullName");
             String address = request.getParameter("address");
             String gender = request.getParameter("gender");
-            
+            Date dateOfBirth = Date.valueOf(request.getParameter("dateOfBirth"));
+
             Customers customer = new Customers();
             customer.setFullName(fullName);
             customer.setAddress(address);
             customer.setGender(gender);
+            customer.setDateOfBirth(dateOfBirth);
 
             CustomerDao dao = new CustomerDao();
 

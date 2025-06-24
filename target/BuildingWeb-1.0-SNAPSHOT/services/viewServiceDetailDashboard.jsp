@@ -95,9 +95,26 @@
             .form-group.readonly textarea {
                 background-color: #eaeaea;
             }
+            
+            .back-button {
+                top: -40px;
+                left: 20px;
+                width: 80px;
+                background-color: #1a73e8;
+                color: white;
+                padding: 8px 12px;
+                border-radius: 5px;
+                font-size: 14px;
+                text-decoration: none;
+                display: inline-block;
+            }
+            .back-button:hover {
+                background-color: #0c53b0;
+            }
         </style>
     </head>
     <body>
+        <a href="javascript:history.back()" class="back-button">← Back</a>
         <div class="container">
             <div class="left">
                 <h3>Service Image</h3>
@@ -112,7 +129,7 @@
                 </div>
                 <div class="form-group readonly">
                     <label>Service type:</label>
-                    <input type="text" value="${service.serviceType}" readonly />
+                    <input type="text" value="${service.unitType}" readonly />
                 </div>
                 <div class="form-group readonly">
                     <label>Price:</label>
