@@ -44,16 +44,30 @@ controllers\news\ViewNewsDashboard.class
 Websocket\TakeNotification.class
 controllers\voucher\VouchersDashBoard.class
 dao\CustomerDao.class
+<<<<<<< HEAD
+controllers\voucher\EditVoucher.class
+=======
+>>>>>>> c35f49c49ea70d06f2b80aa378d3518009d053ea
 dao\NewsDao.class
 dao\EquipmentDao.class
 sendMail\EmailSender.class
 controllers\amenities\AddAmenitiesDashboard.class
 controllers\booking\BookingConfirmation.class
+<<<<<<< HEAD
+models\Employees.class
+models\Services.class
+controllers\services\ViewServices.class
+=======
 controllers\services\ViewServicesCart.class
+>>>>>>> c35f49c49ea70d06f2b80aa378d3518009d053ea
 controllers\report\ViewAllReportsForDashboard.class
 models\Vouchers.class
 models\RoomReviews.class
 controllers\services\DeleteServiceDashboard.class
+<<<<<<< HEAD
+models\Report.class
+=======
+>>>>>>> c35f49c49ea70d06f2b80aa378d3518009d053ea
 controllers\asset\Assets.class
 models\Rooms.class
 controllers\account\Logout.class
@@ -82,7 +96,13 @@ controllers\news\AddNewsDashboard.class
 controllers\amenities\DeleteAmenitiesDashboard.class
 controllers\services\ViewServicesDashboard.class
 controllers\admin\Dashboard.class
+<<<<<<< HEAD
+dao\ServicesDao.class
+models\Floors.class
+controllers\admin\DashboardUser.class
+=======
 controllers\cloudinary\CloudinaryUpload.class
+>>>>>>> c35f49c49ea70d06f2b80aa378d3518009d053ea
 controllers\admin\AdminView.class
 models\Buildings.class
 controllers\services\EditServiceDashboard.class
@@ -94,3 +114,8 @@ controllers\room\DeleteRoomForDashboard.class
 sendMail\EmailSender$1.class
 controllers\news\DeleteNewsDashboard.class
 models\Amenities.class
+<<<<<<< HEAD
+dao\ReportDao.class
+controllers\checkInOut\CheckInOutDetail.class
+=======
+>>>>>>> c35f49c49ea70d06f2b80aa378d3518009d053ea

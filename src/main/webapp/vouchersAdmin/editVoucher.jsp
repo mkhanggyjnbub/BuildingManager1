@@ -217,7 +217,7 @@
             <div class="form-group">
                 <label for="minOrderAmount">Minimum order</label>
                 <input type="number" id="minOrderAmount" name="minOrderAmount"
-                       min="1" max="10000000"
+                       min="1000" max="10000000" step="1000"
                        value="${voucher.minOrderAmount}" required
                        ${isLocked ? 'readonly' : ''} 
                        required placeholder="Maximun 10.000.000"/>
