@@ -87,17 +87,14 @@ public class BookingConfirmation extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int bookingId = Integer.parseInt(request.getParameter("bookingId"));
-        boolean status = Boolean.parseBoolean(request.getParameter("status"));
+        String status = request.getParameter("status");
 
         BookingDao dao = new BookingDao();
-        try {
             dao.updateBookingStatus(bookingId, status);
             // Sau khi update xong, chuyển hướng quay lại trang danh sách
             response.sendRedirect("BookingConfirmation");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        }
+       
+       
     }
 
     /**

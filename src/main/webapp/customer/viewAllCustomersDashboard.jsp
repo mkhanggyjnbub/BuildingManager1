@@ -6,7 +6,8 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Customer List</title>
@@ -16,8 +17,31 @@
             font-family: 'Segoe UI', sans-serif;
             background-color: #f0f4f8;
             margin: 0;
-            padding: 30px;
+            padding: 0;
             color: #333;
+            animation: fadeInBody 0.6s ease-in-out;
+        }
+
+        @keyframes fadeInBody {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .main-content {
+            margin-left: 60px;
+            padding: 80px 30px 40px;
+            transition: margin-left 0.3s ease;
+            animation: slideInMain 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .sidebar.open ~ .main-content {
+            margin-left: 220px;
+        }
+
+        @keyframes slideInMain {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         h2 {
@@ -68,14 +92,6 @@
             transform: scale(1.15);
         }
 
-        .actions a[title="View Details"]::before {
-            <a href="AdminEdit?id=${user.userId}"><i class="fa-solid fa-pencil"></i></a>
-        }
-
-        .actions a[title="Edit"]::before {
-            <a href="AdminEdit?id=${user.userId}"><i class="fa-solid fa-pencil"></i></a>
-        }
-
         @media (max-width: 768px) {
             table, thead, tbody, th, td, tr {
                 display: block;
@@ -106,10 +122,15 @@
             th {
                 display: none;
             }
+        }
     </style>
 </head>
 <body>
 
+<%@ include file="../navbarDashboard/navbarDashboard.jsp" %>
+<%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
+
+<div class="main-content">
     <h2>Customer List</h2>
 
     <table>
@@ -143,6 +164,7 @@
             </c:forEach>
         </tbody>
     </table>
+</div>
 
 </body>
 </html>

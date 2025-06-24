@@ -25,6 +25,7 @@ import models.Rooms;
  * @author dodan
  */
 @WebServlet("/ViewRoomDetail")
+
 public class ViewRoomDetail extends HttpServlet {
    
     /** 

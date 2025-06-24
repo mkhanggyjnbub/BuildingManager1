@@ -4,12 +4,8 @@
  */
 package models;
 
-import java.sql.Date;
+import java.util.Date;
 
-/**
- *
- * @author Kiều Hoàng Mạnh Khang - ce180749
- */
 public class Bookings {
 
     private int bookingId;
@@ -18,22 +14,24 @@ public class Bookings {
     private int userId;
     private Date startDate;
     private Date endDate;
-    private boolean status;
-    private String roomNumber;
-    private String userName;
-    
-    public Bookings(){
-        
+    private String status;
+    private Date requestTime;
+    private Date confirmationTime;
+    private Date checkInTime;
+    private Date checkOutTime;
+    private Date cancelTime;
+    private int canceledBy;
+    private Date deletedTime;
+    private int deletedBy;
+    private String notes;
+    private Rooms rooms;   
+    private Customers customers;
+
+    public Bookings() {
     }
 
-    public boolean isStatus() {
-        return status;
-    }
+    // Getters & Setters
 
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-    
     public int getBookingId() {
         return bookingId;
     }
@@ -82,23 +80,99 @@ public class Bookings {
         this.endDate = endDate;
     }
 
-    public String getRoomNumber() {
-        return roomNumber;
+    public String getStatus() {
+        return status;
     }
 
-    public void setRoomNumber(String roomNumber) {
-        this.roomNumber = roomNumber;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getUserName() {
-        return userName;
+    public Date getRequestTime() {
+        return requestTime;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setRequestTime(Date requestTime) {
+        this.requestTime = requestTime;
     }
-    
-    
+
+    public Date getConfirmationTime() {
+        return confirmationTime;
+    }
+
+    public void setConfirmationTime(Date confirmationTime) {
+        this.confirmationTime = confirmationTime;
+    }
+
+    public Date getCheckInTime() {
+        return checkInTime;
+    }
+
+    public void setCheckInTime(Date checkInTime) {
+        this.checkInTime = checkInTime;
+    }
+
+    public Date getCheckOutTime() {
+        return checkOutTime;
+    }
+
+    public void setCheckOutTime(Date checkOutTime) {
+        this.checkOutTime = checkOutTime;
+    }
+
+    public Date getCancelTime() {
+        return cancelTime;
+    }
+
+    public void setCancelTime(Date cancelTime) {
+        this.cancelTime = cancelTime;
+    }
+
+    public int getCanceledBy() {
+        return canceledBy;
+    }
+
+    public void setCanceledBy(int canceledBy) {
+        this.canceledBy = canceledBy;
+    }
+
+    public Date getDeletedTime() {
+        return deletedTime;
+    }
+
+    public void setDeletedTime(Date deletedTime) {
+        this.deletedTime = deletedTime;
+    }
+
+    public int getDeletedBy() {
+        return deletedBy;
+    }
+
+    public void setDeletedBy(int deletedBy) {
+        this.deletedBy = deletedBy;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public Rooms getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(Rooms rooms) {
+        this.rooms = rooms;
+    }
+
+    public Customers getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(Customers customers) {
+        this.customers = customers;
+    }
 }
-
-    
