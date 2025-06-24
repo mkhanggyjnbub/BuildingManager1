@@ -1,172 +1,300 @@
 <%-- 
     Document   : addVoucher
-    Created on : May 16, 2025, 3:48:15 PM
+    Created on : May 14, 2025, 3:48:15 PM
     Author     : CE180441_Dương Đinh Thế Vinh
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <title>Thêm Voucher Mới</title>
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Thêm Voucher Mới</title>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
 
-    <!-- Giao diện chung -->
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f4f6f8;
-        }
+            html, body {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                font-family: "Segoe UI", sans-serif;
+                background-color: #f1f3f5;
+            }
 
-        .main-content {
-            margin-left: 60px;
-            padding: 80px 20px;
-            transition: margin-left 0.3s ease;
-        }
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
 
-        .sidebar.open ~ .main-content {
-            margin-left: 220px;
-        }
+            form {
+                width: 100%;
+                max-width: 600px;
+                height: auto;
+                background: #fff;
+                border-radius: 16px;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+                padding: 2rem;
+                display: flex;
+                flex-direction: column;
+            }
 
-        form {
-            background-color: #fff;
-            padding: 24px;
-            border-radius: 12px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-            max-width: 600px;
-            width: 100%;
-            margin: auto;
-        }
+            h1 {
+                text-align: center;
+                font-size: 1.5rem;
+                margin-bottom: 0.5rem;
+            }
 
-        h1 {
-            font-size: 22px;
-            margin-bottom: 20px;
-            color: #002b5c;
-            text-align: center;
-        }
+            .form-group {
+                display: flex;
+                flex-direction: column;
+            }
 
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px 16px;
-            margin-bottom: 16px;
-        }
+            label {
+                font-weight: 500;
+                margin-bottom: 0.25rem;
+            }
 
-        label {
-            font-size: 13px;
-            font-weight: 600;
-            color: #002b5c;
-            align-self: center;
-        }
+            input, select, textarea {
+                padding: 0.6rem;
+                font-size: 1rem;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                width: 100%;
+            }
 
-        input[type="text"],
-        input[type="number"],
-        input[type="date"],
-        textarea {
-            font-size: 13px;
-            padding: 8px 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            width: 100%;
-        }
+            textarea {
+                resize: none;
+                height: 60px;
+            }
 
-        textarea {
-            resize: vertical;
-            min-height: 60px;
-            width: 100%;
-            margin-top: 4px;
-            margin-bottom: 12px;
-        }
+            .button-group {
+                display: flex;
+                justify-content: space-between;
+                gap: 1rem;
+                margin-top: 0.5rem;
+            }
 
-        input:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #007bff;
-        }
+            button, .cancel-btn {
+                flex: 1;
+                padding: 0.75rem;
+                border: none;
+                border-radius: 8px;
+                font-size: 1rem;
+                cursor: pointer;
+                text-align: center;
+            }
 
-        .button-group {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 10px;
-        }
+            button {
+                background-color: #007bff;
+                color: white;
+            }
 
-        button[type="submit"] {
-            padding: 8px 16px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 13px;
-            cursor: pointer;
-        }
+            .cancel-btn {
+                background-color: #e0e0e0;
+                color: #333;
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
 
-        button[type="submit"]:hover {
-            background-color: #0056b3;
-        }
+            button:hover {
+                background-color: #0056b3;
+            }
 
-        .cancel-btn {
-            padding: 8px 16px;
-            font-size: 13px;
-            color: #555;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            text-decoration: none;
-        }
+            .cancel-btn:hover {
+                background-color: #ccc;
+            }
 
-        .cancel-btn:hover {
-            background-color: #eee;
-        }
-    </style>
-</head>
-<body>
 
-<%@ include file="../navbarDashboard/navbarDashboard.jsp" %>
-<%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
+            .tooltip-warning {
+                position: absolute;
+                top: -35px;
+                left: 0;
+                background-color: #f44336;
+                color: white;
+                padding: 6px 10px;
+                border-radius: 5px;
+                font-size: 13px;
+                white-space: nowrap;
+                display: none;
+                z-index: 10;
+            }
 
-<div class="main-content">
-    <form action="AddVoucher" method="post">
-        <h1><i class="fa-solid fa-ticket"></i> Thêm Voucher Mới</h1>
+            .tooltip-warning::after {
+                content: '';
+                position: absolute;
+                bottom: -6px;
+                left: 10px;
+                border-width: 6px;
+                border-style: solid;
+                border-color: #f44336 transparent transparent transparent;
+            }
+        </style>
+        <script>
+            function pad(n) {
+                return n.toString().padStart(2, '0');
+            }
 
-        <div class="form-grid">
-            <label><i class="fa-solid fa-barcode"></i> Mã voucher:</label>
-            <input type="text" name="code" required/>
+            function getFormattedDateTimeLocal(date) {
+                return date.getFullYear() + '-' +
+                        pad(date.getMonth() + 1) + '-' +
+                        pad(date.getDate()) + 'T' +
+                        pad(date.getHours()) + ':' +
+                        pad(date.getMinutes());
+            }
 
-            <label><i class="fa-solid fa-layer-group"></i> Số lượng:</label>
-            <input type="number" name="quantity" required/>
+            document.addEventListener('DOMContentLoaded', function () {
+                const startInput = document.getElementById('startDate');
+                const endInput = document.getElementById('endDate');
 
-            <label><i class="fa-solid fa-percent"></i> Giảm %:</label>
-            <input type="number" name="discountPercent"/>
+                const now = new Date();
+                const nowFormatted = getFormattedDateTimeLocal(now);
 
-            <label><i class="fa-solid fa-money-bill-wave"></i> Đơn tối thiểu:</label>
-            <input type="number" name="minOrderAmount" required/>
+                startInput.min = nowFormatted;
+                startInput.value = nowFormatted;
 
-            <label><i class="fa-solid fa-calendar-plus"></i> Ngày bắt đầu:</label>
-            <input type="date" name="startDate" required/>
+                endInput.min = nowFormatted;
+                endInput.value = nowFormatted;
 
-            <label><i class="fa-solid fa-calendar-minus"></i> Ngày kết thúc:</label>
-            <input type="date" name="endDate" required/>
-        </div>
+                startInput.addEventListener('change', function () {
+                    const startValue = startInput.value;
+                    endInput.min = startValue;
 
-        <label><i class="fa-solid fa-file-lines"></i> Mô tả:</label>
-        <textarea name="description"></textarea>
+                    if (endInput.value < startValue) {
+                        endInput.value = startValue;
+                    }
+                });
+            });
 
-        <label><i class="fa-solid fa-toggle-on"></i> Trạng thái: hoạt động</label>
-        <input type="checkbox" name="isActive"
-               <c:if test="${voucher.isActive}">checked</c:if> />
 
-        <div class="button-group">
-            <button type="submit"><i class="fa-solid fa-plus"></i> Thêm voucher</button>
-            <a href="VouchersDashBoard" class="cancel-btn"><i class="fa-solid fa-xmark"></i> Hủy</a>
-        </div>
-    </form>
-</div>
+            //giới hạn chữ
+            const codeInput = document.getElementById('code');
+            const codeTooltip = document.getElementById('code-tooltip');
 
-</body>
+            const descInput = document.getElementById('description');
+            const descTooltip = document.getElementById('desc-tooltip');
+
+            codeInput.addEventListener('input', () => {
+                codeTooltip.style.display = codeInput.value.length >= 50 ? 'block' : 'none';
+            });
+
+            descInput.addEventListener('input', () => {
+                descTooltip.style.display = descInput.value.length >= 200 ? 'block' : 'none';
+            });
+
+
+            window.addEventListener('DOMContentLoaded', () => {
+                const today = new Date();
+                const yyyy = today.getFullYear();
+                const mm = String(today.getMonth() + 1).padStart(2, '0');
+                const dd = String(today.getDate()).padStart(2, '0');
+                const currentDate = `${yyyy}-${mm}-${dd}`;
+                        document.getElementById('startDate').value = currentDate;
+                    });
+
+
+                    function validateMax(input) {
+                        if (parseInt(input.value) > 1000) {
+                            input.value = 1000;
+                        }
+                    }
+
+                    function validateMaxOrder(input) {
+                        const max = 10000000;
+                        if (parseInt(input.value) > max) {
+                            input.value = max;
+                        }
+                    }
+
+                    function updateCurrentTime() {
+                        const now = new Date();
+                        now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); // Điều chỉnh theo múi giờ
+                        const localDatetime = now.toISOString().slice(0, 16); // yyyy-MM-ddTHH:mm
+                        document.getElementById('startDate').value = localDatetime;
+                    }
+
+                    window.addEventListener('DOMContentLoaded', () => {
+                        updateCurrentTime(); // Gọi ngay khi trang load
+                        setInterval(updateCurrentTime, 60000); // Cập nhật mỗi phút
+                    });
+
+        </script>
+
+
+    </head>
+    <body>
+        
+         <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+        <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
+        <form action="AddVoucher" method="post">
+            <h1>Add New Voucher</h1>
+
+            <div class="form-fields">
+                <div class="form-group">
+                    <label for="code">Voucher code</label>
+                    <input type="text" id="code" name="code" maxlength="50" placeholder="Maximum 50 characters" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" id="quantity" name="quantity" min="1" max="1000" required placeholder="Quantity max = 1000"
+                           oninput="validateMax(this)" />
+                </div>
+
+
+                <div class="form-group">
+                    <label for="discountPercent">Reduce %</label>
+                    <input type="number" step="0.1" min="1" max="100" name="discountPercent" required placeholder="e.g. 10.5%, max 100%">
+                </div>
+
+                <div class="form-group">
+                    <label for="minOrderAmount">Minimum application</label>
+                    <input type="number" id="minOrderAmount" name="minOrderAmount" 
+                           min="1" max="10000000" step="1" required placeholder="Maximun 10.000.000"
+                           oninput="validateMaxOrder(this)">
+                </div>
+
+
+                <div class="form-group">
+                    <label for="startDate">Start Date</label>
+                    <input type="datetime-local" id="startDate" name="startDate" required>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="endDate">End Date</label>
+                    <input type="datetime-local" id="endDate" name="endDate" required>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="description">Describe</label>
+                    <textarea id="description" name="description" maxlength="200" placeholder="Maximum 200 characters"></textarea>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="isActive">Status</label>
+                    <select id="isActive" name="isActive">
+                        <option value="false" selected>Inactive</option>
+                        <option value="true">Active</option>
+                    </select>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit">Add voucher</button>
+                    <a href="VouchersDashBoard" class="cancel-btn">Cancel</a>
+                </div>
+
+            </div>
+        </form>
+    </body>
+
+
 </html>

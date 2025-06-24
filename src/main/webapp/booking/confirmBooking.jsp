@@ -627,12 +627,17 @@
                             <label class="form-label">Select Voucher Code</label>
                             <div class="voucher-group">
                                 <input type="text" class="voucher-btn" value="No Choose Vouchers" readonly>
-                                <form action="voucherPage.jsp" method="get">
+                                <form action="voucherPage" method="get">
                                     <button type="submit" class="voucher-btn1">-- Select Voucher Code --</button>
                                 </form>
+                                
+                                
                             </div>
                         </div>
+<<<<<<< HEAD
                        
+=======
+>>>>>>> 370bb7c8c639a75ba05f4d93eca96f78b62245a0
 
                         <!-- Hạn mức thanh toán -->
                         <div class="form-group">

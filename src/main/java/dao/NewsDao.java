@@ -28,6 +28,7 @@ public class NewsDao {
         conn = db.ConnectData.getConnection();
     }
 
+    //author: KhoaDDCE181988 - Use in: ViewNews,..
     public List<News> getAll() {
         List<News> newsList = new ArrayList<>();
         String query = "SELECT * FROM News Where IsPublished = 1"; // Truy vấn để lấy tất cả dữ liệu từ bảng Cart
@@ -55,7 +56,8 @@ public class NewsDao {
         return newsList; // Trả về danh sách cart
     }
 
-    public List<News> getAllAdmin() {
+    //author: KhoaDDCE181988 - Use in: ViewNewsDashboard,..
+    public List<News> getAllNewsDashboard() {
         List<News> newsList = new ArrayList<>();
         String query = "SELECT * FROM News"; // Truy vấn để lấy tất cả dữ liệu từ bảng Cart
 
@@ -82,39 +84,12 @@ public class NewsDao {
         return newsList; // Trả về danh sách cart
     }
 
-    public List<News> getFullOfDashBoard(int page) {
-        List<News> listNews = new ArrayList<>();
-
-        ResultSet rs = null;
-        try {
-            String sql = "select NewsID, Title , Summary, Content, ImageURL, DataPosted, IsPublished, BuildingID \n"
-                    + "FROM News \n";
-            PreparedStatement st = conn.prepareStatement(sql);
-            st.setInt(1, page);
-            rs = st.executeQuery();
-            while (rs.next()) {
-                News news = new News();
-                news.setNewsID(rs.getInt("UserId"));
-                news.setTitle(rs.getString("Title"));
-                news.setSummary(rs.getString("Summary"));
-                news.setImageURL(rs.getString("ImageURL"));
-                news.setDatePosted(rs.getTimestamp("DataPosted"));
-                news.setIsPublished(rs.getBoolean("IsPublished"));
-                news.setBuildingID(rs.getInt("BuildingID"));
-                listNews.add(news);
-
-                listNews.add(news);
-            }
-        } catch (Exception e) {
-        }
-        return listNews;
-    }
-
+    //author: KhoaDDCE181988 - Use in: ViewNewsDetail,..
     public News getNewsById(int id) {
         News news = null;
         try {
-            String sqlNews = "SELECT * FROM news WHERE newsID = ?";
-            PreparedStatement psNews = conn.prepareStatement(sqlNews);
+            String sql = "SELECT * FROM news WHERE newsID = ?";
+            PreparedStatement psNews = conn.prepareStatement(sql);
             psNews.setInt(1, id);
             ResultSet rs = psNews.executeQuery();
 
@@ -137,6 +112,7 @@ public class NewsDao {
         return news;
     }
 
+    //author: KhoaDDCE181988 - Use in: DeleteNewsDashboard,..
     public void deleteNews(int id) throws SQLException {
         String sql = "DELETE FROM News WHERE newsID = ?";
         try ( Connection conn = db.ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -145,7 +121,8 @@ public class NewsDao {
         }
     }
 
-    public int updateNews(int id, News newInfo) {
+    //author: KhoaDDCE181988 - Use in: EditNewsDashboard,..
+    public int editNewsDashboard(int id, News newInfo) {
         int count = 0;
 
         try {
@@ -169,7 +146,8 @@ public class NewsDao {
         return count;
     }
 
-    public int create(News news) {
+    //author: KhoaDDCE181988 - Use in: addNewsDashboard,..
+    public int addNewsDashboard(News news) {
         int count = 0;
 
         try {
@@ -192,6 +170,7 @@ public class NewsDao {
         return count;
     }
 
+    //author: KhoaDDCE181988 - Use in: ViewNews,..
     public void increaseViewCount(int newsId) {
         String sql = "UPDATE News SET ViewCount = ViewCount + 1 WHERE NewsID = ?";
         try ( PreparedStatement ps = conn.prepareStatement(sql)) {

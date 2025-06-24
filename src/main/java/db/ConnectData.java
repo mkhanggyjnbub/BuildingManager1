@@ -22,7 +22,10 @@ public class ConnectData {
     public static Connection getConnection() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String url = "jdbc:sqlserver://LAPTOP-SJ6AII7D\\SQLEXPRESS:1433;databaseName=building_management30;user=sa;password=123456;trustServerCertificate=true;";
+
+            String url = "jdbc:sqlserver://MEONGUYENTU;databaseName=building_management30;user=sa;password=1234567890;encrypt=true;trustServerCertificate=true;";
+
+
             conn = DriverManager.getConnection(url);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ConnectData.class.getName()).log(Level.SEVERE, null, ex);

@@ -5,6 +5,7 @@
 
 package controllers.news;
 
+import dao.BuildingDao;
 import dao.NewsDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +14,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import models.Buildings;
 import models.News;
 
 /**
@@ -61,6 +64,11 @@ public class EditNewsDashboard extends HttpServlet {
         NewsDao dao = new NewsDao();
         News news = dao.getNewsById(id);
         request.setAttribute("news", news);
+        
+        List<Buildings> list = null;
+        BuildingDao daos = new BuildingDao();
+        list = daos.getAllBuiding();
+        request.setAttribute("listBuilding", list);
         request.getRequestDispatcher("news/editNewsDashboard.jsp").forward(request, response);
     } 
 
@@ -94,7 +102,7 @@ public class EditNewsDashboard extends HttpServlet {
             updatedNews.setContent(content);
 
             NewsDao dao = new NewsDao();
-            int result = dao.updateNews(newsID, updatedNews);
+            int result = dao.editNewsDashboard(newsID, updatedNews);
 
             if (result > 0) {
                 response.sendRedirect("ViewNewsDashboard");

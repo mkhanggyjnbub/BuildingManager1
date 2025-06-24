@@ -4,9 +4,7 @@
  */
 package controllers.voucher;
 
-import dao.CustomerDao;
 import dao.VoucherDAO;
-import db.ConnectData;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,12 +13,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.HashSet;
+import static java.nio.file.Files.list;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Set;
-import models.Customers;
 import models.Vouchers;
 
 /**
@@ -77,7 +73,17 @@ public class UserVouchers extends HttpServlet {
         int customerId = Integer.parseInt(session.getAttribute("customerId").toString());
 
         VoucherDAO dao = new VoucherDAO();
-        List savedVouchers = dao.getVouchersByCustomer(customerId);
+        List<Vouchers> savedVouchers = dao.getVouchersByCustomer(customerId);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+        for (Vouchers voucher : savedVouchers) {
+            if (voucher.getEndDate() != null) {
+                voucher.setFormattedEndDate(voucher.getEndDate().format(formatter));
+            }
+        }
+
+        request.setAttribute("now", LocalDateTime.now());
 
         request.setAttribute("savedVouchers", savedVouchers);
         request.getRequestDispatcher("voucher/userVouchers.jsp").forward(request, response);

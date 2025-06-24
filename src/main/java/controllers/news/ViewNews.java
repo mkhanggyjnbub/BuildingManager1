@@ -64,10 +64,11 @@ public class ViewNews extends HttpServlet {
         List<News> newsList = newsDao.getAll();
 
         if (newsList.isEmpty()) {
-            response.sendRedirect("ViewNews?erol");
+            request.setAttribute("message", "An error occurred in the system. Please wait a few minutes and log in again.");
+            request.getRequestDispatcher("news/viewNews.jsp").forward(request, response);
         } else {
-            request.setAttribute("newsList", newsList);  // Gửi dữ liệu sang JSP
-            request.getRequestDispatcher("news/viewNews.jsp").forward(request, response); // Chuyển sang giao diện hiển thị
+            request.setAttribute("newsList", newsList);
+            request.getRequestDispatcher("news/viewNews.jsp").forward(request, response);
         }
     }
 
