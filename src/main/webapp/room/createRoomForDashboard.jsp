@@ -152,112 +152,112 @@
         <br>
         <div class="form-container">
             <h2>Create New Room</h2>
-                <form action="CreateRoomForDashboard" method="post" enctype="multipart/form-data">
-                    <div>
-                        <label>Room Number:</label>
-                        <input type="number" name="roomNumber"  min="0" max="9999" required>
+            <form action="CreateRoomForDashboard" method="post" enctype="multipart/form-data">
+                <div>
+                    <label>Room Number:</label>
+                    <input type="number" name="roomNumber"  min="0" max="9999" required>
+                </div>
+
+                <div>
+                    <label>Floor Number:</label>
+                    <input type="number" name="floorNumber"  min="0" max="100" required>
+                </div>
+
+                <div>
+
+
+
+                    <label>Room Type:</label>
+                    <select id="roomType" name="roomType" required>
+                        <option value="">-- Select Type --</option>
+                        <option  value="Standard">Standard Room</option>
+                        <option value="Deluxe">Deluxe Room</option>
+                        <option  value="Twin">Twin Room</option>
+                        <option  value="Family">Family Room</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Price (VNĐ):</label>
+                    <input id="price" type="text" name="price" required>
+                </div>
+
+                <div class="full-width">
+                    <label>Bed Type:</label>
+                    <div class="bed-checkbox-group">
+                        <label id="single"><input  type="radio" name="bedType" value="Single|1" > Single Bed</label>
+                        <label id="double"><input type="radio" name="bedType" value="Double|2" > Double Bed</label>
+                        <label id="queen"><input type="radio" name="bedType" value="Queen|2" > Queen Bed</label>
+                        <label id="king"><input type="radio" name="bedType" value="King|2" > King Bed</label>
+                        <label id="twin"><input type="radio" name="bedType" value="Twin|2" > Twin Bed</label>
+                        <div id="treePeople" style="display: none">
+                            <label>Option 3 people</label>
+                            <label ><input type="radio" name="bedType" value="1 Double Bed + 1  Single Bed|3" > 1 Double Bed + 1 Single Bed</label>
+                            <label ><input type="radio" name="bedType" value="1 Queen Bed + 1 Single Bed|3" > 1 Queen Bed + 1 Single Bed</label>
+                            <label ><input type="radio" name="bedType" value="3 Single Beds|3" >3 Single Beds</label>
+                        </div>
+                        <div id="fourPeople" style="display: none">
+                            <label>Option 4 people</label>
+                            <label ><input type="radio" name="bedType" value=" 2 Double Beds|4" > 2 Double Beds</label>
+                            <label ><input type="radio" name="bedType" value="1 King Bed + 1 Double Bed|4" > 1 King Bed + 1 Double Bed</label>
+                            <label ><input type="radio" name="bedType" value="1 Queen Bed + 2 Single Beds|4" > 1 Queen Bed + 2 Single Beds</label>
+                            <label ><input type="radio" name="bedType" value="2 Twin Beds + 2 Single Beds|4" > 2 Twin Beds + 2 Single Beds</label>  
+                        </div>
+                        <div id="fivePeople" style="display: none">
+                            <label>Option 5 people</label>
+                            <label ><input type="radio" name="bedType" value="2 Double Beds|5" > 2 Double Beds</label>
+                            <label ><input type="radio" name="bedType" value="2 Queen Beds + 1 Single Bed|5" > 2 Queen Beds + 1 Single Bed</label>
+                            <label ><input type="radio" name="bedType" value="1 King Bed + 2 Single Beds|5" >1 King Bed + 2 Single Beds</label>
+                            <label ><input type="radio" name="bedType" value="1 Double Bed + 3 Single Beds|5" >1 Double Bed + 3 Single Beds</label>  
+                            <label ><input type="radio" name="bedType" value="5 Single Beds|5" >5 Single Beds</label>  
+                        </div>
                     </div>
+                </div>
 
-                    <div>
-                        <label>Floor Number:</label>
-                        <input type="number" name="floorNumber"  min="0" max="100" required>
+                <div class="full-width">
+                    <label>Description:</label>
+                    <textarea name="description" required></textarea>
+                </div>
+
+                <div class="full-width">
+                    <label>Room Image:</label>
+                    <div class="custom-file-upload">
+                        <label for="imageFile" class="file-label">📁 Choose Image</label>
+                        <input type="file" name="imageFile" id="imageFile" accept="image/*">
+                        <span id="file-name">No file chosen</span>
                     </div>
+                </div>
+                <!--                <label>Choose URL:</label>
+                                <div class="full-width">
+                                    <input type="text" name="imageUrl" placeholder="https://example.com/your-image.jpg">
+                                </div>-->
 
-                    <div>
-
-
-
-                        <label>Room Type:</label>
-                        <select id="roomType" name="roomType" required>
-                            <option value="">-- Select Type --</option>
-                            <option  value="Standard">Standard Room</option>
-                            <option value="Deluxe">Deluxe Room</option>
-                            <option  value="Twin">Twin Room</option>
-                            <option  value="Family">Family Room</option>
+                <div class="full-width" style="display: flex; flex-wrap: wrap; gap: 16px;">
+                    <div style="flex: 1 ;">
+                        <label>Status:</label>
+                        <select name="status" required>
+                            <option value="Active">Active</option>
+                            <option value="InActive">InActive</option>
                         </select>
                     </div>
 
-                    <div>
-                        <label>Price (VNĐ):</label>
-                        <input id="price" type="text" name="price" required>
-                    </div>
-
-                    <div class="full-width">
-                        <label>Bed Type:</label>
-                        <div class="bed-checkbox-group">
-                            <label id="single"><input  type="radio" name="bedType" value="Single|1" > Single Bed</label>
-                            <label id="double"><input type="radio" name="bedType" value="Double|2" > Double Bed</label>
-                            <label id="queen"><input type="radio" name="bedType" value="Queen|2" > Queen Bed</label>
-                            <label id="king"><input type="radio" name="bedType" value="King|2" > King Bed</label>
-                            <label id="twin"><input type="radio" name="bedType" value="Twin|2" > Twin Bed</label>
-                            <div id="treePeople" style="display: none">
-                                <label>Option 3 people</label>
-                                <label ><input type="radio" name="bedType" value="1 Double Bed + 1  Single Bed|3" > 1 Double Bed + 1 Single Bed</label>
-                                <label ><input type="radio" name="bedType" value="1 Queen Bed + 1 Single Bed|3" > 1 Queen Bed + 1 Single Bed</label>
-                                <label ><input type="radio" name="bedType" value="3 Single Beds|3" >3 Single Beds</label>
-                            </div>
-                            <div id="fourPeople" style="display: none">
-                                <label>Option 4 people</label>
-                                <label ><input type="radio" name="bedType" value=" 2 Double Beds|4" > 2 Double Beds</label>
-                                <label ><input type="radio" name="bedType" value="1 King Bed + 1 Double Bed|4" > 1 King Bed + 1 Double Bed</label>
-                                <label ><input type="radio" name="bedType" value="1 Queen Bed + 2 Single Beds|4" > 1 Queen Bed + 2 Single Beds</label>
-                                <label ><input type="radio" name="bedType" value="2 Twin Beds + 2 Single Beds|4" > 2 Twin Beds + 2 Single Beds</label>  
-                            </div>
-                            <div id="fivePeople" style="display: none">
-                                <label>Option 5 people</label>
-                                <label ><input type="radio" name="bedType" value="2 Double Beds|5" > 2 Double Beds</label>
-                                <label ><input type="radio" name="bedType" value="2 Queen Beds + 1 Single Bed|5" > 2 Queen Beds + 1 Single Bed</label>
-                                <label ><input type="radio" name="bedType" value="1 King Bed + 2 Single Beds|5" >1 King Bed + 2 Single Beds</label>
-                                <label ><input type="radio" name="bedType" value="1 Double Bed + 3 Single Beds|5" >1 Double Bed + 3 Single Beds</label>  
-                                <label ><input type="radio" name="bedType" value="5 Single Beds|5" >5 Single Beds</label>  
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="full-width">
-                        <label>Description:</label>
-                        <textarea name="description" required></textarea>
-                    </div>
-
-                    <div class="full-width">
-                        <label>Room Image:</label>
-                        <div class="custom-file-upload">
-                            <label for="imageFile" class="file-label">📁 Choose Image</label>
-                            <input type="file" name="imageFile" id="imageFile" accept="image/*">
-                            <span id="file-name">No file chosen</span>
-                        </div>
-                    </div>
-                    <label>Choose URL:</label>
-                    <div class="full-width">
-                        <input type="text" name="imageUrl" placeholder="https://example.com/your-image.jpg">
-                    </div>
-
-                    <div class="full-width" style="display: flex; flex-wrap: wrap; gap: 16px;">
-                        <div style="flex: 1 1 45%;">
-                            <label>Status:</label>
-                            <select name="status" required>
-                                <option value="Active">Active</option>
-                                <option value="InActive">InActive</option>
-                            </select>
-                        </div>
-
-                        <div style="flex: 1 1 45%;">
-                            <label>Location:</label>
-                            <select name="location" required>
-                                <option value="1">Can Tho</option>
-                            </select>
-                        </div>
+                    <div style="flex: 1 ;">
+                        <label>Location:</label>
+                        <select name="location" required>
+                            <option value="1">Can Tho</option>
+                        </select>
                     </div>
 
 
-                    <!--                    <div style="flex: 1;">
-                                            <label>Area (m²):</label>
-                                            <input id="area" type="number" name="area" placeholder="e.g. 35" min="0" max="100" step="0.1" required>
-                                        </div>-->
+                    <div style="flex: 1;">
+                        <label>Area (m²):</label>
+                        <input id="area" type="number" name="area" placeholder="e.g. 35" min="0" max="100" step="0.1" required>
+                    </div>
 
+                </div>
 
-                    <button type="submit">Create Room</button>
-                </form>
+                <button type="submit">Create Room</button>
+            </form>
         </div>
 
         <script>
@@ -354,6 +354,18 @@
                 }
             });
 
+            function validatePrice(input) {
+                const value = parseInt(input.value);
+                const error = document.getElementById('price-error');
+
+                if (!isNaN(value) && value % 1000 === 0) {
+                    error.style.display = 'none';
+                    input.setCustomValidity(""); // Xóa lỗi nếu hợp lệ
+                } else {
+                    error.style.display = 'inline';
+                    input.setCustomValidity("Giá tiền phải là bội số của 1000");
+                }
+            }
         </script>
 
     </body>
