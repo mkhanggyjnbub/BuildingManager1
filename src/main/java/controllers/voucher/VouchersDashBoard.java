@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import models.Vouchers;
 
@@ -60,8 +61,19 @@ public class VouchersDashBoard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         VoucherDAO dao = new VoucherDAO();
-        List list = dao.selectAllVouchers();
+        List<Vouchers> list = dao.selectAllVouchers();
+
+        // Format datetime
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+        for (Vouchers v : list) {
+            if (v.getEndDate() != null) {
+                v.setFormattedEndDate(v.getEndDate().format(formatter));
+            }
+        }
+
         request.setAttribute("vouchers", list);
         request.getRequestDispatcher("vouchersAdmin/vouchersDashBoard.jsp").forward(request, response);
     }

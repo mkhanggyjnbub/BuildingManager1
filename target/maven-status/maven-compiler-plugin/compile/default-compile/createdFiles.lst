@@ -80,7 +80,6 @@ models\Customers.class
 controllers\services\AddServiceDashboard.class
 controllers\voucher\ViewVouchers.class
 controllers\voucher\AddVoucher.class
-controllers\booking\DeleteBookingProcessing.class
 controllers\voucher\DeleteVoucher.class
 models\RoomEquipment.class
 controllers\room\DeleteRoomForDashboard.class

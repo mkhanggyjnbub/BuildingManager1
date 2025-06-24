@@ -110,6 +110,52 @@
         <a href="javascript:history.back()" class="back-button">← Back</a>
         <div class="user-info-container">
             <h1>User Information</h1>
+<<<<<<< HEAD
+            <div class="user-card">
+                <img class="avatar" src="${userProfile.avatarUrl}" alt="Avatar người dùng">
+                <div class="info">
+                    <p><strong>Full Name:</strong> ${userProfile.fullName}</p>
+                    <p><strong>UserName:</strong> ${userProfile.userName}</p>
+                    <p><strong>Email:</strong> ${userProfile.email}</p>
+                    <p><strong>Phone:</strong> ${userProfile.phone}</p>
+                    <p><strong>Address:</strong> 
+                        <c:choose>
+                            <c:when test="${not empty userProfile.address}">
+                                ${userProfile.address}
+                            </c:when>
+                            <c:otherwise>Not updated yet</c:otherwise>
+                        </c:choose>
+                    </p>
+                    <p><strong>Gender:</strong> 
+                        <c:choose>
+                            <c:when test="${userProfile.gender == 'Male'}">Male</c:when>
+                            <c:when test="${userProfile.gender == 'Female'}">Female</c:when>
+                            <c:otherwise>Unknown</c:otherwise>
+                        </c:choose>
+                    </p>
+                    <p><strong>Date of Birth:</strong> 
+                        <c:choose>
+                            <c:when test="${not empty userProfile.dateOfBirth}">
+                                ${userProfile.dateOfBirth}
+                            </c:when>
+                            <c:otherwise>Not updated yet</c:otherwise>
+                        </c:choose>
+                    </p>
+                    <p>
+                        <strong>Status: </strong>
+                        <span class="status-indicator "></span>
+                        ${userProfile.status}
+                    </p>
+                    <p><strong>Last Login:</strong> 
+                        <c:choose>
+                            <c:when test="${not empty userProfile.lastLogin}">
+                                ${fn:replace(userProfile.lastLogin, 'T', ' ')}
+                            </c:when>
+                            <c:otherwise>No data available</c:otherwise>
+                        </c:choose>
+                    </p>
+                    <a href="EditCustomerProfile?id=${customerId}">Update</a>
+=======
 
             <!-- Hiển thị thông báo lỗi nếu có -->
             <c:if test="${not empty message}">
@@ -163,6 +209,7 @@
                         </p>
                         <a href="EditCustomerProfile?id=${customerId}">Update</a>
                     </div>
+>>>>>>> 52dbb0b475b83ca6449008c99ad3a4ab6633ebc6
                 </div>
             </c:if>
         </div>

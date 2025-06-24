@@ -20,6 +20,10 @@ import models.Amenities;
 import models.RoomReviews;
 import models.Rooms;
 
+import models.Amenities;
+import models.RoomReviews;
+import models.Rooms;
+
 /**
  *
  * @author dodan

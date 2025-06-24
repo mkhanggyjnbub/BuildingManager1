@@ -4,33 +4,144 @@
  */
 package models;
 
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDateTime;
 
+/**
+ *
+ * @author Kiều Hoàng Mạnh Khang - ce180749
+ */
 public class Bookings {
 
     private int bookingId;
     private int roomId;
     private int customerId;
-    private int userId;
-    private Date startDate;
-    private Date endDate;
+    private int ConfirmedBy;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private String status;
-    private Date requestTime;
-    private Date confirmationTime;
-    private Date checkInTime;
-    private Date checkOutTime;
-    private Date cancelTime;
-    private int canceledBy;
-    private Date deletedTime;
-    private int deletedBy;
-    private String notes;
-    private Rooms rooms;   
+    private Rooms rooms;
     private Customers customers;
-
-    public Bookings() {
+    private LocalDateTime RequestTime;
+    private LocalDateTime ConfirmationTime;
+    private LocalDateTime CheckInTime;
+    private LocalDateTime CheckOutTime;
+    private LocalDateTime CancelTime;
+    private int CanceledBy;
+    private LocalDateTime DeletedTime;
+    private String DeletedBy;
+    private String Notes;
+  private int  userId;
+    private String formattedStartDate;
+    private String formattedEndDate;
+    
+    public int getUserId() {
+        return userId;
     }
 
-    // Getters & Setters
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public Bookings() {
+
+    }
+
+    public int getCanceledBy() {
+        return CanceledBy;
+    }
+
+    public void setCanceledBy(int CanceledBy) {
+        this.CanceledBy = CanceledBy;
+    }
+
+    public LocalDateTime getRequestTime() {
+        return RequestTime;
+    }
+
+    public void setRequestTime(LocalDateTime RequestTime) {
+        this.RequestTime = RequestTime;
+    }
+
+    public LocalDateTime getConfirmationTime() {
+        return ConfirmationTime;
+    }
+
+    public void setConfirmationTime(LocalDateTime ConfirmationTime) {
+        this.ConfirmationTime = ConfirmationTime;
+    }
+
+    public LocalDateTime getCheckInTime() {
+        return CheckInTime;
+    }
+
+    public void setCheckInTime(LocalDateTime CheckInTime) {
+        this.CheckInTime = CheckInTime;
+    }
+
+    public LocalDateTime getCheckOutTime() {
+        return CheckOutTime;
+    }
+
+    public void setCheckOutTime(LocalDateTime CheckOutTime) {
+        this.CheckOutTime = CheckOutTime;
+    }
+
+    public LocalDateTime getCancelTime() {
+        return CancelTime;
+    }
+
+    public void setCancelTime(LocalDateTime CancelTime) {
+        this.CancelTime = CancelTime;
+    }
+
+    public LocalDateTime getDeletedTime() {
+        return DeletedTime;
+    }
+
+    public void setDeletedTime(LocalDateTime DeletedTime) {
+        this.DeletedTime = DeletedTime;
+    }
+
+    public String getDeletedBy() {
+        return DeletedBy;
+    }
+
+    public void setDeletedBy(String DeletedBy) {
+        this.DeletedBy = DeletedBy;
+    }
+
+    public String getNotes() {
+        return Notes;
+    }
+
+    public void setNotes(String Notes) {
+        this.Notes = Notes;
+    }
+
+    public Rooms getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(Rooms rooms) {
+        this.rooms = rooms;
+    }
+
+    public Customers getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(Customers customers) {
+        this.customers = customers;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public int getBookingId() {
         return bookingId;
@@ -56,123 +167,46 @@ public class Bookings {
         this.customerId = customerId;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getConfirmedBy() {
+        return ConfirmedBy;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setConfirmedBy(int ConfirmedBy) {
+        this.ConfirmedBy = ConfirmedBy;
     }
 
-    public Date getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 
-    public String getStatus() {
-        return status;
+    public String getFormattedStartDate() {
+        return formattedStartDate;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setFormattedStartDate(String formattedStartDate) {
+        this.formattedStartDate = formattedStartDate;
     }
 
-    public Date getRequestTime() {
-        return requestTime;
+    public String getFormattedEndDate() {
+        return formattedEndDate;
     }
 
-    public void setRequestTime(Date requestTime) {
-        this.requestTime = requestTime;
+    public void setFormattedEndDate(String formattedEndDate) {
+        this.formattedEndDate = formattedEndDate;
     }
+    
+    
 
-    public Date getConfirmationTime() {
-        return confirmationTime;
-    }
-
-    public void setConfirmationTime(Date confirmationTime) {
-        this.confirmationTime = confirmationTime;
-    }
-
-    public Date getCheckInTime() {
-        return checkInTime;
-    }
-
-    public void setCheckInTime(Date checkInTime) {
-        this.checkInTime = checkInTime;
-    }
-
-    public Date getCheckOutTime() {
-        return checkOutTime;
-    }
-
-    public void setCheckOutTime(Date checkOutTime) {
-        this.checkOutTime = checkOutTime;
-    }
-
-    public Date getCancelTime() {
-        return cancelTime;
-    }
-
-    public void setCancelTime(Date cancelTime) {
-        this.cancelTime = cancelTime;
-    }
-
-    public int getCanceledBy() {
-        return canceledBy;
-    }
-
-    public void setCanceledBy(int canceledBy) {
-        this.canceledBy = canceledBy;
-    }
-
-    public Date getDeletedTime() {
-        return deletedTime;
-    }
-
-    public void setDeletedTime(Date deletedTime) {
-        this.deletedTime = deletedTime;
-    }
-
-    public int getDeletedBy() {
-        return deletedBy;
-    }
-
-    public void setDeletedBy(int deletedBy) {
-        this.deletedBy = deletedBy;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public Rooms getRooms() {
-        return rooms;
-    }
-
-    public void setRooms(Rooms rooms) {
-        this.rooms = rooms;
-    }
-
-    public Customers getCustomers() {
-        return customers;
-    }
-
-    public void setCustomers(Customers customers) {
-        this.customers = customers;
-    }
 }
