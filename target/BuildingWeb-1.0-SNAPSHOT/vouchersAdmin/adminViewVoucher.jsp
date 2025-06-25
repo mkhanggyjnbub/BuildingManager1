@@ -8,6 +8,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page import="java.text.DecimalFormat" %>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,14 +19,14 @@
             }
 
             body {
-                margin: 0;
+                margin-top: 50px;
                 padding: 0;
                 font-family: "Segoe UI", sans-serif;
                 background-color: #f1f3f5;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                min-height: 100vh;
+
             }
 
             .voucher-details {
@@ -45,11 +46,12 @@
                 color: #333;
             }
 
+
             .detail-row {
                 display: flex;
                 justify-content: space-between;
                 align-items: flex-start;
-                padding: 0.75rem 0;
+                padding: 0.7rem 0;
                 border-bottom: 1px solid #e2e2e2;
             }
 
@@ -83,8 +85,9 @@
         </style>
     </head>
     <body>
-         <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+        <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
         <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
+        
         <div class="voucher-details">
             <h2>Voucher Details</h2>
 
