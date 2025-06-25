@@ -12,7 +12,6 @@
     <title>User Management Dashboard</title>
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
     <style>
         :root {
             --primary: #002b5c;
@@ -22,14 +21,38 @@
             --gray: #e0e0e0;
             --text: #333;
             --shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
         }
 
         body {
             margin: 0;
-            padding: 40px;
+            padding: 0;
             background-color: var(--background);
             font-family: 'Segoe UI', sans-serif;
             color: var(--text);
+        }
+
+        .main-content {
+            margin-left: 60px;
+            padding: 80px 30px 40px;
+            transition: margin-left 0.3s ease;
+            animation: slideInMain 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .sidebar.open ~ .main-content {
+            margin-left: 220px;
+        }
+
+        @keyframes slideInMain {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         h2 {
@@ -78,7 +101,7 @@
             border-spacing: 0;
             background-color: var(--white);
             box-shadow: var(--shadow);
-            border-radius: 12px;
+            border-radius: var(--radius);
             overflow: hidden;
         }
 
@@ -98,23 +121,11 @@
             padding-left: 30px;
         }
 
-        th {
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        td {
-            font-size: 15px;
-            color: var(--text);
-        }
-
         tr:hover {
             background-color: #f0f8ff;
             transition: background-color 0.2s;
         }
 
-        /* Ba chấm dropdown */
         .dot-menu {
             position: relative;
             cursor: pointer;
@@ -159,7 +170,6 @@
             display: block;
         }
 
-        /* Action icons */
         .actions a {
             color: var(--primary);
             margin: 0 6px;
@@ -172,7 +182,6 @@
             transform: scale(1.15);
         }
 
-        /* Pagination */
         nav {
             text-align: center;
             margin-top: 35px;
@@ -199,7 +208,6 @@
             background-color: var(--primary-light);
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             table, thead, tbody, th, td, tr {
                 display: block;
@@ -230,59 +238,63 @@
     </style>
 </head>
 <body>
+<%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+<%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
 
-<h2>User Management Dashboard</h2>
+<div class="main-content">
+    <h2>User Management Dashboard</h2>
 
-<form method="get" action="DashboardUser">
-    <input type="search" name="search" placeholder="Enter keyword...">
-    <button type="submit"><i class='bx bx-search-alt-2'></i></button>
-</form>
+    <form method="get" action="DashboardUser">
+        <input type="search" name="search" placeholder="Enter keyword...">
+        <button type="submit"><i class='bx bx-search-alt-2'></i></button>
+    </form>
 
-<table>
-    <thead>
-        <tr>
-            <th></th>
-            <th>No.</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <c:forEach var="user" items="${list}" varStatus="i">
+    <table>
+        <thead>
             <tr>
-                <td class="dot-menu">
-                    <i class="fas fa-ellipsis-v dot-icon"></i>
-                    <div class="dropdown">
-                        <a href="AdminView?id=${user.userId}"><i class="fa-solid fa-eye"></i> View</a>
-                        <a href="AdminEdit?id=${user.userId}"><i class="fa-solid fa-pencil"></i> Edit</a>
-                        <a href="AdminDelete?id=${user.userId}"><i class="fa-solid fa-user-slash"></i> Delete</a>
-                        <a href="Decentralization?id=${user.userId}"><i class="fa-solid fa-gear"></i> Role</a>
-                    </div>
-                </td>
-                <td>${(thisPage - 1) * 10 + i.index + 1}</td>
-                <td>${user.userName}</td>
-                <td>${user.email}</td>
-                <td>${user.role.roleName}</td>
-                <td class="actions">
-                    <a href="AdminView?id=${user.userId}" title="View"><i class="fa-solid fa-eye"></i></a>
-                    <a href="AdminEdit?id=${user.userId}" title="Edit"><i class="fa-solid fa-pencil"></i></a>
-                    <a href="AdminDelete?id=${user.userId}" title="Delete"><i class="fa-solid fa-user-slash"></i></a>
-                    <a href="Decentralization?id=${user.userId}" title="Role"><i class="fa-solid fa-gear"></i></a>
-                </td>
+                <th></th>
+                <th>No.</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
             </tr>
-        </c:forEach>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <c:forEach var="user" items="${list}" varStatus="i">
+                <tr>
+                    <td class="dot-menu">
+                        <i class="fas fa-ellipsis-v dot-icon"></i>
+                        <div class="dropdown">
+                            <a href="AdminView?id=${user.userId}"><i class="fa-solid fa-eye"></i> View</a>
+                            <a href="AdminEdit?id=${user.userId}"><i class="fa-solid fa-pencil"></i> Edit</a>
+                            <a href="AdminDelete?id=${user.userId}"><i class="fa-solid fa-user-slash"></i> Delete</a>
+                            <a href="Decentralization?id=${user.userId}"><i class="fa-solid fa-gear"></i> Role</a>
+                        </div>
+                    </td>
+                    <td>${(thisPage - 1) * 10 + i.index + 1}</td>
+                    <td>${user.userName}</td>
+                    <td>${user.email}</td>
+                    <td>${user.role.roleName}</td>
+                    <td class="actions">
+                        <a href="AdminView?id=${user.userId}" title="View"><i class="fa-solid fa-eye"></i></a>
+                        <a href="AdminEdit?id=${user.userId}" title="Edit"><i class="fa-solid fa-pencil"></i></a>
+                        <a href="AdminDelete?id=${user.userId}" title="Delete"><i class="fa-solid fa-user-slash"></i></a>
+                        <a href="Decentralization?id=${user.userId}" title="Role"><i class="fa-solid fa-gear"></i></a>
+                    </td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
 
-<nav aria-label="Page navigation">
-    <ul class="pagination">
-        <c:forEach begin="1" end="${finalPage}" var="i">
-            <li><a href="DashboardUser?Page=${i}">${i}</a></li>
-        </c:forEach>
-    </ul>
-</nav>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <c:forEach begin="1" end="${finalPage}" var="i">
+                <li><a href="DashboardUser?Page=${i}">${i}</a></li>
+            </c:forEach>
+        </ul>
+    </nav>
+</div>
 
 </body>
 </html>

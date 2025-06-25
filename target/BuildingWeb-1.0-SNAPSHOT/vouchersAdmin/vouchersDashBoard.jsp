@@ -109,7 +109,7 @@
                 color: #fff;
                 padding: 8px 14px;
                 text-decoration: none;
-                border-radius: 6px;
+border-radius: 6px;
                 font-weight: 500;
                 margin-right: 10px;
                 display: inline-block;
@@ -219,7 +219,7 @@
         </style>
     </head>
     <body>
-        <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+<%@include file="../navbarDashboard/navbarDashboard.jsp" %>
         <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
 
         <div class="content-wrapper">
@@ -275,7 +275,7 @@
         </div>
     </body>
     <script>
-        const rowsPerPage = 10;
+const rowsPerPage = 10;
         const rows = document.querySelectorAll(".voucher-table tbody tr");
         const loadMoreBtn = document.getElementById("loadMoreBtn");
 

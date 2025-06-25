@@ -117,7 +117,7 @@ form {
             .tooltip-warning {
                 position: absolute;
                 top: -35px;
-                left: 0;
+left: 0;
                 background-color: #f44336;
                 color: white;
                 padding: 6px 10px;
@@ -198,7 +198,7 @@ form {
 
 
                 <div class="form-group">
-                    <label for="isActive">Status</label>
+<label for="isActive">Status</label>
                     <select id="isActive" name="isActive">
                         <option value="false" selected>Inactive</option>
                         <option value="true">Active</option>
@@ -274,9 +274,7 @@ form {
                 const currentDate = `${yyyy}-${mm}-${dd}`;
                         document.getElementById('startDate').value = currentDate;
                     });
-
-
-                    function validateMax(input) {
+function validateMax(input) {
                         if (parseInt(input.value) > 1000) {
                             input.value = 1000;
                         }
