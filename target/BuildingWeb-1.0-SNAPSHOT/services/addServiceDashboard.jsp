@@ -24,14 +24,14 @@
             }
 
             .main-content {
-                flex-grow: 1;
-                margin-left: 220px;
+                width: 50%;
+
                 padding: 40px 30px;
-                display: flex
-                    ;
+
+                ;
                 justify-content: space-around;
-                align-items: flex-start;
-                min-height: 100vh;
+
+
                 box-sizing: border-box;
                 flex-direction:row-reverse;
 
@@ -40,8 +40,7 @@
             }
 
             .content-wrapper {
-                width: 100%;
-                max-width: 800px;
+
                 background-color: var(--white);
                 padding: 30px;
                 border-radius: 12px;
@@ -147,6 +146,7 @@
 
                 .content-wrapper {
                     padding: 20px;
+
                 }
             }
         </style>

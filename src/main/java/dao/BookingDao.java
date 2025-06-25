@@ -32,12 +32,13 @@ public class BookingDao {
         List<Bookings> list = new ArrayList<>();
         Connection conn = ConnectData.getConnection();
 
-        String sql = "SELECT b.BookingId, b.RoomId, b.CustomerId, b.StartDate, b.EndDate, b.Status, "
-                + "r.RoomNumber, c.FullName "
-                + "FROM Bookings b "
-                + "JOIN Rooms r ON b.RoomId = r.RoomId "
-                + "JOIN Customers c ON b.CustomerId = c.CustomerId "
-                + "WHERE b.Status IN ('Waiting for processing', 'Confirmed')";
+       String sql = "SELECT b.BookingId, b.RoomId, b.CustomerId, b.StartDate, b.EndDate, b.Status, "
+           + "r.RoomNumber, c.FullName "
+           + "FROM Bookings b "
+           + "JOIN Rooms r ON b.RoomId = r.RoomId "
+           + "JOIN Customers c ON b.CustomerId = c.CustomerId "
+           + "WHERE b.Status IN ( 'Confirmed', 'Checked In','Checked Out')";
+
 
         PreparedStatement ps = conn.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
@@ -307,12 +308,12 @@ public class BookingDao {
 
     public Bookings getBookingById(int id) {
         Bookings b = null;
-        String sql = "SELECT b.BookingID, b.Status, b.StartDate, b.EndDate, b.CheckInTime, b.CheckOutTime, "
-                + "r.RoomNumber, c.FullName, c.Email, c.Phone "
-                + "FROM Bookings b "
-                + "JOIN Rooms r ON b.RoomID = r.RoomID "
-                + "JOIN Customers c ON b.CustomerID = c.CustomerID "
-                + "WHERE b.BookingID = ?";
+            String sql = "SELECT b.BookingID, b.Status, b.StartDate, b.EndDate, b.CheckInTime, b.CheckOutTime, "
+                    + "r.RoomNumber, c.FullName, c.Email, c.Phone "
+                    + "FROM Bookings b "
+                    + "JOIN Rooms r ON b.RoomID = r.RoomID "
+                    + "JOIN Customers c ON b.CustomerID = c.CustomerID "
+                    + "WHERE b.BookingID = ?";
 
         try ( PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setInt(1, id);
