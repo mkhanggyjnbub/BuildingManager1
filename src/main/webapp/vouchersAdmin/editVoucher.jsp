@@ -7,6 +7,7 @@
 <%@page import="models.Vouchers"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -16,15 +17,19 @@
                 box-sizing: border-box;
             }
 
-            body {
+            html, body {
                 margin: 0;
                 padding: 0;
                 font-family: "Segoe UI", sans-serif;
                 background-color: #f1f3f5;
+                min-height: 100vh;
+            }
+
+            body {
                 display: flex;
                 justify-content: center;
-                align-items: center;
-                min-height: 100vh;
+                align-items: flex-start;
+                padding-top: 100px; /* Tránh bị che bởi navbar */
             }
 
             form {
@@ -36,10 +41,11 @@
                 padding: 2rem;
                 display: flex;
                 flex-direction: column;
+                margin-bottom: 40px; /* Cho khoảng cách cuối form */
             }
 
             h2 {
-                margin: 0;
+                margin: 0 0 1rem 0;
                 text-align: center;
                 font-size: 1.8rem;
                 color: #333;
@@ -48,6 +54,7 @@
             .form-group {
                 display: flex;
                 flex-direction: column;
+                margin-bottom: 1rem;
             }
 
             label {
@@ -112,77 +119,14 @@
                 background-color: #e0e0e0;
                 cursor: not-allowed;
             }
-
         </style>
-        <script>
-            function pad(n) {
-                return n.toString().padStart(2, '0');
-            }
 
-            function getFormattedDateTimeLocal(date) {
-                return date.getFullYear() + '-' +
-                        pad(date.getMonth() + 1) + '-' +
-                        pad(date.getDate()) + 'T' +
-                        pad(date.getHours()) + ':' +
-                        pad(date.getMinutes());
-            }
 
-            function validateForm() {
-                const discount = parseFloat(document.getElementById("discountPercent").value);
-                if (isNaN(discount) || discount < 0.01 || discount > 100) {
-                    alert("Discount percent must be between 1.00 and 100.00.");
-                    return false;
-                }
-
-                const decimalPlaces = (discount.toString().split('.')[1] || '').length;
-                if (decimalPlaces > 2) {
-                    alert("Discount percent must not have more than 2 decimal places.");
-                    return false;
-                }
-
-                return true;
-            }
-
-            window.addEventListener("DOMContentLoaded", function () {
-                const startInput = document.getElementById('startDate');
-                const endInput = document.getElementById('endDate');
-
-                if (!startInput || !endInput)
-                    return;
-
-                const now = new Date();
-                const nowFormatted = getFormattedDateTimeLocal(now);
-
-                // Nếu đang tạo mới (startInput chưa có giá trị)
-                if (!startInput.value) {
-                    startInput.value = nowFormatted;
-                    startInput.min = nowFormatted;
-                }
-
-                // Nếu đang tạo mới (endInput chưa có giá trị)
-                if (!endInput.value) {
-                    endInput.value = nowFormatted;
-                    endInput.min = nowFormatted;
-                } else {
-                    // Nếu đang chỉnh sửa, endDate phải sau hoặc bằng startDate
-                    endInput.min = startInput.value;
-                }
-
-                // Khi thay đổi startDate → cập nhật min của endDate
-                startInput.addEventListener('change', function () {
-                    endInput.min = startInput.value;
-                    if (endInput.value < startInput.value) {
-                        endInput.value = startInput.value;
-                    }
-                });
-            });
-
-        </script>
     </head>
 
     <body>
-        
-         <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+
+        <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
         <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
         <form action="/EditVoucher" method="post" onsubmit="return validateForm()">
             <h2>Edit Voucher</h2>
@@ -257,5 +201,68 @@
         </form>
     </body>
 
+    <script>
+        function pad(n) {
+            return n.toString().padStart(2, '0');
+        }
 
+        function getFormattedDateTimeLocal(date) {
+            return date.getFullYear() + '-' +
+                    pad(date.getMonth() + 1) + '-' +
+                    pad(date.getDate()) + 'T' +
+                    pad(date.getHours()) + ':' +
+                    pad(date.getMinutes());
+        }
+
+        function validateForm() {
+            const discount = parseFloat(document.getElementById("discountPercent").value);
+            if (isNaN(discount) || discount < 0.01 || discount > 100) {
+                alert("Discount percent must be between 1.00 and 100.00.");
+                return false;
+            }
+
+            const decimalPlaces = (discount.toString().split('.')[1] || '').length;
+            if (decimalPlaces > 2) {
+                alert("Discount percent must not have more than 2 decimal places.");
+                return false;
+            }
+
+            return true;
+        }
+
+        window.addEventListener("DOMContentLoaded", function () {
+            const startInput = document.getElementById('startDate');
+            const endInput = document.getElementById('endDate');
+
+            if (!startInput || !endInput)
+                return;
+
+            const now = new Date();
+            const nowFormatted = getFormattedDateTimeLocal(now);
+
+            // Nếu đang tạo mới (startInput chưa có giá trị)
+            if (!startInput.value) {
+                startInput.value = nowFormatted;
+                startInput.min = nowFormatted;
+            }
+
+            // Nếu đang tạo mới (endInput chưa có giá trị)
+            if (!endInput.value) {
+                endInput.value = nowFormatted;
+                endInput.min = nowFormatted;
+            } else {
+                // Nếu đang chỉnh sửa, endDate phải sau hoặc bằng startDate
+                endInput.min = startInput.value;
+            }
+
+            // Khi thay đổi startDate → cập nhật min của endDate
+            startInput.addEventListener('change', function () {
+                endInput.min = startInput.value;
+                if (endInput.value < startInput.value) {
+                    endInput.value = startInput.value;
+                }
+            });
+        });
+
+    </script>
 </html>

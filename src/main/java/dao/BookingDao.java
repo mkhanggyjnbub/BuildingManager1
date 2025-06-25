@@ -101,6 +101,7 @@ public class BookingDao {
             ps.setInt(3, canceledBy);
             ps.setString(4, notes);
             ps.setInt(5, bookingId);
+            ps.executeUpdate();
 
         }
     }
