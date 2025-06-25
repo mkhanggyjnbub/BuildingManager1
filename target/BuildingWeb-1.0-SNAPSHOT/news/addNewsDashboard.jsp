@@ -1,50 +1,40 @@
-<%-- 
-    Document   : addNewsDashboard
-    Created on : 15-Jun-2025, 20:49:04
-    Author     : dodan
---%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
         <title>Create New News</title>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/dashboard.css"> <!-- nếu bạn đã tách dashboard chung -->
+        <!-- <link rel="stylesheet" href="css/newsForm.css"> --> <!-- nếu muốn tách riêng CSS form -->
         <style>
-            body {
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                background-color: #f0f2f5;
-                margin: 0;
-                padding: 0;
-            }
-
             .container {
-                max-width: 650px;
-                margin: 50px auto;
+                max-width: 800px;
+                margin: 40px auto;
                 background-color: #ffffff;
-                padding: 40px 30px;
+                padding: 30px 25px;
                 border-radius: 12px;
                 box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-                border-top: 6px solid #1a237e;
+                border-top: 6px solid #4a6fa5;
                 position: relative;
             }
 
             .back-button {
                 position: absolute;
-                top: -40px;
-                left: 20px;
-                background-color: #1a73e8;
+                top: -35px;
+                left: 10px;
+                background-color: #4a6fa5;
                 color: white;
-                padding: 8px 12px;
+                padding: 6px 10px;
                 border-radius: 5px;
                 font-size: 14px;
                 text-decoration: none;
-                display: inline-block;
             }
 
             .back-button:hover {
-                background-color: #0c53b0;
+                background-color: #3a5c88;
             }
 
             h1 {
@@ -115,14 +105,6 @@
                 display: inline-block;
             }
 
-            .file-upload-section label[for="imageFile"]::before {
-                content: "\1F4C2 ";
-            }
-
-            .file-upload-section label[for="imageURL"]::before {
-                content: "\1F517 ";
-            }
-
             .disabled-input {
                 opacity: 0.5;
                 pointer-events: none;
@@ -160,70 +142,63 @@
         </style>
     </head>
     <body>
-        <div class="container">
-            <a href="javascript:history.back()" class="back-button">← Back</a>
-            <h1>📝 Create New News</h1>
+        <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+        <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
 
-            <c:if test="${not empty message}">
-                <script>
-                    alert("${message}");
-                    window.location.href = "<c:url value='/Index' />";
-                </script>
-            </c:if>
+        <div class="content">
+            <div class="container">
+                <a href="javascript:history.back()" class="back-button"><i class="fa-solid fa-arrow-left"></i> Back</a>
+                <h1><i class="fa-solid fa-pen-to-square"></i> Create New News</h1>
 
-            <c:if test="${not empty listBuilding}">
-                <form action="AddNewsDashboard" method="post" onsubmit="return validateNewsForm();" enctype="multipart/form-data">
-                    <label for="title">Title:</label>
-                    <input type="text" id="title" name="title" maxlength="150" required data-tooltip="Required. Max 150 characters."/>
+                <c:if test="${not empty message}">
+                    <script>
+                        alert("${message}");
+                        window.location.href = "<c:url value='/Index' />";
+                    </script>
+                </c:if>
 
-                    <label for="summary">Summary:</label>
-                    <input type="text" id="summary" name="summary" maxlength="500" required data-tooltip="Required. Max 500 characters."/>
+                <c:if test="${not empty listBuilding}">
+                    <form action="AddNewsDashboard" method="post" onsubmit="return validateNewsForm();" enctype="multipart/form-data">
+                        <label for="title">Title:</label>
+                        <input type="text" id="title" name="title" maxlength="150" required data-tooltip="Required. Max 150 characters."/>
 
-                    <label>Choose Image Upload Method:</label>
-                    <div class="file-upload-section">
-                        <label><input type="radio" name="imageUploadMethod" value="file" checked onchange="toggleImageUpload()"> 📁 Upload File</label>
-                        <label><input type="radio" name="imageUploadMethod" value="url" onchange="toggleImageUpload()"> 🔗 Enter URL</label>
-                    </div>
+                        <label for="summary">Summary:</label>
+                        <input type="text" id="summary" name="summary" maxlength="500" required data-tooltip="Required. Max 500 characters."/>
 
-                    <div id="uploadFileGroup">
-                        <label for="imageFile" class="file-label">📂 Choose File</label>
-                        <input type="file" name="imageFile" id="imageFile" accept="image/*">
-                    </div>
+                        <!-- Loại bỏ phần chọn cách upload -->
+                        <label for="imageFile">Upload Image:</label>
+                        <input type="file" name="imageFile" id="imageFile" accept="image/*" required />
 
-                    <div id="uploadUrlGroup" class="disabled-input">
-                        <label for="imageURL" class="file-label">🔗 Image URL</label>
-                        <input type="text" id="imageURL" name="imageURL" maxlength="255" pattern="https?://.+" data-tooltip="Valid URL starting with http:// or https://." disabled />
-                    </div>
+                        <label for="content">Content:</label>
+                        <textarea id="content" name="content" rows="5" required data-tooltip="At least 20 characters."></textarea>
 
-                    <label for="content">Content:</label>
-                    <textarea id="content" name="content" rows="5" required data-tooltip="At least 20 characters."></textarea>
+                        <label>Publish Now:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="isPublished" value="true" checked /> Yes</label>
+                            <label><input type="radio" name="isPublished" value="false" /> No</label>
+                        </div>
 
-                    <label>Publish Now:</label>
-                    <div class="radio-group">
-                        <label><input type="radio" name="isPublished" value="true" checked /> Yes</label>
-                        <label><input type="radio" name="isPublished" value="false" /> No</label>
-                    </div>
+                        <label for="buildingID">Building:</label>
+                        <select id="buildingID" name="buildingID" required data-tooltip="Please select a building.">
+                            <option value="">-- Select Building --</option>
+                            <c:forEach var="b" items="${listBuilding}">
+                                <option value="${b.buildingId}">${b.buildingName}</option>
+                            </c:forEach>
+                        </select>
 
-                    <label for="buildingID">Building:</label>
-                    <select id="buildingID" name="buildingID" required data-tooltip="Please select a building.">
-                        <option value="">-- Select Building --</option>
-                        <c:forEach var="b" items="${listBuilding}">
-                            <option value="${b.buildingId}">${b.buildingName}</option>
-                        </c:forEach>
-                    </select>
-
-                    <button type="submit">✅ Create News</button>
-                </form>
-            </c:if>
+                        <button type="submit"><i class="fa-solid fa-plus"></i> Create News</button>
+                    </form>
+                </c:if>
+            </div>
         </div>
 
         <script>
             function validateNewsForm() {
                 const title = document.getElementById("title").value.trim();
                 const summary = document.getElementById("summary").value.trim();
-                const imageURL = document.getElementById("imageURL").value.trim();
                 const content = document.getElementById("content").value.trim();
                 const buildingID = document.getElementById("buildingID").value;
+                const fileInput = document.getElementById("imageFile");
 
                 if (title === "" || title.length > 150) {
                     alert("Title must not be empty and must not exceed 150 characters.");
@@ -235,12 +210,9 @@
                     return false;
                 }
 
-                const method = document.querySelector('input[name="imageUploadMethod"]:checked').value;
-                if (method === "url") {
-                    if (imageURL === "" || imageURL.length > 255 || !/^https?:\/\/.+/.test(imageURL)) {
-                        alert("Image URL must be a valid http or https link, and no more than 255 characters.");
-                        return false;
-                    }
+                if (!fileInput.files.length) {
+                    alert("Please upload an image.");
+                    return false;
                 }
 
                 if (content.length < 20) {
@@ -261,7 +233,7 @@
             document.body.appendChild(tooltip);
 
             document.querySelectorAll('[data-tooltip]').forEach(el => {
-                el.addEventListener('mouseenter', (e) => {
+                el.addEventListener('mouseenter', () => {
                     tooltip.textContent = el.getAttribute('data-tooltip');
                     tooltip.style.display = 'block';
                 });
@@ -292,9 +264,7 @@
                 }
             }
 
-            window.addEventListener("DOMContentLoaded", () => {
-                toggleImageUpload();
-            });
+            window.addEventListener("DOMContentLoaded", toggleImageUpload);
         </script>
     </body>
 </html>

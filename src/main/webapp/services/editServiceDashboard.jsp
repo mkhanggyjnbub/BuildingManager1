@@ -1,15 +1,39 @@
+<%-- 
+    Document   : editServiceDashboard
+    Created on : 18-Jun-2025, 01:29:57
+    Author     : dodan
+--%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
         <title>Update Service Dashboard</title>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
         <style>
+            :root {
+                --transition-speed: 0.3s;
+                --sidebar-width-collapsed: 60px;
+                --sidebar-width-expanded: 220px;
+            }
+
             body {
                 font-family: 'Segoe UI', sans-serif;
                 background-color: #f4f6f9;
                 margin: 0;
                 padding: 20px;
+                transition: margin-left var(--transition-speed);
+            }
+
+            .main-content {
+                margin-left: var(--sidebar-width-collapsed);
+                transition: margin-left var(--transition-speed);
+                padding: 20px;
+            }
+
+            .sidebar.open ~ .main-content {
+                margin-left: var(--sidebar-width-expanded);
             }
 
             .container {
@@ -138,11 +162,8 @@
             button:hover {
                 background-color: #0056b3;
             }
-            
+
             .back-button {
-                top: -40px;
-                left: 20px;
-                width: 80px;
                 background-color: #1a73e8;
                 color: white;
                 padding: 8px 12px;
@@ -150,81 +171,91 @@
                 font-size: 14px;
                 text-decoration: none;
                 display: inline-block;
+                margin-bottom: 20px;
+                margin-left: 10px;
+                transition: margin-left var(--transition-speed);
             }
-            .back-button:hover {
-                background-color: #0c53b0;
+
+            .sidebar.open ~ .main-content .back-button {
+                margin-left: calc(var(--sidebar-width-expanded) + 10px);
+            }
+
+            @media screen and (max-width: 768px) {
+                .container {
+                    padding: 20px;
+                }
             }
         </style>
     </head>
     <body>
-        <a href="javascript:history.back()" class="back-button">← Back</a>
-        <div class="container">
-            <h1>Update Service</h1>
-            <form action="${pageContext.request.contextPath}/EditServiceDashboard" method="post" onsubmit="return validateForm();" enctype="multipart/form-data">
-                <input type="hidden" name="serviceId" value="${s.serviceId}" />
+        <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+        <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
 
-                <div class="form-group">
-                    <label>Service Name:</label>
-                    <input type="text" name="name" value="${s.serviceName}" maxlength="100" required 
-                           pattern="^[A-Za-z0-9\s]+$"
-                           data-tooltip="Must not contain special characters. Max 100 characters." />
-                    <div class="tooltip"></div>
-                </div>
+        <div class="main-content">
+            <div class="container">
+                <h1>Update Service</h1>
+                <form action="${pageContext.request.contextPath}/EditServiceDashboard" method="post" onsubmit="return validateForm();" enctype="multipart/form-data">
+                    <input type="hidden" name="serviceId" value="${s.serviceId}" />
 
-                <div class="form-group">
-                    <label>Unit Type:</label>
-                    <input type="text" name="unitType" value="${s.unitType}" maxlength="50" required 
-                           pattern="^[\w\d\s]+$"
-                           data-tooltip="Letters, digits, and spaces only. Max 50 characters." />
-                    <div class="tooltip"></div>
-                </div>
-
-                <div class="form-group">
-                    <label>Description:</label>
-                    <textarea name="description" rows="4" minlength="10" maxlength="1000" required
-                              data-tooltip="Must be between 10 and 1000 characters.">${s.description}</textarea>
-                    <div class="tooltip"></div>
-                </div>
-
-                <div class="form-group">
-                    <label>Price (VND):</label>
-                    <input type="text" name="price" id="price" required
-                           inputmode="numeric"
-                           value="${s.price}"
-                           data-tooltip="Only numbers. Between 1,000 and 1,000,000,000. Must be divisible by 1,000." />
-                    <div class="tooltip"></div>
-                </div>
-
-                <div class="form-group">
-                    <label>Choose Image Upload Method:</label>
-                    <div class="image-upload-toggle">
-                        <label><input type="radio" name="imageUploadMethod" value="file" checked onchange="toggleImageUpload()"> 📁 Upload File</label>
-                        <label><input type="radio" name="imageUploadMethod" value="url" onchange="toggleImageUpload()"> 🔗 Enter URL</label>
+                    <div class="form-group">
+                        <label>Service Name:</label>
+                        <input type="text" name="name" value="${s.serviceName}" maxlength="100" required 
+                               pattern="^[A-Za-z0-9\s]+$"
+                               data-tooltip="Must not contain special characters. Max 100 characters." />
+                        <div class="tooltip"></div>
                     </div>
 
-                    <div id="uploadFileGroup" class="custom-file-upload">
-                        <label for="imageFile" class="file-label">📂 Choose File</label>
-                        <input type="file" name="imageFile" id="imageFile" accept="image/*">
-                        <span id="file-name">No file chosen</span>
+                    <div class="form-group">
+                        <label>Unit Type:</label>
+                        <input type="text" name="unitType" value="${s.unitType}" maxlength="50" required 
+                               pattern="^[\w\d\s]+$"
+                               data-tooltip="Letters, digits, and spaces only. Max 50 characters." />
+                        <div class="tooltip"></div>
                     </div>
 
-                    <div id="uploadUrlGroup" class="disabled-input">
-                        <input type="text" id="imageURL" name="imageURL" value="${s.imageURL}" placeholder="https://example.com/your-image.jpg" maxlength="255"
-                               pattern="https?://.+"
-                               data-tooltip="Must be a valid image URL starting with http:// or https://." disabled />
+                    <div class="form-group">
+                        <label>Description:</label>
+                        <textarea name="description" rows="4" minlength="10" maxlength="1000" required
+                                  data-tooltip="Must be between 10 and 1000 characters.">${s.description}</textarea>
+                        <div class="tooltip"></div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label>Status:</label>
-                    <div class="checkbox-group">
-                        <label><input type="radio" name="isActive" value="true" ${s.isActive ? 'checked' : ''} /> Active</label><br>
-                        <label><input type="radio" name="isActive" value="false" ${!s.isActive ? 'checked' : ''} /> Deactivated</label>
+                    <div class="form-group">
+                        <label>Price (VND):</label>
+                        <input type="text" name="price" id="price" required
+                               inputmode="numeric"
+                               value="${s.price}"
+                               data-tooltip="Only numbers. Between 1,000 and 1,000,000,000. Must be divisible by 1,000." />
+                        <div class="tooltip"></div>
                     </div>
-                </div>
 
-                <button type="submit">Update Service</button>
-            </form>
+                    <div class="form-group">
+                        <label>Upload Image:</label>
+                        <div class="custom-file-upload">
+                            <label for="imageFile" class="file-label">📂 Choose File</label>
+                            <input type="file" name="imageFile" id="imageFile" accept="image/*">
+                            <span id="file-name">No file chosen</span>
+                        </div>
+                        <div style="margin-top: 8px; color: #666;">
+                            Current: <span style="font-style: italic;">${s.imageURL}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Status:</label>
+                        <div class="checkbox-group">
+                            <label><input type="radio" name="isActive" value="true" ${s.isActive ? 'checked' : ''} /> Active</label><br>
+                            <label><input type="radio" name="isActive" value="false" ${!s.isActive ? 'checked' : ''} /> Deactivated</label>
+                        </div>
+                    </div>
+
+                    <button type="submit">Update Service</button>
+                    <br>
+                    <br>
+                    <br>
+                    <a href="javascript:history.back()" class="back-button">← Back</a>
+                </form>
+            </div>
         </div>
 
         <script>
@@ -233,7 +264,6 @@
                 const unitType = document.getElementsByName("unitType")[0].value.trim();
                 const desc = document.getElementsByName("description")[0].value.trim();
                 const priceStr = document.getElementById("price").value.replaceAll(".", "");
-                const imageURL = document.getElementById("imageURL").value.trim();
 
                 if (!/^[A-Za-z0-9\s]+$/.test(name) || name.length > 100) {
                     alert("Service Name must not be empty, max 100 characters, and contain no special characters.");
@@ -257,67 +287,43 @@
                 }
                 document.getElementById("price").value = priceStr;
 
-                const method = document.querySelector('input[name="imageUploadMethod"]:checked').value;
-                if (method === "url") {
-                    if (!/^https?:\/\/.+/.test(imageURL)) {
-                        alert("Image URL must be valid.");
-                        return false;
-                    }
-                }
-
                 return true;
             }
 
-            document.getElementById("price").addEventListener("input", function (e) {
-                let val = e.target.value.replace(/\D/g, "");
-                val = val.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                e.target.value = val;
-            });
+            document.addEventListener("DOMContentLoaded", function () {
+                const priceInput = document.getElementById("price");
+                priceInput.addEventListener("input", function (e) {
+                    let val = e.target.value.replace(/\D/g, "");
+                    val = val.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                    e.target.value = val;
+                });
 
-            document.getElementById("imageFile").addEventListener("change", function () {
-                const fileName = this.files[0] ? this.files[0].name : "No file chosen";
-                document.getElementById("file-name").textContent = fileName;
-            });
-
-            function toggleImageUpload() {
-                const method = document.querySelector('input[name="imageUploadMethod"]:checked').value;
-                const fileGroup = document.getElementById("uploadFileGroup");
-                const urlGroup = document.getElementById("uploadUrlGroup");
-                const imageFile = document.getElementById("imageFile");
-                const imageURL = document.getElementById("imageURL");
-
-                if (method === "file") {
-                    fileGroup.classList.remove("disabled-input");
-                    imageFile.disabled = false;
-                    urlGroup.classList.add("disabled-input");
-                    imageURL.disabled = true;
-                } else {
-                    fileGroup.classList.add("disabled-input");
-                    imageFile.disabled = true;
-                    urlGroup.classList.remove("disabled-input");
-                    imageURL.disabled = false;
+                const imageInput = document.getElementById("imageFile");
+                if (imageInput) {
+                    imageInput.addEventListener("change", function () {
+                        const fileName = this.files[0] ? this.files[0].name : "No file chosen";
+                        document.getElementById("file-name").textContent = fileName;
+                    });
                 }
-            }
 
-            const tooltip = document.createElement('div');
-            tooltip.className = 'tooltip';
-            document.body.appendChild(tooltip);
+                const tooltip = document.createElement('div');
+                tooltip.className = 'tooltip';
+                document.body.appendChild(tooltip);
 
-            document.querySelectorAll('[data-tooltip]').forEach(el => {
-                el.addEventListener('mouseenter', (e) => {
-                    tooltip.textContent = el.getAttribute('data-tooltip');
-                    tooltip.style.display = 'block';
-                });
-                el.addEventListener('mousemove', (e) => {
-                    tooltip.style.left = e.pageX + 15 + 'px';
-                    tooltip.style.top = e.pageY + 10 + 'px';
-                });
-                el.addEventListener('mouseleave', () => {
-                    tooltip.style.display = 'none';
+                document.querySelectorAll('[data-tooltip]').forEach(el => {
+                    el.addEventListener('mouseenter', (e) => {
+                        tooltip.textContent = el.getAttribute('data-tooltip');
+                        tooltip.style.display = 'block';
+                    });
+                    el.addEventListener('mousemove', (e) => {
+                        tooltip.style.left = e.pageX + 15 + 'px';
+                        tooltip.style.top = e.pageY + 10 + 'px';
+                    });
+                    el.addEventListener('mouseleave', () => {
+                        tooltip.style.display = 'none';
+                    });
                 });
             });
-
-            window.addEventListener("DOMContentLoaded", toggleImageUpload);
         </script>
     </body>
 </html>

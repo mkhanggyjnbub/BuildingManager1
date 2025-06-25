@@ -3,6 +3,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
         <title>Add New Service</title>
         <style>
             body {
@@ -148,7 +149,7 @@
                 display: none;
                 opacity: 0.9;
             }
-            
+
             .back-button {
                 top: -40px;
                 left: 20px;
@@ -167,6 +168,8 @@
         </style>
     </head>
     <body>
+        <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+        <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
         <a href="javascript:history.back()" class="back-button">← Back</a>
         <div class="form-container">
             <h2>Add New Service</h2>
@@ -201,18 +204,11 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Choose Image Upload Method:</label>
-                    <div class="image-upload-toggle">
-                        <label><input type="radio" name="imageUploadMethod" value="file" checked onchange="toggleImageUpload()"> 📁 Upload File</label>
-                        <label><input type="radio" name="imageUploadMethod" value="url" onchange="toggleImageUpload()"> 🔗 Enter URL</label>
-                    </div>
-                    <div id="uploadFileGroup" class="custom-file-upload">
+                    <label>Choose Image File:</label>
+                    <div class="custom-file-upload">
                         <label for="imageFile" class="file-label">📂 Choose File</label>
                         <input type="file" name="imageFile" id="imageFile" accept="image/*">
                         <span id="file-name">No file chosen</span>
-                    </div>
-                    <div id="uploadUrlGroup" class="full-width disabled-input">
-                        <input type="text" id="imageURL" name="imageURL" placeholder="https://example.com/your-image.jpg" maxlength="255" title="Paste your image URL here.">
                     </div>
                 </div>
 
@@ -246,23 +242,6 @@
                 unitHidden.value = customInput.value.trim();
             }
 
-            function toggleImageUpload() {
-                const method = document.querySelector('input[name="imageUploadMethod"]:checked').value;
-                const fileGroup = document.getElementById("uploadFileGroup");
-                const urlGroup = document.getElementById("uploadUrlGroup");
-                if (method === "file") {
-                    fileGroup.classList.remove("disabled-input");
-                    document.getElementById("imageFile").disabled = false;
-                    urlGroup.classList.add("disabled-input");
-                    document.getElementById("imageURL").disabled = true;
-                } else {
-                    fileGroup.classList.add("disabled-input");
-                    document.getElementById("imageFile").disabled = true;
-                    urlGroup.classList.remove("disabled-input");
-                    document.getElementById("imageURL").disabled = false;
-                }
-            }
-
             function validateForm() {
                 const priceInput = document.getElementById("price");
                 const rawPrice = priceInput.value.replaceAll(".", "");
@@ -275,24 +254,34 @@
                 return true;
             }
 
-            document.getElementById("price").addEventListener("input", function (e) {
-                let val = e.target.value.replace(/\D/g, "");
-                val = val.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                e.target.value = val;
-            });
-
             document.addEventListener("DOMContentLoaded", () => {
-                toggleUnitInput(document.getElementById("unitSelect").value);
-                toggleImageUpload();
+                // Format giá tiền khi nhập
+                const priceInput = document.getElementById("price");
+                priceInput.addEventListener("input", function (e) {
+                    let val = e.target.value.replace(/\D/g, "");
+                    val = val.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                    e.target.value = val;
+                });
 
+                // Set mặc định cho đơn vị tính
+                toggleUnitInput(document.getElementById("unitSelect").value);
+
+                // Gán tên file khi chọn ảnh
+                const imageInput = document.getElementById("imageFile");
+                const fileNameSpan = document.getElementById("file-name");
+                imageInput.addEventListener("change", function () {
+                    const fileName = this.files[0] ? this.files[0].name : "No file chosen";
+                    fileNameSpan.textContent = fileName;
+                });
+
+                // Tooltip hướng dẫn sử dụng
                 const tooltip = document.getElementById("tooltip");
                 const fields = [
-                    {id: "serviceName", text: "❗ Only letters, numbers, and spaces. No special characters. Max 100 characters."},
+                    {id: "serviceName", text: "❗ Only letters, numbers, and spaces. Max 100 characters."},
                     {id: "unitSelect", text: "📦 Select a predefined unit or type your own."},
                     {id: "customUnitInput", text: "✏️ Only letters, numbers, and spaces. Max 50 characters."},
                     {id: "description", text: "📝 Description should be between 10 and 1000 characters."},
-                    {id: "price", text: "💰 Price must be between 10,000 and 10,000,000 VND."},
-                    {id: "imageURL", text: "🌐 Paste your image URL if you choose the link method."}
+                    {id: "price", text: "💰 Price must be between 10,000 and 10,000,000 VND."}
                 ];
 
                 fields.forEach(field => {

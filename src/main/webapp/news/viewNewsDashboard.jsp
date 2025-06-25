@@ -7,18 +7,33 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
         <title>News List</title>
         <style>
+            :root {
+                --sidebar-width-collapsed: 60px;
+                --sidebar-width-expanded: 220px;
+                --transition-speed: 0.3s;
+            }
+
             body {
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                 background-color: #f0f2f5;
                 margin: 0;
+                padding: 0;
+            }
+
+            .main-content {
                 padding: 30px;
-                color: #333;
+                margin-left: var(--sidebar-width-collapsed);
+                transition: margin-left var(--transition-speed);
+            }
+
+            .sidebar.open ~ .main-content {
+                margin-left: var(--sidebar-width-expanded);
             }
 
             h1 {
@@ -105,9 +120,6 @@
             }
 
             .back-button {
-                top: -40px;
-                left: 20px;
-                width: 80px;
                 background-color: #1a73e8;
                 color: white;
                 padding: 8px 12px;
@@ -115,9 +127,13 @@
                 font-size: 14px;
                 text-decoration: none;
                 display: inline-block;
+                margin-bottom: 20px;
+                margin-left: 10px;
+                transition: margin-left var(--transition-speed);
             }
-            .back-button:hover {
-                background-color: #0c53b0;
+
+            .sidebar.open ~ .main-content .back-button {
+                margin-left: 0;
             }
 
             @media (max-width: 768px) {
@@ -134,75 +150,80 @@
         </style>
     </head>
     <body>
-        <h1>Latest News</h1>
-        <a href="javascript:history.back()" class="back-button">← Back</a>
-        <a href="AddNewsDashboard">
-            <button type="button">➕ Thêm Tin Mới</button>
-        </a>
+        <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+        <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
 
-        <!-- Hiển thị thông báo lỗi nếu có -->
-        <c:if test="${not empty message}">
-            <script>
-                alert("${message}");
-                window.location.href = "<c:url value='/Index' />";
-            </script>
-        </c:if>
+        <div class="main-content">
+            <h1>Latest News</h1>
+            <a href="javascript:history.back()" class="back-button">← Back</a>
+            <a href="AddNewsDashboard">
+                <button type="button">➕ Thêm Tin Mới</button>
+            </a>
 
-        <!-- Chỉ hiển thị bảng nếu có dữ liệu -->
-        <c:if test="${not empty newsList}">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Summary</th>
-                        <th>Image</th>
-                        <th>Posted Date</th>
-                        <th>Status</th>
-                        <th>Author</th>
-                        <th>Building</th>
-                        <th>Viewcount</th>
-                        <th>Content</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach items="${newsList}" var="news"> 
+            <!-- Hiển thị thông báo lỗi nếu có -->
+            <c:if test="${not empty message}">
+                <script>
+                    alert("${message}");
+                    window.location.href = "<c:url value='/Index' />";
+                </script>
+            </c:if>
+
+            <!-- Chỉ hiển thị bảng nếu có dữ liệu -->
+            <c:if test="${not empty newsList}">
+                <table>
+                    <thead>
                         <tr>
-                            <td>${news.newsID}</td>
-                            <td>${news.title}</td>
-                            <td>${news.summary}</td>
-                            <td><img src="${news.imageURL}" alt="Ảnh tin tức" style="width: 100px; height: auto;"></td>
-                            <td>${news.datePosted}</td>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${news.isPublished}">
-                                        <span style="color: green;">✔ Public</span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <span style="color: red;">✘ Unpublished</span>
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
-                            <td>${news.userId}</td>
-                            <td>${news.buildingID}</td>
-                            <td>${news.viewcount}</td>
-                            <td>${news.content}</td>
-                            <td>
-                                <form action="EditNewsDashboard" method="get" style="margin-bottom: 5px;">
-                                    <input type="hidden" name="id" value="${news.newsID}" />
-                                    <button type="submit" class="btn btn-update">✏️ Edit</button>
-                                </form>
-                                <form action="DeleteNewsDashboard" method="post"
-                                      onsubmit="return confirm('Are you sure you want to delete this news item?');">
-                                    <input type="hidden" name="id" value="${news.newsID}" />
-                                    <button type="submit" class="btn btn-delete">🗑️ Delete</button>
-                                </form>
-                            </td>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Summary</th>
+                            <th>Image</th>
+                            <th>Posted Date</th>
+                            <th>Status</th>
+                            <th>Author</th>
+                            <th>Building</th>
+                            <th>Viewcount</th>
+                            <th>Content</th>
+                            <th>Action</th>
                         </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </c:if>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${newsList}" var="news"> 
+                            <tr>
+                                <td>${news.newsID}</td>
+                                <td>${news.title}</td>
+                                <td>${news.summary}</td>
+                                <td><img src="${news.imageURL}" alt="Ảnh tin tức" style="width: 100px; height: auto;"></td>
+                                <td>${news.datePosted}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${news.isPublished}">
+                                            <span style="color: green;">✔ Public</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span style="color: red;">✘ Unpublished</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td>${news.userId}</td>
+                                <td>${news.buildingID}</td>
+                                <td>${news.viewcount}</td>
+                                <td>${news.content}</td>
+                                <td>
+                                    <form action="EditNewsDashboard" method="get" style="margin-bottom: 5px;">
+                                        <input type="hidden" name="id" value="${news.newsID}" />
+                                        <button type="submit" class="btn btn-update">✏️ Edit</button>
+                                    </form>
+                                    <form action="DeleteNewsDashboard" method="post"
+                                          onsubmit="return confirm('Are you sure you want to delete this news item?');">
+                                        <input type="hidden" name="id" value="${news.newsID}" />
+                                        <button type="submit" class="btn btn-delete">🗑️ Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
+        </div>
     </body>
 </html>

@@ -6,13 +6,16 @@ package controllers.customer;
 
 import dao.CustomerDao;
 import dao.UserDao;
+import db.FileUploader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import java.sql.Date;
 import java.time.LocalDate;
 import models.Customers;
@@ -22,6 +25,7 @@ import models.Users;
  *
  * @author dodan
  */
+@MultipartConfig
 @WebServlet(name = "EditCustomerProfile", urlPatterns = {"/EditCustomerProfile"})
 public class EditCustomerProfile extends HttpServlet {
 
@@ -97,12 +101,25 @@ public class EditCustomerProfile extends HttpServlet {
             String address = request.getParameter("address");
             String gender = request.getParameter("gender");
             Date dateOfBirth = Date.valueOf(request.getParameter("dateOfBirth"));
+            Part filePart = request.getPart("imageFile");
+            String oldAvatar = request.getParameter("oldAvatar");
+
+            String uploadedUrl = null;
+            if (filePart != null && filePart.getSize() > 0) {
+                String uploadPath = "F:\\SWP\\moi\\BuildingWeb\\src\\main\\webapp\\images";
+                String fileName = FileUploader.uploadImage(filePart, uploadPath);
+                uploadedUrl = "images/" + fileName;
+            } else {
+                // Nếu người dùng không chọn ảnh mới, giữ ảnh cũ
+                uploadedUrl = oldAvatar;
+            }
 
             Customers customer = new Customers();
             customer.setFullName(fullName);
             customer.setAddress(address);
             customer.setGender(gender);
             customer.setDateOfBirth(dateOfBirth);
+            customer.setAvatarUrl(uploadedUrl);
 
             CustomerDao dao = new CustomerDao();
 
@@ -111,10 +128,10 @@ public class EditCustomerProfile extends HttpServlet {
                 response.sendRedirect("ViewCustomerProfile?id=" + id);
             } else {
                 request.setAttribute("message", "Cập nhật thất bại. Vui lòng thử lại.");
-                response.sendRedirect("EditCustomerProfile?Errol" + id);
+                response.sendRedirect("EditCustomerProfile?id=" + id);
             }
         } catch (Exception e) {
-            e.printStackTrace(); // để xem lỗi ở console
+            e.printStackTrace();
             request.setAttribute("message", "Đã xảy ra lỗi. Vui lòng thử lại.");
             request.getRequestDispatcher("customer/viewCustomerProfile.jsp").forward(request, response);
         }
