@@ -572,7 +572,6 @@
                                     <%--<c:when test="${adults >0 and children > 0}"> ${adults} Adults and ${children} Children )</c:when>--%>
                                     <%--<c:when test="${adults >0 }"> ${adults} Adults )</c:when>--%>
                                     <%--<c:otherwise>${children} Children )</c:otherwise>--%>
-
                                 <%--</c:choose>--%>
                             </span>
                         </p>
@@ -634,10 +633,7 @@
                                 
                             </div>
                         </div>
-<<<<<<< HEAD
-                       
-=======
->>>>>>> 370bb7c8c639a75ba05f4d93eca96f78b62245a0
+
 
                         <!-- Hạn mức thanh toán -->
                         <div class="form-group">
@@ -751,6 +747,8 @@
         }
         });
         });
+        
+        
         // thêm dấu . cách 3 số 0
         document.addEventListener('DOMContentLoaded', function () {
         let price1 = document.getElementById("price1");

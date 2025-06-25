@@ -111,6 +111,7 @@ public class RoomDao {
         return list;
 
     }
+//mượn sài tạm
 
     public List<Rooms> getSearchRooms(String location, LocalDate checkIn, LocalDate checkOut, int people, int page) {
         ResultSet rs = null;
@@ -168,7 +169,8 @@ public class RoomDao {
                     + "    R.RoomType,\n"
                     + "    R.Price,\n"
                     + "    R.Description,\n"
-                    + "    R.ImageUrl\n"
+                    + "    R.ImageUrl,\n"
+                    + "     R.Area\n"
                     + "FROM Rooms R\n"
                     + "where R.RoomId = ?";
             PreparedStatement st = conn.prepareStatement(sql);
@@ -180,6 +182,7 @@ public class RoomDao {
                 room.setPrice(rs.getInt("Price"));
                 room.setImageUrl(rs.getString("ImageUrl"));
                 room.setDescription(rs.getString("Description"));
+                room.setArea(rs.getFloat("Area"));
 
             }
         } catch (SQLException ex) {
@@ -303,14 +306,14 @@ public class RoomDao {
 
     public void clearRoomCustomerInfo(int roomId) throws SQLException {
         String sql = "UPDATE Rooms SET Status = 0 WHERE RoomId = ?";
-        try ( Connection conn = ConnectData.getConnection();  
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, roomId);
             stmt.executeUpdate();
         }
 
-        }
-        public Rooms getInformationRoomBooking(int id) {
+    }
+
+    public Rooms getInformationRoomBooking(int id) {
         ResultSet rs = null;
         Rooms room = new Rooms();
         try {
@@ -387,5 +390,55 @@ public class RoomDao {
         }
         return list;
 
+    }
+
+    public int checkRoomOfFoor(int roomNumber, int floorNumber) {
+        ResultSet rs = null;
+        try {
+            String sql = "select RoomId from Rooms where RoomNumber = ? and FloorNumber =?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, roomNumber);
+            pst.setInt(2, floorNumber);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                return 1;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public int createRoom(int roomNumber, int floorNumber, String roomType, String bedType, Long price, int maxOccupancy,
+            String description, String imageUrl, String status, int buildingId, float area) {
+        int cnt = 0;
+        try {
+            String sql = "INSERT INTO Rooms \n"
+                    + "(RoomNumber, FloorNumber,\n"
+                    + "RoomType, BedType,\n"
+                    + "Price, MaxOccupancy,\n"
+                    + "Description, ImageUrl,\n"
+                    + "Status, BuildingId,Area)\n"
+                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, roomNumber);
+            pst.setInt(2, floorNumber);
+            pst.setString(3, roomType);
+            pst.setString(4, bedType);
+            pst.setLong(5, price);
+            pst.setInt(6, maxOccupancy);
+            pst.setString(7, description);
+            pst.setString(8, imageUrl);
+            pst.setString(9, status);
+            pst.setInt(10, buildingId);
+            pst.setFloat(11, area);
+
+            cnt = pst.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return cnt;
     }
 }

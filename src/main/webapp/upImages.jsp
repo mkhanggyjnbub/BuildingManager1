@@ -12,13 +12,10 @@
         <title>JSP Page</title>
     </head>
     <body>
-<!--     <form action="UpImage" method="post" enctype="multipart/form-data">
-        Chọn ảnh: <input type="file" name="image"><br>
-        <input type="submit" value="Tải lên">
-    </form>-->
-     <form action="cloudImage" method="post" enctype="multipart/form-data">
+     <form action="UpImage" method="post" enctype="multipart/form-data">
         Chọn ảnh: <input type="file" name="image"><br>
         <input type="submit" value="Tải lên">
     </form>
+    
     </body>
 </html>

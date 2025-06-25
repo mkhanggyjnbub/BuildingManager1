@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!--<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -16,4 +16,4 @@
     <img src="${imageUrl}" alt="Ảnh từ Cloudinary" style="max-width:400px;">
     <br><a href="upload.jsp">Upload ảnh khác</a>
 </body>
-</html>-->
+</html>

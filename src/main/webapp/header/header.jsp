@@ -150,9 +150,9 @@
         <a href="Index">Home</a>
         <a href="ViewRooms">Rooms</a>
         <!--<a href="#">Liên hệ</a>
-        <a href="UpImage">Up ảnh</a>
-        <a href="Notification">Notification</a>
-        <a href="TakeNotification">Nhận Notification</a>
+        -->        <a href="UpImage">Up ảnh</a><!--
+                <a href="Notification">Notification</a>
+                <a href="TakeNotification">Nhận Notification</a>
         -->       
         <a href="ViewVouchers">voucher</a>
         <a href="ViewServices">Services</a>
@@ -162,10 +162,10 @@
                         <a href="TakeNotification">Nhận Notification</a>-->
         <!--        <a href="ViewVouchers">voucher</a>-->
         <c:if test="${not empty customerId  }">   <a href="UserVouchers">User voucher</a></c:if>
-        <a href="ViewNews">News</a>
-<!--  <a href="CloudinaryUpload">🔹Cloudinary</a>-->
-  
-        
+            <a href="ViewNews">News</a>
+            <a href="CloudinaryUpload">🔹Cloudinary</a>
+
+
 
         <c:choose>
             <c:when test="${empty accountType}">
@@ -191,9 +191,9 @@
                     </c:when>
                     <c:when test="${role == 6}">
                         <a href="?id=${cusstomerId}">${userName}</a>
-                        </c:when>
+                    </c:when>
                 </c:choose> 
-                        
+
             </c:when>
             <c:otherwise>
                 <div class="dichvukhachhang">
@@ -206,15 +206,15 @@
                                                 <a href="#">🔹 Ưu đãi thành viên</a>
                                                 <a href="#">🔹 Trợ giúp</a>-->
                         <!--                        <a href="Logout">🔹 Đăng xuất</a>-->
-                      
+
                     </div>
                 </div>
 
             </c:otherwise>
 
         </c:choose>
-                
-                
+
+
     </nav>
     <button id="menu-toggle">☰</button>
 </header>
