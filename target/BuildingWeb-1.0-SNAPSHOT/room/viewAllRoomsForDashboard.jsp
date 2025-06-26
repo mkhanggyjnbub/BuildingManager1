@@ -2,172 +2,214 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Room Dashboard</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-        <style>
-            body {
-                font-family: 'Segoe UI', sans-serif;
-                background-color: #f9fafb;
-                margin: 0;
-                padding: 20px;
-            }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Thêm dòng này -->
+    <title>Room Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f9fafb;
+            margin: 0;
+            padding: 20px;
+        }
 
-            h2 {
-                text-align: center;
-                color: #333;
-                margin-bottom: 20px;
-            }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
 
-            form {
-                display: flex;
-                justify-content: center;
-                gap: 10px;
-                margin-bottom: 20px;
-                flex-wrap: wrap;
-            }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
 
-            input[type="search"] {
-                padding: 10px;
-                width: 300px;
-                max-width: 90%;
-                border: 1px solid #ccc;
-                border-radius: 6px;
-            }
+        form {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
 
-            button[type="submit"], #openPopupBtn {
-                padding: 10px 16px;
-                border: none;
-                background-color: #007bff;
-                color: white;
-                border-radius: 6px;
-                cursor: pointer;
-                transition: background-color 0.3s ease;
-            }
+        input[type="search"] {
+            padding: 10px;
+            width: 300px;
+            max-width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
 
-            button[type="submit"]:hover, #openPopupBtn:hover {
-                background-color: #0056b3;
-            }
+        button[type="submit"], .create-link {
+            padding: 10px 16px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                background: white;
-                border-radius: 8px;
-                overflow: hidden;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        button[type="submit"]:hover, .create-link:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        thead {
+            background-color: #007bff;
+            color: white;
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: center;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        td a {
+            color: #007bff;
+            margin: 0 6px;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        td a:hover {
+            color: #0056b3;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+            gap: 5px;
+        }
+
+        .pagination li a {
+            display: block;
+            padding: 8px 14px;
+            background-color: #eaeaea;
+            border-radius: 5px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .pagination li a:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .create-link {
+            text-decoration: none;
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 30px;
+            margin: 0 auto 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            display: inline-block;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .create-link:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Responsive table */
+        @media screen and (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
             }
 
             thead {
-                background-color: #007bff;
-                color: white;
+                display: none;
             }
 
-            th, td {
-                padding: 14px;
-                text-align: center;
-                border-bottom: 1px solid #eaeaea;
+            tr {
+                background: white;
+                margin-bottom: 15px;
+                padding: 12px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             }
 
-            td a {
-                color: #007bff;
-                margin: 0 6px;
-                text-decoration: none;
-                transition: color 0.2s ease;
+            td {
+                text-align: left;
+                padding-left: 50%;
+                position: relative;
+                border: none;
+                border-bottom: 1px solid #f0f0f0;
             }
 
-            td a:hover {
-                color: #0056b3;
+            td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 12px;
+                top: 12px;
+                font-weight: bold;
+                color: #555;
             }
 
-            .pagination {
-                display: flex;
-                justify-content: center;
-                flex-wrap: wrap;
-                list-style: none;
-                padding: 0;
-                margin-top: 20px;
-                gap: 5px;
+            td:last-child {
+                border-bottom: none;
             }
 
-            .pagination li a {
+            form {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            input[type="search"], button[type="submit"] {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .create-link {
                 display: block;
-                padding: 8px 14px;
-                background-color: #eaeaea;
-                border-radius: 5px;
-                color: #333;
-                text-decoration: none;
-                transition: all 0.2s ease;
+                width: fit-content;
+                margin: 10px auto;
             }
-
-            .pagination li a:hover {
-                background-color: #007bff;
-                color: white;
-            }
-
-            /* Responsive table */
-            @media screen and (max-width: 768px) {
-                table, thead, tbody, th, td, tr {
-                    display: block;
-                }
-
-                thead {
-                    display: none;
-                }
-
-                tr {
-                    background: white;
-                    margin-bottom: 15px;
-                    padding: 12px;
-                    border-radius: 8px;
-                    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-                }
-
-                td {
-                    text-align: left;
-                    padding-left: 50%;
-                    position: relative;
-                    border: none;
-                    border-bottom: 1px solid #f0f0f0;
-                }
-
-                td::before {
-                    content: attr(data-label);
-                    position: absolute;
-                    left: 12px;
-                    top: 12px;
-                    font-weight: bold;
-                    color: #555;
-                }
-
-                td:last-child {
-                    border-bottom: none;
-                }
-            }
-
-
-        </style>
-    </head>
-    <body>
-        <h2> Danh Sách Phòng</h2>
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+        <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
+        <h2>Room List</h2>
 
         <form method="get" action="ViewAllRoomsForDashboard">            
-            <input type="search"  name="search" placeholder="Nhập Từ Khóa...">
-            <button type="submit">Tìm kiếm</button>
+            <input type="search" id="numberOnlyInput" name="search" placeholder="Enter Room Number...">
+            <button type="submit">Search</button>
         </form>
 
-        <a href="CreateRoomForDashboard" style="text-decoration: none" >Create</a>
+        <a href="CreateRoomForDashboard" class="create-link">Create</a>
+
         <table>
             <thead>
                 <tr>
                     <th>STT</th>
-                    <th>Mã Phòng</th>
-                    <th>Tầng</th>
-                    <th>Loại Phòng</th>
-                    <th>Giá</th>
-                    <th>Trạng Thái</th>
-                    <th>Thao Tác</th>
+                    <th>RoomNumber</th>
+                    <th>Floor</th>
+                    <th>Room Type</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Operation</th>
                 </tr>   
             </thead>
             <tbody>
@@ -180,10 +222,9 @@
                         <td data-label="Giá">${room.price} / VND</td>
                         <td data-label="Trạng Thái">${room.status}</td>
                         <td data-label="Thao Tác">
-                            <a href="AdminView?id=${room.roomId}" title="Xem"><i class="fa-solid fa-eye"></i></a>
-                            <a href="AdminEdit?id=${room.roomId}" title="Sửa"><i class="fa-solid fa-pencil"></i></a>
-                            <a href="AdminDelete?id=${room.roomId}" title="Xóa"><i class="fa-solid fa-circle-user"></i></a> 
-                            <a href="Decentralization?id=${room.roomId}" title="Phân quyền"><i class="fa-solid fa-gear"></i></a>
+<!--                            <a href="AdminView?id=${room.roomId}" title="Xem"><i class="fa-solid fa-eye"></i></a>-->
+                            <a href="EditRoomForDashboard?id=${room.roomId}" title="Sửa"><i class="fa-solid fa-pencil"></i></a>
+                            <!--<a href="AdminDelete?id=${room.roomId}" title="Xóa"><i class="fa-solid fa-circle-user"></i></a>--> 
                         </td>
                     </tr>
                 </c:forEach>
@@ -194,10 +235,31 @@
             <ul class="pagination">
                 <c:forEach begin="1" end="${finalPage}" var="i">
                     <li><a href="ViewAllRoomsForDashboard?Page=${i}">${i}</a></li>
-                    </c:forEach>
+                </c:forEach>
             </ul>
         </nav>
+    </div>
 
+    <script>
+        const input = document.getElementById('numberOnlyInput');
 
-    </body>
+        input.addEventListener('input', function () {
+            // Xoá mọi ký tự không phải số
+            this.value = this.value.replace(/\D/g, '');
+
+            // Giới hạn tối đa 4 chữ số
+            if (this.value.length > 4) {
+                this.value = this.value.slice(0, 4);
+            }
+        });
+    // Lặp qua tất cả các ô có label "Giá"
+    document.querySelectorAll('td[data-label="Giá"]').forEach(function (td) {
+        let text = td.textContent.trim();
+        let numberPart = text.split(' ')[0]; // Lấy phần số (bỏ " / VND")
+        let formatted = Number(numberPart).toLocaleString('vi-VN'); // Format dạng 1.000.000
+        td.textContent = formatted + " / VND"; // Gán lại vào ô
+    });
+
+    </script>
+</body>
 </html>
