@@ -314,30 +314,13 @@
                            required
                            title="🎂 You must be at least 18 years old to register." />
 
-                    <!-- AVATAR UPLOAD METHOD TOGGLE -->
-                    <label>Avatar Upload Method:</label>
-                    <div class="toggle-buttons">
-                        <button type="button" id="btn-file" onclick="setUploadMethod('file')">📁 Upload File</button>
-                        <button type="button" id="btn-url" onclick="setUploadMethod('url')">🔗 Use URL</button>
-                    </div>
-
-                    <!-- UPLOAD FILE SECTION -->
-                    <div id="file-upload-section" class="">
-                        <label>Choose Image File:</label>
-                        <div class="custom-file-upload">
-                            <label for="imageFile" class="file-label">📁 Choose Image</label>
-                            <input type="file" name="imageFile" id="imageFile" accept="image/*">
-                            <span id="file-name">No file chosen</span>
-                        </div>
-                    </div>
-
-                    <!-- URL SECTION -->
-                    <div id="url-upload-section" class="">
-                        <label>Or enter image URL manually:</label>
-                        <input type="text" name="imageUrl"
-                               placeholder="https://example.com/your-image.jpg"
-                               maxlength="255"
-                               title="📷 If you have an image link, paste it here." />
+                    <input type="hidden" name="oldAvatar" value="${userInfomation.avatarUrl}" />
+                    <!-- AVATAR UPLOAD -->
+                    <label>Upload Avatar:</label>
+                    <div class="custom-file-upload">
+                        <label for="imageFile" class="file-label">📁 Choose Image</label>
+                        <input type="file" name="imageFile" id="imageFile" accept="image/*" />
+                        <span id="file-name">No file chosen</span>
                     </div>
                     <br>
                     <button type="submit">Save</button>

@@ -26,6 +26,7 @@ public class ConnectData {
             String url = "jdbc:sqlserver://MKHANGDZ1ST:1433;databaseName=building_management30;user=sa;password=mkhang123abc;encrypt=true;trustServerCertificate=true;";
 
 
+
             conn = DriverManager.getConnection(url);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ConnectData.class.getName()).log(Level.SEVERE, null, ex);

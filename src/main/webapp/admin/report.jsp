@@ -7,26 +7,41 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="models.Report" %>
+<%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+<%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Danh sách Báo Cáo Phòng</title>
+    <title>Room Reports</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
+        :root {
+            --sidebar-width: 250px;
+            --navy: #4a6fa5;
+            --white: #ffffff;
+            --gray-bg: #f0f2f5;
+            --table-header: #007BFF;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f1f3f6;
-            padding: 30px;
-            animation: fadeIn 0.4s ease-in;
+            margin: 0;
+            background-color: var(--gray-bg);
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .main {
+            margin-left: var(--sidebar-width);
+            padding: 20px 30px;
+            width: calc(100% - var(--sidebar-width));
+            box-sizing: border-box;
         }
 
-        .nav-bar {
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
         }
 
@@ -37,51 +52,58 @@
             border: none;
             border-radius: 6px;
             font-size: 14px;
-            text-decoration: none;
             display: inline-flex;
             align-items: center;
-            transition: background-color 0.3s, transform 0.2s;
             cursor: pointer;
-        }
-
-        .back-button:hover {
-            background-color: #0056b3;
-            transform: translateY(-2px);
+            transition: background-color 0.3s;
         }
 
         .back-button i {
             margin-right: 8px;
         }
 
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
         h2 {
+            font-size: 24px;
             color: #333;
-            margin-bottom: 20px;
+            margin: 0;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            background-color: white;
+            background: white;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
-            animation: fadeIn 0.5s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
         th, td {
-            padding: 14px 16px;
-            border-bottom: 1px solid #e0e0e0;
+            padding: 12px 16px;
             text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 14px;
         }
 
         th {
-            background-color: #007BFF;
+            background-color: var(--table-header);
             color: white;
+            font-weight: bold;
         }
 
         tr:hover {
             background-color: #f9f9f9;
-            transition: background-color 0.2s ease;
+        }
+
+        .no-data {
+            padding: 16px;
+            background-color: #fff3cd;
+            color: #856404;
+            border-radius: 6px;
+            margin-top: 10px;
         }
 
         .error {
@@ -89,18 +111,28 @@
             font-weight: bold;
             margin-bottom: 10px;
         }
+
+        @media screen and (max-width: 768px) {
+            .main {
+                margin-left: 0;
+                width: 100%;
+                padding: 16px;
+            }
+
+            table {
+                font-size: 13px;
+            }
+        }
     </style>
 </head>
 <body>
-
-    <!-- 🔙 Back button with JavaScript -->
-    <div class="nav-bar">
+<div class="main">
+    <div class="header">
+        <h2><i class="fa-solid fa-file-lines"></i> Room Report List</h2>
         <button class="back-button" onclick="history.back()">
-            <i class="fa-solid fa-arrow-left"></i> Quay lại
+            <i class="fa-solid fa-arrow-left"></i> Back
         </button>
     </div>
-
-    <h2>📋 Danh sách Báo Cáo Phòng</h2>
 
     <% String error = (String) request.getAttribute("error");
        if (error != null) { %>
@@ -111,45 +143,43 @@
         List<Report> reportList = (List<Report>) request.getAttribute("reportList");
         if (reportList == null || reportList.isEmpty()) {
     %>
-        <p>Không có báo cáo nào.</p>
+        <div class="no-data">There are no reports available.</div>
     <%
         } else {
     %>
         <table>
-            <tr>
-                <th>ID</th>
-                <th>Phòng</th>
-                <th>Khách báo cáo</th>
-                <th>Người dùng báo cáo</th>
-                <th>Thời gian báo cáo</th>
-                <th>Mô tả</th>
-                <th>Trạng thái</th>
-                <th>Xử lý bởi</th>
-                <th>Thời gian xử lý</th>
-                <th>Ghi chú</th>
-            </tr>
-            <%
-                for (Report r : reportList) {
-            %>
-            <tr>
-                <td><%= r.getReportId() %></td>
-                <td><%= r.getRoomId() %></td>
-                <td><%= r.getReportedByCustomerId() %></td>
-                <td><%= r.getReportedByUserId() %></td>
-                <td><%= r.getReportTime() %></td>
-                <td><%= r.getDescription() %></td>
-                <td><%= r.getStatus() %></td>
-                <td><%= r.getHandledBy() %></td>
-                <td><%= r.getHandledTime() %></td>
-                <td><%= r.getNotes() %></td>
-            </tr>
-            <%
-                }
-            %>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Room</th>
+                    <th>Customer Reporter</th>
+                    <th>User Reporter</th>
+                    <th>Reported Time</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Handled By</th>
+                    <th>Handled Time</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (Report r : reportList) { %>
+                    <tr>
+                        <td><%= r.getReportId() %></td>
+                        <td><%= r.getRoomId() %></td>
+                        <td><%= r.getReportedByCustomerId() %></td>
+                        <td><%= r.getReportedByUserId() %></td>
+                        <td><%= r.getReportTime() %></td>
+                        <td><%= r.getDescription() %></td>
+                        <td><%= r.getStatus() %></td>
+                        <td><%= r.getHandledBy() %></td>
+                        <td><%= r.getHandledTime() %></td>
+                        <td><%= r.getNotes() %></td>
+                    </tr>
+                <% } %>
+            </tbody>
         </table>
-    <%
-        }
-    %>
-
+    <% } %>
+</div>
 </body>
 </html>

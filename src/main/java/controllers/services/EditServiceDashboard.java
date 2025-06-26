@@ -5,13 +5,16 @@
 package controllers.services;
 
 import dao.ServicesDao;
+import db.FileUploader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import java.math.BigDecimal;
 import models.Services;
 
@@ -19,6 +22,7 @@ import models.Services;
  *
  * @author dodan
  */
+@MultipartConfig
 @WebServlet(name = "EditServiceDashboard", urlPatterns = {"/EditServiceDashboard"})
 public class EditServiceDashboard extends HttpServlet {
 
@@ -82,28 +86,42 @@ public class EditServiceDashboard extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("serviceId"));
-        String name = request.getParameter("name");
-        String type = request.getParameter("type");
-        String desc = request.getParameter("description");
-        Long price = Long.parseLong(request.getParameter("price"));
-        String imageURL = request.getParameter("imageURL");
-        boolean isActive = Boolean.parseBoolean(request.getParameter("isActive"));
+        try {
+            int id = Integer.parseInt(request.getParameter("serviceId"));
+            String name = request.getParameter("name");
+            String type = request.getParameter("unitType"); // đã chỉnh lại name trong form
+            String desc = request.getParameter("description");
+            Long price = Long.parseLong(request.getParameter("price"));
+            boolean isActive = Boolean.parseBoolean(request.getParameter("isActive"));
 
-        Services s = new Services();
-        s.setServiceId(id);
-        s.setServiceName(name);
-        s.setUnitType(type);
-        s.setDescription(desc);
-        s.setPrice(price);
-        s.setImageURL(imageURL);
-        s.setIsActive(isActive);
-        // IsActive không thay đổi
+            // Lấy ảnh đã chọn
+            Part filePart = request.getPart("imageFile");
+            String uploadPath = "F:\\SWP\\moi\\BuildingWeb\\src\\main\\webapp\\images";
+            String imageUrl = request.getParameter("oldImage"); // ảnh cũ từ input ẩn
 
-        ServicesDao dao = new ServicesDao();
-        dao.editServiceByIdDashboard(s, id);
+            if (filePart != null && filePart.getSize() > 0) {
+                // Nếu có chọn file mới
+                String uploadedFileName = FileUploader.uploadImage(filePart, uploadPath);
+                imageUrl = "images/" + uploadedFileName;
+            }
 
-        response.sendRedirect("ViewServicesDashboard");
+            Services s = new Services();
+            s.setServiceId(id);
+            s.setServiceName(name);
+            s.setUnitType(type);
+            s.setDescription(desc);
+            s.setPrice(price);
+            s.setImageURL(imageUrl);
+            s.setIsActive(isActive);
+
+            ServicesDao dao = new ServicesDao();
+            dao.editServiceByIdDashboard(s, id);
+
+            response.sendRedirect("ViewServicesDashboard");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("Error");
+        }
     }
 
     /**

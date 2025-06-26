@@ -10,14 +10,25 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
         <title>Danh sách dịch vụ</title>
         <style>
             body {
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                 background-color: #f0f2f5;
                 margin: 0;
-                padding: 30px;
+                padding: 0;
                 color: #333;
+            }
+
+            .main-content {
+                margin-left: 60px;
+                padding: 30px;
+                transition: margin-left 0.3s ease;
+            }
+
+            .sidebar.open ~ .main-content {
+                margin-left: 220px;
             }
 
             h1 {
@@ -27,7 +38,7 @@
                 font-size: 32px;
             }
 
-            a button {
+            a button, .back-button {
                 padding: 10px 20px;
                 background-color: #3498db;
                 color: white;
@@ -37,9 +48,11 @@
                 font-size: 15px;
                 transition: background-color 0.3s ease;
                 margin-bottom: 20px;
+                display: inline-block;
+                text-decoration: none;
             }
 
-            a button:hover {
+            a button:hover, .back-button:hover {
                 background-color: #2980b9;
             }
 
@@ -104,9 +117,6 @@
             }
 
             .back-button {
-                top: -40px;
-                left: 20px;
-                width: 80px;
                 background-color: #1a73e8;
                 color: white;
                 padding: 8px 12px;
@@ -115,10 +125,7 @@
                 text-decoration: none;
                 display: inline-block;
             }
-            .back-button:hover {
-                background-color: #0c53b0;
-            }
-            
+
             @media (max-width: 768px) {
                 th, td {
                     font-size: 13px;
@@ -133,56 +140,60 @@
         </style>
     </head>
     <body>
-        <h1>List of Services</h1>
-        <a href="javascript:history.back()" class="back-button">← Back</a>
-        <a href="AddServiceDashboard">
-            <button type="button">➕ Add Service</button>
-        </a>
+        <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+        <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Service Name</th>
-                    <th>Type</th>
-                    <th>Price</th>
-                    <th>Image</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach var="s" items="${listS}">
+        <div class="main-content">
+            <h1>List of Services</h1>
+            <a href="javascript:history.back()" class="back-button">← Back</a>
+            <a href="AddServiceDashboard">
+                <button type="button">➕ Add Service</button>
+            </a>
+
+            <table>
+                <thead>
                     <tr>
-                        <td>${s.serviceId}</td>
-                        <td>${s.serviceName}</td>
-                        <td>${s.unitType}</td>
-                        <td>${s.price}</td>
-                        <td><img src="${s.imageURL}" alt="Hình ảnh dịch vụ"></td>
-                        <td>
-                            <c:choose>
-                                <c:when test="${s.isActive}"><span style="color: green;">✔ Active</span></c:when>
-                                <c:otherwise><span style="color: red;">✘ Deactivated</span></c:otherwise>
-                            </c:choose>
-                        </td>
-                        <td>
-                            <form action="ViewServiceDetailDashboard" method="get">
-                                <input type="hidden" name="id" value="${s.serviceId}" />
-                                <button type="submit" class="btn btn-update">👁️ View</button>
-                            </form>
-                            <form action="EditServiceDashboard" method="get">
-                                <input type="hidden" name="id" value="${s.serviceId}" />
-                                <button type="submit" class="btn btn-update">✏️ Edit</button>
-                            </form>
-                            <form action="DeleteServiceDashboard" method="get" onsubmit="return confirm('Are you sure you want to delete this service?');">
-                                <input type="hidden" name="id" value="${s.serviceId}" />
-                                <button type="submit" class="btn btn-delete">🗑️ Delete</button>
-                            </form>
-                        </td>
+                        <th>ID</th>
+                        <th>Service Name</th>
+                        <th>Type</th>
+                        <th>Price</th>
+                        <th>Image</th>
+                        <th>Status</th>
+                        <th>Action</th>
                     </tr>
-                </c:forEach>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <c:forEach var="s" items="${listS}">
+                        <tr>
+                            <td>${s.serviceId}</td>
+                            <td>${s.serviceName}</td>
+                            <td>${s.unitType}</td>
+                            <td>${s.price}</td>
+                            <td><img src="${s.imageURL}" alt="Hình ảnh dịch vụ"></td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${s.isActive}"><span style="color: green;">✔ Active</span></c:when>
+                                    <c:otherwise><span style="color: red;">✘ Deactivated</span></c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td>
+                                <form action="ViewServiceDetailDashboard" method="get">
+                                    <input type="hidden" name="id" value="${s.serviceId}" />
+                                    <button type="submit" class="btn btn-update">👁️ View</button>
+                                </form>
+                                <form action="EditServiceDashboard" method="get">
+                                    <input type="hidden" name="id" value="${s.serviceId}" />
+                                    <button type="submit" class="btn btn-update">✏️ Edit</button>
+                                </form>
+                                <form action="DeleteServiceDashboard" method="get" onsubmit="return confirm('Are you sure you want to delete this service?');">
+                                    <input type="hidden" name="id" value="${s.serviceId}" />
+                                    <button type="submit" class="btn btn-delete">🗑️ Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>
-

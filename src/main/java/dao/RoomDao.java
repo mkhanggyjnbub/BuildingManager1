@@ -112,6 +112,7 @@ public class RoomDao {
         return list;
 
     }
+//mượn sài tạm
 
     public List<Rooms> getSearchRooms(String location, LocalDate checkIn, LocalDate checkOut, int people, int page) {
         ResultSet rs = null;

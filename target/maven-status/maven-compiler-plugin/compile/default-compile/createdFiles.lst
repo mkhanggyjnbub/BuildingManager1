@@ -25,16 +25,34 @@ sendMail\EmailSender.class
 controllers\amenities\AddAmenitiesDashboard.class
 models\Bookings.class
 controllers\booking\BookingConfirmation.class
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 2a3a52b9bdee84ce52d0f4d671c4ea9a8192c385
 models\Employees.class
 controllers\services\ViewServicesCart.class
 models\Services.class
 controllers\services\ViewServices.class
+<<<<<<< HEAD
+=======
+=======
+controllers\services\ViewServicesCart.class
+>>>>>>> 27be073fdfe2619df0349f55bd4355968b60a514
+>>>>>>> 2a3a52b9bdee84ce52d0f4d671c4ea9a8192c385
 controllers\report\ViewAllReportsForDashboard.class
 models\Vouchers.class
 models\RoomReviews.class
 controllers\services\DeleteServiceDashboard.class
+<<<<<<< HEAD
 dao\ServicesCartDao.class
 models\Report.class
+=======
+<<<<<<< HEAD
+dao\ServicesCartDao.class
+models\Report.class
+=======
+>>>>>>> 27be073fdfe2619df0349f55bd4355968b60a514
+>>>>>>> 2a3a52b9bdee84ce52d0f4d671c4ea9a8192c385
 controllers\asset\Assets.class
 models\Rooms.class
 controllers\account\Logout.class
@@ -64,6 +82,12 @@ controllers\booking\ConfirmBooking.class
 controllers\customer\ViewCustomerProfile.class
 controllers\news\AddNewsDashboard.class
 controllers\amenities\DeleteAmenitiesDashboard.class
+<<<<<<< HEAD
+models\ServicesCart.class
+controllers\customer\ViewAllCustomersDashboard.class
+controllers\news\ViewNewsDetail.class
+=======
+<<<<<<< HEAD
 models\ServicesCart.class
 controllers\customer\ViewAllCustomersDashboard.class
 controllers\news\ViewNewsDetail.class
@@ -71,19 +95,41 @@ controllers\services\ViewServicesDashboard.class
 controllers\admin\Dashboard.class
 dao\ServicesDao.class
 models\Floors.class
-controllers\cloudinary\CloudinaryUpload.class
 dao\BuildingDao.class
 controllers\admin\DashboardUser.class
+=======
+>>>>>>> 2a3a52b9bdee84ce52d0f4d671c4ea9a8192c385
+controllers\services\ViewServicesDashboard.class
+controllers\admin\Dashboard.class
+dao\ServicesDao.class
+models\Floors.class
+controllers\cloudinary\CloudinaryUpload.class
+<<<<<<< HEAD
+dao\BuildingDao.class
+controllers\admin\DashboardUser.class
+=======
+>>>>>>> 27be073fdfe2619df0349f55bd4355968b60a514
+>>>>>>> 2a3a52b9bdee84ce52d0f4d671c4ea9a8192c385
 controllers\admin\AdminView.class
 models\Buildings.class
 controllers\services\EditServiceDashboard.class
 controllers\account\Login.class
+<<<<<<< HEAD
 db\FileUploader.class
+=======
+<<<<<<< HEAD
+>>>>>>> 2a3a52b9bdee84ce52d0f4d671c4ea9a8192c385
 models\Customers.class
 controllers\services\AddServiceDashboard.class
 controllers\voucher\ViewVouchers.class
 db\SendOTPEmail.class
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 27be073fdfe2619df0349f55bd4355968b60a514
+>>>>>>> 2a3a52b9bdee84ce52d0f4d671c4ea9a8192c385
 controllers\voucher\AddVoucher.class
+controllers\booking\AddBooking.class
 controllers\voucher\DeleteVoucher.class
 models\RoomEquipment.class
 controllers\room\DeleteRoomForDashboard.class
@@ -91,6 +137,15 @@ controllers\room\ViewRoomDetail.class
 sendMail\EmailSender$1.class
 controllers\news\DeleteNewsDashboard.class
 models\Amenities.class
+<<<<<<< HEAD
 dao\ReportDao.class
 db\SendOTPEmail$1.class
 controllers\checkInOut\CheckInOutDetail.class
+=======
+<<<<<<< HEAD
+dao\ReportDao.class
+db\SendOTPEmail$1.class
+controllers\checkInOut\CheckInOutDetail.class
+=======
+>>>>>>> 27be073fdfe2619df0349f55bd4355968b60a514
+>>>>>>> 2a3a52b9bdee84ce52d0f4d671c4ea9a8192c385

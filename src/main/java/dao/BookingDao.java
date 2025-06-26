@@ -64,8 +64,8 @@ public class BookingDao {
             }
 
             booking.setStatus(rs.getString("Status"));
-            
-            Rooms room = new Rooms(); 
+
+            Rooms room = new Rooms();
 
             room.setRoomNumber(rs.getString("RoomNumber"));
             booking.setRooms(room);
@@ -101,6 +101,7 @@ public class BookingDao {
             ps.setInt(3, canceledBy);
             ps.setString(4, notes);
             ps.setInt(5, bookingId);
+            ps.executeUpdate();
 
         }
     }
@@ -159,7 +160,7 @@ public class BookingDao {
                 + "FROM Bookings b "
                 + "JOIN Rooms r ON b.RoomId = r.RoomId "
                 + "JOIN Customers c ON b.CustomerId = c.CustomerId "
-                + "WHERE b.Status IN ('Waiting for processing', 'Confirmed')"
+                + "WHERE b.Status IN ('Waiting for processing', 'Confirmed') "
         );
 
         List<Object> params = new ArrayList<>();
@@ -193,35 +194,27 @@ public class BookingDao {
         for (int i = 0; i < params.size(); i++) {
             ps.setObject(i + 1, params.get(i));
         }
-        return list;
 
-    }
-
-    public List<Bookings> getAllCheckInBookings() throws SQLException {
-        List<Bookings> list = new ArrayList<>();
-        String sql = "SELECT b.BookingId, b.RoomId, b.CustomerId, b.StartDate, b.EndDate, b.Status, b.CheckInTime, b.UserId "
-                + "FROM Bookings b WHERE b.Status = 'CheckedIn'";
-
-        PreparedStatement ps = conn.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
             Bookings booking = new Bookings();
             booking.setBookingId(rs.getInt("BookingId"));
-            booking.setRoomId(rs.getInt("RoomId"));
-            booking.setCustomerId(rs.getInt("CustomerId"));
-            booking.setUserId(rs.getInt("UserId"));
             booking.setStartDate(rs.getTimestamp("StartDate").toLocalDateTime());
             booking.setEndDate(rs.getTimestamp("EndDate").toLocalDateTime());
             booking.setStatus(rs.getString("Status"));
-            booking.setCheckInTime(rs.getTimestamp("CheckInTime").toLocalDateTime());
+
+            Rooms room = new Rooms();
+            room.setRoomNumber(rs.getString("RoomNumber"));
+            booking.setRooms(room);
+
+            Customers customer = new Customers();
+            customer.setFullName(rs.getString("FullName"));
+            booking.setCustomers(customer);
 
             list.add(booking);
         }
 
-        rs.close();
-        ps.close();
-        conn.close();
         return list;
     }
 
@@ -347,4 +340,57 @@ public class BookingDao {
 
         return b;
     }
+
+    //vinh   
+    public Bookings getBookingInfo(int bookingId) throws SQLException {
+        String sql
+                = "SELECT b.BookingId, b.StartDate, b.EndDate, "
+                + "       c.FullName, c.Email "
+                + "FROM Bookings b "
+                + "JOIN Customers c ON b.CustomerId = c.CustomerId "
+                + "WHERE b.BookingId = ?";
+
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, bookingId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Bookings info = new Bookings();
+                info.setBookingId(rs.getInt("BookingId"));
+                info.setStartDate(rs.getTimestamp("StartDate").toLocalDateTime());
+                info.setEndDate(rs.getTimestamp("EndDate").toLocalDateTime());
+//                info.setFullName(rs.getString("FullName"));
+//                info.setEmail(rs.getString("Email"));
+
+                Customers customer = new Customers();
+                customer.setFullName(rs.getString("FullName"));
+                customer.setEmail(rs.getString("Email"));
+                info.setCustomers(customer);
+
+                return info;
+            }
+        }
+
+        return null;
+    }
+//vinh
+
+    public String getBookingStatus(int bookingId) throws SQLException {
+        String sql
+                = "SELECT Status FROM Bookings WHERE BookingId = ?";
+
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, bookingId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("Status");
+            }
+        }
+
+        return null; // Không tìm thấy booking
+    }
+
+
 }

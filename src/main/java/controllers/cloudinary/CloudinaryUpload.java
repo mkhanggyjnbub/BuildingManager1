@@ -99,12 +99,12 @@ public class CloudinaryUpload extends HttpServlet {
 
         if (filePart != null && filePart.getSize() > 0) {
             // Đọc dữ liệu từ file và chuyển thành byte[]
-            byte[] imageBytes = filePart.getInputStream().readAllBytes();
+            //byte[] imageBytes = filePart.getInputStream().readAllBytes();
 
-            uploadResult = cloudinary.uploader().upload(
-                    imageBytes,
-                    ObjectUtils.asMap("resource_type", "auto")
-            );
+           // uploadResult = cloudinary.uploader().upload(
+                   // imageBytes,
+                //    ObjectUtils.asMap("resource_type", "auto")
+       //     );
 
         } else if (imageUrl != null && !imageUrl.isEmpty()) {
             // Upload từ URL ảnh

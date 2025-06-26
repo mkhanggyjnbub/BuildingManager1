@@ -7,123 +7,93 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Booking List</title>
         <style>
             body {
                 font-family: 'Segoe UI', sans-serif;
                 background-color: #f0f2f5;
                 margin: 0;
-                padding: 20px;
+                padding: 0;
                 color: #333;
             }
-
+            .content-wrapper {
+                padding: 20px;
+                transition: margin 0.3s ease, transform 0.3s ease;
+            }
+            #sidebar.open ~ .content-wrapper {
+                margin-left: 200px;
+                transform: scale(0.95);
+            }
+            #navbar.open ~ .content-wrapper {
+                margin-top: 60px;
+            }
             h1 {
                 text-align: center;
                 color: #2c3e50;
-                margin-bottom: 30px;
+                margin-bottom: 20px;
                 text-transform: uppercase;
                 letter-spacing: 1px;
             }
-
             form {
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: center;
                 gap: 10px;
-
+                margin-bottom: 20px;
             }
-
-            input[type="text"],
-            input[type="date"],
-            select {
+            input, select, button {
                 padding: 8px 12px;
                 border-radius: 8px;
                 border: 1px solid #ccc;
                 font-size: 14px;
                 background-color: #fff;
+                box-sizing: border-box;
             }
-
             button {
-                padding: 8px 16px;
-                border-radius: 8px;
-                font-weight: bold;
                 border: none;
+                font-weight: bold;
                 cursor: pointer;
-                transition: background-color 0.3s ease;
+                transition: background-color 0.3s;
             }
-
             button[type="submit"] {
                 background-color: #3498db;
-                color: white;
+                color: #fff;
             }
-
             button[type="submit"]:hover {
                 background-color: #2980b9;
             }
-
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
             table {
                 width: 100%;
                 border-collapse: collapse;
-                background-color: white;
+                background: #fff;
                 box-shadow: 0 4px 10px rgba(0,0,0,0.05);
                 border-radius: 10px;
                 overflow: hidden;
             }
-
-            table th,
-            table td {
-                padding: 14px 12px;
+            th, td {
+                padding: 12px;
                 text-align: center;
                 border-bottom: 1px solid #e0e0e0;
             }
-
-            table th {
-                background-color: #000080;
-                color: white;
+            th {
+                background: #000080;
+                color: #fff;
                 font-weight: 600;
             }
-
-            table tr:last-child td {
-                border-bottom: none;
+            tr.hidden-row {
+                display: none;
             }
-
-            .waiting {
-                background-color: #f1c40f;
-                color: white;
-            }
-
-            .confirmed {
-                background-color: #2ecc71;
-                color: white;
-            }
-
-            .cancel {
-                background-color: #e74c3c;
-                color: white;
-            }
-
-            .cancel:hover {
-                background-color: #c0392b;
-            }
-
-            .icon-button {
-                background: transparent;
-                border: none;
-                cursor: pointer;
-                font-size: 1.2rem;
-                color: #555;
-                transition: color 0.2s ease;
-            }
-
-            .icon-button:hover {
-                color: #2c3e50;
-            }
-
+            /* Cancel modal styling */
             .cancel-modal {
                 position: fixed;
                 top: 0;
@@ -134,9 +104,11 @@
                 display: none;
                 justify-content: center;
                 align-items: center;
-                z-index: 999;
+                z-index: 10000;
             }
-
+            .cancel-modal.active {
+                display: flex;
+            }
             .modal-content {
                 background: #fff;
                 padding: 20px;
@@ -144,85 +116,144 @@
                 width: 350px;
                 box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             }
-
             .modal-content textarea {
+                width: 100%;
                 border-radius: 6px;
                 border: 1px solid #ccc;
                 resize: none;
                 font-size: 14px;
             }
-
             .modal-actions {
                 margin-top: 15px;
                 display: flex;
                 justify-content: flex-end;
                 gap: 10px;
             }
-
-            .modal-actions button {
-                padding: 8px 14px;
-                border-radius: 6px;
-                font-size: 14px;
-            }
-
             .modal-actions button:first-child {
                 background-color: #e74c3c;
-                color: white;
+                color: #fff;
             }
-
             .modal-actions button:last-child {
                 background-color: #bdc3c7;
-                color: white;
+                color: #fff;
+            }
+            .waiting {
+                background-color: #f1c40f;
+                color: #fff;
+            }
+            .confirmed {
+                background-color: #2ecc71;
+                color: #fff;
+            }
+            .cancel {
+                background: #e74c3c;
+                color: #fff;
+            }
+            .cancel:hover {
+                background: #c0392b;
+            }
+            @media(max-width:768px){
+                form{
+                    flex-direction:column;
+                }
+                th,td{
+                    font-size:13px;
+                }
+            }
+            @media(max-width:600px){
+                .table-responsive table{
+                    min-width:0;
+                }
+                thead{
+                    display:none;
+                }
+                tr,td{
+                    display:block;
+                    width:100%;
+                }
+                td{
+                    padding-left:50%;
+                    position:relative;
+                    text-align:right;
+                }
+                td::before{
+                    content:attr(data-label);
+                    position:absolute;
+                    left:15px;
+                    width:45%;
+                    padding-right:10px;
+                    white-space:nowrap;
+                    font-weight:bold;
+                    text-align:left;
+                }
             }
 
-            @media screen and (max-width: 768px) {
-                form {
-                    flex-direction: column;
-                    align-items: center;
-                }
-
-                table th, table td {
-                    font-size: 13px;
-                    padding: 10px;
-                }
+            .load-more-wrapper {
+                text-align: center;
+                margin-top: 20px;
             }
 
-            <%--popup  --%>
             .popup-overlay {
                 position: fixed;
                 top: 0;
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background: rgba(0,0,0,0.5);
-                display: flex;
+                background-color: rgba(0, 0, 0, 0.5);
+                display: none;
                 justify-content: center;
                 align-items: center;
-                z-index: 1000;
+                z-index: 9999;
             }
+
             .popup-box {
-                background: white;
+                background: #fff;
                 padding: 20px 30px;
-                border-radius: 8px;
+                border-radius: 10px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
                 text-align: center;
                 font-size: 16px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                max-width: 300px;
+                width: 90%;
             }
+
+            .popup-box p {
+                margin-bottom: 15px;
+            }
+
             .popup-box button {
-                margin-top: 15px;
                 padding: 8px 16px;
+                background-color: #3498db;
                 border: none;
-                background: #3498db;
                 color: white;
                 border-radius: 6px;
                 cursor: pointer;
+                transition: background-color 0.3s ease;
             }
-            .popup-box button:hover {
-                background: #2980b9;
-            }
-        </style>
 
+            .popup-box button:hover {
+                background-color: #2980b9;
+            }
+
+        </style>
         <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const rows = document.querySelectorAll('tbody tr');
+                const btn = document.getElementById('loadMoreBtn');
+                const initial = 10;
+                rows.forEach((row, idx) => {
+                    if (idx >= initial)
+                        row.classList.add('hidden-row');
+                });
+                if (rows.length <= initial)
+                    btn.style.display = 'none';
+                btn.addEventListener('click', () => {
+                    rows.forEach(row => row.classList.remove('hidden-row'));
+                    btn.style.display = 'none';
+                });
+            });
+
+
             function openCancelModal(bookingId) {
                 const modal = document.getElementById("cancelModal-" + bookingId);
                 if (modal) {
@@ -261,126 +292,77 @@
                 input.value = input.value.replace(/[0-9]/g, ''); // Xóa toàn bộ chữ số
             }
         </script>
-
-
     </head>
     <body>
- <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
-        <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
-        <h1>booking confirmation list</h1>
-
-        <c:if test="${empty booking}">
-            <script>
-                window.onload = function () {
-                    showNoResultsPopup();
-                };
-            </script>
-        </c:if>
-
-        <form action="BookingConfirmation" method="post" style="margin-bottom: 20px;">
-            Room Number: 
-            <input type="number"
-                   name="roomNumber"
-                   id="roomNumber"
-                   min="1"
-                   max="999"
-                   oninput="this.value = this.value.slice(0, 3)"
-                   placeholder="Up to 3 digits"
-                   title="Only digits allowed (1–999)" 
-                   style="width: 120px;" />
-
-            Full Name: 
-            <input type="text" name="fullName" id="fullName" maxlength="30" 
-                   pattern="[A-Za-zÀ-ỹ\s]+" 
-                   title="Only letters allowed (max 30 characters)" 
-                   oninput="removeNumbers(this)" />
-
-            Start Date: <input type="date" name="startDate" value="${param.startDate}">
-            End Date: <input type="date" name="endDate" value="${param.endDate}">
-
-            Status:
-            <select name="status">
-                <option value="">-- All --</option>
-                <option value="Waiting for processing" ${status == 'Waiting for processing' ? 'selected' : ''}>Waiting for processing</option>
-                <option value="Confirmed" ${status == 'Confirmed' ? 'selected' : ''}>Confirmed</option>
-            </select>
-
-            <button type="submit">Search</button>
-        </form>
-        <table border="1">
-            <tr>
-
-                <th>Room Number</th>
-                <th>Full Name Customers</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Status</th>
-                <th>Cancel Booking</th>
-
-
-            </tr>
-
-            <tbody>
-                <c:forEach var="booking" items="${booking}">    
-                    <tr>
-
-                        <%--<td>${booking.bookingId}</td> --%>
-                        <td>${booking.rooms.roomNumber}</td>
-                        <td>${booking.customers.fullName}</td>
-                        <td>${booking.formattedStartDate}</td>
-                        <td>${booking.formattedEndDate}</td>
-
-                        <td>
-                            <c:choose>
-                                <c:when test="${booking.status == 'Waiting for processing'}">
-                                    <form action="BookingConfirmation" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to confirm this booking?');">
-                                        <input type="hidden" name="actionType" value="confirmBooking" />
+        <%@ include file="../navbarDashboard/navbarDashboard.jsp" %>
+        <%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
+        <div class="content-wrapper">
+            <c:if test="${sessionScope.bookingConfirmed}"><script>window.onload = () => alert('Booking confirmed!');</script><c:remove var="bookingConfirmed" scope="session"/></c:if>
+                <h1>Booking Confirmation List</h1>
+            <c:if test="${searched and noResult}"><script>window.onload = showNoResultsPopup;</script></c:if>
+                <form action="BookingConfirmation" method="post">
+                    Room Number: <input type="number" name="roomNumber" min="1" max="999" oninput="this.value=this.value.slice(0,3)" placeholder="Up to 3 digits" title="Only digits (1–999)" />
+                    Full Name: <input type="text" name="fullName" maxlength="30" title="Only letters" oninput="removeNumbers(this)" />
+                    Start Date: <input type="date" name="startDate" value="${startDate}" />
+                End Date: <input type="date" name="endDate" value="${endDate}" />
+                Status: <select name="status"><option value="">-- All --</option><option value="Waiting for processing" ${status=='Waiting for processing'?'selected':''}>Waiting</option><option value="Confirmed" ${status=='Confirmed'?'selected':''}>Confirmed</option></select>
+                <button type="submit">Search</button>
+            </form>
+            <div class="table-responsive">
+                <table>
+                    <thead><tr><th>Room Number</th><th>Full Name</th><th>Start Date</th><th>End Date</th><th>Status</th><th>Cancel</th></tr></thead>
+                    <tbody>
+                        <c:forEach var="booking" items="${booking}">
+                            <tr>
+                                <td data-label="Room Number">${booking.rooms.roomNumber}</td>
+                                <td data-label="Full Name">${booking.customers.fullName}</td>
+                                <td data-label="Start Date">${booking.formattedStartDate}</td>
+                                <td data-label="End Date">${booking.formattedEndDate}</td>
+                                <td data-label="Status">
+                                    <c:choose>
+                                        <c:when test="${booking.status=='Waiting for processing'}">
+                                            <form action="BookingConfirmation" method="post" style="display:inline;" onsubmit="return confirm('Confirm this booking?');">
+                                                <input type="hidden" name="actionType" value="confirmBooking" />
+                                                <input type="hidden" name="bookingId" value="${booking.bookingId}" />
+                                                <button type="submit" class="waiting">Waiting</button>
+                                            </form>
+                                        </c:when>
+                                        <c:otherwise><button type="button" class="confirmed" disabled>Confirmed</button></c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td data-label="Cancel" style="text-align:center;">
+                                    <!-- Form cancel -->
+                                    <form id="cancelForm-${booking.bookingId}" action="BookingCancel" method="post">
                                         <input type="hidden" name="bookingId" value="${booking.bookingId}" />
-                                        <button type="submit" class="waiting">Waiting</button>
+                                        <input type="hidden" name="notes" id="notesInput-${booking.bookingId}" />
+
+                                        <!-- Nút Cancel duy nhất -->
+                                        <button type="button" class="cancel" onclick="openCancelModal('${booking.bookingId}')">Cancel</button>
                                     </form>
 
-                                </c:when>
-
-                                <c:when test="${booking.status == 'Confirmed'}">
-                                    <button type="button" class="confirmed" disabled>Confirmed</button>
-                                </c:when>
-                            </c:choose>
-                        </td>
-
-                        <td>
-                            <!-- Form cancel -->
-                            <form id="cancelForm-${booking.bookingId}" action="BookingCancel" method="post">
-                                <input type="hidden" name="bookingId" value="${booking.bookingId}" />
-                                <input type="hidden" name="notes" id="notesInput-${booking.bookingId}" />
-
-                                <!-- Nút Cancel duy nhất -->
-                                <button type="button" class="cancel" onclick="openCancelModal(${booking.bookingId})">Cancel</button>
-                            </form>
-
-                            <!-- Modal nhập lý do -->
-                            <div id="cancelModal-${booking.bookingId}" class="cancel-modal" style="display: none;">
-                                <div class="modal-content">
-                                    <label for="notesTextarea-${booking.bookingId}">Reason for cancellation:</label>
-                                    <textarea id="notesTextarea-${booking.bookingId}" placeholder="Enter reason..." rows="4" style="width: 100%;"></textarea>
-                                    <div class="modal-actions">
-                                        <button type="button" onclick="confirmReason(${booking.bookingId})">OK</button>
-                                        <button type="button" onclick="closeCancelModal(${booking.bookingId})">Close</button>
+                                    <!-- Modal nhập lý do -->
+                                    <div id="cancelModal-${booking.bookingId}" class="cancel-modal">
+                                        <div class="modal-content">
+                                            <label for="notesTextarea-${booking.bookingId}">Reason for cancellation:</label>
+                                            <textarea id="notesTextarea-${booking.bookingId}" placeholder="Enter reason..." rows="4"></textarea>
+                                            <div class="modal-actions">
+                                                <button type="button" onclick="confirmReason('${booking.bookingId}')">OK</button>
+                                                <button type="button" onclick="closeCancelModal('${booking.bookingId}')">Close</button>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </td>
+                                </td>
 
-
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
-        <div id="noResultsPopup" class="popup-overlay" style="display: none;">
-            <div class="popup-box">
-                <p>🔍 No matching results found!</p>
-                <button onclick="closePopup()">OK</button>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
             </div>
-        </div>
+            <div class="load-more-wrapper">
+                <button id="loadMoreBtn" style="padding:8px 16px;">Xem thêm</button>
+            </div>
 
+            <div id="noResultsPopup" class="popup-overlay" style="display:none;"><div class="popup-box"><p>🔍 No matching results found!</p><button onclick="closePopup()">OK</button></div></div>
+        </div>
     </body>
 </html>
