@@ -37,7 +37,7 @@ public class BookingDao {
                 + "FROM Bookings b "
                 + "JOIN Rooms r ON b.RoomId = r.RoomId "
                 + "JOIN Customers c ON b.CustomerId = c.CustomerId "
-                + "WHERE b.Status IN ('Waiting for processing', 'Confirmed')";
+                + "WHERE b.Status IN ('Checked in', 'Confirmed','Checked out')";
 
         PreparedStatement ps = conn.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
