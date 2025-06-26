@@ -5,13 +5,16 @@
 package controllers.services;
 
 import dao.ServicesDao;
+import db.FileUploader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import java.math.BigDecimal;
 import models.Services;
 
@@ -19,6 +22,7 @@ import models.Services;
  *
  * @author dodan
  */
+@MultipartConfig
 @WebServlet(name = "AddServiceDashboard", urlPatterns = {"/AddServiceDashboard"})
 public class AddServiceDashboard extends HttpServlet {
 
@@ -74,22 +78,40 @@ public class AddServiceDashboard extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String serviceName = request.getParameter("name");
-        String unitType = request.getParameter("type");
-        String description = request.getParameter("description");
-        Long price = Long.parseLong(request.getParameter("price"));
-        String avataURL = request.getParameter("imageURL");
-        Services s = new Services();
-        s.setServiceName(serviceName);
-        s.setUnitType(unitType);
-        s.setDescription(description);
-        s.setPrice(price);
-        s.setImageURL(avataURL);
-        ServicesDao dao = new ServicesDao();
-        int check = dao.addServiceDashboard(s);
-        if (check != 0) {
-            response.sendRedirect("ViewServicesDashboard");
-        } else {
+        try {
+            String serviceName = request.getParameter("name");
+            String unitType = request.getParameter("unitType");
+            String description = request.getParameter("description");
+            Long price = Long.parseLong(request.getParameter("price"));
+
+            // Xử lý upload ảnh
+            String avatarURL = "images/default-service.png"; // Ảnh mặc định
+            Part filePart = request.getPart("imageFile");
+
+            if (filePart != null && filePart.getSize() > 0) {
+                String uploadPath = "F:\\SWP\\moi\\BuildingWeb\\src\\main\\webapp\\images";
+                String fileName = FileUploader.uploadImage(filePart, uploadPath);
+                avatarURL = "images/" + fileName;
+            }
+
+            Services s = new Services();
+            s.setServiceName(serviceName);
+            s.setUnitType(unitType);
+            s.setDescription(description);
+            s.setPrice(price);
+            s.setImageURL(avatarURL);
+
+            ServicesDao dao = new ServicesDao();
+            int check = dao.addServiceDashboard(s);
+
+            if (check != 0) {
+                response.sendRedirect("ViewServicesDashboard");
+            } else {
+                response.sendRedirect("Error");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
             response.sendRedirect("Error");
         }
     }

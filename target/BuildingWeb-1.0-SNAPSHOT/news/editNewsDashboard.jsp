@@ -1,40 +1,48 @@
-<%-- 
-    Document   : editNewsDashboard
-    Created on : 15-Jun-2025, 20:49:16
-    Author     : dodan
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
-  <title>Update News</title>
-
-  <!-- Icon libraries -->
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
-  <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
-  <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
-
+        <title>Update News</title>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
         <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f4f6f9;
-                margin: 0;
-                padding: 80px 30px 40px;
+            :root {
+                --navy: #4a6fa5;
+                --navy-dark: #3a5c88;
+                --white: #ffffff;
+                --light-bg: #f4f6f9;
+                --hover-bg: #3a5c88;
+                --transition: 0.3s ease;
+                --sidebar-width-collapsed: 60px;
+                --sidebar-width-expanded: 220px;
             }
+
+            body {
+                font-family: 'Segoe UI', sans-serif;
+                background-color: var(--light-bg);
+                margin: 0;
+                padding: 0;
+            }
+
             .container {
                 max-width: 700px;
-                margin: 0 auto;
-                background-color: #ffffff;
-                padding: 30px;
-                border-radius: 12px;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
                 position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+                margin-top: 80px;
+                margin-bottom: 40px;
+                padding: 40px 30px;
+                border-radius: 12px;
+                background-color: #ffffff;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+                transition: left 0.3s ease;
             }
+
+            .sidebar.open ~ .container {
+                left: calc(50% + var(--sidebar-width-expanded) / 2 - var(--sidebar-width-collapsed) / 2);
+            }
+
             .back-button {
                 position: absolute;
                 top: -40px;
@@ -46,75 +54,82 @@
                 font-size: 14px;
                 text-decoration: none;
                 display: inline-block;
+                z-index: 10;
             }
+
             .back-button:hover {
                 background-color: #0c53b0;
             }
+
             h1 {
                 text-align: center;
-                color: #2c3e50;
+                color: var(--navy-dark);
                 margin-bottom: 30px;
+                font-size: 26px;
             }
+
             label {
                 display: block;
                 margin-bottom: 6px;
-                font-weight: bold;
-                color: #444;
+                font-weight: 600;
+                color: #333;
             }
+
             input[type="text"],
             textarea,
             select {
                 width: 100%;
-                padding: 10px;
+                padding: 12px;
                 margin-bottom: 20px;
                 border: 1px solid #ccc;
                 border-radius: 6px;
-                font-size: 14px;
+                font-size: 15px;
+                background-color: #fdfdfd;
+                transition: border 0.2s;
             }
+
+            input:focus,
+            textarea:focus,
+            select:focus {
+                border-color: var(--navy);
+                outline: none;
+            }
+
             textarea {
                 resize: vertical;
             }
-            .file-upload-section {
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-                margin-bottom: 20px;
-            }
+
             .file-label {
-                background-color: #1a237e;
+                background-color: var(--navy-dark);
                 color: white;
                 padding: 10px 14px;
                 border-radius: 5px;
                 cursor: pointer;
                 display: inline-block;
+                margin-bottom: 10px;
             }
-            .file-upload-section label[for="imageFile"]::before {
-                content: "\1F4C2 ";
-            }
-            .file-upload-section label[for="imageURL"]::before {
-                content: "\1F517 ";
-            }
-            .disabled-input {
-                opacity: 0.5;
-                pointer-events: none;
-            }
+
             .checkbox-group {
                 margin-bottom: 20px;
             }
+
             button {
                 background-color: #28a745;
                 color: white;
-                padding: 12px 20px;
+                padding: 14px;
                 font-size: 16px;
+                font-weight: bold;
                 border: none;
                 border-radius: 6px;
                 cursor: pointer;
                 width: 100%;
                 transition: background-color 0.3s ease;
             }
+
             button:hover {
                 background-color: #218838;
             }
+
             .tooltip {
                 position: absolute;
                 background-color: #333;
@@ -127,12 +142,26 @@
                 z-index: 10;
                 pointer-events: none;
             }
+
+            @media screen and (max-width: 768px) {
+                .container {
+                    margin: 100px 20px;
+                    padding: 25px;
+                }
+
+                .sidebar.open ~ .container {
+                    margin-left: 0;
+                }
+            }
         </style>
     </head>
     <body>
+        <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+        <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
+
         <div class="container">
-            <a href="javascript:history.back()" class="back-button"><i class='bx bx-arrow-back'></i> Back</a>
-            <h1><i class='bx bx-edit'></i> Update News</h1>
+            <a href="javascript:history.back()" class="back-button">← Back</a>
+            <h1>📝 Update News</h1>
             <form action="${pageContext.request.contextPath}/EditNewsDashboard" method="post" onsubmit="return validateForm();" enctype="multipart/form-data">
                 <input type="hidden" name="newsID" value="${news.newsID}" />
 
@@ -142,21 +171,19 @@
                 <label>Summary:</label>
                 <input type="text" name="summary" value="${news.summary}" maxlength="500" required data-tooltip="Required. Max 500 characters." />
 
-                <label>Choose Image Upload Method:</label>
-                <div class="file-upload-section">
-                    <label><input type="radio" name="imageUploadMethod" value="file" checked onchange="toggleImageUpload()"> 📁 Upload File</label>
-                    <label><input type="radio" name="imageUploadMethod" value="url" onchange="toggleImageUpload()"> 🔗 Enter URL</label>
-                </div>
+                <label>Current Image:</label>
+                <c:if test="${not empty news.imageURL}">
+                    <div style="margin-bottom: 10px;">
+                        <img src="${pageContext.request.contextPath}/${news.imageURL}" alt="Current Image" style="max-width: 100%; border: 1px solid #ccc; border-radius: 6px;" />
+                    </div>
+                </c:if>
 
-                <div id="uploadFileGroup">
-                    <label for="imageFile" class="file-label">📂 Choose File</label>
-                    <input type="file" name="imageFile" id="imageFile" accept="image/*">
-                </div>
+                <label for="imageFile" class="file-label">
+                    📂 Upload New Image (Optional)
+                    <input type="file" name="image" id="imageFile" accept="image/*" style="display: none;" />
+                </label>
 
-                <div id="uploadUrlGroup" class="disabled-input">
-                    <label for="imageURL" class="file-label">🔗 Image URL</label>
-                    <input type="text" name="imageURL" id="imageURL" value="${news.imageURL}" maxlength="255" data-tooltip="Valid http/https link. Max 255 characters." pattern="https?://.+" disabled />
-                </div>
+                <input type="hidden" name="existingImageURL" value="${news.imageURL}" />
 
                 <label>Content:</label>
                 <textarea name="content" rows="5" required data-tooltip="Minimum 20 characters.">${news.content}</textarea>
@@ -166,19 +193,17 @@
                     <input type="checkbox" name="isPublished" value="true" ${news.isPublished ? 'checked' : ''} /> Yes
                 </div>
 
-                <input type="hidden" name="userId" value="${news.userId}" />
-
                 <label>Building:</label>
                 <select name="buildingID" required data-tooltip="Select the building this news belongs to.">
                     <option value="">-- Select Building --</option>
                     <c:forEach var="b" items="${listBuilding}">
-                        <option value="${b.buildingId}" ${b.buildingId == news.buildingID ? "selected" : ""}>${b.buildingName}</option>
+                        <option value="${b.buildingId}" <c:if test="${b.buildingId == news.buildingID}">selected</c:if>>${b.buildingName}</option>
                     </c:forEach>
                 </select>
 
                 <input type="hidden" name="viewcount" value="${news.viewcount}" readonly />
 
-                <button type="submit"><i class='bx bx-check'></i> Update</button>
+                <button type="submit">✅ Update News</button>
             </form>
         </div>
 
@@ -186,10 +211,8 @@
             function validateForm() {
                 const title = document.getElementsByName("title")[0].value.trim();
                 const summary = document.getElementsByName("summary")[0].value.trim();
-                const imageURL = document.getElementsByName("imageURL")[0].value.trim();
                 const content = document.getElementsByName("content")[0].value.trim();
                 const buildingID = document.getElementsByName("buildingID")[0].value;
-                const method = document.querySelector('input[name="imageUploadMethod"]:checked').value;
 
                 if (title === "" || title.length > 150) {
                     alert("Title must not be empty and must be at most 150 characters.");
@@ -199,13 +222,6 @@
                 if (summary === "" || summary.length > 500) {
                     alert("Summary must not be empty and must be at most 500 characters.");
                     return false;
-                }
-
-                if (method === "url") {
-                    if (imageURL === "" || imageURL.length > 255 || !/^https?:\/\/.+/.test(imageURL)) {
-                        alert("Image URL must be a valid http or https link, and no more than 255 characters.");
-                        return false;
-                    }
                 }
 
                 if (content.length < 20) {
@@ -237,28 +253,6 @@
                 el.addEventListener('mouseleave', () => {
                     tooltip.style.display = 'none';
                 });
-            });
-
-            function toggleImageUpload() {
-                const method = document.querySelector('input[name="imageUploadMethod"]:checked').value;
-                const fileGroup = document.getElementById("uploadFileGroup");
-                const urlGroup = document.getElementById("uploadUrlGroup");
-
-                if (method === "file") {
-                    fileGroup.classList.remove("disabled-input");
-                    urlGroup.classList.add("disabled-input");
-                    document.getElementById("imageFile").disabled = false;
-                    document.getElementById("imageURL").disabled = true;
-                } else {
-                    fileGroup.classList.add("disabled-input");
-                    urlGroup.classList.remove("disabled-input");
-                    document.getElementById("imageFile").disabled = true;
-                    document.getElementById("imageURL").disabled = false;
-                }
-            }
-
-            window.addEventListener("DOMContentLoaded", () => {
-                toggleImageUpload();
             });
         </script>
     </body>
