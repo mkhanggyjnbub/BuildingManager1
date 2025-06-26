@@ -31,20 +31,20 @@ public class Bookings {
     private LocalDateTime DeletedTime;
     private String DeletedBy;
     private String Notes;
-  private int  userId;
+    private int userId;
     private String formattedStartDate;
     private String formattedEndDate;
-    
+
+    public Bookings() {
+
+    }
+
     public int getUserId() {
         return userId;
     }
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    public Bookings() {
-
     }
 
     public int getCanceledBy() {
@@ -206,7 +206,12 @@ public class Bookings {
     public void setFormattedEndDate(String formattedEndDate) {
         this.formattedEndDate = formattedEndDate;
     }
-    
-    
 
+    public String getFullName() {
+        return customers != null ? customers.getFullName() : null;
+    }
+
+    public String getEmail() {
+        return customers != null ? customers.getEmail() : null;
+    }
 }

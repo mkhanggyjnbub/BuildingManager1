@@ -105,11 +105,11 @@ public class CreateRoomForDashboard extends HttpServlet {
         }
         String description = request.getParameter("description");
         Part filePart = request.getPart("imageFile");
-        //Khang
-        //String uploadPath = "D:\\fouderPrj\\BuildingWeb\\src\\main\\webapp\\images";
-        //Khoa
-        String uploadPath = "F:\\SWP\\moi\\BuildingWeb\\src\\main\\webapp\\images";
-        uploadedUrl = FileUploader.uploadImage(filePart, uploadPath);
+
+
+        String uploadPath = "D:\\fouderPrj\\BuildingWeb\\src\\main\\webapp\\images";
+
+
         String status = request.getParameter("status");
         int location = Integer.parseInt(request.getParameter("location"));
         float area = Float.parseFloat(request.getParameter("area"));

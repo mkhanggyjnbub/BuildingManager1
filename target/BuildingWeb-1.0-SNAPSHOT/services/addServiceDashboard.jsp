@@ -1,10 +1,11 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
         <title>Add New Service</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
         <style>
             body {
                 font-family: 'Segoe UI', sans-serif;
@@ -165,6 +166,7 @@
             .back-button:hover {
                 background-color: #0c53b0;
             }
+
         </style>
     </head>
     <body>
@@ -187,7 +189,8 @@
                         <option value="1 turn">1 turn</option>
                         <option value="other">Other...</option>
                     </select>
-                    <div id="customUnitWrapper" style="margin-top: 10px; display: none;">
+                    <div id="customUnitWrapper" style="margin-top: 10px;
+                         display: none;">
                         <input type="text" id="customUnitInput" placeholder="Type your own..." maxlength="50" pattern="^[\w\d\s]+$" oninput="updateUnitType()" title="Only letters, digits and spaces allowed.">
                     </div>
                     <input type="hidden" id="unitType" name="unitType" required />
