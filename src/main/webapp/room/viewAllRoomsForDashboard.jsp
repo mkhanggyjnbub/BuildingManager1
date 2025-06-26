@@ -3,195 +3,34 @@
 <!DOCTYPE html>
 <<<<<<< HEAD
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Room Management</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f9fafb;
-        }
-
-        .main-content {
-            margin-left: 250px; /* width of sidebar */
-            padding: 30px;
-            transition: margin-left 0.3s ease;
-        }
-
-        h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 25px;
-        }
-
-        form {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
-        input[type="search"] {
-            padding: 10px;
-            width: 300px;
-            max-width: 90%;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
-
-        button[type="submit"] {
-            padding: 10px 16px;
-            border: none;
-            background-color: #007bff;
-            color: white;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-        }
-
-        thead {
-            background-color: #007bff;
-            color: white;
-        }
-
-        th, td {
-            padding: 14px;
-            text-align: center;
-            border-bottom: 1px solid #eaeaea;
-        }
-
-        td a {
-            color: #007bff;
-            margin: 0 6px;
-            text-decoration: none;
-        }
-
-        td a:hover {
-            color: #0056b3;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            padding: 0;
-            margin-top: 30px;
-            gap: 8px;
-        }
-
-        .pagination li a {
-            display: block;
-            padding: 8px 14px;
-            background-color: #eaeaea;
-            border-radius: 5px;
-            color: #333;
-            text-decoration: none;
-        }
-
-        .pagination li a:hover {
-            background-color: #007bff;
-            color: white;
-        }
-
-        @media screen and (max-width: 768px) {
-            .main-content {
-                margin-left: 0;
-                padding: 20px;
-            }
-
-            form {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            table, thead, tbody, th, td, tr {
-                display: block;
-            }
-
-            thead {
-                display: none;
-            }
-
-            tr {
-                margin-bottom: 15px;
-                background: #fff;
-                padding: 12px;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            }
-
-            td {
-                padding-left: 50%;
-                position: relative;
-                border: none;
-                border-bottom: 1px solid #eee;
-                text-align: left;
-            }
-
-            td::before {
-                content: attr(data-label);
-                position: absolute;
-                left: 12px;
-                top: 12px;
-                font-weight: bold;
-                color: #555;
-            }
-        }
-    </style>
-</head>
-<body>
-    <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
-    <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
-
-    <div class="main-content">
-        <h2>Room List</h2>
-
-        <form method="get" action="ViewAllRoomsForDashboard">
-            <input type="search" name="search" placeholder="Enter keyword...">
-            <button type="submit"><i class="fa-solid fa-search"></i> Search</button>
-        </form>
-
-=======
-<html>
     <head>
         <meta charset="UTF-8">
-        <title>Room Dashboard</title>
+        <title>Room Management</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
         <style>
             body {
+                margin: 0;
                 font-family: 'Segoe UI', sans-serif;
                 background-color: #f9fafb;
-                margin: 0;
-                padding: 20px;
+            }
+
+            .main-content {
+                margin-left: 250px; /* width of sidebar */
+                padding: 30px;
+                transition: margin-left 0.3s ease;
             }
 
             h2 {
                 text-align: center;
                 color: #333;
-                margin-bottom: 20px;
+                margin-bottom: 25px;
             }
 
             form {
                 display: flex;
                 justify-content: center;
                 gap: 10px;
-                margin-bottom: 20px;
-                flex-wrap: wrap;
+                margin-bottom: 25px;
             }
 
             input[type="search"] {
@@ -202,7 +41,7 @@
                 border-radius: 6px;
             }
 
-            button[type="submit"], #openPopupBtn {
+            button[type="submit"] {
                 padding: 10px 16px;
                 border: none;
                 background-color: #007bff;
@@ -212,7 +51,7 @@
                 transition: background-color 0.3s ease;
             }
 
-            button[type="submit"]:hover, #openPopupBtn:hover {
+            button[type="submit"]:hover {
                 background-color: #0056b3;
             }
 
@@ -240,7 +79,6 @@
                 color: #007bff;
                 margin: 0 6px;
                 text-decoration: none;
-                transition: color 0.2s ease;
             }
 
             td a:hover {
@@ -250,11 +88,10 @@
             .pagination {
                 display: flex;
                 justify-content: center;
-                flex-wrap: wrap;
                 list-style: none;
                 padding: 0;
-                margin-top: 20px;
-                gap: 5px;
+                margin-top: 30px;
+                gap: 8px;
             }
 
             .pagination li a {
@@ -264,7 +101,6 @@
                 border-radius: 5px;
                 color: #333;
                 text-decoration: none;
-                transition: all 0.2s ease;
             }
 
             .pagination li a:hover {
@@ -272,8 +108,17 @@
                 color: white;
             }
 
-            /* Responsive table */
             @media screen and (max-width: 768px) {
+                .main-content {
+                    margin-left: 0;
+                    padding: 20px;
+                }
+
+                form {
+                    flex-direction: column;
+                    align-items: center;
+                }
+
                 table, thead, tbody, th, td, tr {
                     display: block;
                 }
@@ -283,19 +128,19 @@
                 }
 
                 tr {
-                    background: white;
                     margin-bottom: 15px;
+                    background: #fff;
                     padding: 12px;
                     border-radius: 8px;
                     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
                 }
 
                 td {
-                    text-align: left;
                     padding-left: 50%;
                     position: relative;
                     border: none;
-                    border-bottom: 1px solid #f0f0f0;
+                    border-bottom: 1px solid #eee;
+                    text-align: left;
                 }
 
                 td::before {
@@ -306,74 +151,112 @@
                     font-weight: bold;
                     color: #555;
                 }
-
-                td:last-child {
-                    border-bottom: none;
-                }
             }
+.create-link {
+    text-decoration: none;
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 30px;
+    margin: 20px auto;
+    border-radius: 6px;
+    font-weight: bold;
+    display: inline-block;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-align: center;
+}
+
+.create-link:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
 
 
         </style>
     </head>
     <body>
-        <h2> Danh Sách Phòng</h2>
+        <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+        <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
 
-        <form method="get" action="ViewAllRoomsForDashboard">            
-            <input type="search"  name="search" placeholder="Nhập Từ Khóa...">
-            <button type="submit">Tìm kiếm</button>
-        </form>
+        <div class="main-content">
+            <h2>Room List</h2>
 
-        <a href="CreateRoomForDashboard" style="text-decoration: none" >Create</a>
->>>>>>> 27be073fdfe2619df0349f55bd4355968b60a514
-        <table>
-            <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>Room Number</th>
-                    <th>Floor</th>
-                    <th>Type</th>
-                    <th>Price (VND)</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-<<<<<<< HEAD
-                <c:forEach var="room" items="${list}" varStatus="i">
-=======
-                <c:forEach var="room" items="${list}" varStatus="i"> 
->>>>>>> 27be073fdfe2619df0349f55bd4355968b60a514
+            <form method="get" action="ViewAllRoomsForDashboard">
+                <input type="search" id="numberOnlyInput" name="search" placeholder="Enter keyword...">
+                <button type="submit"><i class="fa-solid fa-search"></i> Search</button>
+            </form>
+
+
+            <a href="CreateRoomForDashboard" class="create-link">Create</a>
+
+            <table>
+                <thead>
                     <tr>
-                        <td data-label="No.">${(thisPage - 1) * 10 + i.index + 1}</td>
-                        <td data-label="Room Number">${room.roomNumber}</td>
-                        <td data-label="Floor">${room.floorNumber}</td>
-                        <td data-label="Type">${room.roomType}</td>
-                        <td data-label="Price">${room.price}</td>
-                        <td data-label="Status">${room.status}</td>
-                        <td data-label="Actions">
-                            <a href="AdminView?id=${room.roomId}" title="View"><i class="fa-solid fa-eye"></i></a>
-                            <a href="AdminEdit?id=${room.roomId}" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
-                            <a href="AdminDelete?id=${room.roomId}" title="Delete"><i class="fa-solid fa-trash"></i></a>
-                            <a href="Decentralization?id=${room.roomId}" title="Manage Access"><i class="fa-solid fa-gear"></i></a>
-                        </td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
-
-        <nav aria-label="Pagination">
-            <ul class="pagination">
-                <c:forEach begin="1" end="${finalPage}" var="i">
-                    <li><a href="ViewAllRoomsForDashboard?Page=${i}">${i}</a></li>
-                </c:forEach>
-            </ul>
-        </nav>
-<<<<<<< HEAD
-    </div>
-</body>
-=======
+                        <th>STT</th>
+                        <th>RoomNumber</th>
+                        <th>Floor</th>
+                        <th>Room Type</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Operation</th>
+                    </tr>   
+                </thead>
+                <tbody>
+                    <c:forEach var="room" items="${list}" varStatus="i">
 
 
+                        <tr>
+
+                            <td data-label="STT">${(thisPage - 1) * 10 + i.index + 1}</td>
+                            <td data-label="Mã Phòng">${room.roomNumber}</td>
+                            <td data-label="Tầng">${room.floorNumber}</td>
+                            <td data-label="Loại Phòng">${room.roomType}</td>
+                            <td data-label="Giá">${room.price} / VND</td>
+                            <td data-label="Trạng Thái">${room.status}</td>
+                            <td data-label="Thao Tác">
+    <!--                            <a href="AdminView?id=${room.roomId}" title="Xem"><i class="fa-solid fa-eye"></i></a>-->
+                                <a href="EditRoomForDashboard?id=${room.roomId}" title="Sửa"><i class="fa-solid fa-pencil"></i></a>
+                                <!--<a href="AdminDelete?id=${room.roomId}" title="Xóa"><i class="fa-solid fa-circle-user"></i></a>--> 
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+
+            <nav aria-label="Pagination">
+                <ul class="pagination">
+                    <c:forEach begin="1" end="${finalPage}" var="i">
+                        <li><a href="ViewAllRoomsForDashboard?Page=${i}">${i}</a></li>
+                        </c:forEach>
+                </ul>
+            </nav>
+
+        </div>
     </body>
->>>>>>> 27be073fdfe2619df0349f55bd4355968b60a514
+
+
+    <script>
+        const input = document.getElementById('numberOnlyInput');
+
+
+        input.addEventListener('input', function () {
+            // Xoá mọi ký tự không phải số
+            this.value = this.value.replace(/\D/g, '');
+
+            // Giới hạn tối đa 4 chữ số
+            if (this.value.length > 4) {
+                this.value = this.value.slice(0, 4);
+            }
+        });
+        // Lặp qua tất cả các ô có label "Giá"
+        document.querySelectorAll('td[data-label="Giá"]').forEach(function (td)
+        {
+            let text = td.textContent.trim();
+            let numberPart = text.split(' ')[0]; // Lấy phần số (bỏ " / VND")
+            let formatted = Number(numberPart).toLocaleString('vi-VN'); // Format dạng 1.000.000
+            td.textContent = formatted + " / VND"; // Gán lại vào ô
+        });
+
+    </script>
+</body>
 </html>
