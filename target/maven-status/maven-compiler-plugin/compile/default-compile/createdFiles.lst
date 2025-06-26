@@ -119,6 +119,7 @@ db\SendOTPEmail.class
 =======
 >>>>>>> 27be073fdfe2619df0349f55bd4355968b60a514
 controllers\voucher\AddVoucher.class
+controllers\booking\AddBooking.class
 controllers\voucher\DeleteVoucher.class
 models\RoomEquipment.class
 controllers\room\DeleteRoomForDashboard.class

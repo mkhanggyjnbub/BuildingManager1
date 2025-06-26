@@ -1,4 +1,4 @@
-<%-- 
+    <%-- 
     Document   : userVouchers
     Created on : Jun 16, 2025, 1:08:27 PM
     Author     : Admin
@@ -142,7 +142,7 @@
                                 <form action="ConfirmBooking" method="get">
                                      <input type="hidden" name="voucherId" value="${v.voucherId}" />
                                     <button type="submit" class="use-button">Use Voucher</button>
-                                    <a href="${v.voucherId}" > class  </a>
+                                    <%--<a href="${v.voucherId}" > class  </a>--%>
                                 </form>
                             </c:if>
                         </div>
