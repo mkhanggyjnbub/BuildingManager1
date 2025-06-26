@@ -67,10 +67,7 @@ public class CreateRoomForDashboard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String check = request.getParameter("check");
-        if (check != null && !check.isEmpty()) {
-            request.setAttribute("check", check);
-        }
+
         request.getRequestDispatcher("room/createRoomForDashboard.jsp").forward(request, response);
 
     }
@@ -89,7 +86,7 @@ public class CreateRoomForDashboard extends HttpServlet {
         String bedType = "";
         String uploadedUrl = "";
         int maxOccupancy = 0;
-        int roomNumber = Integer.parseInt(request.getParameter("roomNumber"));
+        String roomNumber = request.getParameter("roomNumber");
         int floorNumber = Integer.parseInt(request.getParameter("floorNumber"));
         String roomType = request.getParameter("roomType");
         String price = request.getParameter("price");
@@ -106,8 +103,9 @@ public class CreateRoomForDashboard extends HttpServlet {
         String description = request.getParameter("description");
         Part filePart = request.getPart("imageFile");
 
+
         String uploadPath = "D:\\fouderPrj\\BuildingWeb\\src\\main\\webapp\\images";
-        uploadedUrl = FileUploader.uploadImage(filePart, uploadPath);
+
 
         String status = request.getParameter("status");
         int location = Integer.parseInt(request.getParameter("location"));
@@ -116,10 +114,11 @@ public class CreateRoomForDashboard extends HttpServlet {
         RoomDao roomDao = new RoomDao();
         int checkRoom = roomDao.checkRoomOfFoor(roomNumber, floorNumber);
         if (checkRoom == 1) {
-            response.sendRedirect("CreateRoomForDashboard?check=" + 1);
+            request.setAttribute("check", 1);
+            request.getRequestDispatcher("room/createRoomForDashboard.jsp").forward(request, response);
         } else {
             int checkCreate = roomDao.createRoom(roomNumber, floorNumber, roomType, bedType, price2, maxOccupancy,
-                    description, "images/"+uploadedUrl, status, location, area);
+                    description,"images/"+uploadedUrl, status, location, area);
             if (checkCreate > 0) {
                 response.sendRedirect("ViewAllRoomsForDashboard");
             } else {

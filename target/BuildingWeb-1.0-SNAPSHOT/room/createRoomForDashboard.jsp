@@ -5,12 +5,14 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <title>Create New Room</title>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
         <style>
             body {
                 margin: 0;
@@ -119,6 +121,7 @@
                 font-style: italic;
             }
 
+
             @media screen and (max-width: 600px) {
                 form {
                     grid-template-columns: 1fr;
@@ -144,15 +147,115 @@
                 }
             }
 
+
+            /*popUp thông báo*/
+            .popup-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.4);
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+            }
+
+
+
+            .popup-box {
+                background: #fff;
+                padding: 25px 30px;
+                border-radius: 12px;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+                text-align: center;
+                min-width: 300px;
+                animation: fadeIn 0.3s ease;
+            }
+
+            .popup-box h3 {
+                margin-top: 0;
+                color: #d33;
+            }
+
+            .popup-box button {
+                margin-top: 20px;
+                padding: 10px 20px;
+                border: none;
+                background: #d33;
+                color: white;
+                border-radius: 6px;
+                cursor: pointer;
+            }
+
+            .popup-box button:hover {
+                background: #b22;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    transform: scale(0.9);
+                    opacity: 0;
+                }
+                to {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
         </style>
+
+        <script>
+            // Ẩn popup
+            function hidePopup() {
+                document.getElementById("popup").style.display = "none";
+            }
+
+            // Đóng khi click ra ngoài popup-box
+            window.addEventListener("click", function (event) {
+                const popup = document.getElementById("popup");
+                const popupBox = document.querySelector(".popup-box");
+                if (event.target === popup) {
+                    hidePopup();
+                }
+            });
+            // Dữ liệu từ server (JSP truyền giá trị check sang)
+            document.addEventListener("DOMContentLoaded", function () {
+                var check = ${check == null ? 0 : check}; // lấy biến từ JSP
+
+                if (check === 1) {
+                    document.getElementById("popup-message").innerText = "⚠️RoomNumber already exists in FloorNumber!";
+                    document.getElementById("popup").style.display = "flex";
+                } else if (check === 2) {
+                    document.getElementById("popup-message").innerText = "✅ Tạo phòng thành công!";
+                    document.getElementById("popup").style.display = "flex";
+                } else if (check === 3) {
+                    document.getElementById("popup-message").innerText = "❌ Lỗi kết nối cơ sở dữ liệu!";
+                    document.getElementById("popup").style.display = "flex";
+                }
+            });
+        </script>
+
     </head>
     <body>
-        <%@include file="../header/header.jsp" %>
+        <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+        <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
         <br>
         <br>
+        <!-- Popup -->
+        <div id="popup" class="popup-overlay">
+            <div class="popup-box">
+                <h3>Thông báo</h3>
+                <p id="popup-message">Nội dung thông báo sẽ thay đổi bằng JavaScript</p>
+                <button onclick="hidePopup()">Đóng</button>
+            </div>
+        </div>
         <div class="form-container">
+
+
+
             <h2>Create New Room</h2>
-            <form action="CreateRoomForDashboard" method="post" enctype="multipart/form-data">
+            <form action="CreateRoomForDashboard" method="post" enctype="multipart/form-data"  onsubmit="return validateImage()">
                 <div>
                     <label>Room Number:</label>
                     <input type="number" name="roomNumber"  min="0" max="9999" required>
@@ -170,10 +273,10 @@
                     <label>Room Type:</label>
                     <select id="roomType" name="roomType" required>
                         <option value="">-- Select Type --</option>
-                        <option  value="Standard">Standard Room</option>
-                        <option value="Deluxe">Deluxe Room</option>
-                        <option  value="Twin">Twin Room</option>
-                        <option  value="Family">Family Room</option>
+                        <option  value="Standard Room">Standard Room</option>
+                        <option value="Deluxe Room">Deluxe Room</option>
+                        <option  value="Twin Room">Twin Room</option>
+                        <option  value="Family Room">Family Room</option>
                     </select>
                 </div>
 
@@ -185,27 +288,27 @@
                 <div class="full-width">
                     <label>Bed Type:</label>
                     <div class="bed-checkbox-group">
-                        <label id="single"><input  type="radio" name="bedType" value="Single|1" > Single Bed</label>
-                        <label id="double"><input type="radio" name="bedType" value="Double|2" > Double Bed</label>
-                        <label id="queen"><input type="radio" name="bedType" value="Queen|2" > Queen Bed</label>
-                        <label id="king"><input type="radio" name="bedType" value="King|2" > King Bed</label>
-                        <label id="twin"><input type="radio" name="bedType" value="Twin|2" > Twin Bed</label>
+                        <label id="single"><input  type="radio" name="bedType" value="Single Bed|1" > Single Bed</label>
+                        <label id="double"><input type="radio" name="bedType" value="Double Bed|2" > Double Bed</label>
+                        <label id="queen"><input type="radio" name="bedType" value="Queen Bed|2" > Queen Bed</label>
+                        <label id="king"><input type="radio" name="bedType" value="King Bed|2" > King Bed</label>
+                        <label id="twin"><input type="radio" name="bedType" value="Twin Beds|2" > Twin Bed</label>
                         <div id="treePeople" style="display: none">
                             <label>Option 3 people</label>
-                            <label ><input type="radio" name="bedType" value="1 Double Bed + 1  Single Bed|3" > 1 Double Bed + 1 Single Bed</label>
+                            <label ><input type="radio" name="bedType" value="1 Double Bed + 1 Single Bed|3" > 1 Double Bed + 1 Single Bed</label>
                             <label ><input type="radio" name="bedType" value="1 Queen Bed + 1 Single Bed|3" > 1 Queen Bed + 1 Single Bed</label>
                             <label ><input type="radio" name="bedType" value="3 Single Beds|3" >3 Single Beds</label>
                         </div>
                         <div id="fourPeople" style="display: none">
                             <label>Option 4 people</label>
-                            <label ><input type="radio" name="bedType" value=" 2 Double Beds|4" > 2 Double Beds</label>
+                            <label ><input type="radio" name="bedType" value="2 Double Beds|4" > 2 Double Beds</label>
                             <label ><input type="radio" name="bedType" value="1 King Bed + 1 Double Bed|4" > 1 King Bed + 1 Double Bed</label>
                             <label ><input type="radio" name="bedType" value="1 Queen Bed + 2 Single Beds|4" > 1 Queen Bed + 2 Single Beds</label>
                             <label ><input type="radio" name="bedType" value="2 Twin Beds + 2 Single Beds|4" > 2 Twin Beds + 2 Single Beds</label>  
                         </div>
                         <div id="fivePeople" style="display: none">
                             <label>Option 5 people</label>
-                            <label ><input type="radio" name="bedType" value="2 Double Beds|5" > 2 Double Beds</label>
+                            <label ><input type="radio" name="bedType" value="2 Double Beds + 1 Single Bed|5" >2 Double Beds + 1 Single Bed</label>
                             <label ><input type="radio" name="bedType" value="2 Queen Beds + 1 Single Bed|5" > 2 Queen Beds + 1 Single Bed</label>
                             <label ><input type="radio" name="bedType" value="1 King Bed + 2 Single Beds|5" >1 King Bed + 2 Single Beds</label>
                             <label ><input type="radio" name="bedType" value="1 Double Bed + 3 Single Beds|5" >1 Double Bed + 3 Single Beds</label>  
@@ -218,19 +321,30 @@
                     <label>Description:</label>
                     <textarea name="description" required></textarea>
                 </div>
-
-                <div class="full-width">
-                    <label>Room Image:</label>
-                    <div class="custom-file-upload">
-                        <label for="imageFile" class="file-label">📁 Choose Image</label>
-                        <input type="file" name="imageFile" id="imageFile" accept="image/*">
-                        <span id="file-name">No file chosen</span>
+                    <div class="full-width">
+                        <label>Room Image:</label>
+                        <div class="custom-file-upload">
+                            <label for="imageFile" class="file-label">📁 Choose Image</label>
+                            <input type="file" name="imageFile" id="imageFile" accept="image/*" >
+                            <span id="file-name">No file chosen</span>
+                        </div>
+                        <p id="error-message" style="color:red; display:none;">Please choose an image file.</p>
                     </div>
-                </div>
-                <!--                <label>Choose URL:</label>
-                                <div class="full-width">
-                                    <input type="text" name="imageUrl" placeholder="https://example.com/your-image.jpg">
-                                </div>-->
+                <script>
+                    function validateImage() {
+                        const fileInput = document.getElementById('imageFile');
+                        const errorMessage = document.getElementById('error-message');
+
+                        if (!fileInput.files || fileInput.files.length === 0) {
+                            errorMessage.style.display = 'block';
+                            return false; // Ngăn form submit
+                        } else {
+                            errorMessage.style.display = 'none';
+                            return true; // Cho phép submit
+                        }
+                    }
+                </script>
+
 
                 <div class="full-width" style="display: flex; flex-wrap: wrap; gap: 16px;">
                     <div style="flex: 1 ;">
@@ -261,13 +375,14 @@
         </div>
 
         <script>
+
+
+
             // Hiển thị tên file khi chọn ảnh
             document.getElementById("imageFile").addEventListener("change", function () {
                 const fileName = this.files[0] ? this.files[0].name : "No file chosen";
                 document.getElementById("file-name").textContent = fileName;
             });
-
-
             document.addEventListener("DOMContentLoaded", function () {
                 let price = document.getElementById("price");
                 // Không cho nhập chữ kể cả khi đang rỗng
@@ -277,7 +392,6 @@
                         e.preventDefault();
                     }
                 });
-
                 // format khi nhập tiền
                 price.addEventListener("input", function () {
                     let raw = price.value.replace(/\D/g, "");
@@ -297,17 +411,11 @@
                         e.preventDefault();
                     }
                 });
-
-
-
-
-
             });
-
             // làm thay đổi bed khi chọn phòng 
             document.getElementById("roomType").addEventListener("change", function () {
                 const roomType = document.getElementById("roomType");
-                if (roomType.value === "Standard") {
+                if (roomType.value === "Standard Room") {
                     document.getElementById("single").style.display = 'block';
                     document.getElementById("double").style.display = 'block';
                     document.getElementById("queen").style.display = 'none';
@@ -315,7 +423,7 @@
                     document.getElementById("treePeople").style.display = 'none';
                     document.getElementById("fourPeople").style.display = 'none';
                     document.getElementById("fivePeople").style.display = 'none';
-                } else if (roomType.value === "Deluxe") {
+                } else if (roomType.value === "Deluxe Room") {
                     document.getElementById("queen").style.display = 'block';
                     document.getElementById("king").style.display = 'block';
                     document.getElementById("single").style.display = 'none';
@@ -324,7 +432,7 @@
                     document.getElementById("treePeople").style.display = 'none';
                     document.getElementById("fourPeople").style.display = 'none';
                     document.getElementById("fivePeople").style.display = 'none';
-                } else if (roomType.value === "Twin") {
+                } else if (roomType.value === "Twin Room") {
                     document.getElementById("twin").style.display = 'block';
                     document.getElementById("single").style.display = 'none';
                     document.getElementById("double").style.display = 'none';
@@ -333,7 +441,7 @@
                     document.getElementById("treePeople").style.display = 'none';
                     document.getElementById("fourPeople").style.display = 'none';
                     document.getElementById("fivePeople").style.display = 'none';
-                } else if (roomType.value === "Family") {
+                } else if (roomType.value === "Family Room") {
                     document.getElementById("twin").style.display = 'none';
                     document.getElementById("single").style.display = 'none';
                     document.getElementById("double").style.display = 'none';
@@ -354,18 +462,6 @@
                 }
             });
 
-            function validatePrice(input) {
-                const value = parseInt(input.value);
-                const error = document.getElementById('price-error');
-
-                if (!isNaN(value) && value % 1000 === 0) {
-                    error.style.display = 'none';
-                    input.setCustomValidity(""); // Xóa lỗi nếu hợp lệ
-                } else {
-                    error.style.display = 'inline';
-                    input.setCustomValidity("Giá tiền phải là bội số của 1000");
-                }
-            }
         </script>
 
     </body>

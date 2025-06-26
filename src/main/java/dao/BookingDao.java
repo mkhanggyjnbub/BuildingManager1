@@ -32,13 +32,12 @@ public class BookingDao {
         List<Bookings> list = new ArrayList<>();
         Connection conn = ConnectData.getConnection();
 
-       String sql = "SELECT b.BookingId, b.RoomId, b.CustomerId, b.StartDate, b.EndDate, b.Status, "
-           + "r.RoomNumber, c.FullName "
-           + "FROM Bookings b "
-           + "JOIN Rooms r ON b.RoomId = r.RoomId "
-           + "JOIN Customers c ON b.CustomerId = c.CustomerId "
-           + "WHERE b.Status IN ( 'Confirmed', 'Checked In','Checked Out')";
-
+        String sql = "SELECT b.BookingId, b.RoomId, b.CustomerId, b.StartDate, b.EndDate, b.Status, "
+                + "r.RoomNumber, c.FullName "
+                + "FROM Bookings b "
+                + "JOIN Rooms r ON b.RoomId = r.RoomId "
+                + "JOIN Customers c ON b.CustomerId = c.CustomerId "
+                + "WHERE b.Status IN ('Checked in', 'Confirmed','Checked out')";
 
         PreparedStatement ps = conn.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
@@ -219,34 +218,6 @@ public class BookingDao {
         return list;
     }
 
-    public List<Bookings> getAllCheckInBookings() throws SQLException {
-        List<Bookings> list = new ArrayList<>();
-        String sql = "SELECT b.BookingId, b.RoomId, b.CustomerId, b.StartDate, b.EndDate, b.Status, b.CheckInTime, b.UserId "
-                + "FROM Bookings b WHERE b.Status = 'CheckedIn'";
-
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-
-        while (rs.next()) {
-            Bookings booking = new Bookings();
-            booking.setBookingId(rs.getInt("BookingId"));
-            booking.setRoomId(rs.getInt("RoomId"));
-            booking.setCustomerId(rs.getInt("CustomerId"));
-            booking.setUserId(rs.getInt("UserId"));
-            booking.setStartDate(rs.getTimestamp("StartDate").toLocalDateTime());
-            booking.setEndDate(rs.getTimestamp("EndDate").toLocalDateTime());
-            booking.setStatus(rs.getString("Status"));
-            booking.setCheckInTime(rs.getTimestamp("CheckInTime").toLocalDateTime());
-
-            list.add(booking);
-        }
-
-        rs.close();
-        ps.close();
-        conn.close();
-        return list;
-    }
-
     public int updateBookingStatusAndcheckInt(int bookingId, String status) {
         int cnt = 0;
         try {
@@ -330,12 +301,12 @@ public class BookingDao {
 
     public Bookings getBookingById(int id) {
         Bookings b = null;
-            String sql = "SELECT b.BookingID, b.Status, b.StartDate, b.EndDate, b.CheckInTime, b.CheckOutTime, "
-                    + "r.RoomNumber, c.FullName, c.Email, c.Phone "
-                    + "FROM Bookings b "
-                    + "JOIN Rooms r ON b.RoomID = r.RoomID "
-                    + "JOIN Customers c ON b.CustomerID = c.CustomerID "
-                    + "WHERE b.BookingID = ?";
+        String sql = "SELECT b.BookingID, b.Status, b.StartDate, b.EndDate, b.CheckInTime, b.CheckOutTime, "
+                + "r.RoomNumber, c.FullName, c.Email, c.Phone "
+                + "FROM Bookings b "
+                + "JOIN Rooms r ON b.RoomID = r.RoomID "
+                + "JOIN Customers c ON b.CustomerID = c.CustomerID "
+                + "WHERE b.BookingID = ?";
 
         try ( PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setInt(1, id);
@@ -420,5 +391,6 @@ public class BookingDao {
 
         return null; // Không tìm thấy booking
     }
+
 
 }

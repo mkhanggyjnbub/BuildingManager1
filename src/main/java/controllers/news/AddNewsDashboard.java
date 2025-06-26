@@ -6,14 +6,17 @@ package controllers.news;
 
 import dao.BuildingDao;
 import dao.NewsDao;
+import db.FileUploader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,6 +27,7 @@ import models.News;
  *
  * @author dodan
  */
+@MultipartConfig
 @WebServlet(name = "AddNewsDashboard", urlPatterns = {"/AddNewsDashboard"})
 public class AddNewsDashboard extends HttpServlet {
 
@@ -89,21 +93,27 @@ public class AddNewsDashboard extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+
+            String uploadedUrl = "";
             // Lấy dữ liệu từ form
             String title = request.getParameter("title");
             String summary = request.getParameter("summary");
-            String imageURL = request.getParameter("imageURL");
+
             String content = request.getParameter("content");
             boolean isPublished = Boolean.parseBoolean(request.getParameter("isPublished"));
             HttpSession session = request.getSession();
             int userId = Integer.parseInt(session.getAttribute("adminId").toString());
             int buildingID = Integer.parseInt(request.getParameter("buildingID"));
 
+            Part filePart = request.getPart("imageFile");
+
+            String uploadPath = "F:\\SWP\\moi\\BuildingWeb\\src\\main\\webapp\\images";
+            uploadedUrl = FileUploader.uploadImage(filePart, uploadPath);
             // Tạo đối tượng News mới
             News news = new News();
             news.setTitle(title);
             news.setSummary(summary);
-            news.setImageURL(imageURL);
+            news.setImageURL("images/" + uploadedUrl);
             news.setContent(content);
             news.setIsPublished(isPublished);
             news.setUserId(userId);
