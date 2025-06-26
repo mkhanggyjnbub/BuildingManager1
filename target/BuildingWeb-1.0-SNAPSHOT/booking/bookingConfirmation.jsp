@@ -193,6 +193,48 @@
                 margin-top: 20px;
             }
 
+            .popup-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                display: none;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+            }
+
+            .popup-box {
+                background: #fff;
+                padding: 20px 30px;
+                border-radius: 10px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                text-align: center;
+                font-size: 16px;
+                max-width: 300px;
+                width: 90%;
+            }
+
+            .popup-box p {
+                margin-bottom: 15px;
+            }
+
+            .popup-box button {
+                padding: 8px 16px;
+                background-color: #3498db;
+                border: none;
+                color: white;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            .popup-box button:hover {
+                background-color: #2980b9;
+            }
+
         </style>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -260,7 +302,7 @@
             <c:if test="${searched and noResult}"><script>window.onload = showNoResultsPopup;</script></c:if>
                 <form action="BookingConfirmation" method="post">
                     Room Number: <input type="number" name="roomNumber" min="1" max="999" oninput="this.value=this.value.slice(0,3)" placeholder="Up to 3 digits" title="Only digits (1–999)" />
-                    Full Name: <input type="text" name="fullName" maxlength="30" pattern="[A-Za-zÀ-ỹ\\s]+" title="Only letters" oninput="removeNumbers(this)" />
+                    Full Name: <input type="text" name="fullName" maxlength="30" title="Only letters" oninput="removeNumbers(this)" />
                     Start Date: <input type="date" name="startDate" value="${startDate}" />
                 End Date: <input type="date" name="endDate" value="${endDate}" />
                 Status: <select name="status"><option value="">-- All --</option><option value="Waiting for processing" ${status=='Waiting for processing'?'selected':''}>Waiting</option><option value="Confirmed" ${status=='Confirmed'?'selected':''}>Confirmed</option></select>
