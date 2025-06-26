@@ -6,7 +6,6 @@
 
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +19,6 @@
             --white: #ffffff;
         }
 
-        /* Navbar giống như ảnh */
         .navbar {
             background-color: var(--navy);
             color: var(--white);
@@ -156,10 +154,8 @@
 </head>
 <body>
 
-
 <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
 <%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
-
 
 <div class="main-content">
     <div class="container">
@@ -172,25 +168,17 @@
             <p><strong><i class="fa-solid fa-phone"></i> Phone:</strong> ${booking.customers.phone}</p>
             <p><strong><i class="fa-solid fa-door-closed"></i> Room:</strong> ${booking.rooms.roomNumber}</p>
             <p><strong><i class="fa-solid fa-bars-progress"></i> Status:</strong> ${booking.status}</p>
-            <p><strong><i class="fa-solid fa-calendar-plus"></i> Start Date:</strong>
-                <fmt:formatDate value="${booking.startDate}" pattern="dd/MM/yyyy HH:mm:ss"/>
-            </p>
-            <p><strong><i class="fa-solid fa-calendar-minus"></i> End Date:</strong>
-                <fmt:formatDate value="${booking.endDate}" pattern="dd/MM/yyyy HH:mm:ss"/>
-            </p>
+            <p><strong><i class="fa-solid fa-calendar-plus"></i> Start Date:</strong> ${booking.formattedStartDate}</p>
+            <p><strong><i class="fa-solid fa-calendar-minus"></i> End Date:</strong> ${booking.formattedEndDate}</p>
             <p><strong><i class="fa-solid fa-door-open"></i> Check-In Time:</strong>
                 <c:choose>
-                    <c:when test="${not empty booking.checkInTime}">
-                        <fmt:formatDate value="${booking.checkInTime}" pattern="dd/MM/yyyy HH:mm:ss"/>
-                    </c:when>
+                    <c:when test="${not empty booking.checkInTime}">${booking.checkInTime}</c:when>
                     <c:otherwise>N/A</c:otherwise>
                 </c:choose>
             </p>
             <p><strong><i class="fa-solid fa-door-closed"></i> Check-Out Time:</strong>
                 <c:choose>
-                    <c:when test="${not empty booking.checkOutTime}">
-                        <fmt:formatDate value="${booking.checkOutTime}" pattern="dd/MM/yyyy HH:mm:ss"/>
-                    </c:when>
+                    <c:when test="${not empty booking.checkOutTime}">${booking.checkOutTime}</c:when>
                     <c:otherwise>N/A</c:otherwise>
                 </c:choose>
             </p>

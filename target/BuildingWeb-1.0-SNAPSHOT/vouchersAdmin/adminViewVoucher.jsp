@@ -98,7 +98,7 @@
 
             <div class="detail-row">
                 <span class="detail-label">Voucher code:</span>
-                <span class="detail-value">${voucher.code}</span>
+<span class="detail-value">${voucher.code}</span>
             </div>
 
             <div class="detail-row">

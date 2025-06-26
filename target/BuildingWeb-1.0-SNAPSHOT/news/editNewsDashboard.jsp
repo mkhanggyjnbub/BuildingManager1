@@ -10,17 +10,25 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Update News</title>
+  <title>Update News</title>
+
+  <!-- Icon libraries -->
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+  <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
+
         <style>
             body {
                 font-family: Arial, sans-serif;
                 background-color: #f4f6f9;
                 margin: 0;
-                padding: 0;
+                padding: 80px 30px 40px;
             }
             .container {
-                max-width: 600px;
-                margin: 40px auto;
+                max-width: 700px;
+                margin: 0 auto;
                 background-color: #ffffff;
                 padding: 30px;
                 border-radius: 12px;
@@ -44,7 +52,7 @@
             }
             h1 {
                 text-align: center;
-                color: #333;
+                color: #2c3e50;
                 margin-bottom: 30px;
             }
             label {
@@ -123,8 +131,8 @@
     </head>
     <body>
         <div class="container">
-            <a href="javascript:history.back()" class="back-button">← Back</a>
-            <h1>Update News</h1>
+            <a href="javascript:history.back()" class="back-button"><i class='bx bx-arrow-back'></i> Back</a>
+            <h1><i class='bx bx-edit'></i> Update News</h1>
             <form action="${pageContext.request.contextPath}/EditNewsDashboard" method="post" onsubmit="return validateForm();" enctype="multipart/form-data">
                 <input type="hidden" name="newsID" value="${news.newsID}" />
 
@@ -170,7 +178,7 @@
 
                 <input type="hidden" name="viewcount" value="${news.viewcount}" readonly />
 
-                <button type="submit">Update</button>
+                <button type="submit"><i class='bx bx-check'></i> Update</button>
             </form>
         </div>
 

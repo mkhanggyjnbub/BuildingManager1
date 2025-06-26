@@ -49,11 +49,23 @@ dao\EquipmentDao.class
 sendMail\EmailSender.class
 controllers\amenities\AddAmenitiesDashboard.class
 controllers\booking\BookingConfirmation.class
+<<<<<<< HEAD
+models\Employees.class
 controllers\services\ViewServicesCart.class
+models\Services.class
+controllers\services\ViewServices.class
+=======
+controllers\services\ViewServicesCart.class
+>>>>>>> 27be073fdfe2619df0349f55bd4355968b60a514
 controllers\report\ViewAllReportsForDashboard.class
 models\Vouchers.class
 models\RoomReviews.class
 controllers\services\DeleteServiceDashboard.class
+<<<<<<< HEAD
+dao\ServicesCartDao.class
+models\Report.class
+=======
+>>>>>>> 27be073fdfe2619df0349f55bd4355968b60a514
 controllers\asset\Assets.class
 models\Rooms.class
 controllers\account\Logout.class
@@ -80,13 +92,32 @@ controllers\booking\ConfirmBooking.class
 controllers\customer\ViewCustomerProfile.class
 controllers\news\AddNewsDashboard.class
 controllers\amenities\DeleteAmenitiesDashboard.class
+<<<<<<< HEAD
+models\ServicesCart.class
+controllers\customer\ViewAllCustomersDashboard.class
+controllers\news\ViewNewsDetail.class
+controllers\services\ViewServicesDashboard.class
+controllers\admin\Dashboard.class
+dao\ServicesDao.class
+models\Floors.class
+dao\BuildingDao.class
+controllers\admin\DashboardUser.class
+=======
 controllers\services\ViewServicesDashboard.class
 controllers\admin\Dashboard.class
 controllers\cloudinary\CloudinaryUpload.class
+>>>>>>> 27be073fdfe2619df0349f55bd4355968b60a514
 controllers\admin\AdminView.class
 models\Buildings.class
 controllers\services\EditServiceDashboard.class
 controllers\account\Login.class
+<<<<<<< HEAD
+models\Customers.class
+controllers\services\AddServiceDashboard.class
+controllers\voucher\ViewVouchers.class
+db\SendOTPEmail.class
+=======
+>>>>>>> 27be073fdfe2619df0349f55bd4355968b60a514
 controllers\voucher\AddVoucher.class
 controllers\booking\AddBooking.class
 controllers\voucher\DeleteVoucher.class
@@ -95,3 +126,9 @@ controllers\room\DeleteRoomForDashboard.class
 sendMail\EmailSender$1.class
 controllers\news\DeleteNewsDashboard.class
 models\Amenities.class
+<<<<<<< HEAD
+dao\ReportDao.class
+db\SendOTPEmail$1.class
+controllers\checkInOut\CheckInOutDetail.class
+=======
+>>>>>>> 27be073fdfe2619df0349f55bd4355968b60a514
