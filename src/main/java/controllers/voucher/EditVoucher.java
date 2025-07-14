@@ -4,7 +4,7 @@
  */
 package controllers.voucher;
 
-import dao.VoucherDAO;
+import dao.VoucherDao;
 import models.Vouchers;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -65,7 +65,7 @@ public class EditVoucher extends HttpServlet {
         int voucherId = Integer.parseInt(request.getParameter("voucherId"));
         Vouchers vouchers = new Vouchers();
 
-        VoucherDAO dao = new VoucherDAO();
+        VoucherDao dao = new VoucherDao();
         vouchers = dao.getVoucherById(voucherId);
         request.setAttribute("voucher", vouchers);
         request.getRequestDispatcher("vouchersAdmin/editVoucher.jsp").forward(request, response);
@@ -87,15 +87,13 @@ public class EditVoucher extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("voucherId"));
         boolean isActiveNew = Boolean.parseBoolean(request.getParameter("isActive"));
 
-        VoucherDAO dao = new VoucherDAO();
+        VoucherDao dao = new VoucherDao();
         Vouchers current = dao.getVoucherById(id); // Lấy voucher hiện tại từ DB
 
-        // Nếu voucher đang active → chỉ cho update trạng thái
         if (current.getIsActive()) {
-            current.setIsActive(isActiveNew); // chỉ đổi trạng thái
-            dao.updateVoucherStatusOnly(current); // viết riêng 1 hàm chỉ update IsActive
+            current.setIsActive(isActiveNew);
+            dao.updateVoucherStatusOnly(current);
         } else {
-            // Nếu chưa active, thì cho chỉnh toàn bộ
             Vouchers v = new Vouchers();
             v.setVoucherId(id);
             v.setCode(request.getParameter("code"));
@@ -112,7 +110,18 @@ public class EditVoucher extends HttpServlet {
             v.setQuantity(Integer.parseInt(request.getParameter("quantity")));
             v.setIsActive(isActiveNew);
 
-            dao.updateVoucher(v); // update toàn bộ
+            // ✅ Nếu người dùng bật Active thì kiểm tra xem có trùng code không
+            if (isActiveNew) {
+                boolean conflict = dao.isCodeConflictWhenActivating(v.getCode(), v.getStartDate(), v.getEndDate(), v.getVoucherId());
+                if (conflict) {
+                    request.setAttribute("error", "Another active voucher with the same code and overlapping time already exists.");
+                    request.setAttribute("voucher", v); // gửi lại dữ liệu để giữ form
+                    request.getRequestDispatcher("vouchersAdmin/editVoucher.jsp").forward(request, response);
+                    return;
+                }
+            }
+
+            dao.updateVoucher(v);
         }
 
         response.sendRedirect("VouchersDashBoard");
