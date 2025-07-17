@@ -199,7 +199,7 @@
         <li style="--i:2"><a href="VouchersDashBoard"><i class="fa-solid fa-ticket"></i><span>Vouchers</span></a></li>
         <li style="--i:3"><a href="ViewNewsDashboard"><i class="fa-solid fa-newspaper"></i><span>News</span></a></li>
         
-        <li style="--i:3"><a href="SelectRoom"><i class="fa-solid fa-calendar-check"></i><span>Select Room</span></a></li>
+        <li style="--i:3"><a href="CreateBooking"><i class="fa-solid fa-calendar-check"></i><span>Desk Booking</span></a></li>
         
         <li style="--i:4"><a href="BookingConfirmation"><i class="fa-solid fa-calendar-check"></i><span>Bookings</span></a></li>
         <li style="--i:5"><a href="ViewAllRoomsForDashboard"><i class="fa-solid fa-bed"></i><span>List Rooms</span></a></li>

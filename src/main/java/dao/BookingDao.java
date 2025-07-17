@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -381,15 +382,13 @@ public class BookingDao {
     //vinh   
     public Bookings getBookingInfoForConfirmation(int bookingId) throws SQLException {
         String sql = "SELECT b.BookingId, b.StartDate, b.EndDate, b.RoomId, b.ConfirmationTime, "
-                + "       c.FullName, c.Email, "
-                + "       r.RoomType "
+                + "       b.RoomType, " // Lấy RoomType từ bảng Bookings
+                + "       c.FullName, c.Email "
                 + "FROM Bookings b "
                 + "JOIN Customers c ON b.CustomerId = c.CustomerId "
-                + "LEFT JOIN Rooms r ON b.RoomId = r.RoomId "
                 + "WHERE b.BookingId = ?";
 
-        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
-
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, bookingId);
             ResultSet rs = ps.executeQuery();
 
@@ -404,29 +403,26 @@ public class BookingDao {
                     info.setEndDate(rs.getDate("EndDate").toLocalDate());
                 }
 
-                // Gán ConfirmationTime nếu có
                 if (rs.getTimestamp("ConfirmationTime") != null) {
                     info.setConfirmationTime(rs.getTimestamp("ConfirmationTime").toLocalDateTime());
                 }
 
-                // Gán thông tin khách hàng
+                // Gán khách
                 Customers customer = new Customers();
                 customer.setFullName(rs.getString("FullName"));
                 customer.setEmail(rs.getString("Email"));
                 info.setCustomers(customer);
 
-                // Gán thông tin phòng
-                if (rs.getString("RoomType") != null) {
-                    Rooms room = new Rooms();
-                    room.setRoomType(rs.getString("RoomType"));
-                    info.setRooms(room);
-                }
+                // Gán loại phòng
+                Rooms room = new Rooms();
+                room.setRoomType(rs.getString("RoomType")); // luôn có vì lấy từ bảng Bookings
+                info.setRooms(room);
 
                 return info;
             }
         }
 
-        return null;//trả về null nếu ko tìm thấy booking
+        return null;
     }
 
     //vinh
@@ -439,7 +435,7 @@ public class BookingDao {
                 + "JOIN Customers c ON b.CustomerId = c.CustomerId "
                 + "WHERE b.BookingId = ?";
 
-        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, bookingId);
             ResultSet rs = ps.executeQuery();
@@ -493,6 +489,36 @@ public class BookingDao {
         }
 
         return null; // Không tìm thấy booking
+    }
+
+    //vinh deskbooking
+    public int insertBookingAndReturnId(Bookings booking) throws SQLException {
+        String sql = "INSERT INTO Bookings (RoomId, CustomerID, StartDate, EndDate, Status, RequestTime, ConfirmationTime, ConfirmedBy) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try ( PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setInt(1, booking.getRoomId());
+            ps.setInt(2, booking.getCustomerId());
+            ps.setDate(3, Date.valueOf(booking.getStartDate()));
+            ps.setDate(4, Date.valueOf(booking.getEndDate()));
+            ps.setString(5, booking.getStatus());
+            ps.setTimestamp(6, Timestamp.valueOf(booking.getRequestTime()));
+            ps.setTimestamp(7, Timestamp.valueOf(booking.getConfirmationTime()));
+            ps.setInt(8, booking.getConfirmedBy());
+
+            int affected = ps.executeUpdate();
+            if (affected == 0) {
+                throw new SQLException("Không thể tạo booking.");
+            }
+
+            try ( ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1); // Trả lại bookingId
+                } else {
+                    throw new SQLException("Không lấy được bookingId.");
+                }
+            }
+        }
     }
 
 }

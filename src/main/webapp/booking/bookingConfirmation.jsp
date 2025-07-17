@@ -312,100 +312,121 @@
             function closePopup(bookingId) {
                 document.getElementById("popup-confirm-" + bookingId).style.display = "none";
             }
+
+
+            //sử lý seclect room
+            function submitSelectRoom(bookingId) {
+                const form = document.getElementById("selectRoomForm-" + bookingId);
+                if (form)
+                    form.submit();
+            }
         </script>
     </head>
     <body>
-        <%@ include file="../navbarDashboard/navbarDashboard.jsp" %>
-        <%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
+        <div class="dashboard-container">
+            <%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
 
+            <div class="main-content">
+                <%@ include file="../navbarDashboard/navbarDashboard.jsp" %>
 
+                <div class="content-wrapper">
+                    <c:if test="${sessionScope.bookingConfirmed}"><script>window.onload = () => alert('Booking confirmed!');</script><c:remove var="bookingConfirmed" scope="session"/></c:if>
+                        
+                    <h1>Booking Confirmation List</h1>
+                    
+                    <!-- báo lỗi hết loại phòng -->
+                    <c:if test="${noRoomTypeAlert}">
+                        <script>
+                            alert("❌ There are no more rooms of this type available during the selected period!");
+                        </script>
+                    </c:if>
 
+                    <c:if test="${searched and noResult}"><script>window.onload = showNoResultsPopup;</script></c:if>
+                        <form action="BookingConfirmation" method="post">
+                            Room Type: <input type="text" name="roomType" maxlength="30" title="Only letters" oninput="removeNumbers(this)" />
+                            Full Name: <input type="text" name="fullName" maxlength="30" title="Only letters" oninput="removeNumbers(this)" />
+                            Start Date: <input type="date" name="startDate" value="${startDate}" />
+                        End Date: <input type="date" name="endDate" value="${endDate}" />
+                        Status: <select name="status"><option value="">-- All --</option><option value="Waiting for processing" ${status=='Waiting for processing'?'selected':''}>Waiting</option><option value="Confirmed" ${status=='Confirmed'?'selected':''}>Confirmed</option></select>
+                        <button type="submit">Search</button>
+                    </form>
+                    <div class="table-responsive">
+                        <table>
+                            <thead><tr><th>Room Type</th><th>Full Name</th><th>Start Date</th><th>End Date</th><th>Status</th><th>Cancel</th></tr></thead>
+                            <tbody>
+                                <c:forEach var="booking" items="${booking}">
+                                    <tr>
+                                        <td data-label="Room Number">${booking.roomType}</td>
+                                        <td data-label="Full Name">${booking.customers.fullName}</td>
+                                        <td data-label="Start Date">${booking.formattedStartDate}</td>
+                                        <td data-label="End Date">${booking.formattedEndDate}</td>
 
-        <div class="content-wrapper">
-            <c:if test="${sessionScope.bookingConfirmed}"><script>window.onload = () => alert('Booking confirmed!');</script><c:remove var="bookingConfirmed" scope="session"/></c:if>
-                <h1>Booking Confirmation List</h1>
-            <c:if test="${searched and noResult}"><script>window.onload = showNoResultsPopup;</script></c:if>
-                <form action="BookingConfirmation" method="post">
-                    Room Type: <input type="text" name="roomType" maxlength="30" title="Only letters" oninput="removeNumbers(this)" />
-                    Full Name: <input type="text" name="fullName" maxlength="30" title="Only letters" oninput="removeNumbers(this)" />
-                    Start Date: <input type="date" name="startDate" value="${startDate}" />
-                End Date: <input type="date" name="endDate" value="${endDate}" />
-                Status: <select name="status"><option value="">-- All --</option><option value="Waiting for processing" ${status=='Waiting for processing'?'selected':''}>Waiting</option><option value="Confirmed" ${status=='Confirmed'?'selected':''}>Confirmed</option></select>
-                <button type="submit">Search</button>
-            </form>
-            <div class="table-responsive">
-                <table>
-                    <thead><tr><th>Room Type</th><th>Full Name</th><th>Start Date</th><th>End Date</th><th>Status</th><th>Cancel</th></tr></thead>
-                    <tbody>
-                        <c:forEach var="booking" items="${booking}">
-                            <tr>
-                                <td data-label="Room Number">${booking.roomType}</td>
-                                <td data-label="Full Name">${booking.customers.fullName}</td>
-                                <td data-label="Start Date">${booking.formattedStartDate}</td>
-                                <td data-label="End Date">${booking.formattedEndDate}</td>
+                                        <td data-label="Status">
+                                            <c:if test="${booking.status eq 'Waiting for processing'}">
+                                                <button class="waiting" onclick="openConfirmationPopup(${booking.bookingId})">Waiting</button>
 
-                                <td data-label="Status">
-                                    <c:if test="${booking.status eq 'Waiting for processing'}">
-                                        <button class="waiting" onclick="openConfirmationPopup(${booking.bookingId})">Waiting</button>
+                                                <div id="popup-confirm-${booking.bookingId}" class="popup-overlay">
+                                                    <div class="popup-box">
+                                                        <p>How would you like to confirm this booking?</p>
+                                                        <!-- 2 nút xác nhận đơn chọn phòng -->
+                                                        <form method="post" action="BookingConfirmation">
+                                                            <input type="hidden" name="actionType" value="goToSelectRoom" />
+                                                            <input type="hidden" name="bookingId" value="${booking.bookingId}" />
+                                                            <button type="submit">🛏️ Select room</button>
+                                                        </form>
 
-                                        <div id="popup-confirm-${booking.bookingId}" class="popup-overlay">
-                                            <div class="popup-box">
-                                                <p>How would you like to confirm this booking?</p>
-                                                <form method="get" action="SelectRoom" style="display:inline;">
-                                                    <input type="hidden" name="bookingId" value="${booking.bookingId}" />
-                                                    <button type="submit">🛏️ Select room</button>
-                                                </form>
-                                                <form method="post" action="BookingConfirmation" style="display:inline;">
-                                                    <input type="hidden" name="bookingId" value="${booking.bookingId}" />
-                                                    <input type="hidden" name="actionType" value="confirmBooking" />
-                                                    <button type="submit">✅ Confirm no room selection</button>
-                                                </form>
-                                                <br/><br/>
-                                                <button onclick="closePopup(${booking.bookingId})" class="popup-close">Close</button>
+                                                        <form method="post" action="BookingConfirmation">
+                                                            <input type="hidden" name="actionType" value="confirmBooking" />
+                                                            <input type="hidden" name="bookingId" value="${booking.bookingId}" />
+                                                            <button type="submit">✅ Confirm no room selection</button>
+                                                        </form>
+                                                        <button onclick="closePopup(${booking.bookingId})" class="popup-close">Close</button>
+                                                    </div>
+                                                </div>
+
+                                            </c:if>
+
+                                            <c:if test="${booking.status eq 'Confirmed'}">
+                                                <span class="confirmed">Confirmed</span>
+                                            </c:if>
+                                        </td>
+
+                                        <!-- hủy booking -->
+                                        <td data-label="Cancel" style="text-align:center;">
+                                            <!-- Form cancel -->
+                                            <form id="cancelForm-${booking.bookingId}" action="BookingCancel" method="post">
+                                                <input type="hidden" name="bookingId" value="${booking.bookingId}" />
+                                                <input type="hidden" name="notes" id="notesInput-${booking.bookingId}" />
+
+                                                <!-- Nút Cancel duy nhất -->
+                                                <button type="button" class="cancel" onclick="openCancelModal('${booking.bookingId}')">Cancel</button>
+                                            </form>
+
+                                            <!-- Modal nhập lý do -->
+                                            <div id="cancelModal-${booking.bookingId}" class="cancel-modal">
+                                                <div class="modal-content">
+                                                    <label for="notesTextarea-${booking.bookingId}">Reason for cancellation:</label>
+                                                    <textarea id="notesTextarea-${booking.bookingId}" placeholder="Enter reason..." rows="4"></textarea>
+                                                    <div class="modal-actions">
+                                                        <button type="button" onclick="confirmReason('${booking.bookingId}')">OK</button>
+                                                        <button type="button" onclick="closeCancelModal('${booking.bookingId}')">Close</button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </td>
 
-                                    </c:if>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="load-more-wrapper">
+                        <button id="loadMoreBtn" style="padding:8px 16px;">See more</button>
+                    </div>
 
-                                    <c:if test="${booking.status eq 'Confirmed'}">
-                                        <span class="confirmed">Confirmed</span>
-                                    </c:if>
-                                </td>
-
-                                <!-- hủy booking -->
-                                <td data-label="Cancel" style="text-align:center;">
-                                    <!-- Form cancel -->
-                                    <form id="cancelForm-${booking.bookingId}" action="BookingCancel" method="post">
-                                        <input type="hidden" name="bookingId" value="${booking.bookingId}" />
-                                        <input type="hidden" name="notes" id="notesInput-${booking.bookingId}" />
-
-                                        <!-- Nút Cancel duy nhất -->
-                                        <button type="button" class="cancel" onclick="openCancelModal('${booking.bookingId}')">Cancel</button>
-                                    </form>
-
-                                    <!-- Modal nhập lý do -->
-                                    <div id="cancelModal-${booking.bookingId}" class="cancel-modal">
-                                        <div class="modal-content">
-                                            <label for="notesTextarea-${booking.bookingId}">Reason for cancellation:</label>
-                                            <textarea id="notesTextarea-${booking.bookingId}" placeholder="Enter reason..." rows="4"></textarea>
-                                            <div class="modal-actions">
-                                                <button type="button" onclick="confirmReason('${booking.bookingId}')">OK</button>
-                                                <button type="button" onclick="closeCancelModal('${booking.bookingId}')">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
+                    <div id="noResultsPopup" class="popup-overlay" style="display:none;"><div class="popup-box"><p>🔍 No matching results found!</p><button onclick="closePopup()">OK</button></div></div>
+                </div>
             </div>
-            <div class="load-more-wrapper">
-                <button id="loadMoreBtn" style="padding:8px 16px;">See more</button>
-            </div>
-
-            <div id="noResultsPopup" class="popup-overlay" style="display:none;"><div class="popup-box"><p>🔍 No matching results found!</p><button onclick="closePopup()">OK</button></div></div>
         </div>
     </body>
 </html>
