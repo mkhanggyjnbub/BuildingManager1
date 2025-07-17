@@ -188,17 +188,37 @@
                         <input type="text" name="fullName" required>
                         <label>Phone number:</label>
                         <input type="text" name="phone" required>
+                        <label for="identityNumber">Identity Number:</label>
+                        <input type="text" name="identityNumber" id="identityNumber" required>
+
                         <label>Email (can be left blank):</label>
                         <input type="email" name="email">
                         <button type="submit">Create temporary account</button>
                     </form>
                 </div>
 
+
+
                 <c:if test="${not empty customer}">
                     <h2>Customer: ${customer.fullName}</h2>
                     <p><strong>Phone: </strong> ${customer.phone}</p>
+                    <c:if test="${not empty customer.identityNumber}">
+                        <p><strong>Identity Number:</strong> ${customer.identityNumber}</p>
+                    </c:if>
 
 
+                    <c:if test="${!customer.registered}">
+                        <p style="color: #ff9900;"><em>Temporary account</em></p>
+                    </c:if>
+
+                    <form method="get" action="CheckExistingCustomer">
+                        <input type="hidden" name="action" value="logoutCustomer" />
+                        <button type="submit" style="background-color: crimson; color: white; padding: 8px 16px; border: none; border-radius: 4px; display: flex">
+                             Exit
+                        </button>
+                    </form>
+                        
+                        
                     <!-- Tìm phòng -->
                     <div class="search-box">
                         <form method="post" action="CreateBooking" class="search-form">

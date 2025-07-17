@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -61,9 +62,22 @@ public class CheckExistingCustomer extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+        throws ServletException, IOException {
+
+    String action = request.getParameter("action");
+
+    if ("logoutCustomer".equals(action)) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.removeAttribute("customer"); // ✅ Xóa thông tin khách
+        }
+        response.sendRedirect("Dashboard"); // ✅ Điều hướng về trang chính
+        return;
     }
+
+    // Các xử lý GET khác nếu có
+    response.sendRedirect("CreateBooking"); // hoặc load trang nào đó mặc định
+}
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -82,12 +96,13 @@ public class CheckExistingCustomer extends HttpServlet {
 
             CustomerDao dao = new CustomerDao();
             Customers customer = dao.getCustomerByFullNameAndPhone(fullName, phone);
-
+            //check lỗi dữ liệu
+            System.out.println("IdentityNumber = " + customer.getIdentityNumber());
             if (customer != null) {
                 request.getSession().setAttribute("customer", customer);
-                response.sendRedirect("CreateBooking"); 
+                response.sendRedirect("CreateBooking");
             } else {
-                       request.setAttribute("notFound", true);
+                request.setAttribute("notFound", true);
                 request.getRequestDispatcher("booking/createBooking.jsp").forward(request, response);
             }
         } catch (SQLException ex) {

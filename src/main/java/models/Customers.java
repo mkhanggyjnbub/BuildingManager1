@@ -29,7 +29,8 @@ public class Customers {
     private LocalDateTime lastLogin;
     private LocalDateTime currenrLastLogin;
 
-    private boolean isRegistered;
+    private boolean registered;
+
     public Customers() {
     }
 
@@ -167,13 +168,12 @@ public class Customers {
         this.lastLogin = lastLogin;
     }
 
-    public boolean isIsRegistered() {
-        return isRegistered;
+    public boolean isRegistered() {
+        return registered;
     }
 
-    public void setIsRegistered(boolean isRegistered) {
-        this.isRegistered = isRegistered;
+    public void setRegistered(boolean registered) {
+        this.registered = registered;
     }
-
 
 }

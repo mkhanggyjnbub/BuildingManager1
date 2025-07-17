@@ -76,7 +76,7 @@ public class CreateBooking extends HttpServlet {
                 String adultsStr = request.getParameter("adults");
                 String childrenStr = request.getParameter("children");
 
-                // ✅ Check null trước khi parse
+                //  Check null trước khi parse
                 if (start == null || end == null || adultsStr == null || childrenStr == null) {
                     throw new IllegalArgumentException("Missing room search information.");
                 }
@@ -108,7 +108,6 @@ public class CreateBooking extends HttpServlet {
             request.getRequestDispatcher("booking/createBooking.jsp").forward(request, response);
 
         } catch (Exception e) {
-            // ✅ Log chi tiết lỗi ra console để dễ debug
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error loading rooms.");
         }
@@ -152,11 +151,12 @@ public class CreateBooking extends HttpServlet {
                 } else {
                     System.out.println("Không tìm thấy customer trong session!");
                 }
-                
+
                 int customerId = customer.getCustomerId();
                 int confirmedBy = Integer.parseInt(staffIdStr);
                 LocalDateTime now = LocalDateTime.now();
 
+                String roomType = new RoomDao().getRoomTypeById(roomId);
                 Bookings booking = new Bookings();
                 booking.setRoomId(roomId);
                 booking.setCustomerId(customerId);
@@ -166,6 +166,7 @@ public class CreateBooking extends HttpServlet {
                 booking.setRequestTime(now);
                 booking.setConfirmationTime(now);
                 booking.setConfirmedBy(confirmedBy);
+                booking.setRoomType(roomType);
 
                 BookingDao dao = new BookingDao();
                 int bookingId = dao.insertBookingAndReturnId(booking);
@@ -173,7 +174,7 @@ public class CreateBooking extends HttpServlet {
                 // Gửi mail nếu có email
                 if (customer.getEmail() != null && !customer.getEmail().isEmpty()) {
                     try {
-                        String roomType = new RoomDao().getRoomTypeById(roomId);
+
                         EmailSender sender = new EmailSender();
                         sender.sendDeskBookingEmail(
                                 customer.getEmail(),
@@ -182,7 +183,7 @@ public class CreateBooking extends HttpServlet {
                                 bookingId,
                                 booking.getStartDate(),
                                 booking.getEndDate(),
-                                roomType,
+                                booking.getRoomType(),
                                 booking.getConfirmationTime()
                         );
                         System.out.println("Đã gửi Mail tới: " + customer.getEmail());

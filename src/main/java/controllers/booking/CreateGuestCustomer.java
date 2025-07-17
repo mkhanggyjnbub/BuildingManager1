@@ -80,7 +80,13 @@ public class CreateGuestCustomer extends HttpServlet {
             String fullName = request.getParameter("fullName");
             String phone = request.getParameter("phone");
             String email = request.getParameter("email");
+            String identityNumber = request.getParameter("identityNumber");
 
+            // ✅ Kiểm tra CCCD không được để trống
+            if (identityNumber == null || identityNumber.trim().isEmpty()) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "CCCD không được để trống.");
+                return;
+            }
             CustomerDao dao = new CustomerDao();
 
             // Kiểm tra xem khách hàng đã tồn tại chưa
@@ -88,7 +94,7 @@ public class CreateGuestCustomer extends HttpServlet {
             if (existing != null) {
                 request.getSession().setAttribute("customer", existing);
             } else {
-                dao.insertNewGuest(fullName, phone, email);
+                dao.insertNewGuest(fullName, phone, email, identityNumber);
                 Customers customer = dao.getCustomerByFullNameAndPhone(fullName, phone);
                 request.getSession().setAttribute("customer", customer);
             }

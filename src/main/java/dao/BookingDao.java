@@ -493,8 +493,8 @@ public class BookingDao {
 
     //vinh deskbooking
     public int insertBookingAndReturnId(Bookings booking) throws SQLException {
-        String sql = "INSERT INTO Bookings (RoomId, CustomerID, StartDate, EndDate, Status, RequestTime, ConfirmationTime, ConfirmedBy) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Bookings (RoomId, CustomerID, StartDate, EndDate, Status, RequestTime, ConfirmationTime, ConfirmedBy, RoomType) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try ( PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, booking.getRoomId());
@@ -505,7 +505,8 @@ public class BookingDao {
             ps.setTimestamp(6, Timestamp.valueOf(booking.getRequestTime()));
             ps.setTimestamp(7, Timestamp.valueOf(booking.getConfirmationTime()));
             ps.setInt(8, booking.getConfirmedBy());
-
+            ps.setString(9, booking.getRoomType());
+            
             int affected = ps.executeUpdate();
             if (affected == 0) {
                 throw new SQLException("Không thể tạo booking.");

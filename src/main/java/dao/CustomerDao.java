@@ -286,7 +286,6 @@ public class CustomerDao {
     }
 //vinh
 // lấy tên với sdt để check có tài khoảng chưa
-
     public Customers getCustomerByFullNameAndPhone(String fullName, String phone) throws SQLException {
         String sql = "SELECT * FROM Customers WHERE FullName = ? AND Phone = ?";
         try ( PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -299,7 +298,9 @@ public class CustomerDao {
                 c.setFullName(rs.getString("FullName"));
                 c.setPhone(rs.getString("Phone"));
                 c.setUserName(rs.getString("Username"));
-                c.setEmail(rs.getString("Email")); // ✅ THÊM DÒNG NÀY
+                c.setEmail(rs.getString("Email"));
+                c.setIdentityNumber(rs.getString("IdentityNumber")); //  Thêm CCCD
+                c.setRegistered(rs.getBoolean("isRegistered"));       //  Thêm trạng thái tài khoản
                 return c;
             }
         }
@@ -307,12 +308,17 @@ public class CustomerDao {
     }
 
 //vinh
-    public void insertNewGuest(String fullName, String phone, String email) throws SQLException {
-        String sql = "INSERT INTO Customers (FullName, Phone, Email) VALUES (?, ?, ?)";
+    public void insertNewGuest(String fullName, String phone, String email, String identityNumber) throws SQLException {
+        String guestUsername = "guest_" + phone;
+
+        String sql = "INSERT INTO Customers (FullName, Phone, Email, UserName, IdentityNumber, isRegistered) VALUES (?, ?, ?, ?, ?, ?)";
         try ( PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, fullName);
             ps.setString(2, phone);
-            ps.setString(3, email != null && !email.isEmpty() ? email : null);
+            ps.setString(3, (email != null && !email.isEmpty()) ? email : null);
+            ps.setString(4, guestUsername);
+            ps.setString(5, identityNumber); // ✅ Thêm CCCD
+            ps.setBoolean(6, false);
             ps.executeUpdate();
         }
     }
