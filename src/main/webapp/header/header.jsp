@@ -148,12 +148,9 @@
     <nav id="nav-menu">
         <a href="Index">Home</a>
         <a href="ViewRooms">Rooms</a>
-<<<<<<< HEAD
-        <!--<a href="#">Liên hệ</a>-->
-=======
+
 
         <a href="#">Liên hệ</a>
->>>>>>> f8a02766a1379cda5c6e536189cf24995238daa7
                 <!--<a href="UpImage">Up ảnh</a>-->
                 <!--
 >>>>>>> 5df086ec3e126c5c1a51ea75abb3800cbd341bc1
