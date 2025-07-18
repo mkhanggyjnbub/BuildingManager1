@@ -1,7 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<<<<<<< HEAD
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -152,24 +151,24 @@
                     color: #555;
                 }
             }
-.create-link {
-    text-decoration: none;
-    background-color: #007BFF;
-    color: white;
-    padding: 10px 30px;
-    margin: 20px auto;
-    border-radius: 6px;
-    font-weight: bold;
-    display: inline-block;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    text-align: center;
-}
+            .create-link {
+                text-decoration: none;
+                background-color: #007BFF;
+                color: white;
+                padding: 10px 30px;
+                margin: 20px auto;
+                border-radius: 6px;
+                font-weight: bold;
+                display: inline-block;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: background-color 0.3s ease, transform 0.2s ease;
+                text-align: center;
+            }
 
-.create-link:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-}
+            .create-link:hover {
+                background-color: #0056b3;
+                transform: scale(1.05);
+            }
 
 
         </style>
@@ -216,7 +215,19 @@
                             <td data-label="Thao Tác">
     <!--                            <a href="AdminView?id=${room.roomId}" title="Xem"><i class="fa-solid fa-eye"></i></a>-->
                                 <a href="EditRoomForDashboard?id=${room.roomId}" title="Sửa"><i class="fa-solid fa-pencil"></i></a>
-                                <!--<a href="AdminDelete?id=${room.roomId}" title="Xóa"><i class="fa-solid fa-circle-user"></i></a>--> 
+                                <form action="DeleteRoomForDashboard" method="post">
+                                    <input type="hidden" name="roomId" value="${room.roomId}">
+                                    <c:choose>
+                                        <c:when test="${room.status ne 'Hidden'}">
+                                            <input type="hidden" name="status" value="notHidden">
+                                            <button>Delete</button>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input type="hidden" name="status" value="Hidden">
+                                            <button>Restore</button>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </form>
                             </td>
                         </tr>
                     </c:forEach>

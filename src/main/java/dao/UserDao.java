@@ -5,7 +5,6 @@
  */
 package dao;
 
-
 import db.ConnectData;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -202,8 +201,7 @@ public class UserDao {
         return user;
     }
 
-    
-     public Users getRoleUserById(int id) {
+    public Users getRoleUserById(int id) {
         ResultSet rs = null;
         Users user = new Users();
         try {
@@ -243,7 +241,6 @@ public class UserDao {
         }
         return cnt;
     }
-
 
     public int UpdateInfomationById(int id, Users user) {
         int cnt = 0;
@@ -294,4 +291,41 @@ public class UserDao {
 
         return listStaff;
     }
+
+    public int UpdateStatusOnl(int UserId, int Status) {
+        int cnt = 0;
+
+        try {
+            String sql = "Update Users set IsOnl = ? where UserId=?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, Status);
+            pst.setInt(2, UserId);
+            cnt = pst.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return cnt;
+    }
+
+    public int checkIsOnl() {
+        ResultSet rs = null;
+        Users user = new Users();
+        try {
+            String sql = "SELECT TOP 1 userId\n"
+                    + "FROM Users\n"
+                    + "WHERE isOnl = 1\n"
+                    + "ORDER BY userId ASC";
+
+           Statement st = conn.createStatement();
+           rs =st.executeQuery(sql);
+           if(rs.next()){
+             return rs.getInt("userId");
+           }
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
 }

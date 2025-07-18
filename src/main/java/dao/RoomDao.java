@@ -522,4 +522,25 @@ public class RoomDao {
         return check;
     }
 
+    public int deleteRoom(int roomId, String status) {
+        int count = 0;
+        try {
+            String sql = " UPDATE Rooms\n"
+                    + "SET Status = ?\n"
+                    + "WHERE RoomId = ?";
+
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, status);
+            pst.setInt(2, roomId);
+
+            count = pst.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return count;
+
+    }
+
 }

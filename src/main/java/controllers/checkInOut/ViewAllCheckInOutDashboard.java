@@ -67,7 +67,7 @@ public class ViewAllCheckInOutDashboard extends HttpServlet {
             throws ServletException, IOException {
         try {
             BookingDao dao = new BookingDao();
-            List<Bookings> list = dao.getAllBookings();
+            List<Bookings> list = dao.getAllBookingsKhanh();
             request.setAttribute("checkInList", list);
             request.getRequestDispatcher("checkInOut/viewAllCheckInOutDashboard.jsp").forward(request, response);
         } catch (Exception e) {
@@ -102,7 +102,7 @@ public class ViewAllCheckInOutDashboard extends HttpServlet {
                 request.setAttribute("checkInList", list);
 
                 // Chuyển về lại trang chính để thấy nút Check-Out
-                request.getRequestDispatcher("checkInOut/viewAllCheckInOutDashboard.jsp").forward(request, response);
+                response.sendRedirect("ViewAllCheckInOutDashboard");
             } catch (SQLException ex) {
                 Logger.getLogger(ViewAllCheckInOutDashboard.class.getName()).log(Level.SEVERE, null, ex);
             }

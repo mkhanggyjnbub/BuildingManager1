@@ -1,6 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <style>
     * {
         box-sizing: border-box;
@@ -149,7 +148,7 @@
     <nav id="nav-menu">
         <a href="Index">Home</a>
         <a href="ViewRooms">Rooms</a>
-        <a href="#">Liên hệ</a>
+        <!--<a href="#">Liên hệ</a>-->
                 <!--<a href="UpImage">Up ảnh</a>-->
                 <!--
                 <a href="Notification">Notification</a>
@@ -157,10 +156,12 @@
         -->       
         <a href="ViewVouchers">voucher</a>
         <a href="ViewServices">Services</a>
+        <a href="MessageForCustomer">MessageForCustomer</a>
+        <a href="MessageForDashboard">MessageForDashboard</a>
         <!--                <a href="#">Liên hệ</a>
                         <a href="UpImage">Up ảnh</a>
-                        <a href="Notification">Notification</a>
-                        <a href="TakeNotification">Nhận Notification</a>-->
+-->                        <a href="Notification">Notification</a>
+                        <a href="TakeNotification">Nhận Notification</a>
         <!--        <a href="ViewVouchers">voucher</a>-->
         <c:if test="${not empty customerId  }">   <a href="UserVouchers">User voucher</a></c:if>
             <a href="ViewNews">News</a>

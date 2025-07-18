@@ -4,7 +4,6 @@
  */
 package controllers.room;
 
-import Cloudinary.CloudinaryUtil;
 import dao.RoomDao;
 import db.FileUploader;
 import java.io.IOException;
@@ -103,10 +102,9 @@ public class CreateRoomForDashboard extends HttpServlet {
         String description = request.getParameter("description");
         Part filePart = request.getPart("imageFile");
 
-
         String uploadPath = "D:\\fouderPrj\\BuildingWeb\\src\\main\\webapp\\images";
-
-
+        FileUploader uploadImage = new FileUploader();
+        uploadedUrl = uploadImage.uploadImage(filePart, uploadPath);
         String status = request.getParameter("status");
         int location = Integer.parseInt(request.getParameter("location"));
         float area = Float.parseFloat(request.getParameter("area"));
@@ -118,7 +116,7 @@ public class CreateRoomForDashboard extends HttpServlet {
             request.getRequestDispatcher("room/createRoomForDashboard.jsp").forward(request, response);
         } else {
             int checkCreate = roomDao.createRoom(roomNumber, floorNumber, roomType, bedType, price2, maxOccupancy,
-                    description,"images/"+uploadedUrl, status, location, area);
+                    description, "images/" + uploadedUrl, status, location, area);
             if (checkCreate > 0) {
                 response.sendRedirect("ViewAllRoomsForDashboard");
             } else {

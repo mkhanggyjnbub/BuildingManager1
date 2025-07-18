@@ -17,6 +17,7 @@ import static java.nio.file.Files.list;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import models.Rooms;
 import models.Vouchers;
 
 /**
@@ -64,7 +65,13 @@ public class UserVouchers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = (HttpSession) request.getSession();
+        HttpSession session = request.getSession();
+//        if (session.getAttribute("roomId") != null) {
+//            Rooms room = (Rooms) session.getAttribute("room");
+//            long price = room.getPrice();
+//
+//        }
+
         if (session == null || session.getAttribute("customerId") == null) {
             response.sendRedirect("Login");
             return;

@@ -141,6 +141,8 @@
                             <c:if test="${!expired}">
                                 <form action="ConfirmBooking" method="get">
                                      <input type="hidden" name="voucherId" value="${v.voucherId}" />
+                                     <input type="hidden" name="voucherCode" value="${v.code}" />
+                                     <input type="hidden" name="voucherdiscountPercent" value="${v.discountPercent}" />
                                     <button type="submit" class="use-button">Use Voucher</button>
                                     <%--<a href="${v.voucherId}" > class  </a>--%>
                                 </form>
