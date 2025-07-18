@@ -24,7 +24,7 @@
                 <h2>Away from monotonous life.</h2>
                 <h1>Big Resort</h1>
                 <p>If you are looking at blank cassettes on the web, you may be very confused <br>
-                   at the difference in price. You may see some for as low as $.17 each.</p>
+                    at the difference in price. You may see some for as low as $.17 each.</p>
                 <br>
                 <a href="ViewRooms" class="btn">Booking</a>
             </div>

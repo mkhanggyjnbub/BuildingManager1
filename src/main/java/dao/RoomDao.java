@@ -460,5 +460,4 @@ public class RoomDao {
         }
         return 0;
     }
-
 }

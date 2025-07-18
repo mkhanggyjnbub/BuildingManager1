@@ -77,28 +77,28 @@
         <script src="../js/viewRooms.js"></script>
         <script>
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const prices = document.getElementsByClassName("price");
-            for (let i = 0; i < prices.length; i++) {
-                const raw = prices[i].textContent.trim().replace(/[^\d]/g, '');
-                const number = parseInt(raw);
-                if (!isNaN(number)) {
-                    prices[i].textContent = number.toLocaleString("vi-VN") + " VNĐ / Night";
-                }
-            }
-        });
+                document.addEventListener('DOMContentLoaded', function () {
+                    const prices = document.getElementsByClassName("price");
+                    for (let i = 0; i < prices.length; i++) {
+                        const raw = prices[i].textContent.trim().replace(/[^\d]/g, '');
+                        const number = parseInt(raw);
+                        if (!isNaN(number)) {
+                            prices[i].textContent = number.toLocaleString("vi-VN") + " VNĐ / Night";
+                        }
+                    }
+                });
 
 
-        function formatAfterAjax() {
-            const prices = document.getElementsByClassName("price");
-            for (let i = 0; i < prices.length; i++) {
-                const raw = prices[i].textContent.trim().replace(/[^\d]/g, '');
-                const number = parseInt(raw);
-                if (!isNaN(number)) {
-                    prices[i].textContent = number.toLocaleString("vi-VN") + " VNĐ / Night";
+                function formatAfterAjax() {
+                    const prices = document.getElementsByClassName("price");
+                    for (let i = 0; i < prices.length; i++) {
+                        const raw = prices[i].textContent.trim().replace(/[^\d]/g, '');
+                        const number = parseInt(raw);
+                        if (!isNaN(number)) {
+                            prices[i].textContent = number.toLocaleString("vi-VN") + " VNĐ / Night";
+                        }
+                    }
                 }
-            }
-        }
         </script>
 
     </body>

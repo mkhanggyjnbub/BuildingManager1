@@ -114,6 +114,7 @@ public class Rooms {
     public void setStatus(String status) {
         this.status = status;
     }
+
     public int getMaxOccupancy() {
         return maxOccupancy;
     }

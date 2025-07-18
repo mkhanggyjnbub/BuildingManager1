@@ -293,11 +293,8 @@ public class UserDao {
     }
 
     public int signUp() {
-        int check =0;
-        
-        
-        
-        
+        int check = 0;
+
         return check;
     }
 }

@@ -569,9 +569,9 @@
                             <span class="room-info-label">Number Of Guests:</span>
                             <span class="room-info-value">${adults+children}
                                 <%--<c:choose>--%> 
-                                    <%--<c:when test="${adults >0 and children > 0}"> ${adults} Adults and ${children} Children )</c:when>--%>
-                                    <%--<c:when test="${adults >0 }"> ${adults} Adults )</c:when>--%>
-                                    <%--<c:otherwise>${children} Children )</c:otherwise>--%>
+                                <%--<c:when test="${adults >0 and children > 0}"> ${adults} Adults and ${children} Children )</c:when>--%>
+                                <%--<c:when test="${adults >0 }"> ${adults} Adults )</c:when>--%>
+                                <%--<c:otherwise>${children} Children )</c:otherwise>--%>
                                 <%--</c:choose>--%>
                             </span>
                         </p>
@@ -629,8 +629,8 @@
                                 <form action="voucherPage" method="get">
                                     <button type="submit" class="voucher-btn1">-- Select Voucher Code --</button>
                                 </form>
-                                
-                                
+
+
                             </div>
                         </div>
 
@@ -728,40 +728,40 @@
     <script>
         // chỉnh sửa khi chọn thanh toán 
         document.addEventListener('DOMContentLoaded', function () {
-        const select = document.getElementById("limit");
-        select.addEventListener('change', function () {
-        const paymentCod = document.getElementById("cod");
-        if (select.value === "50" || select.value === "30") {
-        paymentCod.hidden = true;
-        const totalPice = document.getElementById("price3");
-           let originalPrice  = totalPice.dataset.price ;
-        if (select.value === "50"){
-         
-        totalPice.textContent = (parseInt(originalPrice) * 0.5).toLocaleString("vi-VN") + " VND "  ;
-        
-        } else{
-        totalPice.textContent = (parseInt(originalPrice) * 0.3).toLocaleString("vi-VN") + " VND " ;
-        }
-        } else {
-        paymentCod.hidden = false;
-        }
+            const select = document.getElementById("limit");
+            select.addEventListener('change', function () {
+                const paymentCod = document.getElementById("cod");
+                if (select.value === "50" || select.value === "30") {
+                    paymentCod.hidden = true;
+                    const totalPice = document.getElementById("price3");
+                    let originalPrice = totalPice.dataset.price;
+                    if (select.value === "50") {
+
+                        totalPice.textContent = (parseInt(originalPrice) * 0.5).toLocaleString("vi-VN") + " VND ";
+
+                    } else {
+                        totalPice.textContent = (parseInt(originalPrice) * 0.3).toLocaleString("vi-VN") + " VND ";
+                    }
+                } else {
+                    paymentCod.hidden = false;
+                }
+            });
         });
-        });
-        
-        
+
+
         // thêm dấu . cách 3 số 0
         document.addEventListener('DOMContentLoaded', function () {
-        let price1 = document.getElementById("price1");
-        let num1 = parseInt(price1.textContent);
-        let price2 = document.getElementById("price2");
-        let num2 = parseInt(price2.textContent);
-        let price3 = document.getElementById("price3");
-        let num3 = parseInt(price3.textContent);
-        if (!isNaN(num1) || !isNaN(num2) || !isNaN(num3)) {
-        price1.textContent = num1.toLocaleString("vi-VN") + " VND / Night";
-        price2.textContent = num2.toLocaleString("vi-VN") + " VND / Night";
-        price3.textContent = num3.toLocaleString("vi-VN") + " VND ";
-        }
+            let price1 = document.getElementById("price1");
+            let num1 = parseInt(price1.textContent);
+            let price2 = document.getElementById("price2");
+            let num2 = parseInt(price2.textContent);
+            let price3 = document.getElementById("price3");
+            let num3 = parseInt(price3.textContent);
+            if (!isNaN(num1) || !isNaN(num2) || !isNaN(num3)) {
+                price1.textContent = num1.toLocaleString("vi-VN") + " VND / Night";
+                price2.textContent = num2.toLocaleString("vi-VN") + " VND / Night";
+                price3.textContent = num3.toLocaleString("vi-VN") + " VND ";
+            }
         });
 
 
