@@ -11,7 +11,6 @@ package models;
 public class Rooms {
 
     private int roomId;
-    private int floorId;
     private String roomNumber;
     private String roomType;
     private String bedType;
@@ -23,6 +22,8 @@ public class Rooms {
     private String imageUrl;
     private int floorNumber;
     private float area;
+    private int buildingId;
+ 
 
     public Rooms() {
     }
@@ -67,13 +68,7 @@ public class Rooms {
         this.roomId = roomId;
     }
 
-    public int getFloorId() {
-        return floorId;
-    }
-
-    public void setFloorId(int floorId) {
-        this.floorId = floorId;
-    }
+   
 
     public String getRoomNumber() {
         return roomNumber;
@@ -128,6 +123,14 @@ public class Rooms {
 
     public void setBedType(String bedType) {
         this.bedType = bedType;
+    }
+
+    public int getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingId(int buildingId) {
+        this.buildingId = buildingId;
     }
 
 }
