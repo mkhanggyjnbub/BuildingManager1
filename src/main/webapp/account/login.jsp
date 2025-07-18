@@ -140,9 +140,6 @@
             <div class="signup-link">
                 <p>Don't have an account? <a href="SignUp">Sign Up</a></p>
             </div>
-            <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile&redirect_uri=http://localhost:8080/YourProjectName/GoogleLogin&response_type=code&client_id=YOUR_CLIENT_ID&approval_prompt=force">
-                <img src="https://developers.google.com/identity/images/btn_google_signin_light_normal_web.png" />
-            </a>
         </div>
     </body>
 </html>
