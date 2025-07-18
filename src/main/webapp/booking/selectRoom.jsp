@@ -158,10 +158,21 @@
         </style>
     </head>
     <body>
+        <c:if test="${noRoomTypeAlert}">
+            <script>
+                window.onload = function () {
+                    alert("❌ No rooms of this type are available for the selected date range.");
+                };
+            </script>
+        </c:if>
+
         <div class="booking-section">
             <h2>📅 Booking time information</h2>
+
             <form action="SelectRoom" method="post" class="booking-date-form">
                 <input type="hidden" name="bookingId" value="${bookingId}" />
+                <input type="hidden" name="roomType" value="${room.roomType}" />
+
 
                 <div class="form-group">
                     <label for="customStart">📅 <strong>Check-in date:</strong></label>
@@ -183,12 +194,12 @@
 
 
             <c:forEach var="floorEntry" items="${roomsByFloor}">
-                <h3 class="floor-heading">Tầng ${floorEntry.key}</h3>
+                <h3 class="floor-heading">Floor ${floorEntry.key}</h3>
                 <div class="room-grid">
                     <c:forEach var="room" items="${floorEntry.value}">
                         <div class="room-card">
                             <p><strong>Room:</strong> ${room.roomNumber}</p>
-                            <p><strong>Type:</strong> ${room.roomType}</p>
+                            <p><strong>Room type:</strong> ${room.roomType}</p>
                             <p><strong>Price:</strong> ${room.price}₫</p>
                             <form action="BookingConfirmation" method="post">
                                 <input type="hidden" name="roomId" value="${room.roomId}" />
@@ -200,6 +211,9 @@
                     </c:forEach>
                 </div>
             </c:forEach>
+
+
+
     </body>
 
 </html>

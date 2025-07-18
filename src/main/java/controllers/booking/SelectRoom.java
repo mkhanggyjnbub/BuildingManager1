@@ -123,38 +123,51 @@ public class SelectRoom extends HttpServlet {
             BookingDao bookingDao = new BookingDao();
             Bookings booking = bookingDao.getBookingInfoForConfirmation(bookingId);
 
-            if (booking != null) {
-                request.setAttribute("roomType", booking.getRoomType());
-
-                request.setAttribute("startDate", booking.getStartDate().toString());
-                request.setAttribute("endDate", booking.getEndDate().toString());
+            if (booking == null) {
+                request.setAttribute("noRoomTypeAlert", true);
+                request.getRequestDispatcher("booking/selectRoom.jsp").forward(request, response);
+                return;
             }
-            // Nếu người dùng gửi ngày tùy chọn
+
+            String roomType = booking.getRoomType();
+
+            request.setAttribute("roomType", roomType);
+            request.setAttribute("startDate", booking.getStartDate().toString());
+            request.setAttribute("endDate", booking.getEndDate().toString());
+
+            // Nhận custom date từ người dùng
             String customStart = request.getParameter("customStartDate");
             String customEnd = request.getParameter("customEndDate");
 
-            RoomDao roomDao = new RoomDao();
             List<Rooms> availableRoomsList = new ArrayList<>();
-
+            System.out.println("RoomType = " + roomType);
+            System.out.println("Available rooms = " + availableRoomsList.size());
             if (customStart != null && customEnd != null && !customStart.isEmpty() && !customEnd.isEmpty()) {
                 try {
                     LocalDate startDate = LocalDate.parse(customStart);
                     LocalDate endDate = LocalDate.parse(customEnd);
 
-                    // Kiểm tra logic ngày: check-in < check-out
                     if (startDate.isBefore(endDate)) {
-                        availableRoomsList = roomDao.getAvailableRoomByDateRange(startDate, endDate);
+                        // chỉ lấy phòng đúng loại
+                        availableRoomsList = new RoomDao().getAvailableRoomByDateAndType(startDate, endDate, roomType);
+                        
+                        System.out.println("danh sach phong"+availableRoomsList);
                         request.setAttribute("customStart", startDate.toString());
                         request.setAttribute("customEnd", endDate.toString());
                     } else {
-                        request.setAttribute("dateError", "Ngày trả phải sau ngày nhận.");
+                        request.setAttribute("dateError", "Check-out date must be after check-in date.");
                     }
                 } catch (DateTimeParseException e) {
-                    request.setAttribute("dateError", "Ngày không hợp lệ.");
+                    request.setAttribute("dateError", "Invalid date.");
                 }
             } else {
-                // Nếu không có ngày tùy chọn => dùng ngày từ booking
-                availableRoomsList = roomDao.getAvailableRoomSameType(bookingId);
+                // Nếu không nhập ngày tùy chọn thì dùng ngày gốc
+                availableRoomsList = new RoomDao().getAvailableRoomSameType(bookingId);
+            }
+
+            // Nếu không còn phòng nào thì báo lỗi
+            if (availableRoomsList.isEmpty()) {
+                request.setAttribute("noRoomTypeAlert", true);
             }
 
             // Nhóm theo tầng
@@ -169,8 +182,10 @@ public class SelectRoom extends HttpServlet {
             request.setAttribute("roomsByFloor", roomsByFloor);
             request.setAttribute("bookingId", bookingId);
             request.getRequestDispatcher("booking/selectRoom.jsp").forward(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(SelectRoom.class.getName()).log(Level.SEVERE, null, ex);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            response.sendError(500, "Lỗi xử lý khi chọn phòng");
         }
     }
 

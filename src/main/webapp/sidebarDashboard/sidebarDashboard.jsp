@@ -9,10 +9,10 @@
 
 <style>
     :root {
-        --navy: #4a6fa5;
-        --navy-dark: #3a5c88;
+        --navy: #46b791;
+        --navy-dark: #3a9c7b;
         --white: #ffffff;
-        --hover-bg: #355880;
+        --hover-bg: #2e8266;
         --transition: 0.3s ease;
         --shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }

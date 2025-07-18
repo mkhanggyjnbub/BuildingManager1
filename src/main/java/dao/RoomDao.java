@@ -525,20 +525,24 @@ public class RoomDao {
     }
 
     //vinh dùng cho select room
-    public List<Rooms> getAvailableRoomByDateAndType(LocalDate startDate, LocalDate endDate, String roomType) throws SQLException {
+    public List<Rooms> getAvailableRoomByDateAndType(LocalDate startDate, LocalDate endDate, String roomType) {
         List<Rooms> list = new ArrayList<>();
 
-        String sql = "SELECT * FROM Rooms R "
-                + "WHERE R.RoomType = ? AND R.Status = 'Active' "
-                + "AND NOT EXISTS ("
-                + "    SELECT 1 FROM Bookings B "
-                + "    WHERE B.RoomId = R.RoomId "
-                + "    AND (B.EndDate > ? AND B.StartDate < ?) "
-                + "    AND B.Status IN ('Waiting for processing', 'Confirmed', 'Checked in', 'Canceled')"
-                + ") "
-                + "ORDER BY R.FloorNumber, R.RoomNumber";
+        try {
 
-        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            System.out.println(startDate);
+            System.out.println(endDate);
+            String sql = "SELECT * FROM Rooms R "
+                    + "WHERE R.RoomType = ? AND R.Status = 'Active' "
+                    + "AND NOT EXISTS ("
+                    + "    SELECT 1 FROM Bookings B "
+                    + "    WHERE B.RoomId = R.RoomId "
+                    + "    AND (B.EndDate > ? AND B.StartDate < ?) "
+                    + "    AND B.Status IN ('Waiting for processing', 'Confirmed', 'Checked in', 'Canceled')"
+                    + ") "
+                    + "ORDER BY R.FloorNumber, R.RoomNumber";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, roomType);
             ps.setDate(2, Date.valueOf(endDate));   // B.EndDate > start
             ps.setDate(3, Date.valueOf(startDate)); // B.StartDate < end
@@ -556,14 +560,19 @@ public class RoomDao {
                 room.setRoomNumber(rs.getString("RoomNumber"));
                 list.add(room);
             }
-        }
 
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return list;
+
     }
 
     //vinh
     public List<Rooms> getAvailableRoomByDateRange(LocalDate startDate, LocalDate endDate) {
         List<Rooms> list = new ArrayList<>();
+        System.out.println(startDate);
+        System.out.println(endDate);
         try {
             String sql = "SELECT R.RoomId, R.RoomType, R.Price, R.Description, R.ImageUrl, R.FloorNumber, R.RoomNumber "
                     + "FROM Rooms R "
