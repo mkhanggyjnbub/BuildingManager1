@@ -1,7 +1,7 @@
-    <%-- 
-    Document   : userVouchers
-    Created on : Jun 16, 2025, 1:08:27 PM
-    Author     : Admin
+<%-- 
+Document   : userVouchers
+Created on : Jun 16, 2025, 1:08:27 PM
+Author     : Admin
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -139,6 +139,7 @@
                             </c:if>
 
                             <c:if test="${!expired}">
+<<<<<<< HEAD
                                 <form action="ConfirmBooking" method="get">
                                      <input type="hidden" name="voucherId" value="${v.voucherId}" />
                                      <input type="hidden" name="voucherCode" value="${v.code}" />
@@ -146,7 +147,26 @@
                                     <button type="submit" class="use-button">Use Voucher</button>
                                     <%--<a href="${v.voucherId}" > class  </a>--%>
                                 </form>
+=======
+                                <c:choose>
+                                    <c:when test="${v.isActive}">
+
+                                        <!-- Voucher còn hạn và đang active -->
+                                        <form action="ConfirmBooking" method="get">
+                                            <input type="hidden" name="voucherId" value="${v.voucherId}" />
+                                            <button type="submit" class="use-button">Use Voucher</button>
+                                        </form>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <!-- Voucher còn hạn nhưng bị inactive -->
+                                        <p class="expired-text">This voucher is currently inactive</p>
+
+                                    </c:otherwise>
+                                </c:choose>
+>>>>>>> f8a02766a1379cda5c6e536189cf24995238daa7
                             </c:if>
+
+
                         </div>
                     </c:forEach>
 

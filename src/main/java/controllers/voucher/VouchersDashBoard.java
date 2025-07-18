@@ -4,7 +4,7 @@
  */
 package controllers.voucher;
 
-import dao.VoucherDAO;
+import dao.VoucherDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -62,7 +62,7 @@ public class VouchersDashBoard extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        VoucherDAO dao = new VoucherDAO();
+        VoucherDao dao = new VoucherDao();
         List<Vouchers> list = dao.selectAllVouchers();
 
         // Format datetime

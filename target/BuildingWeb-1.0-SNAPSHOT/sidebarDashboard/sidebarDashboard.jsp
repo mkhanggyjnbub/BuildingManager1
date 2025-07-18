@@ -9,10 +9,10 @@
 
 <style>
     :root {
-        --navy: #4a6fa5;
-        --navy-dark: #3a5c88;
+        --navy: #46b791;
+        --navy-dark: #3a9c7b;
         --white: #ffffff;
-        --hover-bg: #355880;
+        --hover-bg: #2e8266;
         --transition: 0.3s ease;
         --shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
@@ -198,6 +198,9 @@
         <li style="--i:1"><a href="DashboardUser"><i class="fa-solid fa-user"></i><span>Users</span></a></li>
         <li style="--i:2"><a href="VouchersDashBoard"><i class="fa-solid fa-ticket"></i><span>Vouchers</span></a></li>
         <li style="--i:3"><a href="ViewNewsDashboard"><i class="fa-solid fa-newspaper"></i><span>News</span></a></li>
+        
+        <li style="--i:3"><a href="CreateBooking"><i class="fa-solid fa-calendar-check"></i><span>Desk Booking</span></a></li>
+        
         <li style="--i:4"><a href="BookingConfirmation"><i class="fa-solid fa-calendar-check"></i><span>Bookings</span></a></li>
         <li style="--i:5"><a href="ViewAllRoomsForDashboard"><i class="fa-solid fa-bed"></i><span>List Rooms</span></a></li>
         <li style="--i:6"><a href="ViewServicesDashboard"><i class="fa-solid fa-concierge-bell"></i><span>Services</span></a></li>

@@ -5,6 +5,7 @@
 package controllers.booking;
 
 import dao.BookingDao;
+import jakarta.mail.MessagingException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -14,6 +15,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import models.Bookings;
+import sendMail.EmailSender;
 
 /**
  *
@@ -75,20 +81,44 @@ public class BookingCancel extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-          HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
         if (session == null || session.getAttribute("staffId") == null) {
             response.sendRedirect("Login");
             return;
         }
 
-        int canceledBy = Integer.parseInt(session.getAttribute("staffId").toString()) ;
+        int canceledBy = Integer.parseInt(session.getAttribute("staffId").toString());
 
         try {
             int bookingId = Integer.parseInt(request.getParameter("bookingId"));
             String notes = request.getParameter("notes");
 
             BookingDao bookingDAO = new BookingDao();
+
+            // 1. Cập nhật trạng thái hủy
             bookingDAO.cancelBooking(bookingId, notes, canceledBy);
+
+            // 2. Lấy thông tin khách hàng để gửi mail
+            Bookings booking = bookingDAO.getBookingInfoForCancellation(bookingId);
+            Bookings info = bookingDAO.getBookingInfoForCancellation(bookingId); // Phải chứa RoomType và Notes
+
+            if (info != null) {
+                EmailSender sender = new EmailSender();
+                try {
+                    sender.sendCancellationEmail(
+                            info.getCustomers().getEmail(),
+                            "Booking Cancelled",
+                            info.getCustomers().getFullName(),
+                            bookingId,
+                            info.getStartDate(),
+                            info.getEndDate(),
+                            info.getRoomType(),
+                            info.getNotes() // lý do hủy
+                    );
+                } catch (MessagingException ex) {
+                    Logger.getLogger(BookingCancel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
 
             response.sendRedirect("BookingConfirmation");
         } catch (NumberFormatException | SQLException e) {
@@ -96,7 +126,6 @@ public class BookingCancel extends HttpServlet {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error processing request");
         }
     }
-
 
     /**
      * Returns a short description of the servlet.

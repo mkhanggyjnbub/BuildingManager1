@@ -4,7 +4,7 @@
  */
 package controllers.voucher;
 
-import dao.VoucherDAO;
+import dao.VoucherDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -79,7 +79,10 @@ public class UserVouchers extends HttpServlet {
 
         int customerId = Integer.parseInt(session.getAttribute("customerId").toString());
 
-        VoucherDAO dao = new VoucherDAO();
+        VoucherDao dao = new VoucherDao();
+
+        dao.deleteExpiredSavedVouchers(); // Clean up trước khi load
+
         List<Vouchers> savedVouchers = dao.getVouchersByCustomer(customerId);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
