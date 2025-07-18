@@ -42,7 +42,7 @@ public class BookingDao {
                 + "FROM Bookings b "
                 + "LEFT JOIN Rooms r ON b.RoomId = r.RoomId "
                 + "JOIN Customers c ON b.CustomerId = c.CustomerId "
-                + "WHERE b.Status IN ('Checked in', 'Confirmed','Checked out')";
+                + "WHERE b.Status IN ('Waiting for processing', 'Confirmed')";
 
         PreparedStatement ps = conn.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
@@ -177,7 +177,7 @@ public class BookingDao {
         }
     }
 
-    //vinh
+     //vinh
     public List<Bookings> searchBookings(String roomTypeFilter, String fullNameFilter,
             String startDateFilter, String endDateFilter,
             String statusFilter) throws SQLException {
@@ -265,7 +265,7 @@ public class BookingDao {
         conn.close();
         return list;
     }
-
+    
     public int updateBookingStatusAndcheckInt(int bookingId, String status) {
         int cnt = 0;
         try {
