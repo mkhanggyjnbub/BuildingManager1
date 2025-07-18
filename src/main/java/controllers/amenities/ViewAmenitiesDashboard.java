@@ -7,7 +7,7 @@ package controllers.amenities;
 import controllers.voucher.*;
 import dao.AmenitiesDao;
 import dao.CustomerDao;
-import dao.VoucherDAO;
+import dao.VoucherDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;

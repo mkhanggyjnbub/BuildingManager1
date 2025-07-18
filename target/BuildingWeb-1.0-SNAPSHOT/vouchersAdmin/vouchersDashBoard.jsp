@@ -109,7 +109,7 @@
                 color: #fff;
                 padding: 8px 14px;
                 text-decoration: none;
-border-radius: 6px;
+                border-radius: 6px;
                 font-weight: 500;
                 margin-right: 10px;
                 display: inline-block;
@@ -219,11 +219,27 @@ border-radius: 6px;
         </style>
     </head>
     <body>
-<%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+        <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
         <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
 
         <div class="content-wrapper">
             <h1 class="title">Voucher Management</h1>
+
+            <%
+    String error = (String) session.getAttribute("error");
+    if (error != null) {
+            %>
+            <div style="color: #fff3cd; background-color: #ffc107; padding: 10px 20px; border-radius: 6px; margin-bottom: 15px;">
+                <strong>Warning:</strong> <%= error %>
+            </div>
+            <%
+                    session.removeAttribute("error"); // để không hiển thị lại khi F5
+                }
+            %>
+
+
+
+
             <div style="max-width: 1200px; margin: 0 auto;">
                 <div class="top-actions">
                     <a href="Dashboard" class="btn btn-back">← Back to Dashboard</a>
@@ -259,6 +275,7 @@ border-radius: 6px;
                                             <form action="DeleteVoucher" method="get" onsubmit="return confirm('Are you sure you want to delete this voucher?')">
                                                 <input type="hidden" name="id" value="${v.voucherId}" />
                                                 <button type="submit" class="btn btn-delete">Delete</button>
+
                                             </form>
                                         </div>
                                     </td>
@@ -267,7 +284,7 @@ border-radius: 6px;
                         </tbody>
                     </table>
                     <div id="loadMoreWrapper" style="text-align: center; margin-top: 20px;">
-                        <button id="loadMoreBtn" class="btn btn-load-more">Xem thêm</button>
+                        <button id="loadMoreBtn" class="btn btn-load-more">View More</button>
                     </div>
 
                 </div>
@@ -275,7 +292,7 @@ border-radius: 6px;
         </div>
     </body>
     <script>
-const rowsPerPage = 10;
+        const rowsPerPage = 10;
         const rows = document.querySelectorAll(".voucher-table tbody tr");
         const loadMoreBtn = document.getElementById("loadMoreBtn");
 

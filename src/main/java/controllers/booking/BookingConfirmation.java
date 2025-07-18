@@ -5,6 +5,7 @@
 package controllers.booking;
 
 import dao.BookingDao;
+import dao.RoomDao;
 import jakarta.mail.MessagingException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,9 +15,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.Bookings;
+import models.Rooms;
 import sendMail.EmailSender;
 
 /**
@@ -68,13 +74,13 @@ public class BookingConfirmation extends HttpServlet {
         HttpSession session = request.getSession();
 
         // Lấy dữ liệu từ session
-        String roomNumber = (String) session.getAttribute("search_room");
+        String roomType = (String) session.getAttribute("search_room");
         String fullName = (String) session.getAttribute("search_name");
         String startDate = (String) session.getAttribute("search_start");
         String endDate = (String) session.getAttribute("search_end");
         String status = (String) session.getAttribute("search_status");
 
-        // Xóa session để tránh lưu lại sau khi load
+        // Xóa session sau khi sử dụng để tránh lưu lại sau khi load
         session.removeAttribute("search_room");
         session.removeAttribute("search_name");
         session.removeAttribute("search_start");
@@ -86,20 +92,23 @@ public class BookingConfirmation extends HttpServlet {
             List<Bookings> list;
 
             boolean isSearch
-                    = (roomNumber != null && !roomNumber.trim().isEmpty())
+                    = (roomType != null && !roomType.trim().isEmpty())
                     || (fullName != null && !fullName.trim().isEmpty())
                     || (startDate != null && !startDate.trim().isEmpty())
                     || (endDate != null && !endDate.trim().isEmpty())
                     || (status != null && !status.trim().isEmpty());
 
             if (isSearch) {
-                request.setAttribute("searched", true); // 👈 Gắn cờ tìm kiếm
-                list = dao.searchBookings(roomNumber, fullName, startDate, endDate, status);
+                request.setAttribute("searched", true); // Gắn cờ tìm kiếm
+                list = dao.searchBookings(roomType, fullName, startDate, endDate, status);
             } else {
                 list = dao.getAllBookings();
             }
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
+            // Định dạng ngày không có giờ
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            // Cập nhật ngày cho mỗi booking
             for (Bookings b : list) {
                 if (b.getStartDate() != null) {
                     b.setFormattedStartDate(b.getStartDate().format(formatter));
@@ -108,8 +117,9 @@ public class BookingConfirmation extends HttpServlet {
                     b.setFormattedEndDate(b.getEndDate().format(formatter));
                 }
             }
-            // Truyền giá trị lại vào form tìm kiếm
-            request.setAttribute("roomNumber", roomNumber);
+
+            // Truyền lại thông tin tìm kiếm vào form
+            request.setAttribute("roomType", roomType);
             request.setAttribute("fullName", fullName);
             request.setAttribute("startDate", startDate);
             request.setAttribute("endDate", endDate);
@@ -117,11 +127,10 @@ public class BookingConfirmation extends HttpServlet {
             request.setAttribute("booking", list);
 
             if (isSearch && list.isEmpty()) {
-                request.setAttribute("noResult", true);
+                request.setAttribute("noResult", true); // Thông báo không có kết quả
             }
 
             request.getRequestDispatcher("booking/bookingConfirmation.jsp").forward(request, response);
-
         } catch (Exception e) {
             e.printStackTrace();
             response.sendError(500, "Internal Server Error");
@@ -137,75 +146,115 @@ public class BookingConfirmation extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-   protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String actionType = request.getParameter("actionType");
+        HttpSession session = request.getSession();
 
-        if ("confirmBooking".equals(actionType)) {
-            int bookingId = Integer.parseInt(request.getParameter("bookingId"));
+        try {
+            if ("goToSelectRoom".equals(actionType) || "confirmBooking".equals(actionType)) {
+                int bookingId = Integer.parseInt(request.getParameter("bookingId"));
 
-            HttpSession session = request.getSession();
-            String staffIdStr = (String) session.getAttribute("staffId");
+                RoomDao roomDao = new RoomDao();
+                List<Rooms> availableRooms = roomDao.getAvailableRoomSameType(bookingId);
 
-            if (staffIdStr == null) {
-                response.sendRedirect("Login");
-                return; //
-            }
+                // Nếu không còn phòng cùng loại
+                if (availableRooms.isEmpty()) {
+                    request.setAttribute("noRoomTypeAlert", true);
 
-            int confirmedBy = Integer.parseInt(staffIdStr);
+                    // Gửi lại danh sách booking để load lại trang
+                    BookingDao dao = new BookingDao();
+                    List<Bookings> list = dao.getAllBookings();
 
-            try {
-                BookingDao dao = new BookingDao();
-                String currentStatus = dao.getBookingStatus(bookingId);
+                    // Format ngày lại nếu cần
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    for (Bookings b : list) {
+                        if (b.getStartDate() != null) {
+                            b.setFormattedStartDate(b.getStartDate().format(formatter));
+                        }
+                        if (b.getEndDate() != null) {
+                            b.setFormattedEndDate(b.getEndDate().format(formatter));
+                        }
+                    }
 
-                if ("Waiting for processing".equalsIgnoreCase(currentStatus)) {
-                    dao.confirmBooking(bookingId, confirmedBy);
+                    request.setAttribute("booking", list);
+                    request.getRequestDispatcher("booking/bookingConfirmation.jsp").forward(request, response);
+                    return;
+                }
 
-                    Bookings info = dao.getBookingInfo(bookingId);
-                    if (info != null) {
-                        EmailSender sender = new EmailSender();
-                        try {
+                // Nếu còn phòng
+                if ("goToSelectRoom".equals(actionType)) {
+                    // Chuyển sang SelectRoom servlet (sử dụng forward để giữ bookingId)
+                    request.setAttribute("bookingId", bookingId);
+                    request.getRequestDispatcher("SelectRoom").forward(request, response);
+                    return;
+                }
+
+                if ("confirmBooking".equals(actionType)) {
+                    String staffIdStr = (String) session.getAttribute("staffId");
+                    if (staffIdStr == null) {
+                        response.sendRedirect("Login");
+                        return;
+                    }
+
+                    int confirmedBy = Integer.parseInt(staffIdStr);
+                    BookingDao dao = new BookingDao();
+                    String currentStatus = dao.getBookingStatus(bookingId);
+
+                    if ("Waiting for processing".equalsIgnoreCase(currentStatus)) {
+                        String roomIdStr = request.getParameter("roomId"); // có thể có hoặc không
+
+                        if (roomIdStr != null && !roomIdStr.isEmpty()) {
+                            int roomId = Integer.parseInt(roomIdStr);
+                            dao.confirmBookingWithRoom(bookingId, roomId, confirmedBy);
+                        } else {
+                            dao.confirmBooking(bookingId, confirmedBy); // không có roomId
+                        }
+
+                        // Gửi mail
+                        Bookings info = dao.getBookingInfoForConfirmation(bookingId);
+                        if (info != null) {
+                            EmailSender sender = new EmailSender();
                             sender.sendHTMLEmail(
                                     info.getCustomers().getEmail(),
                                     "Confirm booking #" + info.getBookingId(),
                                     info.getCustomers().getFullName(),
                                     info.getBookingId(),
                                     info.getStartDate(),
-                                    info.getEndDate()
+                                    info.getEndDate(),
+                                    info.getRooms() != null ? info.getRooms().getRoomType() : "Not assigned",
+                                    info.getConfirmationTime()
                             );
-                        } catch (MessagingException e) {
-                            e.printStackTrace();
                         }
+
+                        session.setAttribute("bookingConfirmed", true);
                     }
-                    request.getSession().setAttribute("bookingConfirmed", true);
+
+                    response.sendRedirect("BookingConfirmation");
+                    return;
                 }
-
-                response.sendRedirect("BookingConfirmation");
-                return;
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                response.sendRedirect("BookingConfirmation");
-                return; //
             }
+
+            // Xử lý tìm kiếm
+            String roomType = request.getParameter("roomType");
+            String fullName = request.getParameter("fullName");
+            String startDate = request.getParameter("startDate");
+            String endDate = request.getParameter("endDate");
+            String status = request.getParameter("status");
+
+            session.setAttribute("search_room", roomType);
+            session.setAttribute("search_name", fullName);
+            session.setAttribute("search_start", startDate);
+            session.setAttribute("search_end", endDate);
+            session.setAttribute("search_status", status);
+
+            response.sendRedirect("BookingConfirmation");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("BookingConfirmation");
         }
-
-        // xử lý tìm kiếm
-        String roomNumber = request.getParameter("roomNumber");
-        String fullName = request.getParameter("fullName");
-        String startDate = request.getParameter("startDate");
-        String endDate = request.getParameter("endDate");
-        String status = request.getParameter("status");
-
-        HttpSession session = request.getSession();
-        session.setAttribute("search_room", roomNumber);
-        session.setAttribute("search_name", fullName);
-        session.setAttribute("search_start", startDate);
-        session.setAttribute("search_end", endDate);
-        session.setAttribute("search_status", status);
-
-        response.sendRedirect("BookingConfirmation");
     }
 
     /**
