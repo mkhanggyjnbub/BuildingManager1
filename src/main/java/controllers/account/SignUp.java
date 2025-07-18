@@ -79,6 +79,7 @@ public class SignUp extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -91,7 +92,7 @@ public class SignUp extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        // Save form data for reuse in case of errors
+        // Lưu dữ liệu để hiển thị lại khi có lỗi
         request.setAttribute("username", username);
         request.setAttribute("email", email);
         request.setAttribute("dob", dobStr);
@@ -101,19 +102,19 @@ public class SignUp extends HttpServlet {
         boolean hasError = false;
         CustomerDao dao = new CustomerDao();
 
-        // Check if username already exists
+        // Kiểm tra trùng username
         if (dao.isUsernameTaken(username)) {
             request.setAttribute("usernameError", "Username is already taken.");
             hasError = true;
         }
 
-        // Check if email already exists
+        // Kiểm tra trùng email
         if (dao.isEmailTaken(email)) {
             request.setAttribute("emailError", "Email is already registered.");
             hasError = true;
         }
 
-        // Parse Date of Birth
+        // Chuyển đổi ngày sinh
         Date dob = null;
         try {
             dob = java.sql.Date.valueOf(dobStr);
@@ -127,20 +128,18 @@ public class SignUp extends HttpServlet {
             return;
         }
 
-        // Generate OTP
+        // Tạo OTP và lưu vào session
         int otpCode = new Random().nextInt(900000) + 100000;
         long currentTime = System.currentTimeMillis();
 
-        // Save OTP data to session
-        session.setAttribute("otpCode", String.valueOf(otpCode));
-        session.setAttribute("otpTime", currentTime);
-        session.setAttribute("otpExpiryDuration", 300000L); // 5 minutes in milliseconds
+        session.setAttribute("otpPurpose", "signup");
+        session.setAttribute("otpCode", otpCode); // Integer
+        session.setAttribute("otpSentTime", currentTime);
+        session.setAttribute("otpExpiryDuration", 300000L); // 5 phút
 
-        // Store temporary customer for verification
-        Customers tempCustomer = new Customers(username, password, dob, phone, identityNumber, email, LocalDateTime.now());
+        Customers tempCustomer = new Customers(username, password, dob, phone, email, identityNumber, LocalDateTime.now());
         session.setAttribute("tempUser", tempCustomer);
 
-        // Send OTP via email
         try {
             emailSender.sendOTPEmailRegistered(email, "OTP Verification - Big Resort", otpCode);
             response.sendRedirect("EmailVerification");

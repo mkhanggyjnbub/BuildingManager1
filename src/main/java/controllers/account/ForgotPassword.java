@@ -101,10 +101,11 @@ public class ForgotPassword extends HttpServlet {
         }
 
         int otpCode = new Random().nextInt(900000) + 100000;
-        session.setAttribute("otpCode", String.valueOf(otpCode));
+        session.setAttribute("otpCode", otpCode);
         session.setAttribute("otpSentTime", System.currentTimeMillis());
         session.setAttribute("resetUsername", username);
         session.setAttribute("resetEmail", email);
+        session.setAttribute("otpExpiryDuration", 300000L);
         session.setAttribute("otpPurpose", "reset");
 
         try {

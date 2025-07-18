@@ -293,16 +293,7 @@ public class CustomerDao {
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         int check = 0;
-
         try ( PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            System.out.println(">>> Creating customer with data:");
-            System.out.println("Username: " + c.getUserName());
-            System.out.println("Password (MD5): " + c.getPassword());
-            System.out.println("Date of Birth: " + c.getDateOfBirth());
-            System.out.println("Email: " + c.getEmail());
-            System.out.println("Phone: " + c.getPhone());
-            System.out.println("Creation Date: " + c.getCreationDate());
 
             ps.setString(1, c.getUserName());
             ps.setString(2, c.getPassword()); // Mật khẩu đã hash trước khi truyền vào

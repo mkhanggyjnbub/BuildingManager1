@@ -78,14 +78,16 @@ public class EmailVerification extends HttpServlet {
         HttpSession session = request.getSession();
         String otpPurpose = (String) session.getAttribute("otpPurpose");
 
-        // Lấy thời điểm đã gửi OTP
         Long otpSentTime = (Long) session.getAttribute("otpSentTime");
-        long currentTime = System.currentTimeMillis();
+        Long otpExpiryDuration  = null;
+        if (session.getAttribute("otpExpiryDuration") != null) {
+            otpExpiryDuration = (Long) session.getAttribute("otpExpiryDuration");
+        }
         
-        System.out.println(currentTime);
+        long currentTime = System.currentTimeMillis();
 
-        // Kiểm tra OTP có hết hạn chưa (5 phút = 300,000 ms)
-        if (otpSentTime == null || (currentTime - otpSentTime) > 5 * 60 * 1000) {
+        // Kiểm tra hết hạn OTP
+        if (otpSentTime == null || otpExpiryDuration == null || (currentTime - otpSentTime) > otpExpiryDuration) {
             request.setAttribute("error", "The OTP has expired. Please resend.");
             request.setAttribute("expired", true);
             request.getRequestDispatcher("account/emailVerification.jsp").forward(request, response);
@@ -106,34 +108,33 @@ public class EmailVerification extends HttpServlet {
 
             if ("signup".equals(otpPurpose)) {
                 Customers tempUser = (Customers) session.getAttribute("tempUser");
-
                 if (tempUser == null) {
                     response.sendRedirect("error");
                     return;
                 }
 
-                // Mã hóa mật khẩu trước khi lưu
                 String hashedPassword = dao.md5(tempUser.getPassword());
                 tempUser.setPassword(hashedPassword);
 
                 int result = dao.createCustomer(tempUser);
 
                 if (result > 0) {
-                    // Xóa các session không còn cần thiết
                     session.removeAttribute("otpPurpose");
                     session.removeAttribute("otpCode");
                     session.removeAttribute("otpSentTime");
+                    session.removeAttribute("otpExpiryDuration");
                     session.removeAttribute("tempUser");
-                    session.removeAttribute("cccd");
                     response.sendRedirect("Login");
                 } else {
                     response.sendRedirect("error");
                 }
 
             } else if ("reset".equals(otpPurpose)) {
-                // Đặt lại mật khẩu
+                // Trường hợp đặt lại mật khẩu
+                session.removeAttribute("otpPurpose");
                 session.removeAttribute("otpCode");
                 session.removeAttribute("otpSentTime");
+                session.removeAttribute("otpExpiryDuration");
                 response.sendRedirect("ResetPassword");
 
             } else {
