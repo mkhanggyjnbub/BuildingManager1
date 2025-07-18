@@ -106,8 +106,8 @@ public class AddNewsDashboard extends HttpServlet {
             int buildingID = Integer.parseInt(request.getParameter("buildingID"));
 
             Part filePart = request.getPart("imageFile");
-
-            String uploadPath = "F:\\SWP\\moi\\BuildingWeb\\src\\main\\webapp\\images";
+            String uploadPath = "D:\\fouderPrj\\BuildingWeb\\src\\main\\webapp\\images";
+//            String uploadPath = "F:\\SWP\\moi\\BuildingWeb\\src\\main\\webapp\\images";
             uploadedUrl = FileUploader.uploadImage(filePart, uploadPath);
             // Tạo đối tượng News mới
             News news = new News();

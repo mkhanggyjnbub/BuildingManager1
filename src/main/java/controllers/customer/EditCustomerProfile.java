@@ -106,7 +106,9 @@ public class EditCustomerProfile extends HttpServlet {
 
             String uploadedUrl = null;
             if (filePart != null && filePart.getSize() > 0) {
-                String uploadPath = "D:\\SWP_Project\\BuildingManager1\\src\\main\\webapp\\images";
+                     String uploadPath = "D:\\fouderPrj\\BuildingWeb\\src\\main\\webapp\\images";
+//                String uploadPath = "F:\\SWP\\moi\\BuildingWeb\\src\\main\\webapp\\images";
+//                String uploadPath = "D:\\SWP_Project\\BuildingManager1\\src\\main\\webapp\\images";
                 String fileName = FileUploader.uploadImage(filePart, uploadPath);
                 uploadedUrl = "images/" + fileName;
             } else {

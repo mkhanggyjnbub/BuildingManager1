@@ -1,36 +1,67 @@
-<%-- 
-    Document   : takeNotification
-    Created on : May 31, 2025, 12:12:57 AM
-    Author     : Kiều Hoàng Mạnh Khang - ce180749 
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html>
-<head><title>Nhận Notification</title></head>
+<head>
+    <meta charset="UTF-8">
+    <title>User Notification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fa;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .status {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: green;
+        }
+
+        .notification {
+            background-color: #eef;
+            padding: 12px;
+            border-left: 4px solid #2196f3;
+            border-radius: 6px;
+            color: #333;
+        }
+    </style>
+</head>
 <body>
-<h2>Nhận Notification (Trang nhận)</h2>
+    <h2>🔔 Chào bạn, đang lắng nghe thông báo...</h2>
+    <p id="status" class="status">🟡 Đang kết nối tới máy chủ...</p>
+    <p id="notification" class="notification">Chưa có thông báo nào.</p>
 
-<div id="notifications" style="border:1px solid #ccc; padding:5px; width:300px; height:200px; overflow:auto;"></div>
+    <script>
+        const status = document.getElementById("status");
+        const noti = document.getElementById("notification");
 
-<script>
-    let ws = new WebSocket('ws://' + window.location.host + '<%=request.getContextPath()%>/notification');
-    let notiDiv = document.getElementById('notifications');
+        const socket = new WebSocket("ws://" + location.host + "<%=request.getContextPath()%>/notification");
 
-    ws.onopen = () => {
-        notiDiv.innerHTML += '<p><i>Đã kết nối WebSocket</i></p>';
-    };
-    ws.onmessage = (e) => {
-        notiDiv.innerHTML += '<p>' + e.data + '</p>';
-        notiDiv.scrollTop = notiDiv.scrollHeight;
-    };
-    ws.onclose = () => {
-        notiDiv.innerHTML += '<p><i>WebSocket đóng</i></p>';
-    };
-    ws.onerror = () => {
-        notiDiv.innerHTML += '<p><i>Lỗi WebSocket</i></p>';
-    };
-</script>
+        socket.onopen = function () {
+             console.log("✅ WebSocket connection opened");
+            status.textContent = "🟢 Đã kết nối WebSocket!";
+            status.style.color = "green";
+        };
+
+        socket.onerror = function (error) {
+            status.textContent = "🔴 Lỗi WebSocket!";
+            status.style.color = "red";
+        };
+
+        socket.onclose = function () {
+            status.textContent = "⚠️ Kết nối đã đóng.";
+            status.style.color = "orange";
+        };
+
+        socket.onmessage = function (event) {
+            noti.textContent = "🔔 " + event.data;
+               console.log(event.data);
+        };
+    </script>
 </body>
 </html>
-

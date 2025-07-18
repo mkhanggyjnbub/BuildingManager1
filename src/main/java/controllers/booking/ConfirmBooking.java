@@ -4,6 +4,7 @@
  */
 package controllers.booking;
 
+import dao.BookingDao;
 import dao.RoomDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,8 +14,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -65,8 +68,33 @@ public class ConfirmBooking extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int roomId = Integer.parseInt(request.getParameter("roomId"));
         HttpSession session = request.getSession();
+
+        int roomId = 0;
+        if (request.getParameter("check") != null) {
+            session.removeAttribute("voucherId");
+            session.removeAttribute("voucherCode");
+            session.removeAttribute("voucherdiscountPercent1");
+
+        } else if (request.getParameter("voucherId") != null) {
+            int voucherId = Integer.parseInt(request.getParameter("voucherId"));
+            String voucherCode = request.getParameter("voucherCode");
+            String voucherdiscountPercent = request.getParameter("voucherdiscountPercent");
+            BigDecimal voucherdis = new BigDecimal(voucherdiscountPercent);
+            double voucherdiscountPercent1 = voucherdis.doubleValue();
+            session.setAttribute("voucherId", voucherId);
+            session.setAttribute("voucherCode", voucherCode);
+            session.setAttribute("voucherdiscountPercent1", voucherdiscountPercent1);
+
+        }
+
+        if (request.getParameter("roomId") != null) {
+            roomId = Integer.parseInt(request.getParameter("roomId"));
+
+        } else {
+            roomId = Integer.parseInt(session.getAttribute("roomId").toString());
+
+        }
         String location = session.getAttribute("location").toString();
         LocalDate checkIn = LocalDate.parse(session.getAttribute("checkIn").toString());
         LocalDate checkOut = LocalDate.parse(session.getAttribute("checkOut").toString());
@@ -78,15 +106,15 @@ public class ConfirmBooking extends HttpServlet {
         int children = Integer.parseInt(session.getAttribute("children").toString());
         RoomDao roomDao = new RoomDao();
         Rooms room = roomDao.getInformationRoomBooking(roomId);
-        request.setAttribute("room", room);
-        request.setAttribute("roomId", roomId);
-        request.setAttribute("location", location);
-        request.setAttribute("checkIn", checkInFormat);
-        request.setAttribute("checkOut", checkOutFormat);
-        request.setAttribute("numberNight", numberNight);
-        request.setAttribute("adults", adults);
-        request.setAttribute("children", children);
 
+        session.setAttribute("room", room);
+        session.setAttribute("roomId", roomId);
+        session.setAttribute("location", location);
+        session.setAttribute("checkInFormat", checkInFormat);
+        session.setAttribute("checkOutFormat", checkOutFormat);
+        session.setAttribute("numberNight", numberNight);
+        session.setAttribute("adults", adults);
+        session.setAttribute("children", children);
         String voucherId = request.getParameter("voucherId");
         if (voucherId != null && !voucherId.isEmpty()) {
             request.setAttribute("voucherId", voucherId);
@@ -105,7 +133,57 @@ public class ConfirmBooking extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        int customerId = Integer.parseInt(session.getAttribute("customerId").toString());
+        String startDateStr = request.getParameter("startDate");
+        LocalDate startDate = LocalDate.parse(startDateStr);
+        String endDateStr = request.getParameter("endDate");
+        LocalDate endDate = LocalDate.parse(endDateStr);
+        String roomType = request.getParameter("roomType");
+        String paymentMethod = request.getParameter("payment");
+        String roomPriceTotalSTR = request.getParameter("roomPriceTotal");
 
+        long roomPriceTotal = Long.parseLong(request.getParameter("roomPriceTotal"));
+        String voucherStr = request.getParameter("voucherdiscountPercent1");
+
+        long discount = 0;
+        long totalAmount = 0;
+        if (voucherStr != null && !voucherStr.trim().isEmpty()) {
+            double voucherdiscountPercent1 = Double.parseDouble(voucherStr.trim());
+            discount = (long) (roomPriceTotal * (voucherdiscountPercent1 / 100));
+            totalAmount = (long) (roomPriceTotal - discount);
+        } else {
+            discount = 0;
+            totalAmount = roomPriceTotal;
+        }
+        // nếu discount = null thì totalAmount sẽ bằng roomPriceTotal
+//        totalAmount = Long.parseLong(request.getParameter("totalAmount"));
+        String payment = request.getParameter("payment");
+        String limit = request.getParameter("limit");
+        double paidAmount = 0;
+        if (limit.equals("full")) {
+            paidAmount = totalAmount;
+        } else if (limit.equals("50")) {
+            paidAmount = (totalAmount * 0.5);
+        } else {
+            paidAmount = (totalAmount * 0.3);
+        }
+
+        if (payment.equals("cod")) {
+
+        } else {
+
+            BookingDao bookingDao = new BookingDao();
+           int bookingId =bookingDao.insertBookingBeforePayment(customerId, startDate, endDate, roomType);
+            int invoiceId = bookingDao.insertInvoiceBeforePayment(bookingId, roomPriceTotal, (long) discount, totalAmount, (long) paidAmount, limit);
+
+            HttpSession session1 = request.getSession();
+            session.setAttribute("bookingId", bookingId);
+            session.setAttribute("invoiceId", invoiceId);
+            session.setAttribute("amount", (long) paidAmount);
+            session.setAttribute("paymentMethod", paymentMethod);
+            request.getRequestDispatcher("ajaxServlet").forward(request, response);
+        }
     }
 
     /**

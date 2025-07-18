@@ -412,6 +412,7 @@
                     document.getElementById("double").style.display = 'block';
                     document.getElementById("queen").style.display = 'none';
                     document.getElementById("king").style.display = 'none';
+                    document.getElementById("twin").style.display = 'none';
                     document.getElementById("treePeople").style.display = 'none';
                     document.getElementById("fourPeople").style.display = 'none';
                     document.getElementById("fivePeople").style.display = 'none';
@@ -453,7 +454,11 @@
                     document.getElementById("fivePeople").style.display = 'none';
                 }
             });
-
+            
+            //khi load trang xong tự gọi hàm js thay đổi bed mà ko cần ấn nút 
+  window.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("roomType").dispatchEvent(new Event("change"));
+    });
         </script>   
 
     </body>

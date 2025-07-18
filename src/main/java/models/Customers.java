@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * @author Kiều Hoàng Mạnh Khang - ce180749
  */
 public class Customers {
-
+ private boolean userSessions;
     private int customerId;
     private String userName;
     private String password;
@@ -28,6 +28,7 @@ public class Customers {
     private LocalDateTime creationDate;
     private LocalDateTime lastLogin;
     private LocalDateTime currenrLastLogin;
+
 
     private boolean registered;
 

@@ -89,7 +89,8 @@ public class AddServiceDashboard extends HttpServlet {
             Part filePart = request.getPart("imageFile");
 
             if (filePart != null && filePart.getSize() > 0) {
-                String uploadPath = "F:\\SWP\\moi\\BuildingWeb\\src\\main\\webapp\\images";
+                     String uploadPath = "D:\\fouderPrj\\BuildingWeb\\src\\main\\webapp\\images";
+//                String uploadPath = "F:\\SWP\\moi\\BuildingWeb\\src\\main\\webapp\\images";
                 String fileName = FileUploader.uploadImage(filePart, uploadPath);
                 avatarURL = "images/" + fileName;
             }

@@ -172,7 +172,6 @@
     <body>
         <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
         <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
-        <a href="javascript:history.back()" class="back-button">← Back</a>
         <div class="form-container">
             <h2>Add New Service</h2>
             <form action="AddServiceDashboard" method="post" onsubmit="return validateForm();" enctype="multipart/form-data">

@@ -273,10 +273,13 @@
                     <label>Room Type:</label>
                     <select id="roomType" name="roomType" required>
                         <option value="">-- Select Type --</option>
-                        <option  value="Standard Room">Standard Room</option>
-                        <option value="Deluxe Room">Deluxe Room</option>
-                        <option  value="Twin Room">Twin Room</option>
-                        <option  value="Family Room">Family Room</option>
+                        <option  value="Standard Room For One">Standard Room For One</option>
+                        <option  value="Standard Room For Two">Standard Room For Two</option>
+                        <option value="Deluxe Room For Two">Deluxe Room For Two</option>
+                        <option  value="Twin Room (2 Single Beds)">Twin Room (2 Single Beds)</option>
+                        <option  value="Family Room For Three">Family Room For Three</option>
+                        <option  value="Family Room For Four">Family Room For Four</option>
+                        <option  value="Family Room For Five">Family Room For Five</option>
                     </select>
                 </div>
 
@@ -321,15 +324,15 @@
                     <label>Description:</label>
                     <textarea name="description" required></textarea>
                 </div>
-                    <div class="full-width">
-                        <label>Room Image:</label>
-                        <div class="custom-file-upload">
-                            <label for="imageFile" class="file-label">📁 Choose Image</label>
-                            <input type="file" name="imageFile" id="imageFile" accept="image/*" >
-                            <span id="file-name">No file chosen</span>
-                        </div>
-                        <p id="error-message" style="color:red; display:none;">Please choose an image file.</p>
+                <div class="full-width">
+                    <label>Room Image:</label>
+                    <div class="custom-file-upload">
+                        <label for="imageFile" class="file-label">📁 Choose Image</label>
+                        <input type="file" name="imageFile" id="imageFile" accept="image/*" >
+                        <span id="file-name">No file chosen</span>
                     </div>
+                    <p id="error-message" style="color:red; display:none;">Please choose an image file.</p>
+                </div>
                 <script>
                     function validateImage() {
                         const fileInput = document.getElementById('imageFile');
@@ -415,15 +418,25 @@
             // làm thay đổi bed khi chọn phòng 
             document.getElementById("roomType").addEventListener("change", function () {
                 const roomType = document.getElementById("roomType");
-                if (roomType.value === "Standard Room") {
+                if (roomType.value === "Standard Room For One") {
                     document.getElementById("single").style.display = 'block';
-                    document.getElementById("double").style.display = 'block';
+                    document.getElementById("double").style.display = 'none';
                     document.getElementById("queen").style.display = 'none';
                     document.getElementById("king").style.display = 'none';
+                    document.getElementById("twin").style.display = 'none';
                     document.getElementById("treePeople").style.display = 'none';
                     document.getElementById("fourPeople").style.display = 'none';
                     document.getElementById("fivePeople").style.display = 'none';
-                } else if (roomType.value === "Deluxe Room") {
+                } else if (roomType.value === "Standard Room For Two") {
+                    document.getElementById("single").style.display = 'none';
+                    document.getElementById("double").style.display = 'block';
+                    document.getElementById("queen").style.display = 'none';
+                    document.getElementById("king").style.display = 'none';
+                    document.getElementById("twin").style.display = 'none';
+                    document.getElementById("treePeople").style.display = 'none';
+                    document.getElementById("fourPeople").style.display = 'none';
+                    document.getElementById("fivePeople").style.display = 'none';
+                } else if (roomType.value === "Deluxe Room For Two") {
                     document.getElementById("queen").style.display = 'block';
                     document.getElementById("king").style.display = 'block';
                     document.getElementById("single").style.display = 'none';
@@ -432,7 +445,7 @@
                     document.getElementById("treePeople").style.display = 'none';
                     document.getElementById("fourPeople").style.display = 'none';
                     document.getElementById("fivePeople").style.display = 'none';
-                } else if (roomType.value === "Twin Room") {
+                } else if (roomType.value === "Twin Room (2 Single Beds)") {
                     document.getElementById("twin").style.display = 'block';
                     document.getElementById("single").style.display = 'none';
                     document.getElementById("double").style.display = 'none';
@@ -450,15 +463,33 @@
                     document.getElementById("treePeople").style.display = 'block';
                     document.getElementById("fourPeople").style.display = 'block';
                     document.getElementById("fivePeople").style.display = 'block';
-                } else {
-                    document.getElementById("single").style.display = 'block';
-                    document.getElementById("double").style.display = 'block';
-                    document.getElementById("queen").style.display = 'block';
-                    document.getElementById("king").style.display = 'block';
-                    document.getElementById("twin").style.display = 'block';
-                    document.getElementById("treePeople").style.display = 'none';
+                } else if (roomType.value === "Family Room For Three") {
+                    document.getElementById("single").style.display = 'none';
+                    document.getElementById("double").style.display = 'none';
+                    document.getElementById("queen").style.display = 'none';
+                    document.getElementById("king").style.display = 'none';
+                    document.getElementById("twin").style.display = 'none';
+                    document.getElementById("treePeople").style.display = 'block';
                     document.getElementById("fourPeople").style.display = 'none';
                     document.getElementById("fivePeople").style.display = 'none';
+                } else if (roomType.value === "Family Room For Four") {
+                    document.getElementById("single").style.display = 'none';
+                    document.getElementById("double").style.display = 'none';
+                    document.getElementById("queen").style.display = 'none';
+                    document.getElementById("king").style.display = 'none';
+                    document.getElementById("twin").style.display = 'none';
+                    document.getElementById("treePeople").style.display = 'none';
+                    document.getElementById("fourPeople").style.display = 'block';
+                    document.getElementById("fivePeople").style.display = 'none';
+                } else if (roomType.value === "Family Room For Five") {
+                    document.getElementById("single").style.display = 'none';
+                    document.getElementById("double").style.display = 'none';
+                    document.getElementById("queen").style.display = 'none';
+                    document.getElementById("king").style.display = 'none';
+                    document.getElementById("twin").style.display = 'none';
+                    document.getElementById("treePeople").style.display = 'none';
+                    document.getElementById("fourPeople").style.display = 'none';
+                    document.getElementById("fivePeople").style.display = 'block';
                 }
             });
 
