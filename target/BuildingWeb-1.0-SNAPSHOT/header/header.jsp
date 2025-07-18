@@ -170,7 +170,6 @@
 
 
 
-
         <c:choose>
             <c:when test="${empty accountType}">
                 <a href="Login">Login</a>

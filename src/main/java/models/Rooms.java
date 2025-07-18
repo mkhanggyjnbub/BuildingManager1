@@ -23,7 +23,7 @@ public class Rooms {
     private int floorNumber;
     private float area;
     private int buildingId;
- 
+
 
     public Rooms() {
     }

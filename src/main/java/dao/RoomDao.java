@@ -687,6 +687,7 @@ public class RoomDao {
         return roomType;
         
     }
+
     public Rooms getRoomDetailForEdit(int id) {
         ResultSet rs = null;
         Rooms room = new Rooms();
