@@ -28,15 +28,25 @@ public class Customers {
     private LocalDateTime creationDate;
     private LocalDateTime lastLogin;
     private LocalDateTime currenrLastLogin;
-
-    public Customers() {
-    }
-
     private String status;
-
     private String identityNumber;
     private Date joinDate;
 
+    private boolean isRegistered;
+    
+    public Customers() {
+    }
+
+    public Customers(String userName, String password, Date dateOfBirth, String phone, String email, String identityNumber, LocalDateTime creationDate) {
+        this.userName = userName;
+        this.password = password;
+        this.creationDate = creationDate;
+        this.dateOfBirth = dateOfBirth;
+        this.phone = phone;
+        this.email = email;
+        this.identityNumber = identityNumber;
+    }
+    
     // Getter and Setter
     public int getCustomerId() {
         return customerId;

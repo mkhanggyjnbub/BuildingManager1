@@ -5,7 +5,6 @@
  */
 package dao;
 
-
 import db.ConnectData;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -202,8 +201,7 @@ public class UserDao {
         return user;
     }
 
-    
-     public Users getRoleUserById(int id) {
+    public Users getRoleUserById(int id) {
         ResultSet rs = null;
         Users user = new Users();
         try {
@@ -243,7 +241,6 @@ public class UserDao {
         }
         return cnt;
     }
-
 
     public int UpdateInfomationById(int id, Users user) {
         int cnt = 0;
@@ -293,5 +290,14 @@ public class UserDao {
         }
 
         return listStaff;
+    }
+
+    public int signUp() {
+        int check =0;
+        
+        
+        
+        
+        return check;
     }
 }

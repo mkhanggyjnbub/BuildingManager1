@@ -3,22 +3,28 @@ controllers\services\ViewServiceDetailDashboard.class
 controllers\services\ViewServiceDetail.class
 controllers\booking\BookingCancel.class
 controllers\amenities\ViewAmenitiesDashboard.class
+dao\InvoicesDao.class
 dao\BookingDao.class
 controllers\admin\Decentralization.class
 controllers\customer\EditCustomerProfile.class
 controllers\amenities\EditAmenitiesDashboard.class
+controllers\extraCharge\ViewAllExtraCharge.class
 controllers\voucher\EditVoucher.class
 controllers\room\CreateRoomForDashboard.class
 dao\RoomReviewDao.class
 models\Bookings.class
 models\Employees.class
 models\Services.class
+controllers\booking\ViewBookingHistory.class
 controllers\services\ViewServices.class
 dao\ServicesCartDao.class
 models\Report.class
 controllers\room\ViewRooms.class
+models\Invoices.class
 controllers\voucher\AdminViewVoucher.class
 controllers\customer\EditCustomerDashboard.class
+dao\ExtraChargeDao.class
+controllers\account\ResetPassword.class
 models\ServicesCart.class
 controllers\customer\ViewAllCustomersDashboard.class
 controllers\news\ViewNewsDetail.class
@@ -31,16 +37,20 @@ models\Customers.class
 controllers\services\AddServiceDashboard.class
 controllers\voucher\ViewVouchers.class
 db\SendOTPEmail.class
+models\GoogleUser.class
 controllers\room\ViewRoomDetail.class
 dao\ReportDao.class
 db\SendOTPEmail$1.class
 controllers\checkInOut\CheckInOutDetail.class
+controllers\account\ResendOTP.class
 models\Roles.class
 controllers\voucher\UserVouchers.class
 dao\UserDao.class
 controllers\room\ViewAllRoomsForDashboard.class
 models\MaintenanceStatuses.class
+controllers\account\GoogleLogin.class
 controllers\news\ViewNewsDashboard.class
+models\ExtraCharge.class
 Websocket\TakeNotification.class
 controllers\voucher\VouchersDashBoard.class
 dao\CustomerDao.class
@@ -49,23 +59,11 @@ dao\EquipmentDao.class
 sendMail\EmailSender.class
 controllers\amenities\AddAmenitiesDashboard.class
 controllers\booking\BookingConfirmation.class
-<<<<<<< HEAD
-models\Employees.class
 controllers\services\ViewServicesCart.class
-models\Services.class
-controllers\services\ViewServices.class
-=======
-controllers\services\ViewServicesCart.class
->>>>>>> 27be073fdfe2619df0349f55bd4355968b60a514
 controllers\report\ViewAllReportsForDashboard.class
 models\Vouchers.class
 models\RoomReviews.class
 controllers\services\DeleteServiceDashboard.class
-<<<<<<< HEAD
-dao\ServicesCartDao.class
-models\Report.class
-=======
->>>>>>> 27be073fdfe2619df0349f55bd4355968b60a514
 controllers\asset\Assets.class
 models\Rooms.class
 controllers\account\Logout.class
@@ -76,11 +74,14 @@ controllers\checkInOut\ViewAllCheckInOutDashboard.class
 controllers\account\SignUp.class
 models\News.class
 db\ConnectData.class
+db\GoogleUtils.class
 controllers\Index.class
 controllers\UpImage.class
 dao\RoomDao.class
 models\Equipment.class
 dao\PaginationDao.class
+controllers\account\ForgotPassword.class
+controllers\account\EmailVerification.class
 controllers\customer\ViewCustomerDetailDashboard.class
 controllers\news\EditNewsDashboard.class
 Cloudinary\CloudinaryUtil.class
@@ -92,42 +93,20 @@ controllers\booking\ConfirmBooking.class
 controllers\customer\ViewCustomerProfile.class
 controllers\news\AddNewsDashboard.class
 controllers\amenities\DeleteAmenitiesDashboard.class
-<<<<<<< HEAD
-models\ServicesCart.class
-controllers\customer\ViewAllCustomersDashboard.class
-controllers\news\ViewNewsDetail.class
-controllers\services\ViewServicesDashboard.class
-controllers\admin\Dashboard.class
-dao\ServicesDao.class
-models\Floors.class
-dao\BuildingDao.class
-controllers\admin\DashboardUser.class
-=======
 controllers\services\ViewServicesDashboard.class
 controllers\admin\Dashboard.class
 controllers\cloudinary\CloudinaryUpload.class
->>>>>>> 27be073fdfe2619df0349f55bd4355968b60a514
 controllers\admin\AdminView.class
+controllers\extraCharge\CreateExtraCharge.class
 models\Buildings.class
 controllers\services\EditServiceDashboard.class
 controllers\account\Login.class
-<<<<<<< HEAD
-models\Customers.class
-controllers\services\AddServiceDashboard.class
-controllers\voucher\ViewVouchers.class
-db\SendOTPEmail.class
-=======
->>>>>>> 27be073fdfe2619df0349f55bd4355968b60a514
+models\Payments.class
 controllers\voucher\AddVoucher.class
+controllers\booking\AddBooking.class
 controllers\voucher\DeleteVoucher.class
 models\RoomEquipment.class
 controllers\room\DeleteRoomForDashboard.class
 sendMail\EmailSender$1.class
 controllers\news\DeleteNewsDashboard.class
 models\Amenities.class
-<<<<<<< HEAD
-dao\ReportDao.class
-db\SendOTPEmail$1.class
-controllers\checkInOut\CheckInOutDetail.class
-=======
->>>>>>> 27be073fdfe2619df0349f55bd4355968b60a514

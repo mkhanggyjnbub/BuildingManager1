@@ -205,10 +205,11 @@
         <li style="--i:8"><a href="ViewAllCustomersDashboard"><i class="fa-solid fa-users"></i><span>Customers</span></a></li>
         <li style="--i:9"><a href="ViewAllCheckInOutDashboard"><i class="fa-solid fa-door-open"></i><span>Check-InOut</span></a></li>
         <li style="--i:10"><a href="ViewAllReportsForDashboard"><i class="fa-solid fa-flag"></i><span>Report</span></a></li>
-        <li style="--i:11"><a href="Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
+        <li style="--i:11"><a href="ViewAllExtraCharge"><i class="fa-solid fa-flag"></i><span>ExtraCharge</span></a></li>
+        <li style="--i:12"><a href="Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
 
         <!-- Khang item -->
-        <li style="--i:12" class="khang-item">
+        <li style="--i:13" class="khang-item">
             <a href="#"><i class="fa-solid fa-user-gear"></i><span>Khang</span></a>
             <ul class="khang-dropdown">
                 <li><a href="Profile"><span>?</span> My Account</a></li>

@@ -441,4 +441,24 @@ public class RoomDao {
         }
         return cnt;
     }
+
+    public long getPriceRoomByBookingId(int bookingId) {
+        String sql = "SELECT r.Price FROM Rooms r "
+                + "JOIN Bookings b ON r.RoomId = b.RoomId "
+                + "WHERE b.BookingId = ? AND r.Status = 'Active'";
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, bookingId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                System.out.println(rs.getLong("Price"));
+                return rs.getLong("Price");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 }

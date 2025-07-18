@@ -34,6 +34,16 @@ public class Users {
     public Users() {
     }
 
+    //for SignUp
+    public Users(String userName, String password, Date dayOfBirth, String phone, String email, LocalDateTime CreationDate) {
+        this.userName = userName;
+        this.password = password;
+        this.CreationDate = CreationDate;
+        this.dayOfBirth = dayOfBirth;
+        this.phone = phone;
+        this.email = email;
+    }
+
     public Employees getEmployees() {
         return employees;
     }
