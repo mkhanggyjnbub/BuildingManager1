@@ -14,7 +14,8 @@ import java.time.LocalDateTime;
  * @author Kiều Hoàng Mạnh Khang - ce180749
  */
 public class Customers {
- private boolean userSessions;
+
+    private boolean userSessions;
     private int customerId;
     private String userName;
     private String password;
@@ -28,17 +29,23 @@ public class Customers {
     private LocalDateTime creationDate;
     private LocalDateTime lastLogin;
     private LocalDateTime currenrLastLogin;
-
-
+    private String status;
+    private String identityNumber;
+    private Date joinDate;
     private boolean registered;
 
     public Customers() {
     }
 
-    private String status;
-
-    private String identityNumber;
-    private Date joinDate;
+    public Customers(String username, String password, Date dob, String phone, String identityNumber, String email, LocalDateTime creationDate) {
+        this.userName = username;
+        this.password = password;
+        this.dateOfBirth = dob;
+        this.phone = phone;
+        this.identityNumber = identityNumber;
+        this.email = email;
+        this.creationDate = creationDate;
+    }
 
     // Getter and Setter
     public int getCustomerId() {
