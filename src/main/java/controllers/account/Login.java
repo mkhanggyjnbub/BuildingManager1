@@ -104,13 +104,14 @@ public class Login extends HttpServlet {
                         session.setAttribute("adminId", userId);
                         response.sendRedirect("Dashboard");
                     } else if (checkRole == 2) {
-                        session.setAttribute("managerId", userId);
+                        session.setAttribute("reception", userId);
                         response.sendRedirect("Dashboard");
                     } else if (checkRole == 3) {
                         session.setAttribute("staffId", userId);
                         response.sendRedirect("Dashboard");
 
                     }
+
                 } else {
                     response.sendRedirect("Login");
 

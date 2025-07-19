@@ -12,13 +12,11 @@
     <meta charset="UTF-8">
     <title>Booking Detail</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
     <style>
         :root {
             --navy: #4a6fa5;
             --white: #ffffff;
         }
-
         .navbar {
             background-color: var(--navy);
             color: var(--white);
@@ -32,14 +30,12 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
             font-family: 'Segoe UI', sans-serif;
         }
-
         .navbar h1 {
             font-size: 22px;
             margin: 0;
             font-weight: 700;
             color: var(--white);
         }
-
         .navbar a {
             color: var(--white);
             text-decoration: none;
@@ -48,11 +44,6 @@
             align-items: center;
             gap: 6px;
         }
-
-        .navbar a i {
-            font-size: 16px;
-        }
-
         body {
             font-family: 'Segoe UI', sans-serif;
             background: linear-gradient(to bottom right, #e7f0fa, #ffffff);
@@ -61,29 +52,20 @@
             color: #333;
             animation: fadeInBody 0.6s ease-in-out;
         }
-
         @keyframes fadeInBody {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-
         .main-content {
             margin-left: 60px;
             padding: 80px 20px 40px;
-            transition: margin-left 0.3s ease;
             animation: slideInMain 0.6s ease forwards;
             opacity: 0;
         }
-
-        .sidebar.open ~ .main-content {
-            margin-left: 220px;
-        }
-
         @keyframes slideInMain {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         .container {
             max-width: 700px;
             margin: auto;
@@ -92,7 +74,6 @@
             border-radius: 12px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
         }
-
         h2 {
             text-align: center;
             color: #007bff;
@@ -101,24 +82,20 @@
             border-bottom: 2px solid #007bff;
             padding-bottom: 10px;
         }
-
         p {
             font-size: 16px;
             margin: 12px 0;
             line-height: 1.6;
         }
-
         strong {
             color: #003c75;
             display: inline-block;
             width: 180px;
         }
-
         .back-btn {
             text-align: center;
             margin-top: 30px;
         }
-
         .back-btn a {
             text-decoration: none;
             background-color: #007bff;
@@ -127,72 +104,46 @@
             border-radius: 8px;
             font-weight: 600;
             transition: background-color 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
         }
-
         .back-btn a:hover {
             background-color: #0056b3;
         }
-
         .not-found {
             text-align: center;
             color: #d9534f;
             font-weight: bold;
             margin-top: 20px;
         }
-
-        @media screen and (max-width: 600px) {
-            strong {
-                width: 120px;
-            }
-
-            .container {
-                padding: 25px 15px;
-            }
-        }
     </style>
 </head>
 <body>
-
-<%@include file="../navbarDashboard/navbarDashboard.jsp" %>
-<%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
-
 <div class="main-content">
     <div class="container">
         <h2><i class="fa-solid fa-circle-info"></i> Check-In / Check-Out Detail</h2>
-
         <c:if test="${not empty booking}">
             <p><strong><i class="fa-solid fa-id-badge"></i> Booking ID:</strong> ${booking.bookingId}</p>
             <p><strong><i class="fa-solid fa-user"></i> Customer:</strong> ${booking.customers.fullName}</p>
             <p><strong><i class="fa-solid fa-envelope"></i> Email:</strong> ${booking.customers.email}</p>
             <p><strong><i class="fa-solid fa-phone"></i> Phone:</strong> ${booking.customers.phone}</p>
-            <p><strong><i class="fa-solid fa-door-closed"></i> Room:</strong> ${booking.rooms.roomNumber}</p>
+            <p><strong><i class="fa-solid fa-door-closed"></i> Room:</strong> 
+                <c:choose>
+                    <c:when test="${booking.rooms != null}">
+                        ${booking.rooms.roomNumber}
+                    </c:when>
+                    <c:otherwise>Chưa có phòng</c:otherwise>
+                </c:choose>
+            </p>
             <p><strong><i class="fa-solid fa-bars-progress"></i> Status:</strong> ${booking.status}</p>
             <p><strong><i class="fa-solid fa-calendar-plus"></i> Start Date:</strong> ${booking.formattedStartDate}</p>
             <p><strong><i class="fa-solid fa-calendar-minus"></i> End Date:</strong> ${booking.formattedEndDate}</p>
-            <p><strong><i class="fa-solid fa-door-open"></i> Check-In Time:</strong>
-                <c:choose>
-                    <c:when test="${not empty booking.checkInTime}">${booking.checkInTime}</c:when>
-                    <c:otherwise>N/A</c:otherwise>
-                </c:choose>
-            </p>
-            <p><strong><i class="fa-solid fa-door-closed"></i> Check-Out Time:</strong>
-                <c:choose>
-                    <c:when test="${not empty booking.checkOutTime}">${booking.checkOutTime}</c:when>
-                    <c:otherwise>N/A</c:otherwise>
-                </c:choose>
-            </p>
         </c:if>
-
         <c:if test="${empty booking}">
             <div class="not-found">⚠️ Booking not found.</div>
         </c:if>
-
         <div class="back-btn">
             <a href="javascript:history.back()"><i class="fa-solid fa-arrow-left"></i> Back</a>
         </div>
     </div>
 </div>
-
 </body>
 </html>

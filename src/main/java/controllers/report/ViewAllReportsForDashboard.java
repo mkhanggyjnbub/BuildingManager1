@@ -70,7 +70,7 @@ public class ViewAllReportsForDashboard extends HttpServlet {
         e.printStackTrace();
         request.setAttribute("error", "Không thể tải danh sách báo cáo: " + e.getMessage());
     }
-    request.getRequestDispatcher("/admin/report.jsp").forward(request, response);
+    request.getRequestDispatcher("/report/report.jsp").forward(request, response);
 }
 
 

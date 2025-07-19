@@ -6,16 +6,15 @@
     
 
 <div class="navbar">
-    <a href="Dashboard" style="text-decoration: none;">
+    <a href="Dashboard" class="dashboard-link">
         <h1 class="dashboard-title">Admin Dashboard</h1>
     </a>
     <a href="ViewAllCustomersDashboard" class="customer-link">
-       
     </a>
 </div>
 
-
 <div class="main-content">
+
 </div>
 
 <style>
@@ -23,7 +22,7 @@
     --navy: #4a6fa5;
     --white: #ffffff;
     --transition: 0.3s ease;
-    --hover-color: #d9e6f7;
+    --hover-color: #4a6fa5;
     --navbar-height: 60px;
 }
 
@@ -34,49 +33,55 @@
     left: 0;
     width: 100%;
     height: var(--navbar-height);
-    background-color: var(--navy);
-    color: var(--white);
+    background-color: var(--white);
+    color: var(--navy);
     padding: 0 30px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     z-index: 1000;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     font-family: 'Segoe UI', sans-serif;
-    animation: slideDown 0.6s ease forwards;
+    animation: fadeInDown 0.5s ease forwards;
     opacity: 0;
     transform: translateY(-10px);
+    transition: background-color var(--transition);
 }
 
 /* Dashboard title */
+.dashboard-link {
+    text-decoration: none;
+}
+
 .navbar h1 {
     font-size: 22px;
     margin: 0;
-    color: var(--white);
-    transition: transform 0.3s ease;
+    color: var(--navy);
+    transition: transform var(--transition);
 }
 
 .navbar h1:hover {
-    transform: scale(1.03);
+    transform: scale(1.05);
 }
 
 /* Customer link */
 .customer-link {
-    color: var(--white);
+    color: var(--navy);
     text-decoration: none;
     font-size: 16px;
     display: flex;
     align-items: center;
     gap: 6px;
-    transition: color 0.3s ease, transform 0.3s ease;
+    transition: color var(--transition), transform var(--transition);
 }
 
 .customer-link:hover {
     color: var(--hover-color);
-    transform: translateX(3px);
+    transform: translateX(4px);
+    font-weight: 500;
 }
 
-/* Main content padding to avoid navbar overlap */
+/* Main content padding */
 .main-content {
     padding-top: var(--navbar-height);
 }
@@ -86,14 +91,13 @@
     .navbar h1 {
         font-size: 18px;
     }
-
     .customer-link {
         font-size: 14px;
     }
 }
 
 /* Animation */
-@keyframes slideDown {
+@keyframes fadeInDown {
     to {
         opacity: 1;
         transform: translateY(0);

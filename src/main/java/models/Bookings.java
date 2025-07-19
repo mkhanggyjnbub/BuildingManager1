@@ -34,7 +34,7 @@ public class Bookings {
     private int userId;
     private String formattedStartDate;
     private String formattedEndDate;
-
+private String roomType;
     public Bookings() {
 
     }
@@ -69,6 +69,14 @@ public class Bookings {
 
     public void setConfirmationTime(LocalDateTime ConfirmationTime) {
         this.ConfirmationTime = ConfirmationTime;
+    }
+
+    public String getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
     }
 
     public LocalDateTime getCheckInTime() {

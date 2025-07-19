@@ -6,6 +6,7 @@ package controllers.checkInOut;
 
 import controllers.admin.*;
 import dao.BookingDao;
+import dao.RoomDao;
 import dao.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -24,7 +25,7 @@ import models.Bookings;
  *
  * @author Kiều Hoàng Mạnh Khang - ce180749
  */
-@WebServlet(name = "ViewAllCheckInOutDashboard", urlPatterns = {"/ViewAllCheckInOutDashboard"})
+@WebServlet("/ViewAllCheckInOutDashboard")
 public class ViewAllCheckInOutDashboard extends HttpServlet {
 
     /**
@@ -63,11 +64,11 @@ public class ViewAllCheckInOutDashboard extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+      protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             BookingDao dao = new BookingDao();
-            List<Bookings> list = dao.getAllBookings();
+            List<Bookings> list = dao.getAllBookingsKhanh();
             request.setAttribute("checkInList", list);
             request.getRequestDispatcher("checkInOut/viewAllCheckInOutDashboard.jsp").forward(request, response);
         } catch (Exception e) {
@@ -77,6 +78,7 @@ public class ViewAllCheckInOutDashboard extends HttpServlet {
         }
     }
 
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -85,7 +87,7 @@ public class ViewAllCheckInOutDashboard extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String bookingIdStr = request.getParameter("bookingId");
@@ -95,17 +97,30 @@ public class ViewAllCheckInOutDashboard extends HttpServlet {
             try {
                 int bookingId = Integer.parseInt(bookingIdStr);
                 BookingDao dao = new BookingDao();
-                dao.updateBookingStatus(bookingId, action); // Cập nhật sang Checked in
 
-                // Sau khi cập nhật -> tải lại danh sách mới
-                List<Bookings> list = dao.getAllBookings();
+                if (action.equals("Checked out")) {
+                    dao.updateBookingStatus(bookingId, "Checked out");
+
+                    // Nếu có update phòng thì cập nhật lại phòng là Available (nếu muốn)
+                    Bookings booking = dao.getBookingById(bookingId);
+                    int roomId = booking.getRoomId();
+                    RoomDao roomDao = new RoomDao();
+                    roomDao.updateRoomStatus(roomId, "Available");
+                }
+
+                List<Bookings> list = dao.getAllBookingsKhanh();
                 request.setAttribute("checkInList", list);
 
-                // Chuyển về lại trang chính để thấy nút Check-Out
                 request.getRequestDispatcher("checkInOut/viewAllCheckInOutDashboard.jsp").forward(request, response);
             } catch (SQLException ex) {
                 Logger.getLogger(ViewAllCheckInOutDashboard.class.getName()).log(Level.SEVERE, null, ex);
+                response.sendRedirect("checkInOut/viewAllCheckInOutDashboard.jsp?error=3");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                response.sendRedirect("checkInOut/viewAllCheckInOutDashboard.jsp?error=2");
             }
+        } else {
+            response.sendRedirect("checkInOut/viewAllCheckInOutDashboard.jsp?error=1");
         }
     }
 

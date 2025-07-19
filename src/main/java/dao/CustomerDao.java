@@ -65,7 +65,7 @@ public class CustomerDao {
                     customer.setFullName(rs.getString("FullName"));
                     customer.setEmail(rs.getString("Email"));
                     customer.setPhone(rs.getString("Phone"));
-                    customer.setStatus(rs.getString("Status"));                 
+                    customer.setStatus(rs.getString("Status"));
                     customer.setAvatarUrl(rs.getString("AvatarUrl"));
                     customer.setAddress(rs.getString("Address")); // có thể là null
                     customer.setGender(rs.getString("Gender")); // có thể là null
@@ -104,7 +104,7 @@ public class CustomerDao {
         }
         return cmt;
     }
-    
+
     //author: KhoaDDCE181988 - Use in: EditCustomerProfile,..
     public Customers getCustomerByIdForCustomer(int id) {
         Customers customer = null;
@@ -121,7 +121,7 @@ public class CustomerDao {
                     customer.setFullName(rs.getString("FullName"));
                     customer.setEmail(rs.getString("Email"));
                     customer.setPhone(rs.getString("Phone"));
-                    customer.setStatus(rs.getString("Status"));                 
+                    customer.setStatus(rs.getString("Status"));
                     customer.setAvatarUrl(rs.getString("AvatarUrl"));
                     customer.setAddress(rs.getString("Address")); // có thể là null
                     customer.setGender(rs.getString("Gender")); // có thể là null
@@ -191,7 +191,7 @@ public class CustomerDao {
 
     public List<Customers> getAllCustomers() throws SQLException {
         List<Customers> list = new ArrayList<>();
-            String sql = "SELECT * FROM Customers";
+        String sql = "SELECT * FROM Customers";
         try ( PreparedStatement pst = conn.prepareStatement(sql);  ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
@@ -208,7 +208,7 @@ public class CustomerDao {
                 c.setStatus(rs.getString("Status"));
                 c.setAvatarUrl(rs.getString("AvatarUrl"));
                 c.setCreationDate(rs.getTimestamp("CreationDate").toLocalDateTime());
-                c.setLastLogin(rs.getTimestamp("LastLogin").toLocalDateTime()); 
+                c.setLastLogin(rs.getTimestamp("LastLogin").toLocalDateTime());
                 c.setIdentityNumber(rs.getString("IdentityNumber"));
                 c.setJoinDate(rs.getDate("JoinDate"));
                 list.add(c);
@@ -263,5 +263,106 @@ public class CustomerDao {
             return stmt.executeUpdate();  // trả về số dòng cập nhật thành công
         }
     }
+    //khanh
 
+    public boolean insertCustomerIfCccdNotEmpty(String fullName, String cccd, String email, String phone) {
+        if (cccd == null || cccd.trim().isEmpty()) {
+            return false;
+        }
+
+        String sql = "INSERT INTO Customers (FullName, CCCD, Email, Phone) VALUES (?, ?, ?, ?)";
+
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, fullName);
+            ps.setString(2, cccd);
+            ps.setString(3, email);
+            ps.setString(4, phone);
+
+            int affectedRows = ps.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+//khanh
+
+    public void insertCustomerIfNotExist(String fullName, String cccd) throws SQLException {
+        String checkSql = "SELECT 1 FROM Customers WHERE CCCD = ?";
+        String insertSql = "INSERT INTO Customers (FullName, CCCD) VALUES (?, ?)";
+
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
+            checkStmt.setString(1, cccd);
+            ResultSet rs = checkStmt.executeQuery();
+            if (!rs.next()) {
+                try ( PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                    insertStmt.setString(1, fullName);
+                    insertStmt.setString(2, cccd);
+                    insertStmt.executeUpdate();
+                }
+            }
+        }
+    }
+
+    public boolean checkExistCCCD(String cccd) {
+        String sql = "SELECT COUNT(*) FROM Customers WHERE IdentityNumber = ?";
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, cccd);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean saveGuestInfoIfNotExist(int bookingId, String fullName, String cccd) {
+        if (checkExistCCCD(cccd)) {
+            return false; // Bị trùng -> Không lưu
+        }
+
+        String sql = "INSERT INTO GuestInfo (BookingId, FullName, CCCD) VALUES (?, ?, ?)";
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, bookingId);
+            ps.setString(2, fullName);
+            ps.setString(3, cccd);
+            int result = ps.executeUpdate();
+            return result > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public int insertCustomerByCCCD(String userName, String fullName, String cccd) {
+        int check = 0;
+        String sql = "INSERT INTO Customers (UserName, FullName, IdentityNumber, isRegistered) VALUES (?, ?, ?, 0)";
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, userName);
+            ps.setString(2, fullName);
+            ps.setString(3, cccd);
+            check = ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return check;
+    }
+
+    // Truy vấn lấy username số lớn nhất
+    public int getMaxUsernameNumber() {
+        int max = 0;
+        try {
+            String sql = "SELECT MAX(CAST(username AS INT)) AS MaxUsername FROM Customers WHERE ISNUMERIC(username) = 1";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                max = rs.getInt("MaxUsername");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return (max == 0) ? 1 : max + 1;
+    }
 }

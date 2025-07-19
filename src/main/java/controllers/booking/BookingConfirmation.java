@@ -23,7 +23,7 @@ import sendMail.EmailSender;
  *
  * @author CE180441_Dương Đinh Thế Vinh
  */
-@WebServlet(name = "BookingConfirmation", urlPatterns = {"/BookingConfirmation"})
+@WebServlet("/BookingConfirmation")
 public class BookingConfirmation extends HttpServlet {
 
     /**
