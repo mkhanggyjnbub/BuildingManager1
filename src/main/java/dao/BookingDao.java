@@ -30,6 +30,77 @@ public class BookingDao {
     public BookingDao() {
         conn = ConnectData.getConnection();
     }
+//
+//    public List<Bookings> getAllBookingsKhanh() throws SQLException {
+//        List<Bookings> list = new ArrayList<>();
+//        Connection conn = ConnectData.getConnection();
+//
+//        String sql = "SELECT \n"
+//                + "    b.BookingId, \n"
+//                + "    b.RoomId, \n"
+//                + "    b.CustomerId, \n"
+//                + "    b.StartDate, \n"
+//                + "    b.EndDate, \n"
+//                + "    b.Status, \n"
+//                + "    b.RoomType, \n"
+//                + "    c.FullName\n"
+//                + "FROM \n"
+//                + "    Bookings b\n"
+//                + "Full JOIN \n"
+//                + "    Customers c ON b.CustomerId = c.CustomerId\n"
+//                + "WHERE \n"
+//                + "    b.Status IN ('Checked in', 'Confirmed', 'Checked out')";
+//
+//        PreparedStatement ps = conn.prepareStatement(sql);
+//        ResultSet rs = ps.executeQuery();
+//
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+//
+//        while (rs.next()) {
+//            Bookings booking = new Bookings();
+//            booking.setBookingId(rs.getInt("BookingId"));
+//
+//
+//Date startSqlDate = rs.getDate("StartDate");
+//if (startSqlDate != null) {
+//    LocalDate startDate = startSqlDate.toLocalDate();
+//    booking.setStartDate(startDate);
+//    booking.setFormattedStartDate(startDate.format(formatter));
+//}
+//
+//Date endSqlDate = rs.getDate("EndDate");
+//if (endSqlDate != null) {
+//    LocalDate endDate = endSqlDate.toLocalDate();
+//    booking.setEndDate(endDate);
+//    booking.setFormattedEndDate(endDate.format(formatter));
+//}
+//
+//
+//            booking.setStatus(rs.getString("Status"));
+//
+//            int roomId = rs.getInt("RoomId");
+//            if (rs.wasNull()) {
+//                booking.setRooms(null);
+//            } else {
+//                Rooms room = new Rooms();
+//                room.setRoomId(roomId);
+////                room.setRoomNumber(rs.getString("RoomNumber"));
+//                booking.setRooms(room);
+//
+//            }
+//                                booking.setRoomType(rs.getString("RoomType")); 
+//
+//            Customers customer = new Customers();
+//            customer.setFullName(rs.getString("FullName"));
+//            booking.setCustomers(customer);
+//
+//            list.add(booking);
+//        }
+//        rs.close();
+//        ps.close();
+//        conn.close();
+//        return list;
+//    }
 
     //vinh bookingconfirmation
     public List<Bookings> getAllBookings() throws SQLException {
@@ -42,6 +113,7 @@ public class BookingDao {
                 + "FROM Bookings b "
                 + "LEFT JOIN Rooms r ON b.RoomId = r.RoomId "
                 + "JOIN Customers c ON b.CustomerId = c.CustomerId "
+
                 + "WHERE b.Status IN ('Waiting for processing', 'Confirmed')";
 
         PreparedStatement ps = conn.prepareStatement(sql);
@@ -87,6 +159,10 @@ public class BookingDao {
         return list;
     }
 
+//<<<<<<< HEAD
+//    public int confirmBooking(int bookingId, int confirmedBy) throws SQLException {
+//        int check = 0;
+//=======
    public List<Bookings> getAllBookingsKhanh() throws SQLException {
     List<Bookings> list = new ArrayList<>();
     Connection conn = ConnectData.getConnection();
@@ -162,6 +238,7 @@ public class BookingDao {
         String sql = "UPDATE Bookings SET Status = 'Confirmed', ConfirmationTime = ?, ConfirmedBy = ? WHERE BookingId = ?";
 
         try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+
 
             ps.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now())); // thời gian xác nhận
             ps.setInt(2, confirmedBy); // ID của nhân viên xác nhận
@@ -575,7 +652,189 @@ public class BookingDao {
 //        return 0;
 //    }
 
+    public Bookings getBookingCheckInInfo(int bookingId) {
+        Bookings booking = null;
 
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(
+                "SELECT "
+                + "    b.BookingId, "
+                + "    b.CustomerId, "
+                + "    b.StartDate, "
+                + "    b.EndDate, "
+                + "    b.RoomType, "
+                + "    c.FullName "
+                + "FROM Bookings b "
+                + "INNER JOIN Customers c ON b.CustomerId = c.CustomerId "
+                + "WHERE b.BookingId = ?")) {
+
+            ps.setInt(1, bookingId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                booking = new Bookings();
+                booking.setBookingId(rs.getInt("BookingId"));
+                booking.setCustomerId(rs.getInt("CustomerId"));
+
+                // Nếu model Bookings của bạn đang xài String cho ngày thì dùng getString
+               
+LocalDate startDate = rs.getDate("StartDate").toLocalDate();
+booking.setStartDate(startDate);
+
+LocalDate endDate = rs.getDate("EndDate").toLocalDate();
+booking.setEndDate(endDate);
+                booking.setRoomType(rs.getString("RoomType"));
+
+                Customers customer = new Customers();
+                customer.setFullName(rs.getString("FullName"));
+                booking.setCustomers(customer);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return booking;
+    }
+
+    public boolean updateCheckInStatus(int bookingId, String status, int actualGuests, String cccd, int assignedRoomId, LocalDateTime checkInTime) {
+        String sql = "UPDATE Bookings SET Status = ?, NumberOfGuests = ?, CCCD = ?, RoomId = ?, CheckInTime = ? WHERE BookingId = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, status);
+            ps.setInt(2, actualGuests);
+            ps.setString(3, cccd);
+            ps.setInt(4, assignedRoomId);
+            ps.setTimestamp(5, Timestamp.valueOf(checkInTime));
+            ps.setInt(6, bookingId);
+
+            int rowsUpdated = ps.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public Bookings getBookingBasicInfoById(int bookingId) {
+        Bookings booking = null;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ConnectData.getConnection();
+            String sql = "SELECT "
+                    + "    b.BookingId, "
+                    + "    c.FullName AS CustomerName, "
+                    + "    r.RoomType, "
+                    + "    b.StartDate, "
+                    + "    b.EndDate "
+                    + "FROM Bookings b "
+                    + "JOIN Customers c ON b.CustomerId = c.CustomerId "
+                    + "JOIN Rooms r ON b.RoomId = r.RoomId "
+                    + "WHERE b.BookingId = ?";
+
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, bookingId);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                booking = new Bookings();
+                booking.setBookingId(rs.getInt("BookingId"));
+
+                Customers customer = new Customers();
+                customer.setFullName(rs.getString("CustomerName"));
+                booking.setCustomers(customer);
+
+                Rooms room = new Rooms();
+                room.setRoomType(rs.getString("RoomType"));
+                booking.setRooms(room);
+booking.setStartDate(rs.getDate("StartDate").toLocalDate());
+booking.setEndDate(rs.getDate("EndDate").toLocalDate());
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return booking;
+    }
+
+    public int checkRoomIdExists(Integer roomId) {
+        int result = 0;
+        String sql = "SELECT RoomId FROM Bookings WHERE BookingId = ?";
+
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, roomId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next() && rs.getObject("RoomId") != null) {
+                result = 1;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    //khanh
+    public void updateRoomForBooking(int bookingId, int roomId, int actualGuests) throws SQLException {
+        String sql = "UPDATE Bookings SET RoomId = ?, ActualGuests = ? WHERE BookingId = ?";
+
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, roomId);
+            ps.setInt(2, actualGuests);
+            ps.setInt(3, bookingId);
+
+            ps.executeUpdate();
+        }
+    }
+
+    public void insertRoomIdForBookingK(int bookingId, int roomId, LocalDateTime checkInTime) {
+        Connection conn = ConnectData.getConnection();
+        try {
+            String sql = "UPDATE Bookings SET RoomId = ?, CheckInTime = ?, Status = 'Checked in' WHERE BookingId = ?";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setInt(1, roomId);
+            ps.setTimestamp(2, Timestamp.valueOf(checkInTime));
+            ps.setInt(3, bookingId);
+
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(BookingDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+//code của khanh
+  public int confirmBookingNotByRoomId(int bookingId, int confirmedBy) {
+    int check = 0;
+    try {
+        String sql = "UPDATE Bookings SET Status = 'Checked in', CheckInTime = ?, CheckInBy = ? WHERE BookingId = ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setDate(1, java.sql.Date.valueOf(LocalDate.now()));  // LocalDate -> Date
+        ps.setInt(2, confirmedBy);
+        ps.setInt(3, bookingId);
+        check = ps.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return check;
+}
     //vinh deskbooking
     public int insertBookingAndReturnId(Bookings booking) throws SQLException {
         String sql = "INSERT INTO Bookings (RoomId, CustomerID, StartDate, EndDate, Status, RequestTime, ConfirmationTime, ConfirmedBy, RoomType) "
@@ -736,6 +995,33 @@ public int insertBookingBeforePayment(int customerId, LocalDate startDate, Local
         return 0;
     }
 
+     
+     public int saveGuestInfos(int bookingId, List<String> fullNames, List<String> cccds) {
+    int totalInserted = 0;
+    String sql = "INSERT INTO GuestInfo (BookingId, FullName, CCCD) VALUES (?, ?, ?)";
+
+    try (Connection conn = ConnectData.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        for (int i = 0; i < fullNames.size(); i++) {
+            ps.setInt(1, bookingId);
+            ps.setString(2, fullNames.get(i));
+            ps.setString(3, cccds.get(i));
+            totalInserted += ps.executeUpdate();
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    return totalInserted;
+}
+    
+
+
+
+
+
+     
+    // đóng code của khanh
+   
     public int insertPayment(int invoiceId, long amount, String method, String status, String type) {
         try {
             String sql = "INSERT INTO Payments (InvoiceId, Amount, PaymentMethod, PaymentStatus, PaymentDate, PaymentType) "

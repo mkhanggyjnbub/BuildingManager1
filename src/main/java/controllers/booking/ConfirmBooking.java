@@ -27,7 +27,7 @@ import models.Rooms;
  *
  * @author Kiều Hoàng Mạnh Khang - ce180749
  */
-@WebServlet(name = "ConfirmBooking", urlPatterns = {"/ConfirmBooking"})
+@WebServlet("/ConfirmBooking")
 public class ConfirmBooking extends HttpServlet {
 
     /**

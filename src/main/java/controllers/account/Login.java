@@ -103,6 +103,7 @@ public class Login extends HttpServlet {
                         session.setAttribute("adminId", userId);
                         response.sendRedirect("Dashboard");
                     } else if (checkRole == 2) {
+
                         userDao.UpdateStatusOnl(checkLoginUser, 1);
                         session.setAttribute("reception", userId);
                         response.sendRedirect("Dashboard");
@@ -111,6 +112,7 @@ public class Login extends HttpServlet {
                         response.sendRedirect("Dashboard");
 
                     }
+
                 } else {
                     response.sendRedirect("Login");
 

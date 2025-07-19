@@ -61,19 +61,27 @@ public class CheckInOutDetail extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-   protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String bookingIdStr = request.getParameter("bookingId");
-        if (bookingIdStr != null) {
-            int id = Integer.parseInt(bookingIdStr);
-            BookingDao dao = new BookingDao();
-            Bookings booking = dao.getBookingById(id);
-            request.setAttribute("booking", booking);
-            request.getRequestDispatcher("checkInOut/viewCheckInDetail.jsp").forward(request, response);
-        } else {
-            response.sendRedirect("checkInOut/viewCheckInDetail.jsp");
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    String bookingIdStr = request.getParameter("bookingId");
+    if (bookingIdStr != null) {
+        int id = Integer.parseInt(bookingIdStr);
+        BookingDao dao = new BookingDao();
+        Bookings booking = dao.getBookingById(id);
+
+        if (booking == null) {
+            response.sendRedirect("viewAllCheckInOutDashboard.jsp");
+            return;
         }
+
+        // Đưa booking sang JSP viewCheckInDetail.jsp luôn
+        request.setAttribute("booking", booking);
+        request.getRequestDispatcher("checkInOut/viewCheckInDetail.jsp").forward(request, response);
+    } else {
+        response.sendRedirect("viewAllCheckInOutDashboard.jsp");
     }
+}
+
 
 /**
  * Handles the HTTP <code>POST</code> method.
