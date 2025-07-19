@@ -1,5 +1,5 @@
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\amenities\DeleteAmenitiesDashboard.java
-D:\fouderPrj\BuildingWeb\src\main\java\dao\VoucherDAO.java
+D:\fouderPrj\BuildingWeb\src\main\java\dao\VoucherDao.java
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\voucher\EditVoucher.java
 D:\fouderPrj\BuildingWeb\src\main\java\models\Buildings.java
 D:\fouderPrj\BuildingWeb\src\main\java\models\Floors.java
@@ -8,6 +8,7 @@ D:\fouderPrj\BuildingWeb\src\main\java\dao\ServicesDao.java
 D:\fouderPrj\BuildingWeb\src\main\java\Websocket\TakeNotification.java
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\asset\AssetModel.java
 D:\fouderPrj\BuildingWeb\src\main\java\models\CustomerVouchers.java
+D:\fouderPrj\BuildingWeb\src\main\java\controllers\booking\CreateGuestCustomer.java
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\services\ViewServicesDashboard.java
 D:\fouderPrj\BuildingWeb\src\main\java\models\Amenities.java
 D:\fouderPrj\BuildingWeb\src\main\java\dao\BuildingDao.java
@@ -22,6 +23,7 @@ D:\fouderPrj\BuildingWeb\src\main\java\sendMail\EmailSender.java
 D:\fouderPrj\BuildingWeb\src\main\java\dao\EquipmentDao.java
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\services\AddServiceDashboard.java
 D:\fouderPrj\BuildingWeb\src\main\java\db\ConnectData.java
+D:\fouderPrj\BuildingWeb\src\main\java\controllers\booking\CreateBooking.java
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\booking\BookingCancel.java
 D:\fouderPrj\BuildingWeb\src\main\java\dao\BookingDao.java
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\amenities\ViewAmenitiesDashboard.java
@@ -38,12 +40,14 @@ D:\fouderPrj\BuildingWeb\src\main\java\controllers\message\MessageForCustomer.ja
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\room\CreateRoomForDashboard.java
 D:\fouderPrj\BuildingWeb\src\main\java\dao\PaginationDao.java
 D:\fouderPrj\BuildingWeb\src\main\java\models\Roles.java
+D:\fouderPrj\BuildingWeb\src\main\java\controllers\booking\CheckExistingCustomer.java
 D:\fouderPrj\BuildingWeb\src\main\java\models\Vouchers.java
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\news\ViewNews.java
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\services\EditServiceDashboard.java
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\report\ViewAllReportsForDashboard.java
 D:\fouderPrj\BuildingWeb\src\main\java\models\Invoices.java
 D:\fouderPrj\BuildingWeb\src\main\java\models\ServicesCart.java
+D:\fouderPrj\BuildingWeb\src\main\java\controllers\booking\SelectRoom.java
 D:\fouderPrj\BuildingWeb\src\main\java\models\RoomEquipment.java
 D:\fouderPrj\BuildingWeb\src\main\java\db\SendOTPEmail.java
 D:\fouderPrj\BuildingWeb\src\main\java\models\News.java
@@ -61,7 +65,6 @@ D:\fouderPrj\BuildingWeb\src\main\java\controllers\booking\ConfirmBooking.java
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\news\AddNewsDashboard.java
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\booking\StatusBooking.java
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\checkInOut\CheckInOutDetail.java
-D:\fouderPrj\BuildingWeb\src\main\java\controllers\booking\AddBooking.java
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\customer\EditCustomerDashboard.java
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\voucher\DeleteVoucher.java
 D:\fouderPrj\BuildingWeb\src\main\java\controllers\services\ViewServices.java

@@ -139,6 +139,7 @@ Author     : Admin
                                 </c:when>
                                 <c:when test="${v.customerVouchers.isUsed == true}">
 
+<<<<<<< HEAD
                                     <p class="expired-text">Used</p>
                                 </c:when>
                                 <c:otherwise>
@@ -159,6 +160,37 @@ Author     : Admin
                                     </c:choose>
                                 </c:otherwise>
                             </c:choose>
+=======
+                            <c:if test="${!expired}">
+<<<<<<< HEAD
+                                <form action="ConfirmBooking" method="get">
+                                     <input type="hidden" name="voucherId" value="${v.voucherId}" />
+                                     <input type="hidden" name="voucherCode" value="${v.code}" />
+                                     <input type="hidden" name="voucherdiscountPercent" value="${v.discountPercent}" />
+                                    <button type="submit" class="use-button">Use Voucher</button>
+                                    <%--<a href="${v.voucherId}" > class  </a>--%>
+                                </form>
+=======
+                                <c:choose>
+                                    <c:when test="${v.isActive}">
+
+                                        <!-- Voucher còn hạn và đang active -->
+                                        <form action="ConfirmBooking" method="get">
+                                            <input type="hidden" name="voucherId" value="${v.voucherId}" />
+                                            <button type="submit" class="use-button">Use Voucher</button>
+                                        </form>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <!-- Voucher còn hạn nhưng bị inactive -->
+                                        <p class="expired-text">This voucher is currently inactive</p>
+
+                                    </c:otherwise>
+                                </c:choose>
+>>>>>>> f8a02766a1379cda5c6e536189cf24995238daa7
+                            </c:if>
+
+
+>>>>>>> e901db0bab988fc5d19da92a9df4e55f52b6df08
                         </div>
                     </c:forEach>
 

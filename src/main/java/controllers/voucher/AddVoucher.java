@@ -4,7 +4,7 @@
  */
 package controllers.voucher;
 
-import dao.VoucherDAO;
+import dao.VoucherDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,10 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import models.Vouchers;
 
 /**
@@ -81,42 +78,65 @@ public class AddVoucher extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         Vouchers voucher = new Vouchers();
-        VoucherDAO voucherDao = new VoucherDAO();
+        VoucherDao voucherDao = new VoucherDao();
 
-        // Nhận các dữ liệu cơ bản
-        voucher.setCode(request.getParameter("code"));
-        voucher.setDescription(request.getParameter("description"));
-        BigDecimal discount = new BigDecimal(request.getParameter("discountPercent"));
+        String code = request.getParameter("code");
+        String description = request.getParameter("description");
+        boolean isActive = Boolean.parseBoolean(request.getParameter("isActive"));
 
-        if (discount.scale() > 2 || discount.compareTo(BigDecimal.valueOf(0.01)) < 0 || discount.compareTo(BigDecimal.valueOf(100)) > 0) {
-            request.setAttribute("error", "Discount must be between 0.01 and 100.00 with up to 2 decimal places.");
+        BigDecimal discount;
+        try {
+            discount = new BigDecimal(request.getParameter("discountPercent"));
+        } catch (NumberFormatException e) {
+            request.setAttribute("error", "Invalid discount format.");
+            request.getRequestDispatcher("vouchersAdmin/addVoucher.jsp").forward(request, response);
             return;
         }
 
-        voucher.setDiscountPercent(discount);
+        if (discount.scale() > 2 || discount.compareTo(BigDecimal.valueOf(0.01)) < 0 || discount.compareTo(BigDecimal.valueOf(100)) > 0) {
+            request.setAttribute("error", "Discount must be between 0.01 and 100.00 with up to 2 decimal places.");
+            request.getRequestDispatcher("vouchersAdmin/addVoucher.jsp").forward(request, response);
+            return;
+        }
 
+        // ❗ Chỉ kiểm tra code trùng nếu đang bật active
+        if (isActive && voucherDao.isVoucherCodeExists(code)) {
+            request.setAttribute("error", "Voucher code '" + code + "' is already active.");
+            request.getRequestDispatcher("vouchersAdmin/addVoucher.jsp").forward(request, response);
+            return;
+        }
+
+        voucher.setCode(code);
+        voucher.setDescription(description);
+        voucher.setDiscountPercent(discount);
         voucher.setMinOrderAmount(Long.parseLong(request.getParameter("minOrderAmount")));
         voucher.setQuantity(Integer.parseInt(request.getParameter("quantity")));
-
-        // Lấy startDate (định dạng từ datetime-local: yyyy-MM-ddTHH:mm)
-        String startDateStr = request.getParameter("startDate"); // ví dụ: 2025-06-23T22:30
-        LocalDateTime startDate = LocalDateTime.parse(startDateStr);
-        voucher.setStartDate(startDate);
-
-// Lấy endDate tương tự
-        String endDateStr = request.getParameter("endDate"); // ví dụ: 2025-06-30T23:59
-        LocalDateTime endDate = LocalDateTime.parse(endDateStr);
-        voucher.setEndDate(endDate);
-
-        // Xử lý trạng thái
-        boolean isActive = Boolean.parseBoolean(request.getParameter("isActive"));
         voucher.setIsActive(isActive);
 
-        // Chèn vào database
-        voucherDao.insertVoucher(voucher);
+        try {
+            LocalDateTime startDate = LocalDateTime.parse(request.getParameter("startDate"));
+            LocalDateTime endDate = LocalDateTime.parse(request.getParameter("endDate"));
+            if (!startDate.isBefore(endDate)) {
+                request.setAttribute("error", "Start date must be before end date.");
+                request.getRequestDispatcher("vouchersAdmin/addVoucher.jsp").forward(request, response);
+                return;
+            }
+            voucher.setStartDate(startDate);
+            voucher.setEndDate(endDate);
+        } catch (Exception e) {
+            request.setAttribute("error", "Invalid date format.");
+            request.getRequestDispatcher("vouchersAdmin/addVoucher.jsp").forward(request, response);
+            return;
+        }
 
-        // Chuyển hướng về danh sách
-        response.sendRedirect("VouchersDashBoard");
+        // Chèn vào database
+        int inserted = voucherDao.insertVoucher(voucher);
+        if (inserted > 0) {
+            response.sendRedirect("VouchersDashBoard");
+        } else {
+            request.setAttribute("error", "Failed to insert voucher.");
+            request.getRequestDispatcher("vouchersAdmin/addVoucher.jsp").forward(request, response);
+        }
     }
 
     /**

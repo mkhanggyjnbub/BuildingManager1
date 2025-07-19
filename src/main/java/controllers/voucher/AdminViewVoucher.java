@@ -4,7 +4,7 @@
  */
 package controllers.voucher;
 
-import dao.VoucherDAO;
+import dao.VoucherDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -62,7 +62,7 @@ public class AdminViewVoucher extends HttpServlet {
             throws ServletException, IOException {
         int voucherId = Integer.parseInt(request.getParameter("voucherId"));
         // Gọi DAO hoặc Service để lấy thông tin voucher theo ID
-        VoucherDAO dao = new VoucherDAO();
+        VoucherDao dao = new VoucherDao();
         Vouchers voucher = dao.getVoucherById(voucherId);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");

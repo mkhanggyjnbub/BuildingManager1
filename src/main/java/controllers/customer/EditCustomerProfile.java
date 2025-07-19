@@ -108,6 +108,7 @@ public class EditCustomerProfile extends HttpServlet {
             if (filePart != null && filePart.getSize() > 0) {
                      String uploadPath = "D:\\fouderPrj\\BuildingWeb\\src\\main\\webapp\\images";
 //                String uploadPath = "F:\\SWP\\moi\\BuildingWeb\\src\\main\\webapp\\images";
+//                String uploadPath = "D:\\SWP_Project\\BuildingManager1\\src\\main\\webapp\\images";
                 String fileName = FileUploader.uploadImage(filePart, uploadPath);
                 uploadedUrl = "images/" + fileName;
             } else {
@@ -133,7 +134,7 @@ public class EditCustomerProfile extends HttpServlet {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("message", "Đã xảy ra lỗi. Vui lòng thử lại.");
+            request.setAttribute("message", "Đã xảy ra lỗi. Vui lòng thử lại...");
             request.getRequestDispatcher("customer/viewCustomerProfile.jsp").forward(request, response);
         }
     }

@@ -24,11 +24,11 @@ import models.CustomerVouchers;
  *
  * @author CE180441_Dương Đinh Thế Vinh
  */
-public class VoucherDAO {
+public class VoucherDao {
 
     private Connection conn = null;
 
-    public VoucherDAO() {
+    public VoucherDao() {
 
         conn = ConnectData.getConnection();
     }
@@ -57,7 +57,7 @@ public class VoucherDAO {
                 list.add(voucher);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(VoucherDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VoucherDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
@@ -79,8 +79,10 @@ public class VoucherDAO {
             dem = ps.executeUpdate();
             return dem;
         } catch (SQLException ex) {
-            Logger.getLogger(VoucherDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error when inserting voucher: " + ex.getMessage());
+            ex.printStackTrace();
         }
+
         return dem;
 
     }
@@ -93,7 +95,7 @@ public class VoucherDAO {
             dem = ps.executeUpdate();
             return dem;
         } catch (SQLException ex) {
-            Logger.getLogger(VoucherDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VoucherDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return dem;
     }
@@ -169,7 +171,7 @@ public class VoucherDAO {
 
     public boolean hasSavedVoucher(int customerId, int voucherId) {
         String sql = "SELECT 1 FROM CustomerVouchers WHERE CustomerId = ? AND VoucherId = ?";
-        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, customerId);
             ps.setInt(2, voucherId);
@@ -195,7 +197,7 @@ public class VoucherDAO {
         String sql = "SELECT * FROM Vouchers "
                 + "WHERE EndDate >= GETDATE() AND Quantity > 0 AND IsActive = 1";
 
-        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql);  ResultSet rs = ps.executeQuery()) {
+        try ( PreparedStatement ps = conn.prepareStatement(sql);  ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 Vouchers v = new Vouchers();
@@ -221,7 +223,7 @@ public class VoucherDAO {
                 + "JOIN CustomerVouchers cv ON v.VoucherId = cv.VoucherId "
                 + "WHERE cv.CustomerId = ? ";
 
-        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, customerId);
             ResultSet rs = ps.executeQuery();
@@ -239,7 +241,9 @@ public class VoucherDAO {
                 v.setEndDate(rs.getTimestamp("EndDate").toLocalDateTime());
                 v.setMinOrderAmount(rs.getLong("MinOrderAmount"));
                 v.setQuantity(rs.getInt("Quantity"));
-                
+
+                v.setIsActive(rs.getBoolean("IsActive"));
+
                 list.add(v);
             }
         } catch (Exception e) {
@@ -304,4 +308,59 @@ public class VoucherDAO {
 
 
     // đóng code của KHang 
+    public boolean isVoucherCodeExists(String code) {
+        String sql = "SELECT 1 FROM Vouchers WHERE Code = ? AND IsActive = 1 AND EndDate >= GETDATE()";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, code);
+            ResultSet rs = ps.executeQuery();
+            return rs.next(); // tồn tại là true
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean isCodeConflictWhenActivating(String code, LocalDateTime start, LocalDateTime end, int currentVoucherId) {
+        String sql = "SELECT 1 FROM Vouchers "
+                + "WHERE Code = ? AND IsActive = 1 AND VoucherId != ? "
+                + "AND StartDate <= ? AND EndDate >= ?";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, code);
+            ps.setInt(2, currentVoucherId);
+            ps.setTimestamp(3, Timestamp.valueOf(end));   // StartDate <= current.end
+            ps.setTimestamp(4, Timestamp.valueOf(start)); // EndDate >= current.start
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean isVoucherUsedByCustomer(int voucherId) {
+        String sql = "SELECT 1 FROM CustomerVouchers WHERE VoucherId = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, voucherId);
+            ResultSet rs = ps.executeQuery();
+            return rs.next(); // Có bản ghi là có người lưu
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void deleteExpiredSavedVouchers() {
+        String sql = "DELETE FROM CustomerVouchers "
+                + "WHERE VoucherId IN ( "
+                + "   SELECT v.VoucherId FROM Vouchers v "
+                + "   WHERE v.EndDate < DATEADD(DAY, -5, GETDATE()) "
+                + ")";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            int rowsDeleted = ps.executeUpdate();
+            System.out.println("Deleted " + rowsDeleted + " expired saved vouchers (older than 5 days).");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

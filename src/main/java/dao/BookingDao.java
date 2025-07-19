@@ -2,6 +2,7 @@ package dao;
 
 import db.ConnectData;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,51 +31,55 @@ public class BookingDao {
         conn = ConnectData.getConnection();
     }
 
+    //vinh bookingconfirmation
     public List<Bookings> getAllBookings() throws SQLException {
         List<Bookings> list = new ArrayList<>();
         Connection conn = ConnectData.getConnection();
 
         String sql = "SELECT b.BookingId, b.RoomId, b.CustomerId, b.StartDate, b.EndDate, b.Status, "
-                + "r.RoomNumber, c.FullName "
+                + "COALESCE(r.RoomType, b.RoomType) AS RoomType, " // Ưu tiên lấy từ bảng Rooms nếu có, ngược lại lấy từ Booking
+                + "c.FullName "
                 + "FROM Bookings b "
-                + "JOIN Rooms r ON b.RoomId = r.RoomId "
+                + "LEFT JOIN Rooms r ON b.RoomId = r.RoomId "
                 + "JOIN Customers c ON b.CustomerId = c.CustomerId "
                 + "WHERE b.Status IN ('Waiting for processing', 'Confirmed')";
 
         PreparedStatement ps = conn.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
         while (rs.next()) {
             Bookings booking = new Bookings();
             booking.setBookingId(rs.getInt("BookingId"));
 
-            // Đọc StartDate dạng Timestamp và convert sang LocalDateTime
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-
-            Timestamp startTs = rs.getTimestamp("StartDate");
-            if (startTs != null) {
-                LocalDateTime startDate = startTs.toLocalDateTime();
-                booking.setStartDate(startDate); // nếu vẫn cần giữ LocalDateTime
-                booking.setFormattedStartDate(startDate.format(formatter)); // chuỗi đã format
+            java.sql.Date startDateSql = rs.getDate("StartDate");
+            if (startDateSql != null) {
+                LocalDate startDate = startDateSql.toLocalDate();
+                booking.setStartDate(startDate);
+                booking.setFormattedStartDate(startDate.format(formatter));
             }
 
-            Timestamp endTs = rs.getTimestamp("EndDate");
-            if (endTs != null) {
-                LocalDateTime endDate = endTs.toLocalDateTime();
+            java.sql.Date endDateSql = rs.getDate("EndDate");
+            if (endDateSql != null) {
+                LocalDate endDate = endDateSql.toLocalDate();
                 booking.setEndDate(endDate);
                 booking.setFormattedEndDate(endDate.format(formatter));
             }
 
             booking.setStatus(rs.getString("Status"));
 
-            Rooms room = new Rooms();
+            // Gán RoomType (kể cả khi null)
+            String roomType = rs.getString("RoomType");
+            if (roomType == null) {
+                roomType = "Chưa gán phòng";
+            }
+            booking.setRoomType(roomType); // nếu bạn có thêm field roomType trong Booking
 
-            room.setRoomNumber(rs.getString("RoomNumber"));
-            booking.setRooms(room);
-
-            Customers name = new Customers();
-            name.setFullName(rs.getString("FullName"));
-            booking.setCustomers(name);
+            // Gán tên khách
+            Customers customer = new Customers();
+            customer.setFullName(rs.getString("FullName"));
+            booking.setCustomers(customer);
 
             list.add(booking);
         }
@@ -82,68 +87,104 @@ public class BookingDao {
         return list;
     }
 
-    public List<Bookings> getAllBookingsKhanh() throws SQLException {
-        List<Bookings> list = new ArrayList<>();
-        Connection conn = ConnectData.getConnection();
+   public List<Bookings> getAllBookingsKhanh() throws SQLException {
+    List<Bookings> list = new ArrayList<>();
+    Connection conn = ConnectData.getConnection();
 
-        String sql = "SELECT b.BookingId, b.RoomId, b.CustomerId, b.StartDate, b.EndDate, b.Status, "
-                + "r.RoomNumber, c.FullName "
-                + "FROM Bookings b "
-                + "JOIN Rooms r ON b.RoomId = r.RoomId "
-                + "JOIN Customers c ON b.CustomerId = c.CustomerId "
-                + "WHERE b.Status IN ('checked In', 'Confirmed','checked Out')";
+    String sql = "SELECT \n"
+            + "    b.BookingId, \n"
+            + "    b.RoomId, \n"
+            + "    b.CustomerId, \n"
+            + "    b.StartDate, \n"
+            + "    b.EndDate, \n"
+            + "    b.Status, \n"
+            + "    b.RoomType, \n"
+            + "    c.FullName\n"
+            + "FROM \n"
+            + "    Bookings b\n"
+            + "FULL JOIN \n"
+            + "    Customers c ON b.CustomerId = c.CustomerId\n"
+            + "WHERE \n"
+            + "    b.Status IN ('Checked in', 'Confirmed', 'Checked out')";
 
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
+    PreparedStatement ps = conn.prepareStatement(sql);
+    ResultSet rs = ps.executeQuery();
 
-        while (rs.next()) {
-            Bookings booking = new Bookings();
-            booking.setBookingId(rs.getInt("BookingId"));
+    // Format chỉ ngày
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-            // Đọc StartDate dạng Timestamp và convert sang LocalDateTime
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    while (rs.next()) {
+        Bookings booking = new Bookings();
+        booking.setBookingId(rs.getInt("BookingId"));
 
-            Timestamp startTs = rs.getTimestamp("StartDate");
-            if (startTs != null) {
-                LocalDateTime startDate = startTs.toLocalDateTime();
-                booking.setStartDate(startDate); // nếu vẫn cần giữ LocalDateTime
-                booking.setFormattedStartDate(startDate.format(formatter)); // chuỗi đã format
-            }
-
-            Timestamp endTs = rs.getTimestamp("EndDate");
-            if (endTs != null) {
-                LocalDateTime endDate = endTs.toLocalDateTime();
-                booking.setEndDate(endDate);
-                booking.setFormattedEndDate(endDate.format(formatter));
-            }
-
-            booking.setStatus(rs.getString("Status"));
-
-            Rooms room = new Rooms();
-
-            room.setRoomNumber(rs.getString("RoomNumber"));
-            booking.setRooms(room);
-
-            Customers name = new Customers();
-            name.setFullName(rs.getString("FullName"));
-            booking.setCustomers(name);
-
-            list.add(booking);
+        Timestamp startTs = rs.getTimestamp("StartDate");
+        if (startTs != null) {
+            LocalDate startDate = startTs.toLocalDateTime().toLocalDate();
+            booking.setStartDate(startDate); // đổi kiểu startDate sang LocalDate nếu cần
+            booking.setFormattedStartDate(startDate.format(formatter));
         }
-        
-        return list;
-    }
 
+        Timestamp endTs = rs.getTimestamp("EndDate");
+        if (endTs != null) {
+            LocalDate endDate = endTs.toLocalDateTime().toLocalDate();
+            booking.setEndDate(endDate); // đổi kiểu endDate sang LocalDate nếu cần
+            booking.setFormattedEndDate(endDate.format(formatter));
+        }
+
+        booking.setStatus(rs.getString("Status"));
+
+        int roomId = rs.getInt("RoomId");
+        if (rs.wasNull()) {
+            booking.setRooms(null);
+        } else {
+            Rooms room = new Rooms();
+            room.setRoomId(roomId);
+            booking.setRooms(room);
+        }
+
+        booking.setRoomType(rs.getString("RoomType")); 
+
+        Customers customer = new Customers();
+        customer.setFullName(rs.getString("FullName"));
+        booking.setCustomers(customer);
+
+        list.add(booking);
+    }
+    rs.close();
+    ps.close();
+    conn.close();
+    return list;
+}
+
+
+    //vinh
     public void confirmBooking(int bookingId, int confirmedBy) throws SQLException {
         String sql = "UPDATE Bookings SET Status = 'Confirmed', ConfirmationTime = ?, ConfirmedBy = ? WHERE BookingId = ?";
+
         try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
-            ps.setInt(2, confirmedBy);
-            ps.setInt(3, bookingId);
+
+            ps.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now())); // thời gian xác nhận
+            ps.setInt(2, confirmedBy); // ID của nhân viên xác nhận
+            ps.setInt(3, bookingId);   // ID đơn đặt phòng
+
             ps.executeUpdate();
         }
     }
 
+//vinh
+    public void confirmBookingWithRoom(int bookingId, int roomId, int confirmedBy) throws SQLException {
+        String sql = "UPDATE Bookings SET RoomId = ?, Status = 'Confirmed', ConfirmationTime = ?, ConfirmedBy = ? WHERE BookingId = ?";
+        try (
+                 Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, roomId);
+            ps.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+            ps.setInt(3, confirmedBy);
+            ps.setInt(4, bookingId);
+            ps.executeUpdate();
+        }
+    }
+
+//vinh
     public void cancelBooking(int bookingId, String notes, int canceledBy) throws SQLException {
         String sql = "UPDATE Bookings SET Status = ?, CancelTime = ?, CanceledBy = ?, Notes = ? WHERE BookingId = ?";
         try (
@@ -191,8 +232,9 @@ public class BookingDao {
             ps.setInt(1, booking.getRoomId());
             ps.setInt(2, booking.getCustomerId());
             ps.setInt(3, booking.getUserId());
-            ps.setTimestamp(4, Timestamp.valueOf(booking.getStartDate()));
-            ps.setTimestamp(5, Timestamp.valueOf(booking.getEndDate()));
+            ps.setDate(4, java.sql.Date.valueOf(booking.getStartDate()));
+            ps.setDate(5, java.sql.Date.valueOf(booking.getEndDate()));
+
             ps.setString(6, booking.getStatus());
             ps.setString(7, booking.getNotes());
 
@@ -200,44 +242,46 @@ public class BookingDao {
         }
     }
 
-    public List<Bookings> searchBookings(String roomNumber, String fullName, String startDateStr, String endDateStr, String status) throws SQLException {
+     //vinh
+    public List<Bookings> searchBookings(String roomTypeFilter, String fullNameFilter,
+            String startDateFilter, String endDateFilter,
+            String statusFilter) throws SQLException {
         List<Bookings> list = new ArrayList<>();
         Connection conn = ConnectData.getConnection();
 
         StringBuilder sql = new StringBuilder(
                 "SELECT b.BookingId, b.RoomId, b.CustomerId, b.StartDate, b.EndDate, b.Status, "
-                + "r.RoomNumber, c.FullName "
+                + "b.RoomType, c.FullName "
                 + "FROM Bookings b "
-                + "JOIN Rooms r ON b.RoomId = r.RoomId "
                 + "JOIN Customers c ON b.CustomerId = c.CustomerId "
-                + "WHERE b.Status IN ('Waiting for processing', 'Confirmed') "
+                + "WHERE 1=1 "
         );
 
         List<Object> params = new ArrayList<>();
 
-        if (roomNumber != null && !roomNumber.trim().isEmpty()) {
-            sql.append("AND r.RoomNumber LIKE ? ");
-            params.add("%" + roomNumber.trim() + "%");
+        if (roomTypeFilter != null && !roomTypeFilter.trim().isEmpty()) {
+            sql.append(" AND b.RoomType LIKE ? ");
+            params.add("%" + roomTypeFilter.trim() + "%");
         }
 
-        if (fullName != null && !fullName.trim().isEmpty()) {
-            sql.append("AND c.FullName LIKE ? ");
-            params.add("%" + fullName.trim() + "%");
+        if (fullNameFilter != null && !fullNameFilter.trim().isEmpty()) {
+            sql.append(" AND c.FullName LIKE ? ");
+            params.add("%" + fullNameFilter.trim() + "%");
         }
 
-        if (startDateStr != null && !startDateStr.trim().isEmpty()) {
-            sql.append("AND CONVERT(varchar, b.StartDate, 23) LIKE ? ");
-            params.add(startDateStr.trim() + "%");
+        if (startDateFilter != null && !startDateFilter.isEmpty()) {
+            sql.append(" AND b.StartDate >= ? ");
+            params.add(Date.valueOf(startDateFilter));
         }
 
-        if (endDateStr != null && !endDateStr.trim().isEmpty()) {
-            sql.append("AND CONVERT(varchar, b.EndDate, 23) LIKE ? ");
-            params.add(endDateStr.trim() + "%");
+        if (endDateFilter != null && !endDateFilter.isEmpty()) {
+            sql.append(" AND b.EndDate <= ? ");
+            params.add(Date.valueOf(endDateFilter));
         }
 
-        if (status != null && !status.trim().isEmpty()) {
-            sql.append("AND b.Status = ? ");
-            params.add(status.trim());
+        if (statusFilter != null && !statusFilter.equals("-- All --")) {
+            sql.append(" AND b.Status = ? ");
+            params.add(statusFilter);
         }
 
         PreparedStatement ps = conn.prepareStatement(sql.toString());
@@ -246,17 +290,33 @@ public class BookingDao {
         }
 
         ResultSet rs = ps.executeQuery();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         while (rs.next()) {
             Bookings booking = new Bookings();
             booking.setBookingId(rs.getInt("BookingId"));
-            booking.setStartDate(rs.getTimestamp("StartDate").toLocalDateTime());
-            booking.setEndDate(rs.getTimestamp("EndDate").toLocalDateTime());
+
+            java.sql.Date startDateSql = rs.getDate("StartDate");
+            if (startDateSql != null) {
+                LocalDate startDate = startDateSql.toLocalDate();
+                booking.setStartDate(startDate);
+                booking.setFormattedStartDate(startDate.format(formatter));
+            }
+
+            java.sql.Date endDateSql = rs.getDate("EndDate");
+            if (endDateSql != null) {
+                LocalDate endDate = endDateSql.toLocalDate();
+                booking.setEndDate(endDate);
+                booking.setFormattedEndDate(endDate.format(formatter));
+            }
+
             booking.setStatus(rs.getString("Status"));
 
-            Rooms room = new Rooms();
-            room.setRoomNumber(rs.getString("RoomNumber"));
-            booking.setRooms(room);
+            String roomType = rs.getString("RoomType");
+            if (roomType == null || roomType.trim().isEmpty()) {
+                roomType = "Chưa gán phòng";
+            }
+            booking.setRoomType(roomType);
 
             Customers customer = new Customers();
             customer.setFullName(rs.getString("FullName"));
@@ -265,9 +325,12 @@ public class BookingDao {
             list.add(booking);
         }
 
+        rs.close();
+        ps.close();
+        conn.close();
         return list;
     }
-
+    
     public int updateBookingStatusAndcheckInt(int bookingId, String status) {
         int cnt = 0;
         try {
@@ -309,8 +372,9 @@ public class BookingDao {
                 booking.setRoomId(rs.getInt("RoomId"));
                 booking.setCustomerId(rs.getInt("CustomerId"));
                 booking.setUserId(rs.getInt("UserId"));
-                booking.setStartDate(rs.getTimestamp("StartDate").toLocalDateTime());
-                booking.setEndDate(rs.getTimestamp("EndDate").toLocalDateTime());
+                booking.setStartDate(rs.getDate("StartDate").toLocalDate());
+                booking.setEndDate(rs.getDate("EndDate").toLocalDate());
+
                 booking.setStatus(rs.getString("Status"));
                 booking.setCheckInTime(rs.getTimestamp("CheckInTime").toLocalDateTime());
                 booking.setCheckOutTime(rs.getTimestamp("CheckOutTime").toLocalDateTime());
@@ -353,8 +417,9 @@ public class BookingDao {
                 b = new Bookings();
                 b.setBookingId(rs.getInt("BookingID"));
                 b.setStatus(rs.getString("Status"));
-                b.setStartDate(rs.getTimestamp("StartDate").toLocalDateTime());
-                b.setEndDate(rs.getTimestamp("EndDate").toLocalDateTime());
+                b.setStartDate(rs.getDate("StartDate").toLocalDate());
+                b.setEndDate(rs.getDate("EndDate").toLocalDate());
+
                 b.setCheckInTime(rs.getTimestamp("CheckInTime").toLocalDateTime());
                 b.setCheckOutTime(rs.getTimestamp("CheckOutTime").toLocalDateTime());
 
@@ -379,25 +444,86 @@ public class BookingDao {
     }
 
     //vinh   
-    public Bookings getBookingInfo(int bookingId) throws SQLException {
-        String sql
-                = "SELECT b.BookingId, b.StartDate, b.EndDate, "
+    public Bookings getBookingInfoForConfirmation(int bookingId) throws SQLException {
+        String sql = "SELECT b.BookingId, b.StartDate, b.EndDate, b.RoomId, b.ConfirmationTime, "
+                + "       b.RoomType, " // Lấy RoomType từ bảng Bookings
                 + "       c.FullName, c.Email "
                 + "FROM Bookings b "
                 + "JOIN Customers c ON b.CustomerId = c.CustomerId "
                 + "WHERE b.BookingId = ?";
 
-        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, bookingId);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 Bookings info = new Bookings();
                 info.setBookingId(rs.getInt("BookingId"));
-                info.setStartDate(rs.getTimestamp("StartDate").toLocalDateTime());
-                info.setEndDate(rs.getTimestamp("EndDate").toLocalDateTime());
-//                info.setFullName(rs.getString("FullName"));
-//                info.setEmail(rs.getString("Email"));
+
+                if (rs.getDate("StartDate") != null) {
+                    info.setStartDate(rs.getDate("StartDate").toLocalDate());
+                }
+                if (rs.getDate("EndDate") != null) {
+                    info.setEndDate(rs.getDate("EndDate").toLocalDate());
+                }
+
+                if (rs.getTimestamp("ConfirmationTime") != null) {
+                    info.setConfirmationTime(rs.getTimestamp("ConfirmationTime").toLocalDateTime());
+                }
+
+                // Gán khách
+                Customers customer = new Customers();
+                customer.setFullName(rs.getString("FullName"));
+                customer.setEmail(rs.getString("Email"));
+                info.setCustomers(customer);
+
+                // Gán loại phòng
+                Rooms room = new Rooms();
+                room.setRoomType(rs.getString("RoomType")); // luôn có vì lấy từ bảng Bookings
+                info.setRooms(room);
+
+                return info;
+            }
+        }
+
+        return null;
+    }
+
+    //vinh
+    public Bookings getBookingInfoForCancellation(int bookingId) throws SQLException {
+        String sql = "SELECT b.BookingId, b.StartDate, b.EndDate, b.Notes, "
+                + "       r.RoomType, "
+                + "       c.FullName, c.Email "
+                + "FROM Bookings b "
+                + "LEFT JOIN Rooms r ON b.RoomId = r.RoomId "
+                + "JOIN Customers c ON b.CustomerId = c.CustomerId "
+                + "WHERE b.BookingId = ?";
+
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, bookingId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Bookings info = new Bookings();
+                info.setBookingId(rs.getInt("BookingId"));
+
+                if (rs.getDate("StartDate") != null) {
+                    info.setStartDate(rs.getDate("StartDate").toLocalDate());
+                }
+
+                if (rs.getDate("EndDate") != null) {
+                    info.setEndDate(rs.getDate("EndDate").toLocalDate());
+                }
+
+                String notes = rs.getString("Notes");
+                info.setNotes(notes != null ? notes : "Do not have");
+
+                String roomType = rs.getString("RoomType");
+                if (roomType == null) {
+                    roomType = "Room not assigned yet";
+                }
+                info.setRoomType(roomType);
 
                 Customers customer = new Customers();
                 customer.setFullName(rs.getString("FullName"));
@@ -410,13 +536,13 @@ public class BookingDao {
 
         return null;
     }
-//vinh
 
+//vinh
     public String getBookingStatus(int bookingId) throws SQLException {
         String sql
                 = "SELECT Status FROM Bookings WHERE BookingId = ?";
 
-        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, bookingId);
             ResultSet rs = ps.executeQuery();
@@ -448,6 +574,39 @@ public class BookingDao {
 //        }
 //        return 0;
 //    }
+
+
+    //vinh deskbooking
+    public int insertBookingAndReturnId(Bookings booking) throws SQLException {
+        String sql = "INSERT INTO Bookings (RoomId, CustomerID, StartDate, EndDate, Status, RequestTime, ConfirmationTime, ConfirmedBy, RoomType) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try ( PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setInt(1, booking.getRoomId());
+            ps.setInt(2, booking.getCustomerId());
+            ps.setDate(3, Date.valueOf(booking.getStartDate()));
+            ps.setDate(4, Date.valueOf(booking.getEndDate()));
+            ps.setString(5, booking.getStatus());
+            ps.setTimestamp(6, Timestamp.valueOf(booking.getRequestTime()));
+            ps.setTimestamp(7, Timestamp.valueOf(booking.getConfirmationTime()));
+            ps.setInt(8, booking.getConfirmedBy());
+            ps.setString(9, booking.getRoomType());
+            
+            int affected = ps.executeUpdate();
+            if (affected == 0) {
+                throw new SQLException("Không thể tạo booking.");
+            }
+
+            try ( ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1); // Trả lại bookingId
+                } else {
+                    throw new SQLException("Không lấy được bookingId.");
+                }
+            }
+        }
+    }
+    
 public int insertBookingBeforePayment(int customerId, LocalDate startDate, LocalDate endDate, String roomType, String note) {
     int bookingId = -1;
 

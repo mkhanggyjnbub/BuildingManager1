@@ -27,6 +27,7 @@ public class ConnectData {
 
 
 
+
             conn = DriverManager.getConnection(url);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ConnectData.class.getName()).log(Level.SEVERE, null, ex);

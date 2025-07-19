@@ -65,7 +65,7 @@ public class CustomerDao {
                     customer.setFullName(rs.getString("FullName"));
                     customer.setEmail(rs.getString("Email"));
                     customer.setPhone(rs.getString("Phone"));
-                    customer.setStatus(rs.getString("Status"));                 
+                    customer.setStatus(rs.getString("Status"));
                     customer.setAvatarUrl(rs.getString("AvatarUrl"));
                     customer.setAddress(rs.getString("Address")); // có thể là null
                     customer.setGender(rs.getString("Gender")); // có thể là null
@@ -104,7 +104,7 @@ public class CustomerDao {
         }
         return cmt;
     }
-    
+
     //author: KhoaDDCE181988 - Use in: EditCustomerProfile,..
     public Customers getCustomerByIdForCustomer(int id) {
         Customers customer = null;
@@ -121,7 +121,7 @@ public class CustomerDao {
                     customer.setFullName(rs.getString("FullName"));
                     customer.setEmail(rs.getString("Email"));
                     customer.setPhone(rs.getString("Phone"));
-                    customer.setStatus(rs.getString("Status"));                 
+                    customer.setStatus(rs.getString("Status"));
                     customer.setAvatarUrl(rs.getString("AvatarUrl"));
                     customer.setAddress(rs.getString("Address")); // có thể là null
                     customer.setGender(rs.getString("Gender")); // có thể là null
@@ -191,7 +191,7 @@ public class CustomerDao {
 
     public List<Customers> getAllCustomers() throws SQLException {
         List<Customers> list = new ArrayList<>();
-            String sql = "SELECT * FROM Customers";
+        String sql = "SELECT * FROM Customers";
         try ( PreparedStatement pst = conn.prepareStatement(sql);  ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
@@ -210,6 +210,10 @@ public class CustomerDao {
 //                c.setCreationDate(rs.getTimestamp("CreationDate").toLocalDateTime());
 //                c.setLastLogin(rs.getTimestamp("LastLogin").toLocalDateTime()); 
 //                c.setIdentityNumber(rs.getString("IdentityNumber"));
+                c.setAvatarUrl(rs.getString("AvatarUrl"));
+                c.setCreationDate(rs.getTimestamp("CreationDate").toLocalDateTime());
+                c.setLastLogin(rs.getTimestamp("LastLogin").toLocalDateTime());
+                c.setIdentityNumber(rs.getString("IdentityNumber"));
                 c.setJoinDate(rs.getDate("JoinDate"));
                 list.add(c);
             }
@@ -280,4 +284,63 @@ public class CustomerDao {
         return cnt;
     }
     //
+    //vinh xác nhận tài khoảng
+    public void insertNewCustomer(String fullName, String phone) throws SQLException {
+        String sql = "INSERT INTO Customers (FullName, Phone) VALUES (?, ?)";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, fullName);
+            ps.setString(2, phone);
+            ps.executeUpdate();
+        }
+    }
+//vinh
+
+    public boolean exists(String fullName, String phone) throws SQLException {
+        String sql = "SELECT 1 FROM Customers WHERE FullName = ? AND Phone = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, fullName);
+            ps.setString(2, phone);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        }
+    }
+//vinh
+// lấy tên với sdt để check có tài khoảng chưa
+    public Customers getCustomerByFullNameAndPhone(String fullName, String phone) throws SQLException {
+        String sql = "SELECT * FROM Customers WHERE FullName = ? AND Phone = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, fullName);
+            ps.setString(2, phone);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Customers c = new Customers();
+                c.setCustomerId(rs.getInt("CustomerId"));
+                c.setFullName(rs.getString("FullName"));
+                c.setPhone(rs.getString("Phone"));
+                c.setUserName(rs.getString("Username"));
+                c.setEmail(rs.getString("Email"));
+                c.setIdentityNumber(rs.getString("IdentityNumber")); //  Thêm CCCD
+                c.setRegistered(rs.getBoolean("isRegistered"));       //  Thêm trạng thái tài khoản
+                return c;
+            }
+        }
+        return null;
+    }
+
+//vinh
+    public void insertNewGuest(String fullName, String phone, String email, String identityNumber) throws SQLException {
+        String guestUsername = "guest_" + phone;
+
+        String sql = "INSERT INTO Customers (FullName, Phone, Email, UserName, IdentityNumber, isRegistered) VALUES (?, ?, ?, ?, ?, ?)";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, fullName);
+            ps.setString(2, phone);
+            ps.setString(3, (email != null && !email.isEmpty()) ? email : null);
+            ps.setString(4, guestUsername);
+            ps.setString(5, identityNumber); // ✅ Thêm CCCD
+            ps.setBoolean(6, false);
+            ps.executeUpdate();
+        }
+    }
+
 }
