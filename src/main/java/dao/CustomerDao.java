@@ -313,6 +313,62 @@ public class CustomerDao {
         return check;
     }
 
+    public int updateCustomerGuest(Customers c) {
+        String sql = "Update Customers Set UserName=?, Password=?, DateOfBirth=?, Email=?, Phone=?, CreationDate=?, isRegistered=? Where CustomerId =?";
+        int check = 0;
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, c.getFullName());
+            stmt.setString(2, c.getPassword());
+            stmt.setDate(3, c.getDateOfBirth());
+            stmt.setString(4, c.getEmail());
+            stmt.setString(5, c.getPhone());
+            stmt.setTimestamp(6, java.sql.Timestamp.valueOf(c.getCreationDate()));
+            stmt.setBoolean(7, true);
+            stmt.setInt(8, c.getCustomerId());
+
+            check = stmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return check;
+    }
+
+    public Customers getCustomerIdentityNumberIdDashboard(String identityNumer) {
+        Customers c = null;
+        try {
+            String sql = "SELECT * FROM Customers WHERE IdentityNumer = '?'";
+
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, identityNumer);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                c = new Customers();
+                c.setCustomerId(rs.getInt("CustomerId"));
+                c.setUserName(rs.getString("UserName"));
+                c.setPassword(rs.getString("Password"));
+                c.setFullName(rs.getString("FullName"));
+                c.setPhone(rs.getString("Phone"));
+                c.setEmail(rs.getString("Email"));
+                c.setAddress(rs.getString("Address"));
+                c.setGender(rs.getString("Gender"));
+                c.setDateOfBirth(rs.getDate("DateOfBirth"));
+                c.setStatus(rs.getString("Status"));
+                c.setAvatarUrl(rs.getString("AvatarUrl"));
+                c.setCreationDate(rs.getTimestamp("CreationDate").toLocalDateTime());
+                c.setLastLogin(rs.getTimestamp("LastLogin").toLocalDateTime());
+                c.setIdentityNumber(rs.getString("IdentityNumber"));
+                c.setJoinDate(rs.getDate("JoinDate"));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return c;
+    }
+
     public boolean isUsernameTaken(String username) {
         String sql = "SELECT 1 FROM Customers WHERE UserName = ?";
         try ( PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -354,7 +410,7 @@ public class CustomerDao {
         Customers customer = null;
         String query = "SELECT * FROM Customers WHERE Email = ?";
 
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
+        try ( PreparedStatement ps = conn.prepareStatement(query)) {
 
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
@@ -378,4 +434,17 @@ public class CustomerDao {
         return customer;
     }
 
+    public boolean checkExistCCCD(String cccd) {
+        String sql = "SELECT COUNT(*) FROM Customers WHERE IdentityNumber = ?";
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, cccd);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

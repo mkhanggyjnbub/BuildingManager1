@@ -79,11 +79,11 @@ public class EmailVerification extends HttpServlet {
         String otpPurpose = (String) session.getAttribute("otpPurpose");
 
         Long otpSentTime = (Long) session.getAttribute("otpSentTime");
-        Long otpExpiryDuration  = null;
+        Long otpExpiryDuration = null;
         if (session.getAttribute("otpExpiryDuration") != null) {
             otpExpiryDuration = (Long) session.getAttribute("otpExpiryDuration");
         }
-        
+
         long currentTime = System.currentTimeMillis();
 
         // Kiểm tra hết hạn OTP
@@ -116,9 +116,22 @@ public class EmailVerification extends HttpServlet {
                 String hashedPassword = dao.md5(tempUser.getPassword());
                 tempUser.setPassword(hashedPassword);
 
-                int result = dao.createCustomer(tempUser);
+                int result = 0;
+                result = dao.createCustomer(tempUser);
+                /*
+                if (dao.checkExistCCCD(tempUser.getIdentityNumber())) {
+                    System.out.println(tempUser.getIdentityNumber());
+                    Customers cusGuest = dao.getCustomerIdentityNumberIdDashboard(tempUser.getIdentityNumber());
+                    System.out.println(cusGuest.getCustomerId());
+                    tempUser.setCustomerId(cusGuest.getCustomerId());
+                    result = dao.updateCustomerGuest(tempUser);
+                } else {
 
-                if (result > 0) {
+                }
+                */
+                
+
+                if (result != 0) {
                     session.removeAttribute("otpPurpose");
                     session.removeAttribute("otpCode");
                     session.removeAttribute("otpSentTime");
