@@ -192,31 +192,36 @@ public class CustomerDao {
     public List<Customers> getAllCustomers() throws SQLException {
         List<Customers> list = new ArrayList<>();
         String sql = "SELECT * FROM Customers";
-        try ( PreparedStatement pst = conn.prepareStatement(sql);  ResultSet rs = pst.executeQuery()) {
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement pst = conn.prepareStatement(sql);  ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
                 Customers c = new Customers();
                 c.setCustomerId(rs.getInt("CustomerId"));
                 c.setUserName(rs.getString("UserName"));
-//                c.setPassword(rs.getString("Password"));
                 c.setFullName(rs.getString("FullName"));
                 c.setPhone(rs.getString("Phone"));
                 c.setEmail(rs.getString("Email"));
-//                c.setAddress(rs.getString("Address"));
                 c.setGender(rs.getString("Gender"));
-//                c.setDateOfBirth(rs.getDate("DateOfBirth"));
                 c.setStatus(rs.getString("Status"));
-//                c.setAvatarUrl(rs.getString("AvatarUrl"));
-//                c.setCreationDate(rs.getTimestamp("CreationDate").toLocalDateTime());
-//                c.setLastLogin(rs.getTimestamp("LastLogin").toLocalDateTime()); 
-//                c.setIdentityNumber(rs.getString("IdentityNumber"));
                 c.setAvatarUrl(rs.getString("AvatarUrl"));
-                c.setCreationDate(rs.getTimestamp("CreationDate").toLocalDateTime());
-                c.setLastLogin(rs.getTimestamp("LastLogin").toLocalDateTime());
+
+                // ✅ Bọc kiểm tra null cho Timestamp
+                Timestamp creation = rs.getTimestamp("CreationDate");
+                if (creation != null) {
+                    c.setCreationDate(creation.toLocalDateTime());
+                }
+
+                Timestamp lastLogin = rs.getTimestamp("LastLogin");
+                if (lastLogin != null) {
+                    c.setLastLogin(lastLogin.toLocalDateTime());
+                }
+
                 c.setIdentityNumber(rs.getString("IdentityNumber"));
                 c.setJoinDate(rs.getDate("JoinDate"));
+
                 list.add(c);
             }
+
         }
         return list;
     }
@@ -268,8 +273,8 @@ public class CustomerDao {
         }
     }
 // khang
-    
-      public int UpdateCustomerOnl(int UserId, int Customer) {
+
+    public int UpdateCustomerOnl(int UserId, int Customer) {
         int cnt = 0;
 
         try {
@@ -283,6 +288,7 @@ public class CustomerDao {
         }
         return cnt;
     }
+
     //
     //vinh xác nhận tài khoảng
     public void insertNewCustomer(String fullName, String phone) throws SQLException {
@@ -306,6 +312,7 @@ public class CustomerDao {
     }
 //vinh
 // lấy tên với sdt để check có tài khoảng chưa
+
     public Customers getCustomerByFullNameAndPhone(String fullName, String phone) throws SQLException {
         String sql = "SELECT * FROM Customers WHERE FullName = ? AND Phone = ?";
         try ( PreparedStatement ps = conn.prepareStatement(sql)) {
