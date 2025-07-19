@@ -82,12 +82,12 @@ public class SelectAvailableRoom extends HttpServlet {
 
             BookingDao bookingDao = new BookingDao();
             Bookings booking = bookingDao.getBookingCheckInInfo(bookingId);
- String roomType = booking.getRoomType();
-            LocalDate startDate = booking.getStartDate().toLocalDate();
-            LocalDate endDate = booking.getEndDate().toLocalDate();
+            String roomType = booking.getRoomType();
 
+            LocalDate startDate = booking.getStartDate();
+            LocalDate endDate = booking.getEndDate();
             RoomDao roomDao = new RoomDao();
-            List<Rooms> availableRooms = roomDao.getlistCheckIn(startDate, endDate, actualGuests,roomType);
+            List<Rooms> availableRooms = roomDao.getlistCheckIn(startDate, endDate, actualGuests, roomType);
 
             request.setAttribute("availableRooms", availableRooms);
             request.setAttribute("bookingId", bookingId);
@@ -120,21 +120,21 @@ public class SelectAvailableRoom extends HttpServlet {
 //        } catch (SQLException ex) {
 //            Logger.getLogger(SelectAvailableRoom.class.getName()).log(Level.SEVERE, null, ex);
 //     
-    
-  protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-             int bookingId = Integer.parseInt(request.getParameter("bookingId"));
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int bookingId = Integer.parseInt(request.getParameter("bookingId"));
         int roomId = Integer.parseInt(request.getParameter("roomId"));
 
         LocalDateTime currentDateTime = LocalDateTime.now();
- 
+
         BookingDao dao = new BookingDao();
         dao.insertRoomIdForBookingK(bookingId, roomId, currentDateTime);
-        
 
         response.sendRedirect("ViewAllCheckInOutDashboard");
-  
-}
+
+    }
+
     /**
      * Returns a short description of the servlet.
      *
@@ -145,6 +145,4 @@ public class SelectAvailableRoom extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    
-    
 }

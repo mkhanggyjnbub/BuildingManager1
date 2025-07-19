@@ -11,7 +11,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -447,6 +449,249 @@ public class RoomDao {
         return cnt;
     }
 
+    // vinh
+    public List<Rooms> getAllRooms() {
+        List<Rooms> list = new ArrayList<>();
+        String sql = "SELECT * FROM rooms ORDER BY floor_number, room_number";
+
+        try ( PreparedStatement ps = conn.prepareStatement(sql);  ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Rooms r = new Rooms();
+                r.setRoomId(rs.getInt("room_id"));
+                r.setRoomNumber(rs.getString("room_number"));
+                r.setRoomType(rs.getString("room_type"));
+                r.setFloorNumber(rs.getInt("floor_number"));
+                r.setStatus(rs.getString("status")); // nếu có
+                list.add(r);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+//vinh select room    
+    public List<Rooms> getAvailableRoomSameType(int bookingId) {
+        List<Rooms> list = new ArrayList<>();
+
+        try {
+            // 1. Lấy ngày và loại phòng từ đơn đặt
+            String bookingSQL = "SELECT StartDate, EndDate, RoomType FROM Bookings WHERE BookingId = ?";
+            PreparedStatement ps1 = conn.prepareStatement(bookingSQL);
+            ps1.setInt(1, bookingId);
+            ResultSet rs1 = ps1.executeQuery();
+
+            if (rs1.next()) {
+                LocalDate startDate = rs1.getDate("StartDate").toLocalDate();
+                LocalDate endDate = rs1.getDate("EndDate").toLocalDate();
+                String roomType = rs1.getString("RoomType");
+
+                // 2. Lấy các phòng đang trống và cùng loại phòng
+                String sql = "SELECT * FROM Rooms R "
+                        + "WHERE R.RoomType = ? AND R.Status = 'Active' "
+                        + "AND NOT EXISTS ("
+                        + "    SELECT 1 FROM Bookings B "
+                        + "    WHERE B.RoomId = R.RoomId "
+                        + "    AND B.StartDate < ? AND B.EndDate > ? "
+                        + "    AND B.Status IN ('Waiting for processing', 'Confirmed', 'Checked in', 'Canceled')"
+                        + ") "
+                        + "ORDER BY R.FloorNumber, R.RoomNumber";
+
+                PreparedStatement ps2 = conn.prepareStatement(sql);
+                ps2.setString(1, roomType);
+                ps2.setDate(2, Date.valueOf(endDate));
+                ps2.setDate(3, Date.valueOf(startDate));
+                ResultSet rs2 = ps2.executeQuery();
+
+                while (rs2.next()) {
+                    Rooms room = new Rooms();
+                    room.setRoomId(rs2.getInt("RoomId"));
+                    room.setRoomType(rs2.getString("RoomType"));
+                    room.setPrice(rs2.getInt("Price"));
+                    room.setDescription(rs2.getString("Description"));
+                    room.setImageUrl(rs2.getString("ImageUrl"));
+                    room.setFloorNumber(rs2.getInt("FloorNumber"));
+                    room.setRoomNumber(rs2.getString("RoomNumber"));
+                    list.add(room);
+                }
+                rs2.close();
+                ps2.close();
+            }
+            rs1.close();
+            ps1.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return list;
+    }
+
+    //vinh dùng cho select room
+    public List<Rooms> getAvailableRoomByDateAndType(LocalDate startDate, LocalDate endDate, String roomType) {
+        List<Rooms> list = new ArrayList<>();
+
+        try {
+
+            System.out.println(startDate);
+            System.out.println(endDate);
+            String sql = "SELECT * FROM Rooms R "
+                    + "WHERE R.RoomType = ? AND R.Status = 'Active' "
+                    + "AND NOT EXISTS ("
+                    + "    SELECT 1 FROM Bookings B "
+                    + "    WHERE B.RoomId = R.RoomId "
+                    + "    AND (B.EndDate > ? AND B.StartDate < ?) "
+                    + "    AND B.Status IN ('Waiting for processing', 'Confirmed', 'Checked in', 'Canceled')"
+                    + ") "
+                    + "ORDER BY R.FloorNumber, R.RoomNumber";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, roomType);
+            ps.setDate(2, Date.valueOf(endDate));   // B.EndDate > start
+            ps.setDate(3, Date.valueOf(startDate)); // B.StartDate < end
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Rooms room = new Rooms();
+                room.setRoomId(rs.getInt("RoomId"));
+                room.setRoomType(rs.getString("RoomType"));
+                room.setPrice(rs.getInt("Price"));
+                room.setDescription(rs.getString("Description"));
+                room.setImageUrl(rs.getString("ImageUrl"));
+                room.setFloorNumber(rs.getInt("FloorNumber"));
+                room.setRoomNumber(rs.getString("RoomNumber"));
+                list.add(room);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+
+    }
+
+    //vinh
+    public List<Rooms> getAvailableRoomByDateRange(LocalDate startDate, LocalDate endDate) {
+        List<Rooms> list = new ArrayList<>();
+        System.out.println(startDate);
+        System.out.println(endDate);
+        try {
+            String sql = "SELECT R.RoomId, R.RoomType, R.Price, R.Description, R.ImageUrl, R.FloorNumber, R.RoomNumber "
+                    + "FROM Rooms R "
+                    + "WHERE R.Status = N'Active' "
+                    + "AND NOT EXISTS ( "
+                    + "    SELECT 1 FROM Bookings B "
+                    + "    WHERE B.RoomId = R.RoomId "
+                    + "    AND B.StartDate < ? "
+                    + "    AND B.EndDate > ? "
+                    + "    AND B.Status IN (N'Confirmed', N'Checked in', N'Checked out', N'Canceled') "
+                    + ") "
+                    + "ORDER BY R.FloorNumber, R.RoomNumber";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setDate(1, Date.valueOf(endDate));
+            ps.setDate(2, Date.valueOf(startDate));
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Rooms room = new Rooms();
+                room.setRoomId(rs.getInt("RoomId"));
+                room.setRoomType(rs.getString("RoomType"));
+                room.setPrice(rs.getInt("Price"));
+                room.setDescription(rs.getString("Description"));
+                room.setImageUrl(rs.getString("ImageUrl"));
+                room.setFloorNumber(rs.getInt("FloorNumber"));
+                room.setRoomNumber(rs.getString("RoomNumber"));
+                list.add(room);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    //vinh
+    public List<Rooms> getAllActiveRooms() throws SQLException {
+        List<Rooms> rooms = new ArrayList<>();
+
+        String sql = "SELECT RoomId, RoomType, Price, MaxOccupancy, RoomNumber, FloorNumber "
+                + "FROM Rooms "
+                + "WHERE Status = 'Active' "
+                + "ORDER BY RoomId ASC";
+
+        try ( PreparedStatement ps = conn.prepareStatement(sql);  ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Rooms room = new Rooms();
+                room.setRoomId(rs.getInt("RoomId"));
+                room.setRoomType(rs.getString("RoomType"));
+                room.setPrice(rs.getLong("Price"));
+                room.setMaxOccupancy(rs.getInt("MaxOccupancy"));
+                room.setRoomNumber(rs.getString("RoomNumber"));
+                room.setFloorNumber(rs.getInt("FloorNumber"));
+                // Nếu bạn có thêm trường nào khác muốn hiển thị thì set thêm ở đây
+                rooms.add(room);
+            }
+        }
+
+        return rooms;
+    }
+//vinh
+
+    public List<Rooms> getAvailableRoomTypes(LocalDate startDate, LocalDate endDate, int guestCount) throws SQLException {
+        List<Rooms> availableRooms = new ArrayList<>();
+
+        String sql = "SELECT RoomId, RoomType, Price, MaxOccupancy, RoomNumber, FloorNumber "
+                + "FROM Rooms R "
+                + "WHERE R.Status = 'Active' "
+                + "AND R.MaxOccupancy >= ? "
+                + "AND NOT EXISTS ( "
+                + "    SELECT 1 FROM Bookings B "
+                + "    WHERE B.RoomId = R.RoomId "
+                + "    AND B.StartDate < ? AND B.EndDate > ? "
+                + "    AND B.Status IN ('Confirmed', 'Checked in', 'Waiting for processing', 'Canceled') "
+                + ") "
+                + "ORDER BY RoomId ASC";
+
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, guestCount);
+            ps.setDate(2, Date.valueOf(endDate));  // check-out
+            ps.setDate(3, Date.valueOf(startDate)); // check-in
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Rooms room = new Rooms();
+                room.setRoomId(rs.getInt("RoomId"));
+                room.setRoomType(rs.getString("RoomType"));
+                room.setPrice(rs.getLong("Price"));
+                room.setMaxOccupancy(rs.getInt("MaxOccupancy"));
+                room.setRoomNumber(rs.getString("RoomNumber"));
+                room.setFloorNumber(rs.getInt("FloorNumber"));
+                availableRooms.add(room);
+            }
+        }
+
+        return availableRooms;
+    }
+
+    //vinh
+    public String getRoomTypeById(int roomId) throws SQLException {
+        String roomType = "Không xác định";
+        String sql = "SELECT RoomType FROM Rooms WHERE RoomId = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, roomId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                roomType = rs.getString("RoomType");
+            }
+        }
+        return roomType;
+        
+    }
+
     public Rooms getRoomDetailForEdit(int id) {
         ResultSet rs = null;
         Rooms room = new Rooms();
@@ -691,6 +936,26 @@ public class RoomDao {
         }
 
         return room;
+    }
+    public int deleteRoom(int roomId, String status) {
+        int count = 0;
+        try {
+            String sql = " UPDATE Rooms\n"
+                    + "SET Status = ?\n"
+                    + "WHERE RoomId = ?";
+
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, status);
+            pst.setInt(2, roomId);
+
+            count = pst.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return count;
+
     }
 
 }

@@ -4,7 +4,9 @@
  */
 package controllers.room;
 
+import dao.BookingDao;
 import dao.RoomDao;
+import dao.VoucherDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -62,6 +64,31 @@ public class ViewRooms extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (request.getParameter("status") != null) {
+            String paymentStatus = request.getParameter("status");
+            if (paymentStatus.equals("00")) {
+                HttpSession session = request.getSession();
+                BookingDao bookingDao = new BookingDao();
+                int bookingId = Integer.parseInt(session.getAttribute("bookingId").toString());
+                int invoiceId = Integer.parseInt(session.getAttribute("invoiceId").toString());
+                String paymentMethod = session.getAttribute("paymentMethod").toString();
+                long amount = Long.parseLong(session.getAttribute("amount").toString());
+                int customerId = Integer.parseInt(session.getAttribute("customerId").toString());
+                int voucherId = Integer.parseInt(session.getAttribute("voucherId").toString());
+                VoucherDao voucherDao = new VoucherDao();
+                voucherDao.updateStatusVoucher(customerId, voucherId);
+
+                int check1 = bookingDao.updateBookingStatus(bookingId, "Waiting for processing");
+                int check2 = bookingDao.updateInvoiceStatus(invoiceId, "Partial");
+                int check3 = bookingDao.insertPayment(invoiceId, amount, paymentMethod, "Success", "Deposit");
+
+                session.removeAttribute("bookingId");
+                session.removeAttribute("invoiceId");
+                session.removeAttribute("amount");
+                session.removeAttribute("paymentMethod");
+            }
+
+        }
         RoomDao roomDao = new RoomDao();
         int totalCard = 0;
         int totalRooms = 0;

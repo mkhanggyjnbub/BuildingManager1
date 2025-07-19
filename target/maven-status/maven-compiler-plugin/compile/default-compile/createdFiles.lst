@@ -1,4 +1,5 @@
 controllers\asset\AssetModel.class
+models\Messages.class
 controllers\services\ViewServiceDetailDashboard.class
 controllers\services\ViewServiceDetail.class
 controllers\booking\BookingCancel.class
@@ -8,6 +9,7 @@ controllers\admin\Decentralization.class
 controllers\customer\EditCustomerProfile.class
 controllers\report\UpdateReport.class
 controllers\amenities\EditAmenitiesDashboard.class
+<<<<<<< HEAD
 controllers\voucher\EditVoucher.class
 controllers\room\CreateRoomForDashboard.class
 dao\RoomReviewDao.class
@@ -23,12 +25,43 @@ controllers\customer\EditCustomerDashboard.class
 models\ServicesCart.class
 controllers\customer\ViewAllCustomersDashboard.class
 controllers\news\ViewNewsDetail.class
+=======
+controllers\booking\StatusBooking.class
+controllers\booking\CreateBooking.class
+controllers\voucher\EditVoucher.class
+controllers\room\CreateRoomForDashboard.class
+dao\RoomReviewDao.class
+models\CustomerVouchers.class
+Websocket\WebSocket.class
+models\Bookings.class
+controllers\message\MessageForDashboard.class
+models\Employees.class
+models\Services.class
+controllers\services\ViewServices.class
+dao\MessageDao.class
+dao\ServicesCartDao.class
+models\Report.class
+controllers\room\ViewRooms.class
+models\Invoices.class
+controllers\message\MessageForCustomer.class
+controllers\voucher\AdminViewVoucher.class
+controllers\customer\EditCustomerDashboard.class
+controllers\booking\CreateGuestCustomer.class
+models\ServicesCart.class
+Websocket\Notification.class
+controllers\customer\ViewAllCustomersDashboard.class
+controllers\news\ViewNewsDetail.class
+Websocket\HttpSessionConfigurator.class
+>>>>>>> 994232fd054f54de1c94b1dfb5dae901b69ee022
 dao\ServicesDao.class
 models\Floors.class
 dao\BuildingDao.class
 controllers\admin\DashboardUser.class
+<<<<<<< HEAD
 controllers\checkInOut\ComfirmCheckIn.class
 controllers\report\AddNewReport.class
+=======
+>>>>>>> 994232fd054f54de1c94b1dfb5dae901b69ee022
 db\FileUploader.class
 models\Customers.class
 controllers\services\AddServiceDashboard.class
@@ -47,12 +80,21 @@ controllers\news\ViewNewsDashboard.class
 Websocket\TakeNotification.class
 controllers\voucher\VouchersDashBoard.class
 dao\CustomerDao.class
+<<<<<<< HEAD
+=======
+controllers\booking\CheckExistingCustomer.class
+paymentVNpay\ajaxServlet.class
+>>>>>>> 994232fd054f54de1c94b1dfb5dae901b69ee022
 dao\NewsDao.class
 dao\EquipmentDao.class
 sendMail\EmailSender.class
 controllers\amenities\AddAmenitiesDashboard.class
 controllers\booking\BookingConfirmation.class
 controllers\services\ViewServicesCart.class
+<<<<<<< HEAD
+=======
+paymentVNpay\Config.class
+>>>>>>> 994232fd054f54de1c94b1dfb5dae901b69ee022
 controllers\report\ViewAllReportsForDashboard.class
 models\Vouchers.class
 models\RoomReviews.class
@@ -72,13 +114,20 @@ controllers\UpImage.class
 dao\RoomDao.class
 models\Equipment.class
 dao\PaginationDao.class
+<<<<<<< HEAD
+=======
+Websocket\WebSocket$2.class
+controllers\booking\SelectRoom.class
+>>>>>>> 994232fd054f54de1c94b1dfb5dae901b69ee022
 controllers\customer\ViewCustomerDetailDashboard.class
 controllers\news\EditNewsDashboard.class
-Cloudinary\CloudinaryUtil.class
 models\Users.class
 controllers\services\OrderService.class
 models\MaintenanceSchedule.class
+<<<<<<< HEAD
 dao\VoucherDAO.class
+=======
+>>>>>>> 994232fd054f54de1c94b1dfb5dae901b69ee022
 controllers\booking\ConfirmBooking.class
 controllers\customer\ViewCustomerProfile.class
 controllers\news\AddNewsDashboard.class
@@ -86,13 +135,20 @@ controllers\amenities\DeleteAmenitiesDashboard.class
 controllers\services\ViewServicesDashboard.class
 controllers\admin\Dashboard.class
 controllers\cloudinary\CloudinaryUpload.class
+<<<<<<< HEAD
+=======
+Websocket\WebSocket$1.class
+>>>>>>> 994232fd054f54de1c94b1dfb5dae901b69ee022
 controllers\admin\AdminView.class
+dao\VoucherDao.class
 models\Buildings.class
 controllers\services\EditServiceDashboard.class
 controllers\account\Login.class
+<<<<<<< HEAD
 controllers\checkInOut\SelectAvailableRoom.class
+=======
+>>>>>>> 994232fd054f54de1c94b1dfb5dae901b69ee022
 controllers\voucher\AddVoucher.class
-controllers\booking\AddBooking.class
 controllers\voucher\DeleteVoucher.class
 models\RoomEquipment.class
 controllers\room\DeleteRoomForDashboard.class

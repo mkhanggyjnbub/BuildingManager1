@@ -111,7 +111,9 @@ public class ViewAllCheckInOutDashboard extends HttpServlet {
                 List<Bookings> list = dao.getAllBookingsKhanh();
                 request.setAttribute("checkInList", list);
 
-                request.getRequestDispatcher("checkInOut/viewAllCheckInOutDashboard.jsp").forward(request, response);
+//                request.getRequestDispatcher("checkInOut/viewAllCheckInOutDashboard.jsp").forward(request, response);
+                // Chuyển về lại trang chính để thấy nút Check-Out
+                response.sendRedirect("ViewAllCheckInOutDashboard");
             } catch (SQLException ex) {
                 Logger.getLogger(ViewAllCheckInOutDashboard.class.getName()).log(Level.SEVERE, null, ex);
                 response.sendRedirect("checkInOut/viewAllCheckInOutDashboard.jsp?error=3");

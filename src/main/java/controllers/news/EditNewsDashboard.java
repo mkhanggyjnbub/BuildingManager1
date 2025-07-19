@@ -110,7 +110,8 @@ public class EditNewsDashboard extends HttpServlet {
 
             // Nếu có upload ảnh mới thì xử lý, ngược lại dùng ảnh cũ
             if (filePart != null && filePart.getSize() > 0) {
-                String uploadPath = "F:\\SWP\\moi\\BuildingWeb\\src\\main\\webapp\\images";
+     String uploadPath = "D:\\fouderPrj\\BuildingWeb\\src\\main\\webapp\\images";               
+//                String uploadPath = "F:\\SWP\\moi\\BuildingWeb\\src\\main\\webapp\\images";
                 uploadedUrl = FileUploader.uploadImage(filePart, uploadPath);
             } else {
                 uploadedUrl = existingImageURL;

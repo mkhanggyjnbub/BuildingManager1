@@ -1,4 +1,4 @@
-/*
+    /*
 package db;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -24,6 +24,7 @@ public class ConnectData {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
          String url = "jdbc:sqlserver://LAPTOP-SJ6AII7D\\SQLEXPRESS:1433;databaseName=building_management303;user=sa;password=123456;encrypt=true;trustServerCertificate=true;";
+
 
 
 

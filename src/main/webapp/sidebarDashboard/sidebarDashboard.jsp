@@ -4,15 +4,15 @@
     Author     : KHANH
 --%>
 
-<!-- FontAwesome (n?u ch?a có) -->
+<!-- FontAwesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
     :root {
-        --navy: #4a6fa5;
-        --navy-dark: #3a5c88;
+        --navy: #46b791;
+        --navy-dark: #3a9c7b;
         --white: #ffffff;
-        --hover-bg: #355880;
+        --hover-bg: #2e8266;
         --transition: 0.3s ease;
         --shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
@@ -188,6 +188,12 @@
     }
 
 
+    
+    .menu li a.active {
+    background-color: var(--hover-bg);
+    font-weight: bold;
+    padding-left: 28px;
+}
 
 </style>
 
@@ -197,18 +203,22 @@
         <i class="fa-solid fa-bars"></i>
     </div>
     <ul class="menu">
-        <li style="--i:0"><a href="Index" class="active"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
-        <li style="--i:1"><a href="DashboardUser" class="active"><i class="fa-solid fa-user"></i><span>Users</span></a></li>
-        <li style="--i:2"><a href="VouchersDashBoard" class="active"><i class="fa-solid fa-ticket"></i><span>Vouchers</span></a></li>
-        <li style="--i:3"><a href="ViewNewsDashboard" class="active"><i class="fa-solid fa-newspaper"></i><span>News</span></a></li>
-        <li style="--i:4"><a href="BookingConfirmation" class="active"><i class="fa-solid fa-calendar-check"></i><span>Bookings</span></a></li>
-        <li style="--i:5"><a href="ViewAllRoomsForDashboard" class="active"><i class="fa-solid fa-bed"></i><span>List Rooms</span></a></li>
-        <li style="--i:6"><a href="ViewServicesDashboard" class="active"><i class="fa-solid fa-concierge-bell"></i><span>Services</span></a></li>
-        <li style="--i:7"><a href="ViewAmenitiesDashboard" class="active"><i class="fa-solid fa-bath"></i><span>Amenities</span></a></li>
-        <li style="--i:8"><a href="ViewAllCustomersDashboard" class="active"><i class="fa-solid fa-users"></i><span>Customers</span></a></li>
-        <li style="--i:9"><a href="ViewAllCheckInOutDashboard" class="active"><i class="fa-solid fa-door-open"></i><span>Check-InOut</span></a></li>
-        <li style="--i:10"><a href="ViewAllReportsForDashboard" class="active"><i class="fa-solid fa-flag"></i><span>Report</span></a></li>
-        <li style="--i:11"><a href="Logout" class="active"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
+
+        <li style="--i:0"><a href="Index"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+        <li style="--i:1"><a href="DashboardUser"><i class="fa-solid fa-user"></i><span>Users</span></a></li>
+        <li style="--i:2"><a href="VouchersDashBoard"><i class="fa-solid fa-ticket"></i><span>Vouchers</span></a></li>
+        <li style="--i:3"><a href="ViewNewsDashboard"><i class="fa-solid fa-newspaper"></i><span>News</span></a></li>
+        
+        <li style="--i:3"><a href="CreateBooking"><i class="fa-solid fa-calendar-check"></i><span>Desk Booking</span></a></li>
+        
+        <li style="--i:4"><a href="BookingConfirmation"><i class="fa-solid fa-calendar-check"></i><span>Bookings</span></a></li>
+        <li style="--i:5"><a href="ViewAllRoomsForDashboard"><i class="fa-solid fa-bed"></i><span>List Rooms</span></a></li>
+        <li style="--i:6"><a href="ViewServicesDashboard"><i class="fa-solid fa-concierge-bell"></i><span>Services</span></a></li>
+        <li style="--i:7"><a href="ViewAmenitiesDashboard"><i class="fa-solid fa-bath"></i><span>Amenities</span></a></li>
+        <li style="--i:8"><a href="ViewAllCustomersDashboard"><i class="fa-solid fa-users"></i><span>Customers</span></a></li>
+        <li style="--i:9"><a href="ViewAllCheckInOutDashboard"><i class="fa-solid fa-door-open"></i><span>Check-InOut</span></a></li>
+        <li style="--i:10"><a href="ViewAllReportsForDashboard"><i class="fa-solid fa-flag"></i><span>Report</span></a></li>
+        <li style="--i:11"><a href="Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
 
         <!-- Khang item -->
         <li style="--i:12" class="khang-item">
@@ -227,4 +237,16 @@
         const sidebar = document.getElementById("sidebar");
         sidebar.classList.toggle("open");
     }
+    
+    
+     document.addEventListener("DOMContentLoaded", function () {
+        const links = document.querySelectorAll(".menu li a");
+        const currentUrl = window.location.href;
+
+        links.forEach(link => {
+            if (currentUrl.includes(link.getAttribute("href"))) {
+                link.classList.add("active");
+            }
+        });
+    });
 </script>

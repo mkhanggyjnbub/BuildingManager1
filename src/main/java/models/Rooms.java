@@ -24,6 +24,7 @@ public class Rooms {
     private float area;
     private int buildingId;
 
+
     public Rooms() {
     }
 

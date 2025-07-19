@@ -1,7 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<<<<<<< HEAD
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -44,16 +43,13 @@
             button[type="submit"] {
                 padding: 10px 16px;
                 border: none;
-                background-color: #007bff;
+
                 color: white;
                 border-radius: 6px;
                 cursor: pointer;
                 transition: background-color 0.3s ease;
             }
 
-            button[type="submit"]:hover {
-                background-color: #0056b3;
-            }
 
             table {
                 width: 100%;
@@ -152,26 +148,56 @@
                     color: #555;
                 }
             }
-.create-link {
-    text-decoration: none;
-    background-color: #007BFF;
-    color: white;
-    padding: 10px 30px;
-    margin: 20px auto;
-    border-radius: 6px;
-    font-weight: bold;
-    display: inline-block;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    text-align: center;
-}
+            .create-link {
+                text-decoration: none;
+                background-color: #007BFF;
+                color: white;
+                padding: 10px 30px;
+                margin: 20px auto;
+                border-radius: 6px;
+                font-weight: bold;
+                display: inline-block;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: background-color 0.3s ease, transform 0.2s ease;
+                text-align: center;
+            }
 
-.create-link:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-}
+            .create-link:hover {
+                background-color: #0056b3;
+                transform: scale(1.05);
+            }
+
+            div .a1{
+                display: flex;
+                justify-content: space-around;
+                margin-top: 26px;
+            }
 
 
+
+
+
+
+            /* Màu riêng cho từng nút */
+            .delete-btn {
+                background-color: #e53935;
+            }
+            .delete-btn:hover {
+                background-color:  #c62828;
+            }
+
+            .restore-btn {
+                background-color: #007BFF;
+            }
+            .restore-btn:hover {
+                background-color: #388e3c;
+            }
+
+            .a1 {
+                display: flex;
+
+
+            }
         </style>
     </head>
     <body>
@@ -214,9 +240,31 @@
                             <td data-label="Giá">${room.price} / VND</td>
                             <td data-label="Trạng Thái">${room.status}</td>
                             <td data-label="Thao Tác">
-    <!--                            <a href="AdminView?id=${room.roomId}" title="Xem"><i class="fa-solid fa-eye"></i></a>-->
-                                <a href="EditRoomForDashboard?id=${room.roomId}" title="Sửa"><i class="fa-solid fa-pencil"></i></a>
-                                <!--<a href="AdminDelete?id=${room.roomId}" title="Xóa"><i class="fa-solid fa-circle-user"></i></a>--> 
+
+<!--                            <a href="AdminView?id=${room.roomId}" title="Xem"><i class="fa-solid fa-eye"></i></a>-->
+
+                                <div class="a1">
+                                    <a href="EditRoomForDashboard?id=${room.roomId}" title="Sửa">
+                                        <i class="fa-solid fa-pencil" style="font-size: 20px;"></i>
+                                    </a>
+
+                                    <c:choose>
+                                        <c:when test="${room.status ne 'Hidden'}">
+                                            <form action="DeleteRoomForDashboard" method="post" onsubmit="return confirmDelete()">
+                                                <input type="hidden" name="roomId" value="${room.roomId}">
+                                                <input type="hidden" name="status" value="notHidden">
+                                                <button type="submit" class="delete-btn">Delete</button>
+                                            </form>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <form action="DeleteRoomForDashboard" method="post">
+                                                <input type="hidden" name="roomId" value="${room.roomId}">
+                                                <input type="hidden" name="status" value="Hidden">
+                                                <button type="submit" class="restore-btn">Restore</button>
+                                            </form>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
                             </td>
                         </tr>
                     </c:forEach>
@@ -257,6 +305,9 @@
             td.textContent = formatted + " / VND"; // Gán lại vào ô
         });
 
+        function confirmDelete() {
+            return confirm("Bạn có chắc chắn muốn xóa phòng này không?");
+        }
     </script>
 </body>
 </html>

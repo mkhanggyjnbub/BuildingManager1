@@ -96,7 +96,8 @@ public class EditServiceDashboard extends HttpServlet {
 
             // Lấy ảnh đã chọn
             Part filePart = request.getPart("imageFile");
-            String uploadPath = "F:\\SWP\\moi\\BuildingWeb\\src\\main\\webapp\\images";
+                 String uploadPath = "D:\\fouderPrj\\BuildingWeb\\src\\main\\webapp\\images";
+//            String uploadPath = "F:\\SWP\\moi\\BuildingWeb\\src\\main\\webapp\\images";
             String imageUrl = request.getParameter("oldImage"); // ảnh cũ từ input ẩn
 
             if (filePart != null && filePart.getSize() > 0) {

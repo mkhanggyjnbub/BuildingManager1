@@ -26,24 +26,24 @@
                 background-color: #f1f3f5;
             }
 
-body {
-    padding-top: 100px; /* Tùy vào chiều cao thật của navbar */
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-}
+            body {
+                padding-top: 100px; /* Tùy vào chiều cao thật của navbar */
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+            }
 
-form {
-    width: 100%;
-     max-width: 700px;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 40px; /* Cho đẹp phần cuối */
-}
+            form {
+                width: 100%;
+                max-width: 700px;
+                background: #fff;
+                border-radius: 16px;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+                padding: 2rem;
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 40px; /* Cho đẹp phần cuối */
+            }
 
             h1 {
                 text-align: center;
@@ -117,7 +117,7 @@ form {
             .tooltip-warning {
                 position: absolute;
                 top: -35px;
-left: 0;
+                left: 0;
                 background-color: #f44336;
                 color: white;
                 padding: 6px 10px;
@@ -137,19 +137,19 @@ left: 0;
                 border-style: solid;
                 border-color: #f44336 transparent transparent transparent;
             }
-            
-            
+
+
         </style>
-        
+
 
 
     </head>
     <body>
-        
+
         <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
         <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
-        
-        
+
+
         <form action="AddVoucher" method="post">
             <h1>Add New Voucher</h1>
 
@@ -157,6 +157,10 @@ left: 0;
                 <div class="form-group">
                     <label for="code">Voucher code</label>
                     <input type="text" id="code" name="code" maxlength="50" placeholder="Maximum 50 characters" required>
+
+                    <% if (request.getAttribute("error") != null) { %>
+                    <div style="color:red;"><%= request.getAttribute("error") %></div>
+                    <% } %>
                 </div>
 
                 <div class="form-group">
@@ -198,7 +202,7 @@ left: 0;
 
 
                 <div class="form-group">
-<label for="isActive">Status</label>
+                    <label for="isActive">Status</label>
                     <select id="isActive" name="isActive">
                         <option value="false" selected>Inactive</option>
                         <option value="true">Active</option>
@@ -213,92 +217,92 @@ left: 0;
             </div>
         </form>
     </body>
-<script>
-            function pad(n) {
-                return n.toString().padStart(2, '0');
-            }
+    <script>
+        function pad(n) {
+            return n.toString().padStart(2, '0');
+        }
 
-            function getFormattedDateTimeLocal(date) {
-                return date.getFullYear() + '-' +
-                        pad(date.getMonth() + 1) + '-' +
-                        pad(date.getDate()) + 'T' +
-                        pad(date.getHours()) + ':' +
-                        pad(date.getMinutes());
-            }
+        function getFormattedDateTimeLocal(date) {
+            return date.getFullYear() + '-' +
+                    pad(date.getMonth() + 1) + '-' +
+                    pad(date.getDate()) + 'T' +
+                    pad(date.getHours()) + ':' +
+                    pad(date.getMinutes());
+        }
 
-            document.addEventListener('DOMContentLoaded', function () {
-                const startInput = document.getElementById('startDate');
-                const endInput = document.getElementById('endDate');
+        document.addEventListener('DOMContentLoaded', function () {
+            const startInput = document.getElementById('startDate');
+            const endInput = document.getElementById('endDate');
 
-                const now = new Date();
-                const nowFormatted = getFormattedDateTimeLocal(now);
+            const now = new Date();
+            const nowFormatted = getFormattedDateTimeLocal(now);
 
-                startInput.min = nowFormatted;
-                startInput.value = nowFormatted;
+            startInput.min = nowFormatted;
+            startInput.value = nowFormatted;
 
-                endInput.min = nowFormatted;
-                endInput.value = nowFormatted;
+            endInput.min = nowFormatted;
+            endInput.value = nowFormatted;
 
-                startInput.addEventListener('change', function () {
-                    const startValue = startInput.value;
-                    endInput.min = startValue;
+            startInput.addEventListener('change', function () {
+                const startValue = startInput.value;
+                endInput.min = startValue;
 
-                    if (endInput.value < startValue) {
-                        endInput.value = startValue;
-                    }
+                if (endInput.value < startValue) {
+                    endInput.value = startValue;
+                }
+            });
+        });
+
+
+        //giới hạn chữ
+        const codeInput = document.getElementById('code');
+        const codeTooltip = document.getElementById('code-tooltip');
+
+        const descInput = document.getElementById('description');
+        const descTooltip = document.getElementById('desc-tooltip');
+
+        codeInput.addEventListener('input', () => {
+            codeTooltip.style.display = codeInput.value.length >= 50 ? 'block' : 'none';
+        });
+
+        descInput.addEventListener('input', () => {
+            descTooltip.style.display = descInput.value.length >= 200 ? 'block' : 'none';
+        });
+
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            const currentDate = `${yyyy}-${mm}-${dd}`;
+                    document.getElementById('startDate').value = currentDate;
                 });
-            });
-
-
-            //giới hạn chữ
-            const codeInput = document.getElementById('code');
-            const codeTooltip = document.getElementById('code-tooltip');
-
-            const descInput = document.getElementById('description');
-            const descTooltip = document.getElementById('desc-tooltip');
-
-            codeInput.addEventListener('input', () => {
-                codeTooltip.style.display = codeInput.value.length >= 50 ? 'block' : 'none';
-            });
-
-            descInput.addEventListener('input', () => {
-                descTooltip.style.display = descInput.value.length >= 200 ? 'block' : 'none';
-            });
-
-
-            window.addEventListener('DOMContentLoaded', () => {
-                const today = new Date();
-                const yyyy = today.getFullYear();
-                const mm = String(today.getMonth() + 1).padStart(2, '0');
-                const dd = String(today.getDate()).padStart(2, '0');
-                const currentDate = `${yyyy}-${mm}-${dd}`;
-                        document.getElementById('startDate').value = currentDate;
-                    });
-function validateMax(input) {
-                        if (parseInt(input.value) > 1000) {
-                            input.value = 1000;
-                        }
+                function validateMax(input) {
+                    if (parseInt(input.value) > 1000) {
+                        input.value = 1000;
                     }
+                }
 
-                    function validateMaxOrder(input) {
-                        const max = 10000000;
-                        if (parseInt(input.value) > max) {
-                            input.value = max;
-                        }
+                function validateMaxOrder(input) {
+                    const max = 10000000;
+                    if (parseInt(input.value) > max) {
+                        input.value = max;
                     }
+                }
 
-                    function updateCurrentTime() {
-                        const now = new Date();
-                        now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); // Điều chỉnh theo múi giờ
-                        const localDatetime = now.toISOString().slice(0, 16); // yyyy-MM-ddTHH:mm
-                        document.getElementById('startDate').value = localDatetime;
-                    }
+                function updateCurrentTime() {
+                    const now = new Date();
+                    now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); // Điều chỉnh theo múi giờ
+                    const localDatetime = now.toISOString().slice(0, 16); // yyyy-MM-ddTHH:mm
+                    document.getElementById('startDate').value = localDatetime;
+                }
 
-                    window.addEventListener('DOMContentLoaded', () => {
-                        updateCurrentTime(); // Gọi ngay khi trang load
-                        setInterval(updateCurrentTime, 60000); // Cập nhật mỗi phút
-                    });
+                window.addEventListener('DOMContentLoaded', () => {
+                    updateCurrentTime(); // Gọi ngay khi trang load
+                    setInterval(updateCurrentTime, 60000); // Cập nhật mỗi phút
+                });
 
-        </script>
+    </script>
 
 </html>

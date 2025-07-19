@@ -5,6 +5,7 @@
 package models;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -17,8 +18,8 @@ public class Bookings {
     private int roomId;
     private int customerId;
     private int ConfirmedBy;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String status;
     private Rooms rooms;
     private Customers customers;
@@ -34,9 +35,39 @@ public class Bookings {
     private int userId;
     private String formattedStartDate;
     private String formattedEndDate;
-private String roomType;
+
+
+    private String RoomType;
+
+    public String getRoomType() {
+        return RoomType;
+    }
+
+    public void setRoomType(String RoomType) {
+        this.RoomType = RoomType;
+    }
+
+    private Date checkInDate;
+    private Date checkOutDate;
+
     public Bookings() {
 
+    }
+
+    public Date getCheckInDate() {
+        return checkInDate;
+    }
+
+    public void setCheckInDate(Date checkInDate) {
+        this.checkInDate = checkInDate;
+    }
+
+    public Date getCheckOutDate() {
+        return checkOutDate;
+    }
+
+    public void setCheckOutDate(Date checkOutDate) {
+        this.checkOutDate = checkOutDate;
     }
 
     public int getUserId() {
@@ -71,13 +102,7 @@ private String roomType;
         this.ConfirmationTime = ConfirmationTime;
     }
 
-    public String getRoomType() {
-        return roomType;
-    }
 
-    public void setRoomType(String roomType) {
-        this.roomType = roomType;
-    }
 
     public LocalDateTime getCheckInTime() {
         return CheckInTime;
@@ -183,19 +208,19 @@ private String roomType;
         this.ConfirmedBy = ConfirmedBy;
     }
 
-    public LocalDateTime getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
@@ -222,4 +247,9 @@ private String roomType;
     public String getEmail() {
         return customers != null ? customers.getEmail() : null;
     }
+
+  
+
+    
+    
 }

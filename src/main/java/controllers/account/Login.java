@@ -61,10 +61,9 @@ public class Login extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-      request.getRequestDispatcher("account/login.jsp").forward(request, response);
-    } 
-
+            throws ServletException, IOException {
+        request.getRequestDispatcher("account/login.jsp").forward(request, response);
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -104,6 +103,8 @@ public class Login extends HttpServlet {
                         session.setAttribute("adminId", userId);
                         response.sendRedirect("Dashboard");
                     } else if (checkRole == 2) {
+
+                        userDao.UpdateStatusOnl(checkLoginUser, 1);
                         session.setAttribute("reception", userId);
                         response.sendRedirect("Dashboard");
                     } else if (checkRole == 3) {
@@ -122,10 +123,13 @@ public class Login extends HttpServlet {
                 customer.setUserName(userName);
                 customer.setPassword(passWord);
                 checkLoginCuss = customerDao.loginCussForId(customer);
+                customerDao.UpdateCustomerOnl(checkLoginCuss, 1);
+
                 if (checkLoginCuss != 0) {
                     CustomerDao dao = new CustomerDao();
                     dao.updateLoginTimestamps(checkLoginCuss);
                     String customerId = checkLoginCuss + "";
+
                     session.setAttribute("customerId", customerId);
                     response.sendRedirect("Index");
                 } else {

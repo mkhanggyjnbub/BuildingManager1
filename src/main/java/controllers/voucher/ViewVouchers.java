@@ -5,7 +5,7 @@
 package controllers.voucher;
 
 import dao.CustomerDao;
-import dao.VoucherDAO;
+import dao.VoucherDao;
 import db.ConnectData;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -74,7 +74,7 @@ public class ViewVouchers extends HttpServlet {
         Object id = session.getAttribute("customerId");
 
         try {
-            VoucherDAO voucherDao = new VoucherDAO();
+            VoucherDao voucherDao = new VoucherDao();
             voucherDao.updateExpiredVouchers();
             List<Vouchers> allVouchers = voucherDao.getAllAvailableVouchers();
 
@@ -125,7 +125,7 @@ public class ViewVouchers extends HttpServlet {
         }
 
         int customerId = Integer.parseInt(customerStr);
-        VoucherDAO dao = new VoucherDAO();
+        VoucherDao dao = new VoucherDao();
 
         try ( Connection conn = ConnectData.getConnection()) {
             conn.setAutoCommit(false);

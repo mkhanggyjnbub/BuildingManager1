@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * @author Kiều Hoàng Mạnh Khang - ce180749
  */
 public class Customers {
-
+ private boolean userSessions;
     private int customerId;
     private String userName;
     private String password;
@@ -28,6 +28,9 @@ public class Customers {
     private LocalDateTime creationDate;
     private LocalDateTime lastLogin;
     private LocalDateTime currenrLastLogin;
+
+
+    private boolean registered;
 
     public Customers() {
     }
@@ -164,6 +167,14 @@ public class Customers {
 
     public void setLastLogin(LocalDateTime lastLogin) {
         this.lastLogin = lastLogin;
+    }
+
+    public boolean isRegistered() {
+        return registered;
+    }
+
+    public void setRegistered(boolean registered) {
+        this.registered = registered;
     }
 
 }
