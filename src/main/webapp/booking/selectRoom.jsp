@@ -158,6 +158,9 @@
         </style>
     </head>
     <body>
+        
+        
+        
         <c:if test="${noRoomTypeAlert}">
             <script>
                 window.onload = function () {
@@ -165,7 +168,9 @@
                 };
             </script>
         </c:if>
-
+            <%@ include file="../navbarDashboard/navbarDashboard.jsp" %>
+<%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
+    
         <div class="booking-section">
             <h2>📅 Booking time information</h2>
 
