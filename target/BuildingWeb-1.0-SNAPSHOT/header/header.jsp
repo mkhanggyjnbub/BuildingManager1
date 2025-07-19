@@ -206,7 +206,8 @@
                     <div class="dichvukhachhang-content">
                         <a href="ViewCustomerProfile?id=${customerId}">🔹 My Account</a>
                         <a href="ViewServicesCart">🔹 Order Services</a>
-                        <!--                        <a href="#">🔹 Đơn đặt phòng</a>
+                        <a href="ViewBookingHistory">🔹 Đơn đặt phòng</a>
+                        <!--                        
                                                 <a href="#">🔹 Lịch sử thanh toán</a>
                                                 <a href="#">🔹 Ưu đãi thành viên</a>
                                                 <a href="#">🔹 Trợ giúp</a>-->

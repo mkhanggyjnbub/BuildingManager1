@@ -265,4 +265,94 @@ public class EmailSender {
             Logger.getLogger(EmailSender.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public void sendOTPEmailRegistered(String toEmail, String subject, int otpCode) throws MessagingException {
+        try {
+            String htmlContent = String.format(
+                    "<div style='font-family:Segoe UI, sans-serif; background-color:#f2f2f2; padding:30px;'>"
+                    + "  <div style='max-width:600px; margin:auto; background-color:#fff; border-radius:10px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1);'>"
+                    // HEADER
+                    + "    <div style='background-color:#1A5276; color:white; padding:20px 30px; text-align: center;'>"
+                    + "      <h1 style='margin:0; font-size:24px;'>Big Resort</h1>"
+                    + "      <p style='margin:0; font-size:14px;'>OTP Verification</p>"
+                    + "    </div>"
+                    // BODY
+                    + "    <div style='padding:30px;'>"
+                    + "      <p style='font-size:16px;'>Hello,</p>"
+                    + "      <p>Thank you for registering with <strong>Big Resort</strong>.</p>"
+                    + "      <p>Your OTP code is:</p>"
+                    + "      <div style='font-size:24px; font-weight:bold; color:#1A5276; text-align:center; margin:20px 0;'>%d</div>"
+                    + "      <p>Please enter this code in the OTP verification page to complete your registration.</p>"
+                    + "      <p>This OTP is valid for a limited time. Do not share it with anyone.</p>"
+                    // CONTACT
+                    + "      <p style='margin-top:30px;'>For any questions please contact: "
+                    + "<a href='http://localhost:8080/Index' style='color:#1A5276;'>http://localhost:8080/Index</a></p>"
+                    + "      <p>Best regards,<br/><strong>Big Resort team</strong></p>"
+                    + "    </div>"
+                    // FOOTER
+                    + "    <div style='background-color:#f4f4f4; text-align:center; padding:15px; font-size:12px; color:#888;'>"
+                    + "      © 2025 Big Resort. All rights reserved."
+                    + "    </div>"
+                    + "  </div>"
+                    + "</div>",
+                    otpCode
+            );
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(fromEmail, "BigResort.Group6"));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+            message.setSubject(subject);
+            message.setContent(htmlContent, "text/html; charset=utf-8");
+            Transport.send(message);
+
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(EmailSender.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void sendOTPEmailResetPassword(String toEmail, String subject, int otpCode) throws MessagingException {
+        try {
+            String htmlContent = String.format(
+                    "<div style='font-family:Segoe UI, sans-serif; background-color:#f2f2f2; padding:30px;'>"
+                    + "  <div style='max-width:600px; margin:auto; background-color:#fff; border-radius:10px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1);'>"
+                    // HEADER
+                    + "    <div style='background-color:#884EA0; color:white; padding:20px 30px; text-align: center;'>"
+                    + "      <h1 style='margin:0; font-size:24px;'>Big Resort</h1>"
+                    + "      <p style='margin:0; font-size:14px;'>Password Reset Verification</p>"
+                    + "    </div>"
+                    // BODY
+                    + "    <div style='padding:30px;'>"
+                    + "      <p style='font-size:16px;'>Hello,</p>"
+                    + "      <p>We received a request to reset the password for your account at <strong>Big Resort</strong>.</p>"
+                    + "      <p>Your OTP code is:</p>"
+                    + "      <div style='font-size:24px; font-weight:bold; color:#884EA0; text-align:center; margin:20px 0;'>%d</div>"
+                    + "      <p>Please enter this code on the password reset page to proceed.</p>"
+                    + "      <p>This OTP is valid for 5 minutes and should not be shared with anyone.</p>"
+                    + "      <p>If you did not request a password reset, you can safely ignore this email.</p>"
+                    // CONTACT
+                    + "      <p style='margin-top:30px;'>Need help? Visit: "
+                    + "<a href='http://localhost:8080/Index' style='color:#884EA0;'>http://localhost:8080/Index</a></p>"
+                    + "      <p>Best regards,<br/><strong>Big Resort team</strong></p>"
+                    + "    </div>"
+                    // FOOTER
+                    + "    <div style='background-color:#f4f4f4; text-align:center; padding:15px; font-size:12px; color:#888;'>"
+                    + "      © 2025 Big Resort. All rights reserved."
+                    + "    </div>"
+                    + "  </div>"
+                    + "</div>",
+                    otpCode
+            );
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(fromEmail, "BigResort.Group6"));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+            message.setSubject(subject);
+            message.setContent(htmlContent, "text/html; charset=utf-8");
+            Transport.send(message);
+
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(EmailSender.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }
