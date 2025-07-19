@@ -210,7 +210,7 @@
                                                 <a href="#">🔹 Lịch sử thanh toán</a>
                                                 <a href="#">🔹 Ưu đãi thành viên</a>
                                                 <a href="#">🔹 Trợ giúp</a>-->
-                        <!--                        <a href="Logout">🔹 Đăng xuất</a>-->
+                                                <a href="Logout">🔹 Đăng xuất</a>
 
                     </div>
                 </div>

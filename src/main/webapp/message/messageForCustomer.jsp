@@ -46,12 +46,12 @@
                 line-height: 1.4;
                 word-wrap: break-word;
             }
-            .customer {
-                background-color: #10b981;
+            .reception {
+                background-color: #2563eb;
                 color: white;
                 align-self: flex-end;
             }
-            .staff {
+            .customer {
                 background-color: white;
                 border: 1px solid #ddd;
                 align-self: flex-start;
@@ -99,7 +99,6 @@
             const ws = new WebSocket("ws://" + location.host + "<%=request.getContextPath()%>/notification");// sửa lại đúng endpoint WebSocket
             let customerId = null;
             document.addEventListener("DOMContentLoaded", function () {
-                const userType = "customer"; // hoặc "staff", bạn có thể truyền động dựa vào session/login
 
                 customerId = document.getElementById("customerId").value;
 
@@ -115,7 +114,11 @@
 //                    alert("❌ Gửi tin nhắn thất bại. Lỗi: " + data.message);
 //                }
                     const msgDiv = document.createElement("div");
-                    msgDiv.classList.add("message", data.senderType === "customer" ? "customer" : "staff");
+                    if (data.senderType === "customer") {
+                        msgDiv.classList.add("message", "customer"); // Gửi từ mình (hiện bên phải)
+                    } else {
+                        msgDiv.classList.add("message", "reception"); // Gửi từ lễ tân (hiện bên trái)
+                    }
                     msgDiv.textContent = data.message;
                     document.getElementById("chatBox").appendChild(msgDiv);
                     document.getElementById("chatBox").scrollTop = document.getElementById("chatBox").scrollHeight;
@@ -142,6 +145,12 @@
                 };
 
                 ws.send(JSON.stringify(data));
+                const msgDiv = document.createElement("div");
+                msgDiv.classList.add("message", "reception");
+                msgDiv.textContent = msg;
+                document.getElementById("chatBox").appendChild(msgDiv);
+                document.getElementById("chatBox").scrollTop = document.getElementById("chatBox").scrollHeight;
+
                 input.value = "";
             }
 

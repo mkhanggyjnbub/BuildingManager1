@@ -142,7 +142,10 @@ public class ConfirmBooking extends HttpServlet {
         String roomType = request.getParameter("roomType");
         String paymentMethod = request.getParameter("payment");
         String roomPriceTotalSTR = request.getParameter("roomPriceTotal");
-
+        String notes = "";
+        if (request.getParameter("note") != null) {
+            notes = request.getParameter("note");
+        }
         long roomPriceTotal = Long.parseLong(request.getParameter("roomPriceTotal"));
         String voucherStr = request.getParameter("voucherdiscountPercent1");
 
@@ -174,7 +177,7 @@ public class ConfirmBooking extends HttpServlet {
         } else {
 
             BookingDao bookingDao = new BookingDao();
-           int bookingId =bookingDao.insertBookingBeforePayment(customerId, startDate, endDate, roomType);
+            int bookingId = bookingDao.insertBookingBeforePayment(customerId, startDate, endDate, roomType, notes);
             int invoiceId = bookingDao.insertInvoiceBeforePayment(bookingId, roomPriceTotal, (long) discount, totalAmount, (long) paidAmount, limit);
 
             HttpSession session1 = request.getSession();

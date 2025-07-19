@@ -43,16 +43,13 @@
             button[type="submit"] {
                 padding: 10px 16px;
                 border: none;
-                background-color: #007bff;
+
                 color: white;
                 border-radius: 6px;
                 cursor: pointer;
                 transition: background-color 0.3s ease;
             }
 
-            button[type="submit"]:hover {
-                background-color: #0056b3;
-            }
 
             table {
                 width: 100%;
@@ -170,7 +167,37 @@
                 transform: scale(1.05);
             }
 
+            div .a1{
+                display: flex;
+                justify-content: space-around;
+                margin-top: 26px;
+            }
 
+
+
+
+
+
+            /* Màu riêng cho từng nút */
+            .delete-btn {
+                background-color: #e53935;
+            }
+            .delete-btn:hover {
+                background-color:  #c62828;
+            }
+
+            .restore-btn {
+                background-color: #007BFF;
+            }
+            .restore-btn:hover {
+                background-color: #388e3c;
+            }
+
+            .a1 {
+                display: flex;
+
+
+            }
         </style>
     </head>
     <body>
@@ -213,21 +240,31 @@
                             <td data-label="Giá">${room.price} / VND</td>
                             <td data-label="Trạng Thái">${room.status}</td>
                             <td data-label="Thao Tác">
-    <!--                            <a href="AdminView?id=${room.roomId}" title="Xem"><i class="fa-solid fa-eye"></i></a>-->
-                                <a href="EditRoomForDashboard?id=${room.roomId}" title="Sửa"><i class="fa-solid fa-pencil"></i></a>
-                                <form action="DeleteRoomForDashboard" method="post">
-                                    <input type="hidden" name="roomId" value="${room.roomId}">
+
+<!--                            <a href="AdminView?id=${room.roomId}" title="Xem"><i class="fa-solid fa-eye"></i></a>-->
+
+                                <div class="a1">
+                                    <a href="EditRoomForDashboard?id=${room.roomId}" title="Sửa">
+                                        <i class="fa-solid fa-pencil" style="font-size: 20px;"></i>
+                                    </a>
+
                                     <c:choose>
                                         <c:when test="${room.status ne 'Hidden'}">
-                                            <input type="hidden" name="status" value="notHidden">
-                                            <button>Delete</button>
+                                            <form action="DeleteRoomForDashboard" method="post" onsubmit="return confirmDelete()">
+                                                <input type="hidden" name="roomId" value="${room.roomId}">
+                                                <input type="hidden" name="status" value="notHidden">
+                                                <button type="submit" class="delete-btn">Delete</button>
+                                            </form>
                                         </c:when>
                                         <c:otherwise>
-                                            <input type="hidden" name="status" value="Hidden">
-                                            <button>Restore</button>
+                                            <form action="DeleteRoomForDashboard" method="post">
+                                                <input type="hidden" name="roomId" value="${room.roomId}">
+                                                <input type="hidden" name="status" value="Hidden">
+                                                <button type="submit" class="restore-btn">Restore</button>
+                                            </form>
                                         </c:otherwise>
                                     </c:choose>
-                                </form>
+                                </div>
                             </td>
                         </tr>
                     </c:forEach>
@@ -268,6 +305,9 @@
             td.textContent = formatted + " / VND"; // Gán lại vào ô
         });
 
+        function confirmDelete() {
+            return confirm("Bạn có chắc chắn muốn xóa phòng này không?");
+        }
     </script>
 </body>
 </html>

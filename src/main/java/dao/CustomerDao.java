@@ -267,7 +267,23 @@ public class CustomerDao {
             return stmt.executeUpdate();  // trả về số dòng cập nhật thành công
         }
     }
+// khang
+    
+      public int UpdateCustomerOnl(int UserId, int Customer) {
+        int cnt = 0;
 
+        try {
+            String sql = "Update Customers set IsOnl = ? where UserId=?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, Customer);
+            pst.setInt(2, UserId);
+            cnt = pst.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return cnt;
+    }
+    //
     //vinh xác nhận tài khoảng
     public void insertNewCustomer(String fullName, String phone) throws SQLException {
         String sql = "INSERT INTO Customers (FullName, Phone) VALUES (?, ?)";

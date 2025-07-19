@@ -27,7 +27,16 @@ public class Vouchers {
 
     private String formattedStartDate;
     private String formattedEndDate;
-    
+    private CustomerVouchers customerVouchers;
+
+    public CustomerVouchers getCustomerVouchers() {
+        return customerVouchers;
+    }
+
+    public void setCustomerVouchers(CustomerVouchers customerVouchers) {
+        this.customerVouchers = customerVouchers;
+    }
+
     public Vouchers() {
     }
 

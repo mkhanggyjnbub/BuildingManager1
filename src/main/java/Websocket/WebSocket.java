@@ -1,5 +1,14 @@
 package Websocket;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+import dao.CustomerDao;
 import dao.MessageDao;
 import dao.UserDao;
 import jakarta.servlet.http.HttpSession;
@@ -14,10 +23,14 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import jakarta.websocket.Session;
+import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import models.Customers;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 @ServerEndpoint(value = "/notification", configurator = HttpSessionConfigurator.class)
@@ -44,6 +57,8 @@ public class WebSocket {
                     int customerId = Integer.parseInt(customerIdStr);
                     session.getUserProperties().put("customerId", customerId); // lưu thêm userId
                     customerSessions.put(customerId, session);
+                    CustomerDao customerDao = new CustomerDao();
+                    customerDao.UpdateCustomerOnl(customerId, 1);
                     System.out.println("➡️ Đã lưu session cho customerId: " + customerId);
                 } catch (NumberFormatException e) {
                     System.out.println("⚠️ customerId không hợp lệ: " + customerIdStr);
@@ -85,6 +100,8 @@ public class WebSocket {
             receptionistSessions.remove(receptionistId);
             System.out.println("❌ Đã xóa session của receptionistId: " + receptionistId);
         } else if (customerId != null) {
+            CustomerDao customerDao = new CustomerDao();
+            customerDao.UpdateCustomerOnl(customerId, 0);
             receptionistSessions.remove(customerId);
             System.out.println("❌ Đã xóa session của customerId: " + customerId);
         } else {
@@ -94,14 +111,64 @@ public class WebSocket {
 
     @OnMessage
     public void onMessage(String messageJson, Session session) {
+        System.out.println("💬 Nhận được JSON từ client: " + messageJson);
+
+        Integer receptionistIdOnl = (Integer) session.getUserProperties().get("reception");
+        Integer customerIdOnl = (Integer) session.getUserProperties().get("customerId");
         int customerId = 0;
+        MessageDao messageDao = new MessageDao();
+        List<Customers> recentCustomers = messageDao.getRecentSenders();
+
+        // biến list thành chuổi 
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDateTime.class, new JsonSerializer<LocalDateTime>() {
+                    @Override
+                    public JsonElement serialize(LocalDateTime src, java.lang.reflect.Type typeOfSrc, JsonSerializationContext context) {
+                        return new JsonPrimitive(src.toString());
+                    }
+                })
+                .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
+                    @Override
+                    public LocalDateTime deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) {
+                        return LocalDateTime.parse(json.getAsString());
+                    }
+                })
+                .create();
+        String jsonList = gson.toJson(recentCustomers);
+        System.out.println("📋 recentCustomers.size = " + recentCustomers.size());
+
+// Gói lại trong JSON có type để client biết đây là danh sách
+        String recentListJson = new JSONObject()
+                .put("type", "recentSenders")
+                .put("data", new JSONArray(jsonList))
+                .toString();
+        
+        if(receptionistIdOnl!=null){
+        if (session.isOpen()) {
+            try {
+                
+                session.getBasicRemote().sendText(recentListJson);
+            } catch (IOException ex) {
+                Logger.getLogger(WebSocket.class.getName()).log(Level.SEVERE, null, ex);
+            }}
+}
+        for (Session s : receptionistSessions.values()) {
+            if (s.isOpen()) {
+                try {
+                    s.getBasicRemote().sendText(recentListJson);
+
+                } catch (IOException ex) {
+                    Logger.getLogger(WebSocket.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
         try {
 
             System.out.println("📦 Danh sách toàn bộ userSessions:");
             for (Map.Entry<Integer, Session> entry : receptionistSessions.entrySet()) {
                 System.out.println("🔑 userId: " + entry.getKey() + " → sessionId: " + entry.getValue().getId());
             }
-
+// biến chuỗi thành đối tượng
             JSONObject json = new JSONObject(messageJson);
             if (json.getString("customerId") != null) {
                 customerId = json.getInt("customerId");
@@ -112,95 +179,95 @@ public class WebSocket {
             System.out.println("📨 [" + senderType + "] gửi: " + messageContent);
 
             UserDao userdao = new UserDao();
-            MessageDao messageDao = new MessageDao();
+
             int checkReception = userdao.checkIsOnl();
-            for (Session s : session.getOpenSessions()) {
-                if (s.isOpen() && s != session) {
-                    s.getBasicRemote().sendText(messageJson);
-                }
+            Session targetSession = customerSessions.get(customerId);
+            if (targetSession != null && targetSession.isOpen()) {
+                targetSession.getBasicRemote().sendText(messageJson);
             }
-            if (checkReception != 0) {
+            if (checkReception != 0 || receptionistIdOnl != 0) {
                 System.out.println("checkReception" + checkReception);
-                messageDao.saveMessage(customerId, checkReception, senderType, messageContent);
-                        Session staffSession = receptionistSessions.get(checkReception);
+                messageDao.saveMessageStaffOn(customerId, checkReception, senderType, messageContent);
+                Session staffSession = receptionistSessions.get(checkReception);
                 if (staffSession != null && staffSession.isOpen()) {
                     staffSession.getBasicRemote().sendText(messageJson);
                 }
-
-//                for (Session s : session.getOpenSessions()) {
-//                    if (s.isOpen()) {
-//                        Integer uid = (Integer) s.getUserProperties().get("reception");
-//                        if (uid != null && uid == 2) {
-//                            s.getBasicRemote().sendText(messageJson);
-//                        }
-//                    }
-//                }
-
+            } else if (checkReception == 0) {
+                messageDao.saveMessageStaffOff(customerId, senderType, messageContent);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    //     @OnMessage
+    //    public void onMessage(String messageJson, Session session) {
+    //        try {
+    //            // Phân tích chuỗi JSON
+    //            JSONObject json = new JSONObject(messageJson);
+    //            if (json.getString("customerId") != null) {
+    //                int id = json.getInt("customerId");
+    //            }
+    //            String senderType = json.getString("senderType"); 
+    //            String messageContent = json.getString("message");
+    //
+    ////            String receiverType = json.optString("receiverType", "staff"); // mặc định gửi cho staff
+    //            System.out.println("📨 [" + senderType + "] gửi: " + messageContent);
+    //
+    //            // Gửi lại cho bên kia
+    //                for (Session s : session.getOpenSessions()) {
+    //                    if (s.isOpen() && s != session) {
+    //                        s.getBasicRemote().sendText(messageJson);
+    //                    }
+    //                }
+    //            // Gửi lại cho bên kia 
+    //                for (Session s : session.getOpenSessions()) {
+    //                    if (s.isOpen()) {
+    //                        Integer uid = (Integer) s.getUserProperties().get("reception");
+    //                        if (uid != null && uid == 2) {
+    //                            s.getBasicRemote().sendText(messageJson);
+    //                        }
+    //                    }
+    //                } 
+    //            UserDao userdao = new UserDao();
+    //            int checkReception = userdao.checkIsOnl();
+    //            if (checkReception != 0) {
+    //
+    //            }
+    //
+    //        } catch (Exception e) {
+    //            e.printStackTrace();
+    //        }
+    //    }
+    //    
+    //    public static void sendNotificationTo(int userId, String message) {
+    //        Session session = userSessions.get(userId);
+    //        if (session != null && session.isOpen()) {
+    //            try {
+    //                session.getBasicRemote().sendText(message);
+    //            } catch (IOException e) {
+    //                e.printStackTrace();
+    //            }
+    //        }
+    //    }
+    //    public static void sendNotificationTo(int userId, String message, String userType) {
+    //    Session session = null;
+    //
+    //    if ("customer".equals(userType)) {
+    //        session = customerSessions.get(userId);
+    //    } else if ("reception".equals(userType)) {
+    //        session = receptionistSessions.get(userId);
+    //    }
+    //
+    //    if (session != null && session.isOpen()) {
+    //        try {
+    //            session.getBasicRemote().sendText(message);
+    //        } catch (IOException e) {
+    //            e.printStackTrace();
+    //        }
+    //    }
+    //}
 
-//     @OnMessage
-//    public void onMessage(String messageJson, Session session) {
-//        try {
-//            // Phân tích chuỗi JSON
-//            JSONObject json = new JSONObject(messageJson);
-//            if (json.getString("customerId") != null) {
-//                int id = json.getInt("customerId");
-//            }
-//            String senderType = json.getString("senderType"); 
-//            String messageContent = json.getString("message");
-//
-////            String receiverType = json.optString("receiverType", "staff"); // mặc định gửi cho staff
-//            System.out.println("📨 [" + senderType + "] gửi: " + messageContent);
-//
-//            // Gửi lại cho bên kia
-//                for (Session s : session.getOpenSessions()) {
-//                    if (s.isOpen() && s != session) {
-//                        s.getBasicRemote().sendText(messageJson);
-//                    }
-//                }
-//            UserDao userdao = new UserDao();
-//            int checkReception = userdao.checkIsOnl();
-//            if (checkReception != 0) {
-//
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//    
-//    public static void sendNotificationTo(int userId, String message) {
-//        Session session = userSessions.get(userId);
-//        if (session != null && session.isOpen()) {
-//            try {
-//                session.getBasicRemote().sendText(message);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-//    public static void sendNotificationTo(int userId, String message, String userType) {
-//    Session session = null;
-//
-//    if ("customer".equals(userType)) {
-//        session = customerSessions.get(userId);
-//    } else if ("reception".equals(userType)) {
-//        session = receptionistSessions.get(userId);
-//    }
-//
-//    if (session != null && session.isOpen()) {
-//        try {
-//            session.getBasicRemote().sendText(message);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//}
     public static void sendNotificationToAll(String message) {
 
 //        System.out.println("👥 Tổng kết nối: " + userSessions.size());

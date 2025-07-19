@@ -126,18 +126,41 @@ Author     : Admin
                 <div class="voucher-list">
                     <c:forEach var="v" items="${savedVouchers}">
                         <c:set var="expired" value="${v.endDate lt now}" />
-
                         <div class="voucher-card ${expired ? 'expired' : ''}">
                             <h3>${v.code}</h3>
                             <p>Reduce ${v.discountPercent}%</p>
                             <p>Minimum application: ${v.minOrderAmount} VNĐ</p>
                             <p>${v.description}</p>
                             <p>Expiry: ${v.formattedEndDate}</p>
+                            <c:choose>
+                                <c:when test="${v.endDate lt now}">
 
-                            <c:if test="${expired}">
-                                <p class="expired-text">Expired</p>
-                            </c:if>
+                                    <p class="expired-text">Expired</p>
+                                </c:when>
+                                <c:when test="${v.customerVouchers.isUsed == true}">
 
+<<<<<<< HEAD
+                                    <p class="expired-text">Used</p>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:choose>
+                                        <c:when test="${not empty sessionScope.roomId}">
+                                            <form action="ConfirmBooking" method="get">
+                                                <input type="hidden" name="voucherId" value="${v.voucherId}" />
+                                                <input type="hidden" name="voucherCode" value="${v.code}" />
+                                                <input type="hidden" name="voucherdiscountPercent" value="${v.discountPercent}" />
+                                                <button type="submit" class="use-button">Use Voucher</button>
+                                            </form>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <form action="ViewRooms" method="get">
+                                                <button type="submit" class="use-button">Use Voucher</button>
+                                            </form>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:otherwise>
+                            </c:choose>
+=======
                             <c:if test="${!expired}">
                          <c:choose>
                                     <c:when test="${v.isActive}">
@@ -157,6 +180,7 @@ Author     : Admin
                             </c:if>
 
 
+>>>>>>> e901db0bab988fc5d19da92a9df4e55f52b6df08
                         </div>
                     </c:forEach>
 

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import models.CustomerVouchers;
 
 /**
  *
@@ -216,11 +217,11 @@ public class VoucherDao {
         return list;
     }
 
-    public List getVouchersByCustomer(int customerId) {
-        List list = new ArrayList<>();
-        String sql = "SELECT v.* FROM Vouchers v "
+    public List<Vouchers> getVouchersByCustomer(int customerId) {
+        List<Vouchers>  list = new ArrayList<>();
+        String sql = "SELECT * FROM Vouchers v "
                 + "JOIN CustomerVouchers cv ON v.VoucherId = cv.VoucherId "
-                + "WHERE cv.CustomerId = ?";
+                + "WHERE cv.CustomerId = ? ";
 
         try ( PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -229,6 +230,9 @@ public class VoucherDao {
 
             while (rs.next()) {
                 Vouchers v = new Vouchers();
+                CustomerVouchers cvs = new CustomerVouchers();
+                cvs.setIsUsed(rs.getBoolean("IsUsed"));
+                v.setCustomerVouchers(cvs);
                 v.setVoucherId(rs.getInt("VoucherId"));
                 v.setCode(rs.getString("Code"));
                 v.setDescription(rs.getString("Description"));
@@ -237,6 +241,7 @@ public class VoucherDao {
                 v.setEndDate(rs.getTimestamp("EndDate").toLocalDateTime());
                 v.setMinOrderAmount(rs.getLong("MinOrderAmount"));
                 v.setQuantity(rs.getInt("Quantity"));
+
                 v.setIsActive(rs.getBoolean("IsActive"));
 
                 list.add(v);
@@ -280,6 +285,29 @@ public class VoucherDao {
         return result;
     }
 
+    // khang
+   public int updateStatusVoucher(int customerId, int voucherId) {
+    String sql = "UPDATE CustomerVouchers SET IsUsed = 1, UsedDate = ? WHERE CustomerId = ? AND VoucherId = ?";
+
+    try (Connection conn = ConnectData.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+        LocalDateTime now = LocalDateTime.now();
+        ps.setTimestamp(1, Timestamp.valueOf(now));
+        ps.setInt(2, customerId);
+        ps.setInt(3, voucherId);
+
+        return ps.executeUpdate(); 
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return 0; 
+}
+
+
+    // đóng code của KHang 
     public boolean isVoucherCodeExists(String code) {
         String sql = "SELECT 1 FROM Vouchers WHERE Code = ? AND IsActive = 1 AND EndDate >= GETDATE()";
         try ( PreparedStatement ps = conn.prepareStatement(sql)) {
