@@ -12,6 +12,7 @@ controllers\booking\StatusBooking.class
 controllers\voucher\EditVoucher.class
 controllers\room\CreateRoomForDashboard.class
 dao\RoomReviewDao.class
+models\CustomerVouchers.class
 Websocket\WebSocket.class
 models\Bookings.class
 controllers\message\MessageForDashboard.class
@@ -80,6 +81,7 @@ controllers\UpImage.class
 dao\RoomDao.class
 models\Equipment.class
 dao\PaginationDao.class
+Websocket\WebSocket$2.class
 controllers\customer\ViewCustomerDetailDashboard.class
 controllers\news\EditNewsDashboard.class
 models\Users.class
@@ -93,6 +95,7 @@ controllers\amenities\DeleteAmenitiesDashboard.class
 controllers\services\ViewServicesDashboard.class
 controllers\admin\Dashboard.class
 controllers\cloudinary\CloudinaryUpload.class
+Websocket\WebSocket$1.class
 controllers\admin\AdminView.class
 models\Buildings.class
 controllers\services\EditServiceDashboard.class

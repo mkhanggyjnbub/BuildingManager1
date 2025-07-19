@@ -13,10 +13,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import models.CustomerVouchers;
 
 /**
  *
@@ -213,11 +215,11 @@ public class VoucherDAO {
         return list;
     }
 
-    public List getVouchersByCustomer(int customerId) {
-        List list = new ArrayList<>();
-        String sql = "SELECT v.* FROM Vouchers v "
+    public List<Vouchers> getVouchersByCustomer(int customerId) {
+        List<Vouchers>  list = new ArrayList<>();
+        String sql = "SELECT * FROM Vouchers v "
                 + "JOIN CustomerVouchers cv ON v.VoucherId = cv.VoucherId "
-                + "WHERE cv.CustomerId = ?";
+                + "WHERE cv.CustomerId = ? ";
 
         try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -226,6 +228,9 @@ public class VoucherDAO {
 
             while (rs.next()) {
                 Vouchers v = new Vouchers();
+                CustomerVouchers cvs = new CustomerVouchers();
+                cvs.setIsUsed(rs.getBoolean("IsUsed"));
+                v.setCustomerVouchers(cvs);
                 v.setVoucherId(rs.getInt("VoucherId"));
                 v.setCode(rs.getString("Code"));
                 v.setDescription(rs.getString("Description"));
@@ -234,6 +239,7 @@ public class VoucherDAO {
                 v.setEndDate(rs.getTimestamp("EndDate").toLocalDateTime());
                 v.setMinOrderAmount(rs.getLong("MinOrderAmount"));
                 v.setQuantity(rs.getInt("Quantity"));
+                
                 list.add(v);
             }
         } catch (Exception e) {
@@ -275,4 +281,27 @@ public class VoucherDAO {
         return result;
     }
 
+    // khang
+   public int updateStatusVoucher(int customerId, int voucherId) {
+    String sql = "UPDATE CustomerVouchers SET IsUsed = 1, UsedDate = ? WHERE CustomerId = ? AND VoucherId = ?";
+
+    try (Connection conn = ConnectData.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+        LocalDateTime now = LocalDateTime.now();
+        ps.setTimestamp(1, Timestamp.valueOf(now));
+        ps.setInt(2, customerId);
+        ps.setInt(3, voucherId);
+
+        return ps.executeUpdate(); 
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return 0; 
+}
+
+
+    // đóng code của KHang 
 }

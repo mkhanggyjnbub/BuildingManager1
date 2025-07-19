@@ -6,6 +6,7 @@ package controllers.room;
 
 import dao.BookingDao;
 import dao.RoomDao;
+import dao.VoucherDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -72,6 +73,10 @@ public class ViewRooms extends HttpServlet {
                 int invoiceId = Integer.parseInt(session.getAttribute("invoiceId").toString());
                 String paymentMethod = session.getAttribute("paymentMethod").toString();
                 long amount = Long.parseLong(session.getAttribute("amount").toString());
+                int customerId = Integer.parseInt(session.getAttribute("customerId").toString());
+                int voucherId = Integer.parseInt(session.getAttribute("voucherId").toString());
+                VoucherDAO voucherDao = new VoucherDAO();
+                voucherDao.updateStatusVoucher(customerId, voucherId);
 
                 int check1 = bookingDao.updateBookingStatus(bookingId, "Waiting for processing");
                 int check2 = bookingDao.updateInvoiceStatus(invoiceId, "Partial");

@@ -448,19 +448,19 @@ public class BookingDao {
 //        }
 //        return 0;
 //    }
-public int insertBookingBeforePayment(int customerId, LocalDate startDate, LocalDate endDate, String roomType) {
+public int insertBookingBeforePayment(int customerId, LocalDate startDate, LocalDate endDate, String roomType, String note) {
     int bookingId = -1;
 
     try {
-        String sql = "INSERT INTO Bookings(CustomerId, StartDate, EndDate, roomType, Status) "
-                   + "VALUES (?, ?, ?, ?, 'pending payment')";
+        String sql = "INSERT INTO Bookings(CustomerId, StartDate, EndDate, roomType, Status, Notes) "
+                   + "VALUES (?, ?, ?, ?, 'pending payment', ?)";
 
-        // Sử dụng RETURN_GENERATED_KEYS
         PreparedStatement pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         pst.setInt(1, customerId);
         pst.setDate(2, java.sql.Date.valueOf(startDate));
         pst.setDate(3, java.sql.Date.valueOf(endDate));
         pst.setString(4, roomType);
+        pst.setString(5, note);  // Thêm note ở đây
 
         int affectedRows = pst.executeUpdate();
 
@@ -473,7 +473,6 @@ public int insertBookingBeforePayment(int customerId, LocalDate startDate, Local
         }
 
         pst.close();
-        // KHÔNG đóng conn ở đây nếu bạn còn dùng tiếp
 
     } catch (SQLException ex) {
         Logger.getLogger(BookingDao.class.getName()).log(Level.SEVERE, null, ex);
