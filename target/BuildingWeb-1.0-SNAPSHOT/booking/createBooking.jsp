@@ -154,12 +154,12 @@
         </style>
     </head>    
 
+<%@ include file="../navbarDashboard/navbarDashboard.jsp" %>
+<%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
+
     <body <c:if test="${empty customer}">onload="showAccountChoicePopup()"</c:if>>
             <div class="dashboard-container">
-            <%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
-
-            <div class="main-content">
-                <%@ include file="../navbarDashboard/navbarDashboard.jsp" %>
+      
 
                 <!-- Modal chọn loại tài khoản -->
                 <div id="accountModal" class="modal">
@@ -282,7 +282,6 @@
                     </c:if>
                 </c:if>
             </div>
-        </div>
         <script>
             function showAccountChoicePopup() {
                 document.getElementById('accountModal').style.display = 'block';

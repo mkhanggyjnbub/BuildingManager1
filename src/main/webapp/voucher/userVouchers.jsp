@@ -139,16 +139,7 @@ Author     : Admin
                             </c:if>
 
                             <c:if test="${!expired}">
-<<<<<<< HEAD
-                                <form action="ConfirmBooking" method="get">
-                                     <input type="hidden" name="voucherId" value="${v.voucherId}" />
-                                     <input type="hidden" name="voucherCode" value="${v.code}" />
-                                     <input type="hidden" name="voucherdiscountPercent" value="${v.discountPercent}" />
-                                    <button type="submit" class="use-button">Use Voucher</button>
-                                    <%--<a href="${v.voucherId}" > class  </a>--%>
-                                </form>
-=======
-                                <c:choose>
+                         <c:choose>
                                     <c:when test="${v.isActive}">
 
                                         <!-- Voucher còn hạn và đang active -->
@@ -163,7 +154,6 @@ Author     : Admin
 
                                     </c:otherwise>
                                 </c:choose>
->>>>>>> f8a02766a1379cda5c6e536189cf24995238daa7
                             </c:if>
 
 

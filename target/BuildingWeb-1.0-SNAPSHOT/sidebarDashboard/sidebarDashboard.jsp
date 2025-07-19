@@ -4,7 +4,7 @@
     Author     : KHANH
 --%>
 
-<!-- FontAwesome (n?u ch?a có) -->
+<!-- FontAwesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
@@ -186,6 +186,13 @@
     .khang-item:hover .khang-dropdown {
         display: block;
     }
+    
+    .menu li a.active {
+    background-color: var(--hover-bg);
+    font-weight: bold;
+    padding-left: 28px;
+}
+
 </style>
 
 <!-- Sidebar HTML -->
@@ -226,4 +233,16 @@
         const sidebar = document.getElementById("sidebar");
         sidebar.classList.toggle("open");
     }
+    
+    
+     document.addEventListener("DOMContentLoaded", function () {
+        const links = document.querySelectorAll(".menu li a");
+        const currentUrl = window.location.href;
+
+        links.forEach(link => {
+            if (currentUrl.includes(link.getAttribute("href"))) {
+                link.classList.add("active");
+            }
+        });
+    });
 </script>
