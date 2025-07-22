@@ -151,15 +151,39 @@
                     opacity: 1;
                 }
             }
+
+
+.dashboard-layout {
+    display: flex;
+}
+
+/* Nội dung ban đầu lệch 60px */
+.main-content {
+    margin-left: 60px;
+    padding: 20px;
+    flex: 1;
+    transition: margin-left 0.3s ease;
+}
+
+/* Khi sidebar mở rộng */
+.sidebar.open ~ .main-content {
+    margin-left: 220px;
+}
+
+
+
         </style>
     </head>    
 
-<%@ include file="../navbarDashboard/navbarDashboard.jsp" %>
-<%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
+
+
 
     <body <c:if test="${empty customer}">onload="showAccountChoicePopup()"</c:if>>
-            <div class="dashboard-container">
-      
+        <%@ include file="../navbarDashboard/navbarDashboard.jsp" %>
+
+        <div class="dashboard-layout">
+            <%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
+             <div class="main-content" id="main-content">
 
                 <!-- Modal chọn loại tài khoản -->
                 <div id="accountModal" class="modal">
@@ -214,11 +238,11 @@
                     <form method="get" action="CheckExistingCustomer">
                         <input type="hidden" name="action" value="logoutCustomer" />
                         <button type="submit" style="background-color: crimson; color: white; padding: 8px 16px; border: none; border-radius: 4px; display: flex">
-                             Exit
+                            Exit
                         </button>
                     </form>
-                        
-                        
+
+
                     <!-- Tìm phòng -->
                     <div class="search-box">
                         <form method="post" action="CreateBooking" class="search-form">
@@ -282,6 +306,7 @@
                     </c:if>
                 </c:if>
             </div>
+        </div>
         <script>
             function showAccountChoicePopup() {
                 document.getElementById('accountModal').style.display = 'block';
@@ -367,6 +392,22 @@
                 validateNumberInput(adultsInput, 1);    // Người lớn phải >= 1
                 validateNumberInput(childrenInput, 0);  // Trẻ em >= 0
             });
+
+
+function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    const mainContent = document.getElementById("main-content");
+
+    sidebar.classList.toggle("open");
+
+    if (sidebar.classList.contains("open")) {
+        mainContent.style.marginLeft = "220px";
+    } else {
+        mainContent.style.marginLeft = "60px";
+    }
+}
+
+
         </script>
 
 

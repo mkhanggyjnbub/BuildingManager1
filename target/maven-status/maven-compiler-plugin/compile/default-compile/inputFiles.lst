@@ -83,6 +83,7 @@ D:\SWP_Project\BuildingManager1\src\main\java\controllers\checkInOut\ViewAllChec
 D:\SWP_Project\BuildingManager1\src\main\java\db\ConnectData.java
 D:\SWP_Project\BuildingManager1\src\main\java\models\ExtraCharge.java
 D:\SWP_Project\BuildingManager1\src\main\java\models\RoomReviews.java
+D:\SWP_Project\BuildingManager1\src\main\java\controllers\booking\ViewBookingDetail.java
 D:\SWP_Project\BuildingManager1\src\main\java\controllers\account\ResendOTP.java
 D:\SWP_Project\BuildingManager1\src\main\java\dao\ExtraChargeDao.java
 D:\SWP_Project\BuildingManager1\src\main\java\models\Services.java
