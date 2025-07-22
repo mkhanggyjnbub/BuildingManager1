@@ -186,6 +186,8 @@
     .khang-item:hover .khang-dropdown {
         display: block;
     }
+
+
     
     .menu li a.active {
     background-color: var(--hover-bg);
@@ -201,6 +203,7 @@
         <i class="fa-solid fa-bars"></i>
     </div>
     <ul class="menu">
+
         <li style="--i:0"><a href="Index"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
         <li style="--i:1"><a href="DashboardUser"><i class="fa-solid fa-user"></i><span>Users</span></a></li>
         <li style="--i:2"><a href="VouchersDashBoard"><i class="fa-solid fa-ticket"></i><span>Vouchers</span></a></li>
@@ -212,10 +215,11 @@
         <li style="--i:5"><a href="ViewAllRoomsForDashboard"><i class="fa-solid fa-bed"></i><span>List Rooms</span></a></li>
         <li style="--i:6"><a href="ViewServicesDashboard"><i class="fa-solid fa-concierge-bell"></i><span>Services</span></a></li>
         <li style="--i:7"><a href="ViewAmenitiesDashboard"><i class="fa-solid fa-bath"></i><span>Amenities</span></a></li>
-        <li style="--i:8"><a href="ViewAllCustomersDashboard"><i class="fa-solid fa-users"></i><span>Customers</span></a></li>
-        <li style="--i:9"><a href="ViewAllCheckInOutDashboard"><i class="fa-solid fa-door-open"></i><span>Check-InOut</span></a></li>
-        <li style="--i:10"><a href="ViewAllReportsForDashboard"><i class="fa-solid fa-flag"></i><span>Report</span></a></li>
-        <li style="--i:11"><a href="Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
+        <li style="--i:8"><a href="ViewAllExtraCharge"><i class="fa-solid fa-bath"></i><span>Extra Charge</span></a></li>
+        <li style="--i:9"><a href="ViewAllCustomersDashboard"><i class="fa-solid fa-users"></i><span>Customers</span></a></li>
+        <li style="--i:10"><a href="ViewAllCheckInOutDashboard"><i class="fa-solid fa-door-open"></i><span>Check-InOut</span></a></li>
+        <li style="--i:11"><a href="ViewAllReportsForDashboard"><i class="fa-solid fa-flag"></i><span>Report</span></a></li>
+        <li style="--i:12"><a href="Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
 
         <!-- Khang item -->
         <li style="--i:12" class="khang-item">
@@ -229,6 +233,7 @@
 </div>
 
 <script>
+
     function toggleSidebar() {
         const sidebar = document.getElementById("sidebar");
         sidebar.classList.toggle("open");

@@ -6,6 +6,8 @@ package dao;
 
 import static dao.UserDao.md5;
 import db.ConnectData;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -192,31 +194,36 @@ public class CustomerDao {
     public List<Customers> getAllCustomers() throws SQLException {
         List<Customers> list = new ArrayList<>();
         String sql = "SELECT * FROM Customers";
-        try ( PreparedStatement pst = conn.prepareStatement(sql);  ResultSet rs = pst.executeQuery()) {
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement pst = conn.prepareStatement(sql);  ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
                 Customers c = new Customers();
                 c.setCustomerId(rs.getInt("CustomerId"));
                 c.setUserName(rs.getString("UserName"));
-//                c.setPassword(rs.getString("Password"));
                 c.setFullName(rs.getString("FullName"));
                 c.setPhone(rs.getString("Phone"));
                 c.setEmail(rs.getString("Email"));
-//                c.setAddress(rs.getString("Address"));
                 c.setGender(rs.getString("Gender"));
-//                c.setDateOfBirth(rs.getDate("DateOfBirth"));
                 c.setStatus(rs.getString("Status"));
-//                c.setAvatarUrl(rs.getString("AvatarUrl"));
-//                c.setCreationDate(rs.getTimestamp("CreationDate").toLocalDateTime());
-//                c.setLastLogin(rs.getTimestamp("LastLogin").toLocalDateTime()); 
-//                c.setIdentityNumber(rs.getString("IdentityNumber"));
                 c.setAvatarUrl(rs.getString("AvatarUrl"));
-                c.setCreationDate(rs.getTimestamp("CreationDate").toLocalDateTime());
-                c.setLastLogin(rs.getTimestamp("LastLogin").toLocalDateTime());
+
+                // ✅ Bọc kiểm tra null cho Timestamp
+                Timestamp creation = rs.getTimestamp("CreationDate");
+                if (creation != null) {
+                    c.setCreationDate(creation.toLocalDateTime());
+                }
+
+                Timestamp lastLogin = rs.getTimestamp("LastLogin");
+                if (lastLogin != null) {
+                    c.setLastLogin(lastLogin.toLocalDateTime());
+                }
+
                 c.setIdentityNumber(rs.getString("IdentityNumber"));
                 c.setJoinDate(rs.getDate("JoinDate"));
+
                 list.add(c);
             }
+
         }
         return list;
     }
@@ -268,8 +275,8 @@ public class CustomerDao {
         }
     }
 // khang
-    
-      public int UpdateCustomerOnl(int UserId, int Customer) {
+
+    public int UpdateCustomerOnl(int UserId, int Customer) {
         int cnt = 0;
 
         try {
@@ -283,6 +290,7 @@ public class CustomerDao {
         }
         return cnt;
     }
+
     //
     //vinh xác nhận tài khoảng
     public void insertNewCustomer(String fullName, String phone) throws SQLException {
@@ -306,6 +314,7 @@ public class CustomerDao {
     }
 //vinh
 // lấy tên với sdt để check có tài khoảng chưa
+
     public Customers getCustomerByFullNameAndPhone(String fullName, String phone) throws SQLException {
         String sql = "SELECT * FROM Customers WHERE FullName = ? AND Phone = ?";
         try ( PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -343,4 +352,197 @@ public class CustomerDao {
         }
     }
 
+    public boolean insertCustomerIfCccdNotEmpty(String fullName, String cccd, String email, String phone) {
+        if (cccd == null || cccd.trim().isEmpty()) {
+            return false;
+        }
+
+        String sql = "INSERT INTO Customers (FullName, CCCD, Email, Phone) VALUES (?, ?, ?, ?)";
+
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, fullName);
+            ps.setString(2, cccd);
+            ps.setString(3, email);
+            ps.setString(4, phone);
+
+            int affectedRows = ps.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+//khanh
+
+    public void insertCustomerIfNotExist(String fullName, String cccd) throws SQLException {
+        String checkSql = "SELECT 1 FROM Customers WHERE CCCD = ?";
+        String insertSql = "INSERT INTO Customers (FullName, CCCD) VALUES (?, ?)";
+
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
+            checkStmt.setString(1, cccd);
+            ResultSet rs = checkStmt.executeQuery();
+            if (!rs.next()) {
+                try ( PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                    insertStmt.setString(1, fullName);
+                    insertStmt.setString(2, cccd);
+                    insertStmt.executeUpdate();
+                }
+            }
+        }
+    }
+
+    public boolean checkExistCCCD(String cccd) {
+        String sql = "SELECT COUNT(*) FROM Customers WHERE IdentityNumber = ?";
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, cccd);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean saveGuestInfoIfNotExist(int bookingId, String fullName, String cccd) {
+        if (checkExistCCCD(cccd)) {
+            return false; // Bị trùng -> Không lưu
+        }
+
+        String sql = "INSERT INTO GuestInfo (BookingId, FullName, CCCD) VALUES (?, ?, ?)";
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, bookingId);
+            ps.setString(2, fullName);
+            ps.setString(3, cccd);
+            int result = ps.executeUpdate();
+            return result > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public int insertCustomerByCCCD(String userName, String fullName, String cccd) {
+        int check = 0;
+        String sql = "INSERT INTO Customers (UserName, FullName, IdentityNumber, isRegistered) VALUES (?, ?, ?, 0)";
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, userName);
+            ps.setString(2, fullName);
+            ps.setString(3, cccd);
+            check = ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return check;
+    }
+
+    // Truy vấn lấy username số lớn nhất
+    public int getMaxUsernameNumber() {
+        int max = 0;
+        try {
+            String sql = "SELECT MAX(CAST(username AS INT)) AS MaxUsername FROM Customers WHERE ISNUMERIC(username) = 1";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                max = rs.getInt("MaxUsername");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return (max == 0) ? 1 : max + 1;
+    }
+
+    //code cua khoa
+    public boolean isUsernameTaken(String username) {
+        String sql = "SELECT 1 FROM Customers WHERE UserName = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            return rs.next(); // Có dữ liệu nghĩa là username đã tồn tại
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean isEmailTaken(String email) {
+        String sql = "SELECT 1 FROM Customers WHERE Email = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean updatePassword(String username, String email, String hashedPassword) {
+        String sql = "UPDATE Customers SET password = ? WHERE username = ? AND email = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, hashedPassword);
+            ps.setString(2, username);
+            ps.setString(3, email);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public String md5(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(input.getBytes());
+
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : messageDigest) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public int createCustomer(Customers c) {
+        String sql = "INSERT INTO Customers "
+                + "(UserName, Password, DateOfBirth, Email, Phone, IdentityNumber, CreationDate, isRegistered) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        int check = 0;
+
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            System.out.println(">>> Creating customer with data:");
+            System.out.println("Username: " + c.getUserName());
+            System.out.println("Password (MD5): " + c.getPassword());
+            System.out.println("Date of Birth: " + c.getDateOfBirth());
+            System.out.println("Email: " + c.getEmail());
+            System.out.println("Phone: " + c.getPhone());
+            System.out.println("Creation Date: " + c.getCreationDate());
+
+            ps.setString(1, c.getUserName());
+            ps.setString(2, c.getPassword()); // Mật khẩu đã hash trước khi truyền vào
+            ps.setDate(3, c.getDateOfBirth());
+            ps.setString(4, c.getEmail());
+            ps.setString(5, c.getPhone());
+            ps.setString(6, c.getIdentityNumber());
+            ps.setTimestamp(7, java.sql.Timestamp.valueOf(c.getCreationDate()));
+            ps.setBoolean(8, true); // Mặc định đã đăng ký
+
+            check = ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return check;
+    }
 }

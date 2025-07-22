@@ -36,7 +36,17 @@ public class Bookings {
     private String formattedStartDate;
     private String formattedEndDate;
 
+    private LocalDateTime extendedEndDate;
+
     private String RoomType;
+
+    public String getRoomType() {
+        return RoomType;
+    }
+
+    public void setRoomType(String RoomType) {
+        this.RoomType = RoomType;
+    }
 
     private Date checkInDate;
     private Date checkOutDate;
@@ -237,14 +247,12 @@ public class Bookings {
         return customers != null ? customers.getEmail() : null;
     }
 
-    public String getRoomType() {
-        return RoomType;
+    public LocalDateTime getExtendedEndDate() {
+        return extendedEndDate;
     }
 
-    public void setRoomType(String RoomType) {
-        this.RoomType = RoomType;
+    public void setExtendedEndDate(LocalDateTime extendedEndDate) {
+        this.extendedEndDate = extendedEndDate;
     }
 
-    
-    
 }

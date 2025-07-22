@@ -15,10 +15,14 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Amenities;
+import models.Buildings;
 import models.Customers;
 import models.RoomReviews;
 import models.Rooms;
@@ -685,7 +689,7 @@ public class RoomDao {
             }
         }
         return roomType;
-        
+
     }
 
     public Rooms getRoomDetailForEdit(int id) {
@@ -767,6 +771,173 @@ public class RoomDao {
         return check;
     }
 
+    public boolean updateRoomStatus(int roomId, String status) { //khanh
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+            conn = ConnectData.getConnection();
+            String sql = "UPDATE Rooms SET Status = ? WHERE RoomId = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, status);        // Ví dụ: "Occupied"
+            ps.setInt(2, roomId);           // ID của phòng cần cập nhật
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public Map<Integer, List<Rooms>> getAvailableRoomsGroupedByFloor(LocalDate checkIn, LocalDate checkOut, String location, int numberOfGuests) {
+        Map<Integer, List<Rooms>> roomsByFloor = new HashMap<>();
+        ResultSet rs = null;
+
+        try {
+            String sql = "SELECT "
+                    + "R.RoomId, "
+                    + "R.RoomNumber, "
+                    + "R.RoomType, "
+                    + "R.FloorNumber, "
+                    + "R.MaxOccupancy, "
+                    + "R.Status, "
+                    + "B.Location "
+                    + "FROM Rooms R "
+                    + "JOIN Buildings B ON R.BuildingId = B.BuildingId "
+                    + "WHERE R.Status = 'Available' "
+                    + "AND B.Location LIKE ? "
+                    + "AND R.MaxOccupancy >= ? "
+                    + "AND R.RoomId NOT IN ( "
+                    + "   SELECT RoomId FROM Bookings "
+                    + "   WHERE (? < EndDate AND ? > StartDate) "
+                    + "   AND Status IN ('Confirmed', 'Checked in') "
+                    + ") "
+                    + "ORDER BY R.FloorNumber, R.RoomNumber";
+
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setString(1, "%" + location + "%");
+            st.setInt(2, numberOfGuests);
+            st.setDate(3, java.sql.Date.valueOf(checkOut));
+            st.setDate(4, java.sql.Date.valueOf(checkIn));
+
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                Rooms room = new Rooms();
+                room.setRoomId(rs.getInt("RoomId"));
+                room.setRoomNumber(rs.getString("RoomNumber"));
+                room.setRoomType(rs.getString("RoomType"));
+                room.setFloorNumber(rs.getInt("FloorNumber"));
+                room.setMaxOccupancy(rs.getInt("MaxOccupancy"));
+                room.setStatus(rs.getString("Status"));
+                int floorNumber = rs.getInt("FloorNumber");
+
+                if (!roomsByFloor.containsKey(floorNumber)) {
+                    roomsByFloor.put(floorNumber, new ArrayList<Rooms>());
+                }
+                roomsByFloor.get(floorNumber).add(room);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return roomsByFloor;
+    }
+
+    public List<String> getRoomTypesByBookingRoomType(String roomType) {
+        List<String> roomList = new ArrayList<>();
+        String sql = "SELECT DISTINCT RoomNumber FROM Rooms WHERE RoomType = ? AND Status = 'Available'";
+
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, roomType);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                roomList.add(rs.getString("RoomNumber"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return roomList;
+    }
+
+    //khanh
+    public List<Rooms> getlistCheckIn(LocalDate startDate, LocalDate endDate, int guestCount, String roomType) throws SQLException {
+        List<Rooms> availableRooms = new ArrayList<>();
+
+        String sql = "SELECT RoomId, RoomType, Price, MaxOccupancy, RoomNumber, FloorNumber "
+                + "FROM Rooms R "
+                + "WHERE R.Status = 'Active' "
+                + "AND R.MaxOccupancy >= ? "
+                + "AND R.RoomType = ? "
+                + "AND NOT EXISTS ( "
+                + "    SELECT 1 FROM Bookings B "
+                + "    WHERE B.RoomId = R.RoomId "
+                + "    AND B.StartDate < ? AND B.EndDate > ? "
+                + "    AND B.Status IN ('Confirmed', 'Checked in', 'Waiting for processing', 'Canceled') "
+                + ") "
+                + "ORDER BY RoomId ASC";
+
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, guestCount);
+            ps.setString(2, roomType);
+            ps.setDate(3, Date.valueOf(endDate));  // check-out
+            ps.setDate(4, Date.valueOf(startDate)); // check-in
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Rooms room = new Rooms();
+                room.setRoomId(rs.getInt("RoomId"));
+                room.setRoomType(rs.getString("RoomType"));
+                room.setPrice(rs.getLong("Price"));
+                room.setMaxOccupancy(rs.getInt("MaxOccupancy"));
+                room.setRoomNumber(rs.getString("RoomNumber"));
+                room.setFloorNumber(rs.getInt("FloorNumber"));
+                availableRooms.add(room);
+            }
+        }
+
+        return availableRooms;
+    }
+
+    //khanh
+    public Rooms getRoomByIdkhanh(int roomId) throws SQLException {
+        Rooms room = null;
+
+        String sql = "SELECT RoomId, RoomNumber, FloorNumber, RoomType, MaxOccupancy, Price "
+                + "FROM Rooms WHERE RoomId = ?";
+
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, roomId);
+
+            try ( ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    room = new Rooms();
+                    room.setRoomId(rs.getInt("RoomId"));
+                    room.setRoomNumber(rs.getString("RoomNumber"));
+                    room.setFloorNumber(rs.getInt("FloorNumber"));
+                    room.setRoomType(rs.getString("RoomType"));
+                    room.setMaxOccupancy(rs.getInt("MaxOccupancy"));
+                    room.setPrice(rs.getLong("Price"));
+                }
+            }
+        }
+
+        return room;
+    }
+
     public int deleteRoom(int roomId, String status) {
         int count = 0;
         try {
@@ -788,4 +959,22 @@ public class RoomDao {
 
     }
 
+    public long getPriceRoomByBookingId(int bookingId) {
+        String sql = "SELECT r.Price FROM Rooms r "
+                + "JOIN Bookings b ON r.RoomId = b.RoomId "
+                + "WHERE b.BookingId = ? AND r.Status = 'Active'";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, bookingId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                System.out.println(rs.getLong("Price"));
+                return rs.getLong("Price");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }
