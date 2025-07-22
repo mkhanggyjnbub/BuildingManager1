@@ -12,8 +12,8 @@
     <a href="ViewAllCustomersDashboard" class="customer-link">
     </a>
           <a href="Notification">Notification</a>
-                        <a href="TakeNotification">Nh?n Notification</a>
-                         <a href="MessageForDashboard">MessageForDashboard</a>
+<!--                        <a href="TakeNotification">Nh?n Notification</a>
+                         <a href="MessageForDashboard">MessageForDashboard</a>-->
 </div>
 
 <div class="main-content">

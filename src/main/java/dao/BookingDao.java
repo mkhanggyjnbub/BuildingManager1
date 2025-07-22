@@ -1032,6 +1032,7 @@ public class BookingDao {
     }
 
     //Đóng code của khang
+
     //Code của khoa
     public List<Bookings> getBookingHistoryByCustomerId(int customerId) {
         List<Bookings> list = new ArrayList<>();
