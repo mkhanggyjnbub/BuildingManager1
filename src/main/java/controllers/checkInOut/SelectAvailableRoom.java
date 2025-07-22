@@ -83,9 +83,9 @@ public class SelectAvailableRoom extends HttpServlet {
             BookingDao bookingDao = new BookingDao();
             Bookings booking = bookingDao.getBookingCheckInInfo(bookingId);
             String roomType = booking.getRoomType();
-
-            LocalDate startDate = booking.getStartDate();
-            LocalDate endDate = booking.getEndDate();
+         
+LocalDate startDate = booking.getStartDate();
+LocalDate endDate = booking.getEndDate();
             RoomDao roomDao = new RoomDao();
             List<Rooms> availableRooms = roomDao.getlistCheckIn(startDate, endDate, actualGuests, roomType);
 
