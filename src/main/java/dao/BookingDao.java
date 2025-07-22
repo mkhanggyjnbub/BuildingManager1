@@ -1032,40 +1032,224 @@ public class BookingDao {
     }
 
     //Đóng code của khang
-    
-    
-    
-//    //Khoa
-//    public List<Bookings> getAllBookingsActive() {
-//        String sql = "SELECT * FROM Bookings b \n"
-//                + "inner join Rooms r on r.RoomId = b.RoomId\n"
-//                + "WHERE b.Status = 'Checked in' AND CheckInTime IS NOT NULL";
-//        List<Bookings> list = new ArrayList<>();
-//        try {
-//            Connection conn = ConnectData.getConnection();
-//            PreparedStatement ps = conn.prepareStatement(sql);
-//            ResultSet rs = ps.executeQuery();
-//            while (rs.next()) {
-//                Bookings b = new Bookings();
-//                b.setBookingId(rs.getInt("BookingId"));
-//                Rooms r = new Rooms();
-//                r.setRoomNumber(rs.getString("RoomNumber"));
-//                b.setRooms(r);
-//                b.setCustomerId(rs.getInt("CustomerID"));
-//                b.setStartDate(rs.getTimestamp("StartDate").toLocalDateTime());
-//                b.setEndDate(rs.getTimestamp("EndDate").toLocalDateTime());
-//                list.add(b);
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(BookingDao.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        if (list.isEmpty()) {
-//            System.out.println("list dang rong");
-//            return null;
-//        } else {
-//            System.out.println("list dang khong rong");
-//            System.out.println(list);
-//        }
-//        return list;
-//    }
+
+    //Code của khoa
+    public List<Bookings> getBookingHistoryByCustomerId(int customerId) {
+        List<Bookings> list = new ArrayList<>();
+        String sql = "SELECT\n"
+                + "    b.BookingId, b.RoomId, r.RoomNumber, r.ImageUrl,\n"
+                + "    b.CustomerId, b.StartDate, b.EndDate, b.Notes, r.RoomType,\n"
+                + "    b.Status,\n"
+                + "    MAX(e.EndTime) AS ExtendedEndDate\n"
+                + "FROM Bookings b\n"
+                + "INNER JOIN Rooms r ON r.RoomId = b.RoomId\n"
+                + "LEFT JOIN ExtraCharge e \n"
+                + "    ON e.BookingId = b.BookingId\n"
+                + "   AND e.ChargeType IN ('Late Hour', 'Extra Hour', 'Extra Day')\n"
+                + "WHERE b.CustomerId = ?\n"
+                + "GROUP BY b.BookingId, b.RoomId, r.RoomNumber, r.ImageUrl,\n"
+                + "         b.CustomerId, b.StartDate, b.EndDate, b.Notes,\n"
+                + "         r.RoomType, b.Status\n"
+                + "ORDER BY b.StartDate DESC";
+
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, customerId);
+            try ( ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Bookings b = new Bookings();
+                    b.setBookingId(rs.getInt("BookingId"));
+                    b.setRoomId(rs.getInt("RoomId"));
+
+                    Rooms r = new Rooms();
+                    r.setRoomNumber(rs.getString("RoomNumber"));
+                    r.setImageUrl(rs.getString("ImageUrl"));
+                    r.setRoomType(rs.getString("RoomType"));
+                    b.setRooms(r);
+
+                    b.setCustomerId(rs.getInt("CustomerId"));
+
+                    // Xử lý ngày (không có thời gian)
+                    Date sqlStartDate = rs.getDate("StartDate");
+                    Date sqlEndDate = rs.getDate("EndDate");
+
+                    b.setStartDate(sqlStartDate.toLocalDate());
+                    b.setEndDate(sqlEndDate.toLocalDate());
+
+                    b.setNotes(rs.getString("Notes"));
+                    b.setStatus(rs.getString("Status"));
+
+                    // Xử lý ExtendedEndDate có kiểu DATETIME
+                    Timestamp extendedEnd = rs.getTimestamp("ExtendedEndDate");
+                    if (extendedEnd != null) {
+                        b.setExtendedEndDate(extendedEnd.toLocalDateTime());
+                    }
+
+                    list.add(b);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("CustomerId: " + customerId);
+        System.out.println("Bookings: " + list.size());
+
+        return list;
+    }
+
+    public Bookings getBookingWithExtendedEndTime(int bookingId) {
+        String query = "SELECT * FROM Bookings WHERE BookingId = ?";
+
+        try ( PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, bookingId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Bookings booking = new Bookings();
+                booking.setBookingId(rs.getInt("BookingId"));
+                booking.setCustomerId(rs.getInt("CustomerId"));
+                booking.setRoomId(rs.getInt("RoomId"));
+                booking.setStartDate(rs.getDate("StartDate").toLocalDate());
+                booking.setEndDate(rs.getDate("EndDate").toLocalDate());
+                booking.setStatus(rs.getString("BookingStatus"));
+                booking.setRequestTime(rs.getTimestamp("BookingTime").toLocalDateTime());
+                booking.setCheckInTime(rs.getTimestamp("CheckInTime") != null
+                        ? rs.getTimestamp("CheckInTime").toLocalDateTime() : null);
+                booking.setCheckOutTime(rs.getTimestamp("CheckOutTime") != null
+                        ? rs.getTimestamp("CheckOutTime").toLocalDateTime() : null);
+
+                // Gọi phương thức mới để lấy thời gian kết thúc sau gia hạn (nếu có)
+                LocalDateTime extendedEndTime = setExtendedEndDate(bookingId);
+                booking.setExtendedEndDate(extendedEndTime); // Cần có setter trong Booking.java
+
+                return booking;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public LocalDateTime setExtendedEndDate(int bookingId) {
+        String query = "SELECT MAX(ec.EndTime) AS latestEndTime "
+                + "FROM ExtraCharge ec "
+                + "WHERE ec.BookingId = ? "
+                + "AND ec.ChargeType IN ('Late Hour', 'Extra Hour', 'Extra Day')";
+
+        try ( PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, bookingId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Timestamp ts = rs.getTimestamp("latestEndTime");
+                if (ts != null) {
+                    return ts.toLocalDateTime();
+                }
+            }
+
+            // Nếu không có phụ thu, lấy EndDate gốc từ bảng Bookings
+            String fallbackQuery = "SELECT EndDate FROM Bookings WHERE BookingId = ?";
+            try ( PreparedStatement ps2 = conn.prepareStatement(fallbackQuery)) {
+                ps2.setInt(1, bookingId);
+                ResultSet rs2 = ps2.executeQuery();
+
+                if (rs2.next()) {
+                    Date date = rs2.getDate("EndDate");
+                    if (date != null) {
+                        return date.toLocalDate().atStartOfDay().plusHours(12); // mặc định 12h trưa checkout
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public List<Bookings> getAllBookingsActive() {
+        String sql = "SELECT * FROM Bookings b \n"
+                + "inner join Rooms r on r.RoomId = b.RoomId\n"
+                + "WHERE b.Status = 'Checked in' AND CheckInTime IS NOT NULL";
+        List<Bookings> list = new ArrayList<>();
+        try {
+            Connection conn = ConnectData.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Bookings b = new Bookings();
+                b.setBookingId(rs.getInt("BookingId"));
+                Rooms r = new Rooms();
+                r.setRoomNumber(rs.getString("RoomNumber"));
+                b.setRooms(r);
+                b.setCustomerId(rs.getInt("CustomerID"));
+                b.setStartDate(rs.getDate("StartDate").toLocalDate());
+                b.setEndDate(rs.getDate("EndDate").toLocalDate());
+                list.add(b);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookingDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (list.isEmpty()) {
+            System.out.println("list dang rong");
+            return null;
+        } else {
+            System.out.println("list dang khong rong");
+            System.out.println(list);
+        }
+        return list;
+    }
+
+    public Bookings getNextBookingByRoom(int roomId, LocalDateTime currentEndDate, int bookingId) {
+        String sql = "SELECT TOP 1 * FROM Bookings\n"
+                + "        WHERE RoomId = ? AND StartDate > (\n"
+                + "            SELECT \n"
+                + "                CASE \n"
+                + "                    WHEN MAX(EndTime) IS NOT NULL AND MAX(EndTime) > ? \n"
+                + "                    THEN MAX(EndTime) \n"
+                + "                    ELSE ? \n"
+                + "                END\n"
+                + "            FROM ExtraCharge\n"
+                + "            WHERE BookingId = ?\n"
+                + "        )\n"
+                + "        ORDER BY StartDate ASC";
+        Bookings nextBooking = null;
+
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            Timestamp currentEndTimestamp = Timestamp.valueOf(currentEndDate);
+
+            ps.setInt(1, roomId);
+            ps.setTimestamp(2, currentEndTimestamp); // used in MAX check
+            ps.setTimestamp(3, currentEndTimestamp); // fallback if no ExtraCharge
+            ps.setInt(4, bookingId); // filter by BookingId in ExtraCharge
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                nextBooking = new Bookings();
+                nextBooking.setBookingId(rs.getInt("BookingId"));
+                nextBooking.setRoomId(rs.getInt("RoomId"));
+                nextBooking.setCustomerId(rs.getInt("CustomerID"));
+                nextBooking.setStartDate(rs.getDate("StartDate").toLocalDate());
+                nextBooking.setEndDate(rs.getDate("EndDate").toLocalDate());
+                nextBooking.setStatus(rs.getString("Status"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookingDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (nextBooking == null) {
+            System.out.println("Không có booking kế tiếp cho phòng " + roomId);
+        } else {
+            System.out.println("Booking kế tiếp: " + nextBooking.getBookingId());
+        }
+
+        return nextBooking;
+    }
+
 }

@@ -15,15 +15,19 @@ import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author dodan package controllers.Account;
- *
- * import javax.servlet.http.HttpSession; import java.io.IOException; import
- * java.io.PrintWriter; import javax.servlet.ServletException; import
- * javax.servlet.annotation.WebServlet; import javax.servlet.http.HttpServlet;
- * import javax.servlet.http.HttpServletRequest; import
- * javax.servlet.http.HttpServletResponse;
- *
- * /**
+ * @author dodan
+package controllers.Account;
+
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
  *
  * @author Admin
  */
@@ -48,7 +52,7 @@ public class Logout extends HttpServlet {
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Servlet Logout</title>");
-            out.println("<title>Servlet Logout</title>");
+            out.println("<title>Servlet Logout</title>");            
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet Logout at " + request.getContextPath() + "</h1>");
@@ -70,11 +74,32 @@ public class Logout extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
+        HttpSession session = request.getSession();
+
+        // Xử lý đăng xuất cho từng loại tài khoản
+        if (session.getAttribute("customerId") != null) {
+            session.removeAttribute("customerId");
+            session.removeAttribute("role");
+            session.removeAttribute("userName");
+            session.removeAttribute("accountType");
+            response.sendRedirect("Index");
+        } else if (session.getAttribute("adminId") != null) {
+            session.removeAttribute("adminId");
+            session.removeAttribute("role");
+            session.removeAttribute("userName");
+            session.removeAttribute("accountType");
+            response.sendRedirect("Index");
+            
+        }else if (session.getAttribute("staffId") != null) {
+            session.removeAttribute("adminId");
+            session.removeAttribute("role");
+            session.removeAttribute("userName");
+            session.removeAttribute("accountType");
+            response.sendRedirect("Index");
+        } else {
+            // Không tìm thấy người dùng để đăng xuất
+            response.sendRedirect("Error");
         }
-response.sendRedirect("Index");
     }
 
     /**

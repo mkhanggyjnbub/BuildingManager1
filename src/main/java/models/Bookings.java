@@ -36,6 +36,7 @@ public class Bookings {
     private String formattedStartDate;
     private String formattedEndDate;
 
+    private LocalDateTime extendedEndDate;
 
     private String RoomType;
 
@@ -101,8 +102,6 @@ public class Bookings {
     public void setConfirmationTime(LocalDateTime ConfirmationTime) {
         this.ConfirmationTime = ConfirmationTime;
     }
-
-
 
     public LocalDateTime getCheckInTime() {
         return CheckInTime;
@@ -248,8 +247,12 @@ public class Bookings {
         return customers != null ? customers.getEmail() : null;
     }
 
-  
+    public LocalDateTime getExtendedEndDate() {
+        return extendedEndDate;
+    }
 
-    
-    
+    public void setExtendedEndDate(LocalDateTime extendedEndDate) {
+        this.extendedEndDate = extendedEndDate;
+    }
+
 }

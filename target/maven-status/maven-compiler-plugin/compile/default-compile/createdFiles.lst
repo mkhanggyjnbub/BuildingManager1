@@ -10,6 +10,7 @@ controllers\customer\EditCustomerProfile.class
 controllers\report\UpdateReport.class
 controllers\amenities\EditAmenitiesDashboard.class
 controllers\booking\StatusBooking.class
+controllers\extraCharge\ViewAllExtraCharge.class
 controllers\booking\CreateBooking.class
 controllers\voucher\EditVoucher.class
 controllers\room\CreateRoomForDashboard.class
@@ -20,6 +21,7 @@ models\Bookings.class
 controllers\message\MessageForDashboard.class
 models\Employees.class
 models\Services.class
+controllers\booking\ViewBookingHistory.class
 controllers\services\ViewServices.class
 dao\MessageDao.class
 dao\ServicesCartDao.class
@@ -29,7 +31,9 @@ models\Invoices.class
 controllers\message\MessageForCustomer.class
 controllers\voucher\AdminViewVoucher.class
 controllers\customer\EditCustomerDashboard.class
+dao\ExtraChargeDao.class
 controllers\booking\CreateGuestCustomer.class
+controllers\account\ResetPassword.class
 models\ServicesCart.class
 Websocket\Notification.class
 controllers\customer\ViewAllCustomersDashboard.class
@@ -50,12 +54,14 @@ controllers\room\ViewRoomDetail.class
 dao\ReportDao.class
 db\SendOTPEmail$1.class
 controllers\checkInOut\CheckInOutDetail.class
+controllers\account\ResendOTP.class
 models\Roles.class
 controllers\voucher\UserVouchers.class
 dao\UserDao.class
 controllers\room\ViewAllRoomsForDashboard.class
 models\MaintenanceStatuses.class
 controllers\news\ViewNewsDashboard.class
+models\ExtraCharge.class
 Websocket\TakeNotification.class
 controllers\voucher\VouchersDashBoard.class
 dao\CustomerDao.class
@@ -89,6 +95,8 @@ models\Equipment.class
 dao\PaginationDao.class
 Websocket\WebSocket$2.class
 controllers\booking\SelectRoom.class
+controllers\account\ForgotPassword.class
+controllers\account\EmailVerification.class
 controllers\customer\ViewCustomerDetailDashboard.class
 controllers\news\EditNewsDashboard.class
 models\Users.class
@@ -103,6 +111,7 @@ controllers\admin\Dashboard.class
 controllers\cloudinary\CloudinaryUpload.class
 Websocket\WebSocket$1.class
 controllers\admin\AdminView.class
+controllers\extraCharge\CreateExtraCharge.class
 dao\VoucherDao.class
 models\Buildings.class
 controllers\services\EditServiceDashboard.class

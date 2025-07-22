@@ -6,6 +6,8 @@ package dao;
 
 import static dao.UserDao.md5;
 import db.ConnectData;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -449,5 +451,98 @@ public class CustomerDao {
             Logger.getLogger(CustomerDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return (max == 0) ? 1 : max + 1;
+    }
+
+    //code cua khoa
+    public boolean isUsernameTaken(String username) {
+        String sql = "SELECT 1 FROM Customers WHERE UserName = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            return rs.next(); // Có dữ liệu nghĩa là username đã tồn tại
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean isEmailTaken(String email) {
+        String sql = "SELECT 1 FROM Customers WHERE Email = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean updatePassword(String username, String email, String hashedPassword) {
+        String sql = "UPDATE Customers SET password = ? WHERE username = ? AND email = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, hashedPassword);
+            ps.setString(2, username);
+            ps.setString(3, email);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public String md5(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(input.getBytes());
+
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : messageDigest) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public int createCustomer(Customers c) {
+        String sql = "INSERT INTO Customers "
+                + "(UserName, Password, DateOfBirth, Email, Phone, IdentityNumber, CreationDate, isRegistered) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        int check = 0;
+
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            System.out.println(">>> Creating customer with data:");
+            System.out.println("Username: " + c.getUserName());
+            System.out.println("Password (MD5): " + c.getPassword());
+            System.out.println("Date of Birth: " + c.getDateOfBirth());
+            System.out.println("Email: " + c.getEmail());
+            System.out.println("Phone: " + c.getPhone());
+            System.out.println("Creation Date: " + c.getCreationDate());
+
+            ps.setString(1, c.getUserName());
+            ps.setString(2, c.getPassword()); // Mật khẩu đã hash trước khi truyền vào
+            ps.setDate(3, c.getDateOfBirth());
+            ps.setString(4, c.getEmail());
+            ps.setString(5, c.getPhone());
+            ps.setString(6, c.getIdentityNumber());
+            ps.setTimestamp(7, java.sql.Timestamp.valueOf(c.getCreationDate()));
+            ps.setBoolean(8, true); // Mặc định đã đăng ký
+
+            check = ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return check;
     }
 }

@@ -689,7 +689,7 @@ public class RoomDao {
             }
         }
         return roomType;
-        
+
     }
 
     public Rooms getRoomDetailForEdit(int id) {
@@ -873,7 +873,7 @@ public class RoomDao {
     }
 
     //khanh
-    public List<Rooms> getlistCheckIn(LocalDate startDate, LocalDate endDate, int guestCount,String roomType) throws SQLException {
+    public List<Rooms> getlistCheckIn(LocalDate startDate, LocalDate endDate, int guestCount, String roomType) throws SQLException {
         List<Rooms> availableRooms = new ArrayList<>();
 
         String sql = "SELECT RoomId, RoomType, Price, MaxOccupancy, RoomNumber, FloorNumber "
@@ -937,6 +937,7 @@ public class RoomDao {
 
         return room;
     }
+
     public int deleteRoom(int roomId, String status) {
         int count = 0;
         try {
@@ -958,4 +959,22 @@ public class RoomDao {
 
     }
 
+    public long getPriceRoomByBookingId(int bookingId) {
+        String sql = "SELECT r.Price FROM Rooms r "
+                + "JOIN Bookings b ON r.RoomId = b.RoomId "
+                + "WHERE b.BookingId = ? AND r.Status = 'Active'";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, bookingId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                System.out.println(rs.getLong("Price"));
+                return rs.getLong("Price");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }
