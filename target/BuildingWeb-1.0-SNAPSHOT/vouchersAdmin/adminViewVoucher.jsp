@@ -109,7 +109,7 @@
             <div class="detail-row">
                 <span class="detail-label">Minimum application:</span>
                 <span class="detail-value">
-                    <fmt:formatNumber value="${voucher.minOrderAmount}" type="number" groupingUsed="true" />đ
+                    <fmt:formatNumber value="${voucher.minOrderAmount}" type="number" groupingUsed="true" /> / VND
                 </span>
             </div>
 

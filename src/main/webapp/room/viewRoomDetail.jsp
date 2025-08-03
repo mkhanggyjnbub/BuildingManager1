@@ -456,6 +456,11 @@
                     <!-- Form đánh giá -->
                     <article class="review">
                         <h4 class="text-lg mb-3">Send Your Review</h4>
+
+                        <c:if test="${not empty reviewError}">
+                            <div class="please">${reviewError}</div>
+                        </c:if>
+
                         <form action="ViewRoomDetail" method="post">
                             <input type="hidden" name="roomId" value="${room.roomId}">
                             <div class="form-group">
@@ -474,15 +479,16 @@
                             </div>
 
                             <c:choose>
-                                <c:when test="${ not empty sessionScope.customerId}"> 
-                                    <button class="sendMessage"type="submit">Send</button>
+                                <c:when test="${not empty sessionScope.customerId}"> 
+                                    <button class="sendMessage" type="submit">Send</button>
                                 </c:when>
                                 <c:otherwise>
-                                    <div class="checkLogin"><div class="please">  Please Login To Send Messages</div>
-                                        <a class="sendMessage" style="text-decoration: none;" href="Login"> ==> Go to Login</a></div>
-                                    </c:otherwise>
-                                </c:choose>
-
+                                    <div class="checkLogin">
+                                        <div class="please">  Please Login To Send Messages</div>
+                                        <a class="sendMessage" style="text-decoration: none;" href="Login"> ==> Go to Login</a>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
                         </form>
                     </article>
                 </div>

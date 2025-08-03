@@ -289,8 +289,6 @@ public class BookingDao {
         return list;
     }
 
- 
-
     public Bookings getCheckInCheckOutDetails(int id) {
         Bookings booked = new Bookings();
 
@@ -398,7 +396,6 @@ public class BookingDao {
 
         return b;
     }
-
 
     //vinh   
     public Bookings getBookingInfoForConfirmation(int bookingId) throws SQLException {
@@ -698,9 +695,6 @@ public class BookingDao {
         }
     }
 
-    
-    
-    
 //        public int updateBookingStatusAndcheckInt(int bookingId, String status) {
 //        int cnt = 0;
 //        try {
@@ -717,7 +711,6 @@ public class BookingDao {
 //        }
 //        return cnt;
 //    }
-        
     public int updateBookingStatusAndcheckInt(int bookingId, String status) {
         int cnt = 0;
         try {
@@ -735,10 +728,6 @@ public class BookingDao {
         return cnt;
     }
 
-    
-    
-    
-    
 //    public Bookings getCheckInCheckOutDetails(int id) {
 //        Bookings booked = new Bookings();
 //
@@ -789,7 +778,6 @@ public class BookingDao {
 //        return booked;
 //
 //    }
-
 //    public Bookings getBookingById(int id) {
 //        Bookings b = null;
 //        String sql = "SELECT b.BookingID, b.Status, b.StartDate, b.EndDate, b.CheckInTime, b.CheckOutTime, "
@@ -832,7 +820,6 @@ public class BookingDao {
 //
 //        return b;
 //    }
-
 //Khang 
 //    public int insertBookingBeforePayment(int customerId, LocalDate startDate, LocalDate endDate, String roomType) {
 //        try {
@@ -1237,9 +1224,6 @@ public class BookingDao {
     }
 
     //Đóng code của khang
-    
-    
-    
     //Code của khoa
     public List<Bookings> getBookingHistoryByCustomerId(int customerId) {
         List<Bookings> list = new ArrayList<>();
@@ -1601,4 +1585,21 @@ public class BookingDao {
         return false;
     }
 //đống của khoa
+
+    public int countBookingsByRoomAndCustomer(int roomId, int customerId) {
+        int count = 0;
+        String sql = "SELECT COUNT(*) FROM Bookings WHERE RoomId = ? AND CustomerId = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, roomId);
+            ps.setInt(2, customerId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
 }

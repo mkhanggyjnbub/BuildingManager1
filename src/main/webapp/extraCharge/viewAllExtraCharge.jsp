@@ -182,6 +182,19 @@
         </style>
     </head>
     <body>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const priceCells = document.querySelectorAll(".price-cell");
+
+                priceCells.forEach(function (cell) {
+                    const rawValue = parseInt(cell.textContent.trim());
+                    if (!isNaN(rawValue)) {
+                        const formatted = rawValue.toLocaleString('vi-VN'); // Dấu chấm ngăn cách
+                        cell.textContent = formatted + ' / VND'; // Thêm đơn vị nếu muốn
+                    }
+                });
+            });
+        </script>
 
         <%@ include file="../navbarDashboard/navbarDashboard.jsp" %>
         <%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
@@ -219,7 +232,7 @@
                                     <td data-label="Booking ID">${e.bookingId}</td>
                                     <td data-label="Charge Type">${e.chargeType}</td>
                                     <td data-label="Quantity">${e.quantity}</td>
-                                    <td data-label="Unit Price">${e.unitPrice}</td>
+                                    <td data-label="Unit Price" class="price-cell">${e.unitPrice}</td>
                                     <td data-label="Start Time">${e.startTime}</td>
                                     <td data-label="End Time">${e.endTime}</td>
                                 </tr>

@@ -4,7 +4,6 @@
  */
 package dao;
 
-import static dao.UserDao.md5;
 import db.ConnectData;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

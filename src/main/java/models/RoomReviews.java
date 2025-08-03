@@ -11,13 +11,14 @@ import java.time.LocalDateTime;
  * @author Kiều Hoàng Mạnh Khang - ce180749
  */
 public class RoomReviews {
- private int reviewId;
- private int roomId;
- private int customerId;
- private int rating;
- private String comment;
- private LocalDateTime createdAt;
- private Customers customer;
+
+    private int reviewId;
+    private int roomId;
+    private int customerId;
+    private int rating;
+    private String comment;
+    private LocalDateTime createdAt;
+    private Customers customer;
 
     public RoomReviews() {
     }
@@ -78,7 +79,4 @@ public class RoomReviews {
         this.customer = customer;
     }
 
-    
-
-  
 }
