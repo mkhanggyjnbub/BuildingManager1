@@ -159,5 +159,6 @@
                 <div class="error-message">No news found or invalid request.</div>
             </c:otherwise>
         </c:choose>
+                <%@include file="../footer/footer.jsp" %>
     </body>
 </html>

@@ -109,7 +109,7 @@
                 text-decoration: none;
                 color: inherit;
                 display: block;
-                height: 100%;
+
             }
 
             .back-button {
@@ -176,7 +176,10 @@
                 </c:forEach>
             </div>
         </c:if>
+
+        <%@include file="../footer/footer.jsp" %>
     </body>
+
 </html>
 
 
