@@ -96,6 +96,11 @@
             <version>2.16.1</version>
         </dependency>
 
+<dependency>
+    <groupId>org.seleniumhq.selenium</groupId>
+    <artifactId>selenium-java</artifactId>
+    <version>4.21.0</version>
+</dependency>
 
     </dependencies>
 
@@ -104,6 +109,10 @@
 
     <build>
         <plugins>
+            
+            
+            
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -124,6 +133,8 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
+            
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -149,7 +160,29 @@
                     </execution>
                 </executions>
             </plugin>
-        </plugins>
-    </build>
+             <plugin>
+    <groupId>com.github.spotbugs</groupId>
+    <artifactId>spotbugs-maven-plugin</artifactId>
+    <version>4.7.3.0</version>
+    <executions>
+        <execution>
+            <goals>
+                <goal>check</goal>
+                <goal>spotbugs</goal>
+            </goals>
+        </execution>
+    </executions>
+    <configuration>
+        <effort>Max</effort>
+        <threshold>Low</threshold>
+        <failOnError>false</failOnError>
+        <xmlOutput>true</xmlOutput>
+        <htmlOutput>true</htmlOutput>
+        <outputDirectory>${project.build.directory}/spotbugs</outputDirectory>
+    </configuration>
+</plugin>
+
+    </plugins>
+</build>
 
 </project>

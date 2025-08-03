@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="BuildingWeb:war" />
+      <artifact name="unnamed" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
@@ -10,24 +10,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2735afc1-1300-435c-9baf-bd2feedbc65f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/cloudinary/CloudinaryUpload.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/cloudinary/CloudinaryUpload.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/CustomerDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/CustomerDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/booking/confirmBooking.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/booking/confirmBooking.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/cloudinary/cloudinaryUpload.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/cloudinary/cloudinaryUpload.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/cloudinary/result.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/cloudinary/result.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/header/header.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/header/header.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/room/createRoomForDashboard.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/room/createRoomForDashboard.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/room/viewAllRoomsForDashboard.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/room/viewAllRoomsForDashboard.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/room/viewRooms.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/room/viewRooms.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/dao/CustomerDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/dao/CustomerDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/booking/confirmBooking.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/booking/confirmBooking.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/cloudinary/cloudinaryUpload.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/cloudinary/cloudinaryUpload.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/cloudinary/result.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/cloudinary/result.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/header/header.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/header/header.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/room/createRoomForDashboard.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/room/createRoomForDashboard.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/room/viewAllRoomsForDashboard.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/room/viewAllRoomsForDashboard.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/room/viewRooms.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/room/viewRooms.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/extraCharge (1)/createExtraCharge.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/extraCharge/createExtraCharge.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/extraCharge (1)/viewAllExtraCharge.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/extraCharge/viewAllExtraCharge.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/extraCharge (1)/createExtraCharge.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/extraCharge (1)/viewAllExtraCharge.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +52,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "TomEE Server.TomEE 10.0.23.executor": "Run",
     "TomEE Server.Unnamed.executor": "Run",
-    "Tomcat Server.Tomcat 10.0.23.executor": "Debug",
+    "Tomcat Server.Tomcat 10.0.23.executor": "Run",
     "Tomcat Server.admin.jsp.executor": "Run",
     "Tomcat Server.index.jsp.executor": "Debug",
     "git-widget-placeholder": "nhanh__cua__Khang",
@@ -72,30 +64,33 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
+    "project.structure.proportion": "0.14746094",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunDashboard">
     <option name="excludedTypes">
       <set>
+        <option value="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" />
         <option value="TomeeConfiguration" />
       </set>
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="Tomcat 10.0.23" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 10.0.23" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+    <configuration name="TomEE 10.0.23" type="TomeeConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="TomEE 10.1.43" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="1.8" nameIsGenerated="true">
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
-        <artifact name="BuildingWeb:war">
+        <artifact name="unnamed">
           <settings>
-            <option name="CONTEXT_PATH" value="/BuildingWeb_war" />
+            <option name="CONTEXT_PATH" value="/unnamed" />
           </settings>
         </artifact>
       </deployment>
       <server-settings>
-        <option name="BASE_DIRECTORY_NAME" value="199641a7-291a-474e-ab42-8a49f6003ee1" />
+        <option name="BASE_DIRECTORY_NAME" value="b4ee46e5-4570-48db-a11f-78910e7a4c31" />
+        <option name="HTTP_PORT" value="8080" />
       </server-settings>
       <predefined_log_file enabled="true" id="Tomcat" />
       <predefined_log_file enabled="true" id="Tomcat Catalina" />
@@ -103,7 +98,7 @@
       <predefined_log_file id="Tomcat Host Manager" />
       <predefined_log_file id="Tomcat Localhost Access" />
       <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="50818" />
+        <option name="DEBUG_PORT" value="54403" />
       </RunnerSettings>
       <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
         <option name="USE_ENV_VARIABLES" value="true" />
@@ -168,8 +163,93 @@
       <method v="2">
         <option name="Make" enabled="true" />
         <option name="BuildArtifacts" enabled="true">
-          <artifact name="BuildingWeb:war" />
+          <artifact name="unnamed" />
         </option>
+      </method>
+    </configuration>
+    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/apache_tomcat_10_0_23/" />
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment>
+        <file path="$USER_HOME$/Downloads/apache-tomcat-10.0.23-windows-x64/apache-tomcat-10.0.23">
+          <settings>
+            <option name="CONTEXT_PATH" value="/apache_tomcat_10_0_23" />
+          </settings>
+        </file>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="f434104c-0f86-4149-9ac5-9af4c82c5dd0" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="53921" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Profile">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
       </method>
     </configuration>
   </component>
@@ -193,6 +273,8 @@
       <workItem from="1750306111224" duration="31000" />
       <workItem from="1750663631133" duration="19000" />
       <workItem from="1750664787629" duration="744000" />
+      <workItem from="1753255779405" duration="231000" />
+      <workItem from="1753256017657" duration="7439000" />
     </task>
     <servers />
   </component>

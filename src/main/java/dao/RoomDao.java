@@ -944,7 +944,7 @@ public class RoomDao {
             String sql = " UPDATE Rooms\n"
                     + "SET Status = ?\n"
                     + "WHERE RoomId = ?";
-
+            
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, status);
             pst.setInt(2, roomId);
