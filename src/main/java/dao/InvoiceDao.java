@@ -8,6 +8,7 @@ import db.ConnectData;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import models.Invoices;
 
 /**
@@ -50,4 +51,16 @@ public class InvoiceDao {
 
         return invoice;
     }
+
+    public void updatePayment(int invoiceId, int totalPayable) {
+        String sql = "UPDATE Invoices SET PaidAmount = ?, Status = 1 WHERE InvoiceId = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, totalPayable);
+            ps.setInt(2, invoiceId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
