@@ -84,14 +84,8 @@ public class ForgotPassword extends HttpServlet {
         CustomerDao dao = new CustomerDao();
 
         boolean hasError = false;
-
-        if (!dao.isUsernameTaken(username)) {
-            request.setAttribute("usernameError", "Tên đăng nhập không tồn tại.");
-            hasError = true;
-        }
-
-        if (!dao.isEmailTaken(email)) {
-            request.setAttribute("emailError", "Email không tồn tại.");
+        if (!dao.isUsernameAndEmailTaken(username, email)) {
+            request.setAttribute("usernameOrEmailError", "Username of Email does not exist.");
             hasError = true;
         }
 
@@ -109,10 +103,10 @@ public class ForgotPassword extends HttpServlet {
 
         try {
             EmailSender emailSender = new EmailSender();
-            emailSender.sendOTPEmailResetPassword(email, "Xác minh đặt lại mật khẩu - Big Resort", otpCode);
+            emailSender.sendOTPEmailResetPassword(email, "Password Reset Verification - Big Resort", otpCode);
             response.sendRedirect("EmailVerification");
         } catch (MessagingException e) {
-            request.setAttribute("error", "Không thể gửi mã OTP. Vui lòng thử lại.");
+            request.setAttribute("error", "Unable to send OTP code. Please try again.");
             request.getRequestDispatcher("account/forgotPassword.jsp").forward(request, response);
         }
     }

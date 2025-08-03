@@ -491,6 +491,19 @@ public class CustomerDao {
         }
     }
 
+    public boolean isUsernameAndEmailTaken(String username, String email) {
+        String sql = "SELECT 1 FROM Customers WHERE UserName = ? AND Email = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            ps.setString(2, email);
+            ResultSet rs = ps.executeQuery();
+            return rs.next(); // Có bản ghi thỏa điều kiện => true
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public String md5(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -544,5 +557,46 @@ public class CustomerDao {
         }
 
         return check;
+    }
+
+    public boolean updatePassword(int customerId, String hashedPassword) {
+        try {
+            String sql = "UPDATE Customers SET password = ? WHERE customerId = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, hashedPassword);
+            ps.setInt(2, customerId);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public String getPasswordFoChange(int id) {
+        ResultSet rs = null;
+        String password = null;
+
+        try {
+            String sql = "SELECT Password FROM Customers WHERE customerId = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                password = rs.getString("Password");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return password;
     }
 }
