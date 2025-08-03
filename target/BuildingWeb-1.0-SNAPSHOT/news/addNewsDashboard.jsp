@@ -266,5 +266,6 @@
 
             window.addEventListener("DOMContentLoaded", toggleImageUpload);
         </script>
+        <%@include file="../footer/footer.jsp" %>
     </body>
 </html>

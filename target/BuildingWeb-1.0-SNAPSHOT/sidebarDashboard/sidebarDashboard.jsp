@@ -4,15 +4,15 @@
     Author     : KHANH
 --%>
 
-<!-- FontAwesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
     :root {
-        --navy: #46b791;
-        --navy-dark: #3a9c7b;
+        --navy: #ffffff;         
+        --navy-dark: #4169E1;   /* Royal Blue */
+        --aqua: #4169E1;        /* Icon + text */
+        --hover-bg: #e6edff;    /* Màu hover nh?t */
         --white: #ffffff;
-        --hover-bg: #2e8266;
         --transition: 0.3s ease;
         --shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
@@ -22,7 +22,7 @@
         top: 60px;
         left: 0;
         height: calc(100% - 60px);
-        width: 60px;
+        width: 70px;
         background-color: var(--navy);
         overflow-x: hidden;
         box-shadow: var(--shadow);
@@ -36,10 +36,10 @@
         width: 220px;
     }
 
-    .toggle-btn {
+    .toggle-wrapper {
         background-color: var(--navy-dark);
         color: var(--white);
-        font-size: 20px;
+        font-size: 18px;
         cursor: pointer;
         height: 50px;
         display: flex;
@@ -50,8 +50,27 @@
         animation: fadeIn 0.4s ease forwards;
     }
 
-    .toggle-btn:hover {
-        background-color: var(--hover-bg);
+    .toggle-wrapper:hover {
+        background-color: #3551b5; /* Royal Blue ??m khi hover */
+    }
+
+    .toggle-icon,
+    .toggle-text {
+        display: none;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .toggle-icon {
+        font-size: 20px;
+    }
+
+    .sidebar:not(.open) .toggle-icon {
+        display: inline-block;
+    }
+
+    .sidebar.open .toggle-text {
+        display: inline-block;
+        font-weight: bold;
     }
 
     .menu {
@@ -73,7 +92,7 @@
         align-items: center;
         padding: 14px 20px;
         text-decoration: none;
-        color: var(--white);
+        color: var(--aqua); 
         font-size: 16px;
         white-space: nowrap;
         transition: background-color var(--transition), padding-left 0.3s;
@@ -86,6 +105,7 @@
         min-width: 20px;
         text-align: center;
         transition: transform 0.3s ease;
+        color: var(--aqua);
     }
 
     .menu li a span {
@@ -149,7 +169,6 @@
         }
     }
 
-    /* Dropdown gi?ng hình */
     .khang-item {
         position: relative;
     }
@@ -187,42 +206,36 @@
         display: block;
     }
 
-
-    
     .menu li a.active {
-    background-color: var(--hover-bg);
-    font-weight: bold;
-    padding-left: 28px;
-}
-
+        background-color: var(--hover-bg);
+        font-weight: bold;
+        padding-left: 28px;
+    }
 </style>
 
 <!-- Sidebar HTML -->
 <div class="sidebar" id="sidebar">
-    <div class="toggle-btn" onclick="toggleSidebar()">
-        <i class="fa-solid fa-bars"></i>
+    <div class="toggle-wrapper" onclick="toggleSidebar()">
+        <i class="fa-solid fa-bars toggle-icon"></i>
+        <span class="toggle-text">BigHotel</span>
     </div>
-    <ul class="menu">
 
+    <ul class="menu">
         <li style="--i:0"><a href="Index"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
         <li style="--i:1"><a href="DashboardUser"><i class="fa-solid fa-user"></i><span>Users</span></a></li>
         <li style="--i:2"><a href="VouchersDashBoard"><i class="fa-solid fa-ticket"></i><span>Vouchers</span></a></li>
         <li style="--i:3"><a href="ViewNewsDashboard"><i class="fa-solid fa-newspaper"></i><span>News</span></a></li>
-        
-        <li style="--i:3"><a href="CreateBooking"><i class="fa-solid fa-calendar-check"></i><span>Desk Booking</span></a></li>
-        
-        <li style="--i:4"><a href="BookingConfirmation"><i class="fa-solid fa-calendar-check"></i><span>Bookings</span></a></li>
-        <li style="--i:5"><a href="ViewAllRoomsForDashboard"><i class="fa-solid fa-bed"></i><span>List Rooms</span></a></li>
-        <li style="--i:6"><a href="ViewServicesDashboard"><i class="fa-solid fa-concierge-bell"></i><span>Services</span></a></li>
-        <li style="--i:7"><a href="ViewAmenitiesDashboard"><i class="fa-solid fa-bath"></i><span>Amenities</span></a></li>
-        <li style="--i:8"><a href="ViewAllExtraCharge"><i class="fa-solid fa-bath"></i><span>Extra Charge</span></a></li>
-        <li style="--i:9"><a href="ViewAllCustomersDashboard"><i class="fa-solid fa-users"></i><span>Customers</span></a></li>
-        <li style="--i:10"><a href="ViewAllCheckInOutDashboard"><i class="fa-solid fa-door-open"></i><span>Check-InOut</span></a></li>
-        <li style="--i:11"><a href="ViewAllReportsForDashboard"><i class="fa-solid fa-flag"></i><span>Report</span></a></li>
-        <li style="--i:12"><a href="Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
+        <li style="--i:4"><a href="CreateBooking"><i class="fa-solid fa-calendar-check"></i><span>Desk Booking</span></a></li>
+        <li style="--i:5"><a href="BookingConfirmation"><i class="fa-solid fa-calendar-check"></i><span>Bookings</span></a></li>
+        <li style="--i:6"><a href="ViewAllRoomsForDashboard"><i class="fa-solid fa-bed"></i><span>List Rooms</span></a></li>
+        <li style="--i:7"><a href="ViewServicesDashboard"><i class="fa-solid fa-concierge-bell"></i><span>Services</span></a></li>
+        <li style="--i:8"><a href="ViewAmenitiesDashboard"><i class="fa-solid fa-bath"></i><span>Amenities</span></a></li>
+        <li style="--i:9"><a href="ViewAllExtraCharge"><i class="fa-solid fa-bath"></i><span>Extra Charge</span></a></li>
+        <li style="--i:10"><a href="ViewAllCustomersDashboard"><i class="fa-solid fa-users"></i><span>Customers</span></a></li>
+        <li style="--i:11"><a href="ViewAllCheckInOutDashboard"><i class="fa-solid fa-door-open"></i><span>Check-InOut</span></a></li>
+        <li style="--i:13"><a href="Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
 
-        <!-- Khang item -->
-        <li style="--i:12" class="khang-item">
+        <li style="--i:14" class="khang-item">
             <a href="#"><i class="fa-solid fa-user-gear"></i><span>Khang</span></a>
             <ul class="khang-dropdown">
                 <li><a href="Profile"><span>?</span> My Account</a></li>
@@ -233,14 +246,12 @@
 </div>
 
 <script>
-
     function toggleSidebar() {
         const sidebar = document.getElementById("sidebar");
         sidebar.classList.toggle("open");
     }
-    
-    
-     document.addEventListener("DOMContentLoaded", function () {
+
+    document.addEventListener("DOMContentLoaded", function () {
         const links = document.querySelectorAll(".menu li a");
         const currentUrl = window.location.href;
 

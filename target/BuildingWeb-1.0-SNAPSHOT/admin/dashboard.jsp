@@ -14,6 +14,7 @@
                 --light-bg: #f4f6f9;
                 --hover-bg: #3a5c88;
                 --transition: 0.3s ease;
+                --royal-blue: #4169E1; /* màu Royal Blue */
             }
 
             * {
@@ -38,9 +39,11 @@
                 box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             }
 
+            /* chữ Admin Dashboard trên navbar */
             .navbar h1 {
                 font-size: 22px;
                 margin: 0;
+                color: var(--royal-blue); /* đổi sang Royal Blue */
             }
 
             .customer-link {
@@ -134,9 +137,11 @@
                 margin-left: 220px;
             }
 
+            /* chữ Welcome to the Admin Dashboard màu Royal Blue */
             .content h2 {
                 font-size: 28px;
                 margin-bottom: 10px;
+                color: var(--royal-blue);
             }
 
             .content p {
@@ -157,17 +162,22 @@
                     padding: 20px;
                 }
             }
-            
-        
         </style>
     </head>
     <body>
 
         <!-- Navbar -->
-        <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
+        <div class="navbar">
+            <h1>Admin Dashboard</h1>
+            <a href="ViewAllCustomersDashboard" class="customer-link">
+                <i class="fa-solid fa-user"></i> Customers
+            </a>
+        </div>
 
         <!-- Sidebar -->
         <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
+        
+
         <!-- Main Content -->
         <div class="content">
             <h2>Welcome to the Admin Dashboard</h2>

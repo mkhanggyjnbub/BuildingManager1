@@ -68,7 +68,7 @@ public class ViewAllCustomersDashboard extends HttpServlet {
             throws ServletException, IOException {
         try {
             CustomerDao dao = new CustomerDao();
-            List<Customers> customerList = dao.getAllCustomers();
+            List<Customers> customerList = dao.getAllCustomersDashboard();
 
             request.setAttribute("customers", customerList);
             request.getRequestDispatcher("customer/viewAllCustomersDashboard.jsp").forward(request, response);

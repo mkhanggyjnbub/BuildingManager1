@@ -20,6 +20,7 @@
 
         <div class="SearchHeader">      
             <%@include file="../header/header.jsp" %>
+
         </div>
         <br>
         <br>
@@ -54,53 +55,53 @@
             </div>
 
         </div>
-
-        <h1>Hotel Rooms</h1>
-        <div class="product-grid" id="product" role="list">
-            <c:forEach var="room" items="${list}">
-                <a href="ViewRoomDetail?id=${room.roomId}"  style="text-decoration: none;">
-                    <article class="card" role="listitem" tabindex="0" aria-label="">
-                        <img src="${room.imageUrl}" alt="" />
-                        <div class="card-content">
-                            <h2 class="room-title">${room.roomType}</h2>
-                            <p class="room-desc">${room.description}</p>
-                            <div class="price">${room.price} / Night</div>
-                            <button class="btn-book" aria-label="">View Details</button>
-                        </div>
-                    </article>
-                </a>
-            </c:forEach>
-        </div>
-        <div>
-            <button id="loadmore-btn" onclick="loadMore()">See More ${finalRooms} Rooms</button>
-        </div>
-        <script src="../js/viewRooms.js"></script>
-        <script>
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const prices = document.getElementsByClassName("price");
-            for (let i = 0; i < prices.length; i++) {
-                const raw = prices[i].textContent.trim().replace(/[^\d]/g, '');
-                const number = parseInt(raw);
-                if (!isNaN(number)) {
-                    prices[i].textContent = number.toLocaleString("vi-VN") + " VNĐ / Night";
-                }
-            }
-        });
-
-
-        function formatAfterAjax() {
-            const prices = document.getElementsByClassName("price");
-            for (let i = 0; i < prices.length; i++) {
-                const raw = prices[i].textContent.trim().replace(/[^\d]/g, '');
-                const number = parseInt(raw);
-                if (!isNaN(number)) {
-                    prices[i].textContent = number.toLocaleString("vi-VN") + " VNĐ / Night";
-                }
-            }
-        }
-        </script>
-
     </body>
+    <h1>Hotel Rooms</h1>
+    <div class="product-grid" id="product" role="list">
+        <c:forEach var="room" items="${list}">
+            <a href="ViewRoomDetail?id=${room.roomId}"  style="text-decoration: none;">
+                <article class="card" role="listitem" tabindex="0" aria-label="">
+                    <img src="${room.imageUrl}" alt="" />
+                    <div class="card-content">
+                        <h2 class="room-title">${room.roomType}</h2>
+                        <p class="room-desc">${room.description}</p>
+                        <div class="price">${room.price} / Night</div>
+                        <button class="btn-book" aria-label="">View Details</button>
+                    </div>
+                </article>
+            </a>
+        </c:forEach>
+    </div>
+    <div>
+        <button id="loadmore-btn" onclick="loadMore()">See More ${finalRooms} Rooms</button>
+    </div>
+    <script src="../js/viewRooms.js"></script>
+    <script>
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const prices = document.getElementsByClassName("price");
+                for (let i = 0; i < prices.length; i++) {
+                    const raw = prices[i].textContent.trim().replace(/[^\d]/g, '');
+                    const number = parseInt(raw);
+                    if (!isNaN(number)) {
+                        prices[i].textContent = number.toLocaleString("vi-VN") + " VNĐ / Night";
+                    }
+                }
+            });
+
+
+            function formatAfterAjax() {
+                const prices = document.getElementsByClassName("price");
+                for (let i = 0; i < prices.length; i++) {
+                    const raw = prices[i].textContent.trim().replace(/[^\d]/g, '');
+                    const number = parseInt(raw);
+                    if (!isNaN(number)) {
+                        prices[i].textContent = number.toLocaleString("vi-VN") + " VNĐ / Night";
+                    }
+                }
+            }
+    </script>
+    <%@include file="../footer/footer.jsp" %>
+</body>
 
 </html>

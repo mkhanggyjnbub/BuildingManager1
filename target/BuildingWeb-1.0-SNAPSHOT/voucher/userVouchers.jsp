@@ -8,116 +8,137 @@ Author     : Admin
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Voucher đã lưu</title>
-        <style>
-            body {
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                background-color: #f4f6fa;
-                color: #2c3e50;
-                margin: 0;
-                padding: 20px;
-            }
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Voucher đã lưu</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
 
-            h1 {
-                font-size: 28px;
-                margin-bottom: 20px;
-                color: #1a202c;
-            }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6fa;
+            color: #2c3e50;
+            display: flex;
+            flex-direction: column;
+        }
 
-            .voucher-list {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 20px;
-            }
+        .content-wrapper {
+            flex: 1;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
 
-            .voucher-card {
-                background-color: #ffffff;
-                border: 2px solid #4a90e2;
-                border-left: 6px solid #4a90e2;
-                color: #2c3e50;
-                border-radius: 10px;
-                padding: 16px 20px;
-                width: 280px;
-                box-shadow: 0 3px 8px rgba(0,0,0,0.06);
-                transition: transform 0.2s ease;
-            }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #1a202c;
+        }
 
-            .voucher-card:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-            }
+        .voucher-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
 
-            .voucher-card h3 {
-                margin-top: 0;
-                color: #2d3748;
-                font-size: 18px;
-                font-weight: 600;
-                margin-bottom: 10px;
-            }
+        .voucher-card {
+            background-color: #ffffff;
+            border: 2px solid #4a90e2;
+            border-left: 6px solid #4a90e2;
+            color: #2c3e50;
+            border-radius: 10px;
+            padding: 16px 20px;
+            width: 280px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+            transition: transform 0.2s ease;
+        }
 
-            .voucher-card p {
-                margin: 6px 0;
-                font-size: 14px;
-                line-height: 1.4;
-            }
+        .voucher-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
 
-            .voucher-card p:last-child {
-                font-weight: bold;
-                color: #e74c3c;
-            }
+        .voucher-card h3 {
+            margin-top: 0;
+            color: #2d3748;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
 
-            .btn-back {
-                display: inline-block;
-                margin: 10px 0 20px 0;
-                padding: 8px 16px;
-                background-color: #4a90e2;
-                color: white;
-                border: none;
-                border-radius: 6px;
-                font-size: 14px;
-                text-decoration: none;
-                transition: background-color 0.2s ease;
-            }
+        .voucher-card p {
+            margin: 6px 0;
+            font-size: 14px;
+            line-height: 1.4;
+        }
 
-            .btn-back:hover {
-                background-color: #357ab8;
-            }
+        .voucher-card p:last-child {
+            font-weight: bold;
+            color: #e74c3c;
+        }
 
-            .voucher-card.expired {
-                background-color: #e0e0e0;
-                color: #888;
-                border: 1px dashed #aaa;
-            }
+        .btn-back {
+            display: inline-block;
+            margin: 10px 0 20px 0;
+            padding: 8px 16px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            text-decoration: none;
+            transition: background-color 0.2s ease;
+        }
 
-            .expired-text {
-                color: #d9534f;
-                font-weight: bold;
-            }
+        .btn-back:hover {
+            background-color: #357ab8;
+        }
 
-            .use-button {
-                margin-top: 10px;
-                padding: 8px 16px;
-                background-color: #28a745;
-                color: white;
-                border: none;
-                border-radius: 6px;
-                cursor: pointer;
-                font-weight: bold;
-                transition: background-color 0.3s ease;
-            }
+        .voucher-card.expired {
+            background-color: #e0e0e0;
+            color: #888;
+            border: 1px dashed #aaa;
+        }
 
-            .use-button:hover {
-                background-color: #218838;
-            }
+        .expired-text {
+            color: #d9534f;
+            font-weight: bold;
+        }
 
-        </style>
+        .use-button {
+            margin-top: 10px;
+            padding: 8px 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
 
-    </head>
-    <body>
+        .use-button:hover {
+            background-color: #218838;
+        }
+
+        footer {
+            background-color: #1a1a1a;
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
         <h1 class="page-title">🎁 Your Voucher(s)</h1>
         <a href="ViewVouchers" class="btn-back">← Return to voucher warehouse</a>
+
         <c:choose>
             <c:when test="${empty savedVouchers}">
                 <p class="empty-text">You have not saved any vouchers yet.</p>
@@ -132,13 +153,12 @@ Author     : Admin
                             <p>Minimum application: ${v.minOrderAmount} VNĐ</p>
                             <p>${v.description}</p>
                             <p>Expiry: ${v.formattedEndDate}</p>
+
                             <c:choose>
                                 <c:when test="${v.endDate lt now}">
-
                                     <p class="expired-text">Expired</p>
                                 </c:when>
                                 <c:when test="${v.customerVouchers.isUsed == true}">
-
                                     <p class="expired-text">Used</p>
                                 </c:when>
                                 <c:otherwise>
@@ -159,15 +179,13 @@ Author     : Admin
                                     </c:choose>
                                 </c:otherwise>
                             </c:choose>
-
-
-
                         </div>
                     </c:forEach>
-
                 </div>
             </c:otherwise>
         </c:choose>
-    </body>
+    </div>
 
+    <%@include file="../footer/footer.jsp" %>
+</body>
 </html>

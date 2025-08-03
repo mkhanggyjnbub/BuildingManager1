@@ -15,60 +15,59 @@
 
     <style>
         :root {
-            --primary: #1e88e5;
-            --primary-dark: #1565c0;
+            --primary: #002b5c;
+            --primary-dark: #004080;
             --danger: #e53935;
             --danger-dark: #b71c1c;
+            --background: #f4f6f9;
             --white: #ffffff;
-            --gray-light: #f4f6f9;
-            --gray-medium: #e0e7ef;
-            --text: #2b2b2b;
+            --gray-light: #f9fafb;
+            --gray-medium: #eaeaea;
+            --text: #222;
             --shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
             --radius: 12px;
             --transition: 0.3s ease;
         }
 
-        * {
-            box-sizing: border-box;
-        }
-
         body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            background: linear-gradient(to bottom right, #eef5ff, #f9fbff);
+            font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+            background-color: var(--background);
             color: var(--text);
+            margin: 0;
+            padding: 0;
         }
 
         .main-content {
             margin-left: 240px;
-            padding: 60px 40px 50px;
+            padding: 40px;
+            transition: margin-left 0.3s ease;
         }
 
         h2 {
-            font-size: 34px;
-            font-weight: 800;
+            text-align: center;
+            font-size: 30px;
+            font-weight: 700;
             margin-bottom: 25px;
-            color: var(--primary-dark);
-            line-height: 1.4;
-            border-left: 6px solid var(--primary-dark);
-            padding-left: 16px;
+            color: var(--primary);
+            letter-spacing: 1px;
         }
 
         .top-bar {
             display: flex;
             justify-content: flex-end;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .btn {
             background-color: var(--primary);
             color: var(--white);
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: var(--radius);
             font-weight: 600;
             text-decoration: none;
             box-shadow: var(--shadow);
             transition: background-color var(--transition), transform var(--transition);
+            font-size: 14px;
         }
 
         .btn:hover {
@@ -86,18 +85,23 @@
         }
 
         th, td {
-            padding: 16px 18px;
+            padding: 14px 18px;
             text-align: center;
-            font-size: 15px;
-            vertical-align: middle;
+            font-size: 14px;
         }
 
         th {
             background-color: var(--primary-dark);
-            color: var(--white);
+            color: white;
+            font-weight: 600;
             text-transform: uppercase;
-            font-size: 14px;
-            letter-spacing: 0.5px;
+        }
+
+        /* ✅ Đẩy riêng cột Description sang phải */
+        th:nth-child(3),
+        td:nth-child(3) {
+            text-align: left;
+            padding-left: 60px; /* ✅ Tăng khoảng cách */
         }
 
         tbody tr:nth-child(even) {
@@ -109,14 +113,15 @@
         }
 
         .action-links a {
-            padding: 8px 16px;
-            border-radius: 8px;
+            padding: 6px 14px;
+            border-radius: 6px;
             text-decoration: none;
             color: white;
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 500;
             margin: 0 4px;
             transition: background-color var(--transition), transform var(--transition);
+            display: inline-block;
         }
 
         .edit-btn {
@@ -145,12 +150,11 @@
 
             h2 {
                 font-size: 24px;
-                padding-left: 10px;
             }
 
             th, td {
-                font-size: 13px;
-                padding: 10px;
+                font-size: 130px;
+                padding: 100px;
             }
 
             .btn {

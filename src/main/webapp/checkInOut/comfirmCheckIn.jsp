@@ -120,8 +120,6 @@
             .guest-input input {
                 width: 100%;
             }
-
-            /* Popup error */
             .popup {
                 position: fixed;
                 top: 20px;
@@ -131,12 +129,10 @@
                 color: #fff;
                 padding: 12px 24px;
                 border-radius: 6px;
-                box-shadow: 0 0 10px rgba(0,0,0,0.1);
                 display: none;
                 z-index: 9999;
                 animation: fadeInOut 2.5s ease-in-out forwards;
             }
-
             @keyframes fadeInOut {
                 0% {
                     opacity: 0;
@@ -161,22 +157,18 @@
             function showCCCDInputs() {
                 var container = document.getElementById("cccdContainer");
                 container.innerHTML = "";
-
                 var maxOccupancy = parseInt(document.getElementById("maxOccupancy").value);
                 var numberOfGuests = parseInt(document.getElementById("numberOfGuests").value);
-
                 if (isNaN(numberOfGuests) || numberOfGuests < 1) {
                     numberOfGuests = 1;
                     document.getElementById("numberOfGuests").value = 1;
                 }
-
                 var extraFee = 0;
                 if (numberOfGuests > maxOccupancy) {
                     extraFee = (numberOfGuests - maxOccupancy) * 100000;
                 }
                 document.getElementById("extraFeeText").innerText =
                         extraFee > 0 ? "+ Extra fee: " + extraFee.toLocaleString('en-US') + " VND" : "0 VND";
-
                 for (var i = 1; i <= numberOfGuests; i++) {
                     var div = document.createElement("div");
                     div.className = "guest-input";
@@ -187,11 +179,9 @@
                     container.appendChild(div);
                 }
             }
-
             function validateUniqueCCCD() {
                 const inputs = document.querySelectorAll('input[name^="cccd"]');
                 const values = [];
-
                 for (let input of inputs) {
                     const val = input.value.trim();
                     if (val === "")
@@ -205,7 +195,6 @@
                 }
                 return true;
             }
-
             function showPopup(message) {
                 const popup = document.getElementById("popup");
                 popup.innerText = message;
@@ -214,7 +203,6 @@
                     popup.style.display = "none";
                 }, 2500);
             }
-
             window.onload = function () {
                 showCCCDInputs();
             };
@@ -223,9 +211,8 @@
 
     <body>
         <div id="popup" class="popup"></div>
-
         <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
-        <%@include file="../navbarDashboard/navbarDashboard.jsp" %>    
+        <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
 
         <div class="main-content">
             <h2>Confirm Check-In</h2>
@@ -234,10 +221,8 @@
                       method="${checkRoom == 0 ? 'get' : 'post'}"
                       onsubmit="return validateUniqueCCCD();">
                     <input type="hidden" name="bookingId" value="${bookingInfo.bookingId}">
-
                     <p><strong>Customer (Main Guest):</strong> ${bookingInfo.customers.fullName}</p>
                     <p><strong>Room type:</strong> ${bookingInfo.roomType}</p>
-
                     <c:choose>
                         <c:when test="${bookingInfo.roomType == 'Standard Room For One'}">
                             <input type="hidden" id="maxOccupancy" value="1">
@@ -273,14 +258,11 @@
                         </c:otherwise>
                     </c:choose>
 
-
                     <label>Actual number of guests (including main guest):</label>
                     <input type="number" id="numberOfGuests" name="actualGuests"
                            min="1" max="10" required onchange="showCCCDInputs()"
                            value="${bookingInfo.rooms.maxOccupancy}">
-
                     <p class="extra-fee" id="extraFeeText">0 VND</p>
-
                     <div id="cccdContainer"></div>
 
                     <c:choose>
@@ -292,9 +274,15 @@
                             <button type="submit" class="btn-submit">Confirm Check-In</button>
                         </c:otherwise>
                     </c:choose>
-                </form>
-            </div>  
 
-        </div>  
+
+                    <a href="UpdateRoomOption?bookingId=${bookingInfo.bookingId}&currentMaxOccupancy=${bookingInfo.rooms.maxOccupancy}" 
+                       class="btn-submit" style="background-color: #28a745; margin-top: 10px;">
+                        Update Room
+                    </a>
+
+                </form>
+            </div>
+        </div>
     </body>
 </html>

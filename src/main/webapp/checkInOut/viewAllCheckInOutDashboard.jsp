@@ -167,7 +167,7 @@
 <%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
 
 <div class="main-content">
-    <h2><i class="fas fa-calendar-check"></i> Check-in / Check-out Management</h2>
+    <h2><i class=""></i> Check-in / Check-out Management</h2>
     <table>
         <thead>
             <tr>

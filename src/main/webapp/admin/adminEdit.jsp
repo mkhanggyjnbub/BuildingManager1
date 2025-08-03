@@ -10,41 +10,28 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-    <scrip>
-        funtion oppenPopup(UserId){
-        document.getElementById(''){
-        
-        
-        
-        }
-        
-        
-        
-        
-        
-    </scrip>
+        <script>
+            function openPopup(UserId) {
+                document.getElementById('');
+            }
+        </script>
     </head>
     <body>
-    <from>
-        
-        <table border="1">
-            <thead>
-                
-          
-            <tbody>
-                <tr>
-                    <td>Họ tên: </td>
-                    <td>Email: </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-
-        
-        
-    </from>
+        <form>
+            <table border="1">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Full Name:</td>
+                        <td>Email:</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
     </body>
 </html>

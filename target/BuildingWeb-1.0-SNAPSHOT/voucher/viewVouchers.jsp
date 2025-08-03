@@ -1,187 +1,184 @@
 <%-- 
-    Document   : vouchers
-    Created on : May 14, 2025, 11:36:39 PM
-    Author     : CE180441_Dương Đinh Thế Vinh
+Document   : userVouchers
+Created on : Jun 16, 2025, 1:08:27 PM
+Author     : Admin
 --%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Voucher đã lưu</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
 
-    <head>
-        <title>Kho Voucher</title>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6fa;
+            color: #2c3e50;
+            display: flex;
+            flex-direction: column;
+        }
 
-        <style>
-            body {
-                font-family: 'Segoe UI', Tahoma, sans-serif;
-                background-color: #f7f9fc;
-                padding: 20px;
-                margin: 0;
-                color: #333;
-            }
+        .content-wrapper {
+            flex: 1;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            margin-bottom: 120px; /* tăng khoảng cách với footer */
+        }
 
-            .title {
-                font-size: 24px;
-                color: #2c3e50;
-                margin-bottom: 20px;
-                text-align: center;
-            }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #1a202c;
+        }
 
-            .voucher-list {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-                gap: 15px;
-            }
+        .voucher-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
 
-            .voucher-card {
-                background-color: #fff;
-                border-radius: 8px;
-                padding: 14px 16px;
-                box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                transition: transform 0.2s;
-                border-left: 5px solid #3498db;
-            }
+        .voucher-card {
+            background-color: #ffffff;
+            border: 2px solid #4a90e2;
+            border-left: 6px solid #4a90e2;
+            color: #2c3e50;
+            border-radius: 10px;
+            padding: 16px 20px;
+            width: 280px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+            transition: transform 0.2s ease;
+        }
 
-            .voucher-card.saved {
-                border-left-color: #28a745;
-            }
+        .voucher-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
 
-            .voucher-card.out-of-stock {
-                border-left-color: #e74c3c;
-                opacity: 0.75;
-            }
+        .voucher-card h3 {
+            margin-top: 0;
+            color: #2d3748;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
 
-            .voucher-card:hover {
-                transform: translateY(-3px);
-            }
+        .voucher-card p {
+            margin: 6px 0;
+            font-size: 14px;
+            line-height: 1.4;
+        }
 
-            .voucher-code {
-                font-size: 18px;
-                font-weight: bold;
-                margin-bottom: 4px;
-                color: #2c3e50;
-            }
+        .voucher-card p:last-child {
+            font-weight: bold;
+            color: #e74c3c;
+        }
 
-            .voucher-desc,
-            .voucher-time {
-                font-size: 13px;
-                margin: 3px 0;
-                color: #555;
-            }
+        .btn-back {
+            display: inline-block;
+            margin: 10px 0 20px 0;
+            padding: 8px 16px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            text-decoration: none;
+            transition: background-color 0.2s ease;
+        }
 
-            .voucher-discount .discount {
-                font-size: 18px;
-                font-weight: bold;
-                color: #e67e22;
-            }
+        .btn-back:hover {
+            background-color: #357ab8;
+        }
 
-            .voucher-action {
-                margin-top: 10px;
-            }
+        .voucher-card.expired {
+            background-color: #e0e0e0;
+            color: #888;
+            border: 1px dashed #aaa;
+        }
 
-            .save-btn {
-                background-color: #3498db;
-                color: #fff;
-                border: none;
-                padding: 6px 12px;
-                border-radius: 4px;
-                font-size: 13px;
-                cursor: pointer;
-                transition: background-color 0.2s;
-                width: 100%;
-            }
+        .expired-text {
+            color: #d9534f;
+            font-weight: bold;
+        }
 
-            .save-btn:hover {
-                background-color: #2980b9;
-            }
+        .use-button {
+            margin-top: 10px;
+            padding: 8px 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
 
-            .saved-label,
-            .out-label {
-                font-size: 13px;
-                font-weight: 600;
-                text-align: center;
-                margin-top: 4px;
-            }
+        .use-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1 class="page-title">🎁 Your Voucher(s)</h1>
+        <a href="ViewVouchers" class="btn-back">← Return to voucher warehouse</a>
 
-            .saved-label {
-                color: #28a745;
-            }
-
-            .out-label {
-                color: #c0392b;
-            }
-
-            @media (max-width: 480px) {
-                .voucher-code {
-                    font-size: 16px;
-                }
-
-                .discount {
-                    font-size: 16px;
-                }
-
-                .voucher-desc,
-                .voucher-time {
-                    font-size: 12px;
-                }
-            }
-        </style>
-
-
-    </head>
-    <body>
-        <h1 class="title">🎁 Voucher Warehouse</h1>
-
-        <div class="voucher-list">
-            <c:forEach var="v" items="${vouchers}">
-                <c:set var="isSaved" value="false" />
-                <c:forEach var="saved" items="${savedIds}">
-                    <c:if test="${v.voucherId == saved.voucherId}">
-                        <c:set var="isSaved" value="true" />
-                    </c:if>
-                </c:forEach>
-
-                <div class="voucher-card ${isSaved ? 'saved' : ''} ${v.quantity == 0 ? 'out-of-stock' : ''}">
-                    <div class="voucher-content">
-                        <div class="voucher-info">
-                            <h2 class="voucher-code">${v.code}</h2>
-                            <p class="voucher-desc">Minimum application: ${v.minOrderAmount} VNĐ</p>
-                            <p class="voucher-desc">${v.description}</p>
-                            <p class="voucher-time">Expiry: ${v.formattedEndDate}</p>
-                        </div>
-
-                        <div class="voucher-action">
-                            <div class="voucher-discount">
-                                <c:if test="${v.discountPercent != 0}">
-                                    <span class="discount">-${v.discountPercent}%</span>
-                                </c:if>
-                            </div>
+        <c:choose>
+            <c:when test="${empty savedVouchers}">
+                <p class="empty-text">You have not saved any vouchers yet.</p>
+            </c:when>
+            <c:otherwise>
+                <div class="voucher-list">
+                    <c:forEach var="v" items="${savedVouchers}">
+                        <c:set var="expired" value="${v.endDate lt now}" />
+                        <div class="voucher-card ${expired ? 'expired' : ''}">
+                            <h3>${v.code}</h3>
+                            <p>Reduce ${v.discountPercent}%</p>
+                            <p>Minimum application: ${v.minOrderAmount} VNĐ</p>
+                            <p>${v.description}</p>
+                            <p>Expiry: ${v.formattedEndDate}</p>
 
                             <c:choose>
-                                <c:when test="${isSaved}">
-                                    <p class="saved-label">✔ Received</p>
+                                <c:when test="${v.endDate lt now}">
+                                    <p class="expired-text">Expired</p>
                                 </c:when>
-                                <c:when test="${v.quantity == 0}">
-                                    <p class="status-label out-label">Voucher has expired</p>
+                                <c:when test="${v.customerVouchers.isUsed == true}">
+                                    <p class="expired-text">Used</p>
                                 </c:when>
                                 <c:otherwise>
-                                    <form action="ViewVouchers" method="post">
-                                        <input type="hidden" name="voucherId" value="${v.voucherId}" />
-                                        <button class="save-btn">Save voucher</button>
-                                    </form>
+                                    <c:choose>
+                                        <c:when test="${not empty sessionScope.roomId}">
+                                            <form action="ConfirmBooking" method="get">
+                                                <input type="hidden" name="voucherId" value="${v.voucherId}" />
+                                                <input type="hidden" name="voucherCode" value="${v.code}" />
+                                                <input type="hidden" name="voucherdiscountPercent" value="${v.discountPercent}" />
+                                                <button type="submit" class="use-button">Use Voucher</button>
+                                            </form>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <form action="ViewRooms" method="get">
+                                                <button type="submit" class="use-button">Use Voucher</button>
+                                            </form>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:otherwise>
                             </c:choose>
                         </div>
-                    </div>
+                    </c:forEach>
                 </div>
-            </c:forEach>
-        </div>
-    </body>
+            </c:otherwise>
+        </c:choose>
+    </div>
 
-
-
+    <%@include file="../footer/footer.jsp" %>
+</body>
 </html>

@@ -977,4 +977,32 @@ public class RoomDao {
         }
         return 0;
     }
+
+ //khanh
+     public List<Rooms> getAvailableRoomsForUpgrade(int minOccupancy) {
+        List<Rooms> list = new ArrayList<>();
+        String sql = "SELECT * FROM Rooms WHERE MaxOccupancy >= ? AND Status = 'Available'";
+
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, minOccupancy);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Rooms room = new Rooms();
+                    room.setRoomId(rs.getInt("RoomId"));
+                    room.setRoomNumber(rs.getString("RoomNumber"));
+                    room.setRoomType(rs.getString("RoomType"));
+                    room.setStatus(rs.getString("Status"));
+                    room.setMaxOccupancy(rs.getInt("MaxOccupancy"));
+                    list.add(room);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
 }
+

@@ -460,6 +460,6 @@
         document.getElementById("roomType").dispatchEvent(new Event("change"));
     });
         </script>   
-
+<%@include file="../footer/footer.jsp" %>
     </body>
 </html>

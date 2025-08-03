@@ -545,4 +545,41 @@ public class CustomerDao {
 
         return check;
     }
+    
+    public List<Customers> getAllCustomersDashboard() throws SQLException {
+        List<Customers> list = new ArrayList<>();
+        String sql = "SELECT * FROM Customers Where isRegistered = 1";
+        try ( Connection conn = ConnectData.getConnection();  PreparedStatement pst = conn.prepareStatement(sql);  ResultSet rs = pst.executeQuery()) {
+
+            while (rs.next()) {
+                Customers c = new Customers();
+                c.setCustomerId(rs.getInt("CustomerId"));
+                c.setUserName(rs.getString("UserName"));
+                c.setFullName(rs.getString("FullName"));
+                c.setPhone(rs.getString("Phone"));
+                c.setEmail(rs.getString("Email"));
+                c.setGender(rs.getString("Gender"));
+                c.setStatus(rs.getString("Status"));
+                c.setAvatarUrl(rs.getString("AvatarUrl"));
+
+                // ✅ Bọc kiểm tra null cho Timestamp
+                Timestamp creation = rs.getTimestamp("CreationDate");
+                if (creation != null) {
+                    c.setCreationDate(creation.toLocalDateTime());
+                }
+
+                Timestamp lastLogin = rs.getTimestamp("LastLogin");
+                if (lastLogin != null) {
+                    c.setLastLogin(lastLogin.toLocalDateTime());
+                }
+
+                c.setIdentityNumber(rs.getString("IdentityNumber"));
+                c.setJoinDate(rs.getDate("JoinDate"));
+
+                list.add(c);
+            }
+
+        }
+        return list;
+    }
 }

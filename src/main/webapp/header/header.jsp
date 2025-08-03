@@ -44,6 +44,7 @@
         flex: 2 1 auto;
         flex-wrap: wrap;
         justify-content: flex-end;
+        align-items: center;
     }
 
     nav a {
@@ -83,7 +84,7 @@
             display: none;
             flex-direction: column;
             width: 100%;
-            background:  linear-gradient(to right, #3f1d1d, #7a3e3e);
+            background: linear-gradient(to right, #3f1d1d, #7a3e3e);
         }
 
         nav a {
@@ -101,19 +102,38 @@
     }
 
     /* Dropdown menu */
-    .dichvukhachhang {
+    .customer-service {
         position: relative;
-        display: inline-block;
-        cursor: pointer;
     }
 
-    .dichvukhachhang-name {
+    .customer-btn {
+        background: none;
+        border: none;
         font-weight: bold;
         color: #fff;
-        padding: 8px 12px;
+        cursor: pointer;
+        padding: 0;
+        margin: 0;
+        font-size: 1rem;
+        position: relative;
     }
 
-    .dichvukhachhang-content {
+    .customer-btn::after {
+        content: '';
+        position: absolute;
+        width: 0%;
+        height: 2px;
+        bottom: -2px;
+        left: 0;
+        background-color: white;
+        transition: width 0.3s ease;
+    }
+
+    .customer-btn:hover::after {
+        width: 100%;
+    }
+
+    .customer-service-content {
         display: none;
         position: absolute;
         background-color: #fff;
@@ -125,7 +145,7 @@
         padding: 8px 0;
     }
 
-    .dichvukhachhang-content a {
+    .customer-service-content a {
         color: #333;
         padding: 10px 16px;
         text-decoration: none;
@@ -133,14 +153,13 @@
         font-size: 14px;
     }
 
-    .dichvukhachhang-content a:hover {
+    .customer-service-content a:hover {
         background-color: #f7f7f7;
     }
 
-    .dichvukhachhang:hover .dichvukhachhang-content {
+    .customer-service.show .customer-service-content {
         display: block;
     }
-
 </style>
 
 <header>
@@ -148,29 +167,12 @@
     <nav id="nav-menu">
         <a href="Index">Home</a>
         <a href="ViewRooms">Rooms</a>
+        <a href="#">Contact</a>
 
-
-        <a href="#">Liên hệ</a>
-                <!--<a href="UpImage">Up ảnh</a>-->
-                <!--
->>>>>>> 5df086ec3e126c5c1a51ea75abb3800cbd341bc1
-                <a href="Notification">Notification</a>
-                <a href="TakeNotification">Nhận Notification</a>
-        -->       
-        <a href="ViewVouchers">voucher</a>
-        <a href="ViewServices">Services</a>
-        <a href="MessageForCustomer">MessageForCustomer</a>
-        <a href="MessageForDashboard">MessageForDashboard</a>
-        <!--                <a href="#">Liên hệ</a>
-                        <a href="UpImage">Up ảnh</a>
--->                        <a href="Notification">Notification</a>
-                        <a href="TakeNotification">Nhận Notification</a>
-        <!--        <a href="ViewVouchers">voucher</a>-->
-        <c:if test="${not empty customerId  }">   <a href="UserVouchers">User voucher</a></c:if>
-            <a href="ViewNews">News</a>
-
-
-
+        <c:if test="${not empty customerId}">   
+            <a href="UserVouchers">User Voucher</a>
+        </c:if>
+        <a href="ViewNews">News</a>
 
         <c:choose>
             <c:when test="${empty accountType}">
@@ -198,29 +200,19 @@
                         <a href="?id=${cusstomerId}">${userName}</a>
                     </c:when>
                 </c:choose> 
-
             </c:when>
             <c:otherwise>
-                <div class="dichvukhachhang">
-                    <div class="dichvukhachhang-name">${userName}</div>
-                    <div class="dichvukhachhang-content">
+                <div class="customer-service" id="customerMenu">
+                    <button class="customer-btn">${userName}</button>
+                    <div class="customer-service-content">
                         <a href="ViewCustomerProfile?id=${customerId}">🔹 My Account</a>
                         <a href="ViewServicesCart">🔹 Order Services</a>
-                        <a href="ViewBookingHistory">🔹 Đơn đặt phòng</a>
-                        <!--                        
-                                                <a href="#">🔹 Lịch sử thanh toán</a>
-                                                <a href="#">🔹 Ưu đãi thành viên</a>
-                                                <a href="#">🔹 Trợ giúp</a>-->
-                                                <a href="Logout">🔹 Đăng xuất</a>
-
+                        <a href="ViewBookingHistory">🔹 Booking History</a>
+                        <a href="Logout">🔹 Logout</a>
                     </div>
                 </div>
-
             </c:otherwise>
-
         </c:choose>
-
-
     </nav>
     <button id="menu-toggle">☰</button>
 </header>
@@ -232,5 +224,23 @@
         toggle.addEventListener("click", function () {
             nav.classList.toggle("show");
         });
+
+        // Dropdown toggle khi click vào tên user
+        const customerMenu = document.getElementById("customerMenu");
+        const customerBtn = customerMenu?.querySelector(".customer-btn");
+
+        if (customerBtn) {
+            customerBtn.addEventListener("click", function (e) {
+                e.stopPropagation();
+                customerMenu.classList.toggle("show");
+            });
+
+            // Click ra ngoài thì đóng menu
+            document.addEventListener("click", function (e) {
+                if (!customerMenu.contains(e.target)) {
+                    customerMenu.classList.remove("show");
+                }
+            });
+        }
     });
 </script>

@@ -14,11 +14,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         :root {
-            --primary: #1e88e5;
-            --primary-dark: #0d47a1;
+            --primary: #002b5c;
+            --primary-dark: #004080;
             --white: #ffffff;
-            --gray-light: #f3f6fa;
-            --gray-medium: #e0e6ed;
+            --gray-light: #f9fafb;
+            --gray-medium: #eaeaea;
             --text-color: #2b2b2b;
             --shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
             --radius: 12px;
@@ -26,23 +26,24 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, sans-serif;
-            background: linear-gradient(to bottom right, #eef3fc, #f9fbff);
+            background: #f4f6f9;
             margin: 0;
             color: var(--text-color);
         }
 
         .main-content {
             margin-left: 240px;
-            padding: 60px 40px 40px;
+            padding: 50px 40px;
+            transition: margin-left 0.3s ease;
         }
 
         h2 {
-            font-size: 32px;
-            font-weight: 800;
-            margin-bottom: 30px;
+            font-size: 30px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 25px;
             color: var(--primary-dark);
-            border-left: 6px solid var(--primary-dark);
-            padding-left: 15px;
+            letter-spacing: 1px;
         }
 
         table {
@@ -55,17 +56,17 @@
         }
 
         th, td {
-            padding: 16px 12px;
+            padding: 14px 16px;
             text-align: center;
-            font-size: 15px;
+            font-size: 14px;
         }
 
         th {
             background-color: var(--primary-dark);
             color: white;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            font-size: 13px;
         }
 
         tr:nth-child(even) {
@@ -77,13 +78,14 @@
         }
 
         .actions a {
-            margin: 0 6px;
-            font-size: 16px;
-            padding: 8px 12px;
-            border-radius: 8px;
+            margin: 0 5px;
+            font-size: 14px;
+            padding: 6px 12px;
+            border-radius: 6px;
             color: white;
             transition: all 0.3s ease;
             text-decoration: none;
+            display: inline-block;
         }
 
         .actions a.fa-eye {
@@ -95,41 +97,13 @@
         }
 
         .actions a.fa-pencil {
-            background-color: #2196f3;
+            background-color: #1e88e5;
         }
 
         .actions a.fa-pencil:hover {
             background-color: #1565c0;
         }
 
-        .navbar {
-            background-color: var(--primary-dark);
-            color: var(--white);
-            padding: 0 30px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 60px;
-            font-weight: bold;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
-
-        .navbar h1 {
-            font-size: 22px;
-            margin: 0;
-            font-weight: 700;
-        }
-
-        .navbar a {
-            color: var(--white);
-            text-decoration: none;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
             .main-content {
                 margin-left: 0;
@@ -149,24 +123,26 @@
             }
 
             tr {
-                margin-bottom: 20px;
+                margin-bottom: 15px;
                 border-radius: 10px;
                 box-shadow: var(--shadow);
                 background: white;
                 overflow: hidden;
+                padding: 10px 0;
             }
 
             td {
-                padding: 14px 20px;
+                padding: 12px 20px;
                 text-align: right;
                 position: relative;
+                font-size: 14px;
             }
 
             td::before {
                 content: attr(data-label);
                 position: absolute;
                 left: 20px;
-                top: 14px;
+                top: 12px;
                 font-weight: bold;
                 color: var(--primary-dark);
                 text-align: left;

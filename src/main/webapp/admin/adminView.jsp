@@ -107,8 +107,6 @@
                 box-shadow: 0 0 10px rgba(0,0,0,0.1);
             }
 
-
-
             a:hover {
                 background-color: var(--primary-light);
             }
@@ -121,14 +119,14 @@
             <table>
                 <tr>
                     <th colspan="4">
-                        THÔNG TIN CHI TIẾT: ${user.userName} &nbsp;&nbsp;
-                        <a href="DashboardUser">Đóng</a>
+                        DETAILED INFORMATION: ${user.userName} &nbsp;&nbsp;
+                        <a href="DashboardUser">Close</a>
                     </th>
                 </tr>
                 <tr>
-                    <td class="label">Ảnh đại diện:</td>
+                    <td class="label">Avatar:</td>
                     <td rowspan="6"><img src="${user.avatarUrl}" alt="Avatar"></td>
-                    <td class="label">Họ tên:</td>
+                    <td class="label">Full Name:</td>
                     <td class="value">${user.fullName}</td>
                 </tr>
                 <tr>
@@ -138,24 +136,24 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td class="label">SĐT:</td>
+                    <td class="label">Phone:</td>
                     <td class="value">${user.phone}</td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td class="label">Vai trò:</td>
+                    <td class="label">Role:</td>
                     <td class="value">${user.role.roleName}</td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td class="label">Trạng thái:</td>
+                    <td class="label">Status:</td>
                     <td class="value">${user.status}</td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td class="label">Ngày tạo:</td>
+                    <td class="label">Created Date:</td>
                     <td class="value">01/01/2024</td>
-                    <td class="label">Lần cuối đăng nhập: <span class="value">05/05/2024</span></td>
+                    <td class="label">Last Login: <span class="value">05/05/2024</span></td>
                 </tr>
             </table>
         </div>

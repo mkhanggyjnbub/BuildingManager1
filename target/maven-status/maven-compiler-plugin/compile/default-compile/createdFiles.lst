@@ -1,4 +1,5 @@
 controllers\asset\AssetModel.class
+controllers\checkInOut\UpdateRoomOption.class
 models\Messages.class
 controllers\services\ViewServiceDetailDashboard.class
 controllers\services\ViewServiceDetail.class
@@ -51,6 +52,7 @@ controllers\services\AddServiceDashboard.class
 controllers\voucher\ViewVouchers.class
 db\SendOTPEmail.class
 controllers\room\ViewRoomDetail.class
+controllers\booking\ViewBookingDetail.class
 dao\ReportDao.class
 db\SendOTPEmail$1.class
 controllers\checkInOut\CheckInOutDetail.class
