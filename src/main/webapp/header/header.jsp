@@ -150,7 +150,6 @@
         <a href="ViewRooms">Rooms</a>
 
 
-        <a href="#">Liên hệ</a>
                 <!--<a href="UpImage">Up ảnh</a>-->
                 <!--
 >>>>>>> 5df086ec3e126c5c1a51ea75abb3800cbd341bc1

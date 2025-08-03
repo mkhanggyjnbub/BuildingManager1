@@ -82,9 +82,12 @@ nav a {
 
   
 .hero h1 {
+    color: white;
   font-size: 3.5rem;
 }
-
+.BigHotel {
+    color: white;
+}
 .hero p {
   margin: 1rem 0;
   font-size: 1.2rem;

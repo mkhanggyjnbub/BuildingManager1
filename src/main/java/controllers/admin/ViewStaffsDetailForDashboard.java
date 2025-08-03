@@ -4,8 +4,7 @@
  */
 package controllers.admin;
 
-import dao.PaginationDao;
-import dao.UserDao;  
+import dao.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,15 +12,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
-import models.Users;
 
 /**
  *
  * @author Kiều Hoàng Mạnh Khang - ce180749
  */
-@WebServlet(name = "DashBoardUser", urlPatterns = {"/DashboardUser"})
-public class DashboardUser extends HttpServlet {
+@WebServlet("/ViewStaffsDetailForDashboard")
+public class ViewStaffsDetailForDashboard extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +37,10 @@ public class DashboardUser extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DashBoardUser</title>");
+            out.println("<title>Servlet AdminView</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DashBoardUser at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AdminView at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,44 +58,15 @@ public class DashboardUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        int Page = 0, finalPage = 0, totalPage = 0;
-        UserDao userDao = new UserDao();
-        PaginationDao paginationDao = new PaginationDao();
-        if (request.getParameter("search") == null || request.getParameter("search").equals("")) {
-            if (request.getParameter("Page") == null) {
-                Page = 1;
-            } else {
-                Page = Integer.parseInt(request.getParameter("Page"));
-            }
-            request.setAttribute("list", userDao.getFullOfDashBoard(Page));
-            request.setAttribute("thisPage", Page);
-            totalPage = paginationDao.PageFullOfDashBoard();
-            finalPage = totalPage / 10;
-            if (totalPage % 10 != 0) {
-                finalPage++;
-            }
+        if (request.getParameter("id") != null && !request.getParameter("id").equals("")) {
+            UserDao userDao = new UserDao();
+            int id = Integer.parseInt(request.getParameter("id"));
+            request.setAttribute("user", userDao.getUserById(id));
+            request.getRequestDispatcher("admin/viewStaffsDetailForDashboard.jsp").forward(request, response);
 
         } else {
-
-            if (request.getParameter("Page") == null) {
-                Page = 1;
-            } else {
-                Page = Integer.parseInt(request.getParameter("Page"));
-            }
-
-            request.setAttribute("list", userDao.getSearchOfDashBoard(Page, request.getParameter("search")));
-            request.setAttribute("thisPage", Page);
-            totalPage = paginationDao.PageFullOfDashBoard();
-            finalPage = totalPage / 10;
-            if (totalPage % 10 != 0) {
-                finalPage++;
-            }
+            response.sendRedirect("ViewStaffsForDashboard");
         }
-        request.setAttribute("finalPage", finalPage);
-        
-
-        request.getRequestDispatcher("admin/dashboardUser.jsp").forward(request, response);
 
     }
 

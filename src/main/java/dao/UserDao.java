@@ -177,10 +177,7 @@ public class UserDao {
         ResultSet rs = null;
         Users user = new Users();
         try {
-            String sql = "SELECT Username, FullName, Email,Phone, RoleName, Status,AvatarUrl \n"
-                    + "                              FROM Users \n"
-                    + "                                INNER JOIN Roles ON Users.RoleId = Roles.RoleId \n"
-                    + "                               WHERE Users.UserId = ?";
+            String sql = "SELECT UserId, IdentityNumber,Username,FullName, Email, Phone, RoleName, Status, AvatarUrl , CreationDate FROM Users INNER JOIN Roles ON Users.RoleId = Roles.RoleId WHERE Users.UserId = ?";
 
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setInt(1, id);
@@ -192,9 +189,12 @@ public class UserDao {
                 user.setFullName(rs.getString("FullName"));
                 user.setEmail(rs.getString("Email"));
                 user.setStatus(rs.getString("Status"));
+                user.setIdentityNumber(rs.getString("IdentityNumber"));
                 user.setPhone(rs.getString("Phone"));
-                user.setRole(role);
                 user.setAvatarUrl(rs.getString("AvatarUrl"));
+        user.setUserId(rs.getInt("UserId"));
+                user.setRole(role);
+                user.setCreationDate(rs.getTimestamp("CreationDate").toLocalDateTime());
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -346,7 +346,7 @@ public class UserDao {
                     u.setAddress(rs.getString("Address"));
                     u.setAvatarUrl(rs.getString("AvatarUrl"));
                     u.setGender(rs.getString("Gender"));
-                    u.setIdenityNumber(rs.getString("IdentityNumber"));
+                    u.setIdentityNumber(rs.getString("IdentityNumber"));
                     u.setStatus(rs.getString("Status"));
                     try {
                         u.setDayOfBirth(rs.getDate("DateOfBirth"));
@@ -412,6 +412,30 @@ public class UserDao {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public int updateUserById(Users user) {
+        int cnt = 0;
+
+        try {
+            String sql = "UPDATE Users \n"
+                    + "SET IdentityNumber = ?, \n"
+                    + "    FullName = ?, \n"
+                    + "    Email = ?, \n"
+                    + "    Phone = ? \n"
+                    + "WHERE UserId = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, user.getIdentityNumber());
+            pst.setString(2, user.getFullName());
+            pst.setString(3, user.getEmail());
+            pst.setString(4, user.getPhone());
+            pst.setInt(5, user.getUserId());
+            cnt = pst.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return cnt;
+
     }
 
 }

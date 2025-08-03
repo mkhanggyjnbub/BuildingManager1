@@ -205,7 +205,7 @@
     <ul class="menu">
 
         <li style="--i:0"><a href="Index"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
-        <li style="--i:1"><a href="DashboardUser"><i class="fa-solid fa-user"></i><span>Users</span></a></li>
+        <li style="--i:1"><a href="ViewStaffsForDashboard"><i class="fa-solid fa-user"></i><span>Users</span></a></li>
         <li style="--i:2"><a href="VouchersDashBoard"><i class="fa-solid fa-ticket"></i><span>Vouchers</span></a></li>
         <li style="--i:3"><a href="ViewNewsDashboard"><i class="fa-solid fa-newspaper"></i><span>News</span></a></li>
         

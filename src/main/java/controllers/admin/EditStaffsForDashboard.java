@@ -12,13 +12,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import models.Users;
 
 /**
  *
  * @author Kiều Hoàng Mạnh Khang - ce180749
  */
-@WebServlet(name = "AdminView", urlPatterns = {"/AdminView"})
-public class AdminView extends HttpServlet {
+@WebServlet("/EditStaffsForDashboard")
+public class EditStaffsForDashboard extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +38,10 @@ public class AdminView extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AdminView</title>");
+            out.println("<title>Servlet EditUsers</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AdminView at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet EditUsers at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,10 +63,9 @@ public class AdminView extends HttpServlet {
             UserDao userDao = new UserDao();
             int id = Integer.parseInt(request.getParameter("id"));
             request.setAttribute("user", userDao.getUserById(id));
-            request.getRequestDispatcher("admin/adminView.jsp").forward(request, response);
-
+            request.getRequestDispatcher("admin/editStaffsForDashboard.jsp").forward(request, response);
         } else {
-            response.sendRedirect("DashboardUser");
+            response.sendRedirect("ViewStaffsForDashboard");
         }
 
     }
@@ -81,7 +81,28 @@ public class AdminView extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        String fullName = request.getParameter("fullName");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        String identityNumber = request.getParameter("identityNumber");
+
+        Users user = new Users();
+        user.setUserId(userId);
+        user.setFullName(fullName);
+        user.setEmail(email);
+        user.setPhone(phone);
+        user.setIdentityNumber(identityNumber);
+
+        UserDao userDao = new UserDao();
+        int updated = userDao.updateUserById(user);
+
+        if (updated != 0) {
+            response.sendRedirect("ViewStaffsForDashboard");
+        } else {
+            response.sendRedirect("ViewStaffsForDashboarderror?updated=" + updated);
+        }
+
     }
 
     /**

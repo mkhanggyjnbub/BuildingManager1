@@ -3,9 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controllers;
+package controllers.admin;
 
-import dao.BookingDao;
+import dao.PaginationDao;
+import dao.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -18,8 +19,8 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author Kiều Hoàng Mạnh Khang - ce180749 
  */
-@WebServlet("/")
-public class Index extends HttpServlet {
+@WebServlet("/ViewStaffsForDashboard")
+public class ViewStaffsForDashboard extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,10 +37,10 @@ public class Index extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Index</title>");  
+            out.println("<title>Servlet ViewUsers</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Index at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ViewUsers at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,9 +57,43 @@ public class Index extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-         BookingDao booking = new BookingDao();
-        request.setAttribute("list", booking.getTop3MostBookedRooms());
-       request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
+        int Page = 0, finalPage = 0, totalPage = 0;
+        UserDao userDao = new UserDao();
+        PaginationDao paginationDao = new PaginationDao();
+        if (request.getParameter("search") == null || request.getParameter("search").equals("")) {
+            if (request.getParameter("Page") == null) {
+                Page = 1;
+            } else {
+                Page = Integer.parseInt(request.getParameter("Page"));
+            }
+            request.setAttribute("list", userDao.getFullOfDashBoard(Page));
+            request.setAttribute("thisPage", Page);
+            totalPage = paginationDao.PageFullOfDashBoard();
+            finalPage = totalPage / 10;
+            if (totalPage % 10 != 0) {
+                finalPage++;
+            }
+
+        } else {
+
+            if (request.getParameter("Page") == null) {
+                Page = 1;
+            } else {
+                Page = Integer.parseInt(request.getParameter("Page"));
+            }
+
+            request.setAttribute("list", userDao.getSearchOfDashBoard(Page, request.getParameter("search")));
+            request.setAttribute("thisPage", Page);
+            totalPage = paginationDao.PageFullOfDashBoard();
+            finalPage = totalPage / 10;
+            if (totalPage % 10 != 0) {
+                finalPage++;
+            }
+        }
+        request.setAttribute("finalPage", finalPage);
+        
+
+        request.getRequestDispatcher("admin/viewStaffsForDashboard.jsp").forward(request, response);
     } 
 
     /** 

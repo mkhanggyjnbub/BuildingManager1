@@ -269,15 +269,18 @@
                     <input type="number" name="floorNumber" value="${roomDetail.floorNumber}" min="0" max="100" required>
                 </div>
 
-                <div>
-                    <label>Room Type:</label>
-                    <select id="roomType" name="roomType" required>
-                        <option <c:if test="${roomDetail.roomType eq 'Standard Room'}">selected</c:if> value="Standard Room">Standard Room</option>
-                        <option <c:if test="${roomDetail.roomType eq 'Deluxe Room'}">selected</c:if> value="Deluxe Room">Deluxe Room</option>
-                        <option  <c:if test="${roomDetail.roomType eq 'Twin Room'}">selected</c:if> value="Twin Room">Twin Room</option>
-                        <option  <c:if test="${roomDetail.roomType eq 'Family Room'}">selected</c:if> value="Family Room">Family Room</option>
-                        </select>
-                    </div>
+              <label>Room Type:</label>
+<select id="roomType" name="roomType" required>
+    <option value="">-- Select Type --</option>
+    <option value="Standard Room For One" <c:if test="${roomDetail.roomType eq 'Standard Room For One'}">selected</c:if>>Standard Room For One</option>
+    <option value="Standard Room For Two" <c:if test="${roomDetail.roomType eq 'Standard Room For Two'}">selected</c:if>>Standard Room For Two</option>
+    <option value="Deluxe Room For Two" <c:if test="${roomDetail.roomType eq 'Deluxe Room For Two'}">selected</c:if>>Deluxe Room For Two</option>
+    <option value="Twin Room (2 Single Beds)" <c:if test="${roomDetail.roomType eq 'Twin Room (2 Single Beds)'}">selected</c:if>>Twin Room (2 Single Beds)</option>
+    <option value="Family Room For Three" <c:if test="${roomDetail.roomType eq 'Family Room For Three'}">selected</c:if>>Family Room For Three</option>
+    <option value="Family Room For Four" <c:if test="${roomDetail.roomType eq 'Family Room For Four'}">selected</c:if>>Family Room For Four</option>
+    <option value="Family Room For Five" <c:if test="${roomDetail.roomType eq 'Family Room For Five'}">selected</c:if>>Family Room For Five</option>
+</select>
+
 
                     <div>
                         <label>Price (VNĐ):</label>
@@ -404,11 +407,20 @@
                     }
                 });
             });
-            // làm thay đổi bed khi chọn phòng 
+             // làm thay đổi bed khi chọn phòng 
             document.getElementById("roomType").addEventListener("change", function () {
                 const roomType = document.getElementById("roomType");
-                if (roomType.value === "Standard Room") {
+                if (roomType.value === "Standard Room For One") {
                     document.getElementById("single").style.display = 'block';
+                    document.getElementById("double").style.display = 'none';
+                    document.getElementById("queen").style.display = 'none';
+                    document.getElementById("king").style.display = 'none';
+                    document.getElementById("twin").style.display = 'none';
+                    document.getElementById("treePeople").style.display = 'none';
+                    document.getElementById("fourPeople").style.display = 'none';
+                    document.getElementById("fivePeople").style.display = 'none';
+                } else if (roomType.value === "Standard Room For Two") {
+                    document.getElementById("single").style.display = 'none';
                     document.getElementById("double").style.display = 'block';
                     document.getElementById("queen").style.display = 'none';
                     document.getElementById("king").style.display = 'none';
@@ -416,7 +428,7 @@
                     document.getElementById("treePeople").style.display = 'none';
                     document.getElementById("fourPeople").style.display = 'none';
                     document.getElementById("fivePeople").style.display = 'none';
-                } else if (roomType.value === "Deluxe Room") {
+                } else if (roomType.value === "Deluxe Room For Two") {
                     document.getElementById("queen").style.display = 'block';
                     document.getElementById("king").style.display = 'block';
                     document.getElementById("single").style.display = 'none';
@@ -425,7 +437,7 @@
                     document.getElementById("treePeople").style.display = 'none';
                     document.getElementById("fourPeople").style.display = 'none';
                     document.getElementById("fivePeople").style.display = 'none';
-                } else if (roomType.value === "Twin Room") {
+                } else if (roomType.value === "Twin Room (2 Single Beds)") {
                     document.getElementById("twin").style.display = 'block';
                     document.getElementById("single").style.display = 'none';
                     document.getElementById("double").style.display = 'none';
@@ -443,15 +455,33 @@
                     document.getElementById("treePeople").style.display = 'block';
                     document.getElementById("fourPeople").style.display = 'block';
                     document.getElementById("fivePeople").style.display = 'block';
-                } else {
-                    document.getElementById("single").style.display = 'block';
-                    document.getElementById("double").style.display = 'block';
-                    document.getElementById("queen").style.display = 'block';
-                    document.getElementById("king").style.display = 'block';
-                    document.getElementById("twin").style.display = 'block';
-                    document.getElementById("treePeople").style.display = 'none';
+                } else if (roomType.value === "Family Room For Three") {
+                    document.getElementById("single").style.display = 'none';
+                    document.getElementById("double").style.display = 'none';
+                    document.getElementById("queen").style.display = 'none';
+                    document.getElementById("king").style.display = 'none';
+                    document.getElementById("twin").style.display = 'none';
+                    document.getElementById("treePeople").style.display = 'block';
                     document.getElementById("fourPeople").style.display = 'none';
                     document.getElementById("fivePeople").style.display = 'none';
+                } else if (roomType.value === "Family Room For Four") {
+                    document.getElementById("single").style.display = 'none';
+                    document.getElementById("double").style.display = 'none';
+                    document.getElementById("queen").style.display = 'none';
+                    document.getElementById("king").style.display = 'none';
+                    document.getElementById("twin").style.display = 'none';
+                    document.getElementById("treePeople").style.display = 'none';
+                    document.getElementById("fourPeople").style.display = 'block';
+                    document.getElementById("fivePeople").style.display = 'none';
+                } else if (roomType.value === "Family Room For Five") {
+                    document.getElementById("single").style.display = 'none';
+                    document.getElementById("double").style.display = 'none';
+                    document.getElementById("queen").style.display = 'none';
+                    document.getElementById("king").style.display = 'none';
+                    document.getElementById("twin").style.display = 'none';
+                    document.getElementById("treePeople").style.display = 'none';
+                    document.getElementById("fourPeople").style.display = 'none';
+                    document.getElementById("fivePeople").style.display = 'block';
                 }
             });
             

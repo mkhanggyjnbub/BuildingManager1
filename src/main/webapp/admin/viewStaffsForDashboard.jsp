@@ -1,6 +1,6 @@
 <%-- 
-    Document   : dashBoardUser
-    Created on : May 3, 2025, 2:04:23 PM
+    Document   : viewUsers
+    Created on : Aug 3, 2025, 9:07:25 PM
     Author     : Kiều Hoàng Mạnh Khang - ce180749 
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -244,7 +244,7 @@
 <div class="main-content">
     <h2>User Management Dashboard</h2>
 
-    <form method="get" action="DashboardUser">
+    <form method="get" action="ViewUsers">
         <input type="search" name="search" placeholder="Enter keyword...">
         <button type="submit"><i class='bx bx-search-alt-2'></i></button>
     </form>
@@ -252,7 +252,6 @@
     <table>
         <thead>
             <tr>
-                <th></th>
                 <th>No.</th>
                 <th>Username</th>
                 <th>Email</th>
@@ -263,22 +262,13 @@
         <tbody>
             <c:forEach var="user" items="${list}" varStatus="i">
                 <tr>
-                    <td class="dot-menu">
-                        <i class="fas fa-ellipsis-v dot-icon"></i>
-                        <div class="dropdown">
-                            <a href="AdminView?id=${user.userId}"><i class="fa-solid fa-eye"></i> View</a>
-                            <a href="AdminEdit?id=${user.userId}"><i class="fa-solid fa-pencil"></i> Edit</a>
-                            <a href="AdminDelete?id=${user.userId}"><i class="fa-solid fa-user-slash"></i> Delete</a>
-                            <a href="Decentralization?id=${user.userId}"><i class="fa-solid fa-gear"></i> Role</a>
-                        </div>
-                    </td>
                     <td>${(thisPage - 1) * 10 + i.index + 1}</td>
                     <td>${user.userName}</td>
                     <td>${user.email}</td>
                     <td>${user.role.roleName}</td>
                     <td class="actions">
-                        <a href="AdminView?id=${user.userId}" title="View"><i class="fa-solid fa-eye"></i></a>
-                        <a href="AdminEdit?id=${user.userId}" title="Edit"><i class="fa-solid fa-pencil"></i></a>
+                        <a href="ViewStaffsDetailForDashboard?id=${user.userId}" title="View"><i class="fa-solid fa-eye"></i></a>
+                        <a href="EditStaffsForDashboard?id=${user.userId}" title="Edit"><i class="fa-solid fa-pencil"></i></a>
                         <a href="AdminDelete?id=${user.userId}" title="Delete"><i class="fa-solid fa-user-slash"></i></a>
                         <a href="Decentralization?id=${user.userId}" title="Role"><i class="fa-solid fa-gear"></i></a>
                     </td>
@@ -290,7 +280,7 @@
     <nav aria-label="Page navigation">
         <ul class="pagination">
             <c:forEach begin="1" end="${finalPage}" var="i">
-                <li><a href="DashboardUser?Page=${i}">${i}</a></li>
+                <li><a href="ViewUsers?Page=${i}">${i}</a></li>
             </c:forEach>
         </ul>
     </nav>

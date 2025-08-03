@@ -20,16 +20,24 @@ public class Users {
     private Roles role;
     private int roleId;
     private LocalDateTime CreationDate;
-    private String avatarUrl;
     private String fullName;
     private String gender;
     private Date dayOfBirth;
     private String phone;
     private String email;
     private String address;
-    private String idenityNumber;
+    private String identityNumber;
     private Employees employees;
     private String status;
+    private String avatarUrl;
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
 
     public Users() {
     }
@@ -90,13 +98,7 @@ public class Users {
         this.password = password;
     }
 
-    public String getAvatarUrl() {
-        return avatarUrl;
-    }
-
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
+   
 
     public LocalDateTime getLastLogin() {
         return lastLogin;
@@ -162,13 +164,14 @@ public class Users {
         this.address = address;
     }
 
-    public String getIdenityNumber() {
-        return idenityNumber;
+    public String getIdentityNumber() {
+        return identityNumber;
     }
 
-    public void setIdenityNumber(String idenityNumber) {
-        this.idenityNumber = idenityNumber;
+    public void setIdentityNumber(String identityNumber) {
+        this.identityNumber = identityNumber;
     }
-    
+
+   
     
 }

@@ -1601,4 +1601,38 @@ public class BookingDao {
         return false;
     }
 //đống của khoa
+    
+//    code của khang
+    
+    public List<Rooms> getTop3MostBookedRooms() {
+    List<Rooms> list = new ArrayList<>();
+    String sql = "SELECT TOP 3 " +
+                 "B.RoomId, COUNT(*) AS TotalBookings, " +
+                 "R.RoomType, R.Description, R.Price, R.ImageUrl " +
+                 "FROM Bookings B " +
+                 "INNER JOIN Rooms R ON B.RoomId = R.RoomId " +
+                 "WHERE B.RoomId IS NOT NULL AND B.DeletedTime IS NULL " +
+                 "GROUP BY B.RoomId, R.RoomType, R.Description, R.Price, R.ImageUrl " +
+                 "ORDER BY TotalBookings DESC";
+
+    try (PreparedStatement pst = conn.prepareStatement(sql);
+         ResultSet rs = pst.executeQuery()) {
+        
+        while (rs.next()) {
+            Rooms room = new Rooms();
+            room.setRoomId(rs.getInt("RoomId"));
+            room.setRoomType(rs.getString("RoomType"));
+            room.setDescription(rs.getString("Description"));
+            room.setPrice(rs.getLong("Price"));
+            room.setImageUrl(rs.getString("ImageUrl"));
+            list.add(room);
+        }
+
+    } catch (SQLException ex) {
+        Logger.getLogger(RoomDao.class.getName()).log(Level.SEVERE, null, ex);
+    }
+
+    return list;
+}
+//đóng code của khang
 }
