@@ -24,6 +24,7 @@ Author     : Admin
                 font-size: 28px;
                 margin-bottom: 20px;
                 color: #1a202c;
+                margin-top: 100px;
             }
 
             .voucher-list {
@@ -116,6 +117,7 @@ Author     : Admin
 
     </head>
     <body>
+        <%@include file="../header/header.jsp"%> 
         <h1 class="page-title">🎁 Your Voucher(s)</h1>
         <a href="ViewVouchers" class="btn-back">← Return to voucher warehouse</a>
         <c:choose>
@@ -167,7 +169,7 @@ Author     : Admin
                                         <!-- Voucher còn hạn và đang active -->
                                         <form action="ConfirmBooking" method="get">
                                             <input type="hidden" name="voucherId" value="${v.voucherId}" />
-                                            <button type="submit" class="use-button">Use Voucher</button>
+                                            <%--  <button type="submit" class="use-button">Use Voucher</button> --%>
                                         </form>
                                     </c:when>
                                     <c:otherwise>

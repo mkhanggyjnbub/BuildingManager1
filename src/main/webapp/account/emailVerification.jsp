@@ -160,6 +160,7 @@
                 }
             }, 1000);
         </script>
+            <%@include file="../footer/footer.jsp" %>
 
     </body>
 </html>

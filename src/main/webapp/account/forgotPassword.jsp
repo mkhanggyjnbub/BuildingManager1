@@ -154,5 +154,8 @@
                 <p><a href="Login">Back to Login</a></p>
             </div>
         </div>
+        
+                    <%@include file="../footer/footer.jsp" %>
+
     </body>
 </html>
