@@ -128,6 +128,19 @@
         </style>
     </head>
     <body>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const priceCells = document.querySelectorAll(".price-cell");
+
+                priceCells.forEach(function (cell) {
+                    const rawValue = parseInt(cell.textContent.trim());
+                    if (!isNaN(rawValue)) {
+                        const formatted = rawValue.toLocaleString('vi-VN'); // Dùng dấu chấm
+                        cell.textContent = formatted + ' / VND';
+                    }
+                });
+            });
+        </script>
 
         <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
         <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
@@ -173,7 +186,7 @@
                         <tr>
                             <td data-label="Room Number">${room.roomNumber}</td>
                             <td data-label="Room Type">${room.roomType}</td>
-                            <td data-label="Price">${room.price}</td>
+                            <td data-label="Price" class="price-cell">${room.price}</td>
                             <td data-label="Max Occupancy">${room.maxOccupancy}</td>
                             <td data-label="Image">
                                 <img src="${room.imageUrl}" alt="Room Image" />
