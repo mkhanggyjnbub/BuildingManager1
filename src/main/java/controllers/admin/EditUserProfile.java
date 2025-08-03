@@ -114,7 +114,6 @@ public class EditUserProfile extends HttpServlet {
             String oldAvatar = request.getParameter("oldAvatar");
             System.out.println("oldAvatar: " +oldAvatar);
             
-            request.getParameterMap().forEach((k, v) -> System.out.println(k + " = " + Arrays.toString(v)));
 
             int id = Integer.parseInt(uid);
             String uploadedUrl = null;

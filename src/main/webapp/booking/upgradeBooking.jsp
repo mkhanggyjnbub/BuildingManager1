@@ -128,11 +128,11 @@
         </style>
     </head>
     <body>
-        
+
         <%@include file="../navbarDashboard/navbarDashboard.jsp" %>
         <%@include file="../sidebarDashboard/sidebarDashboard.jsp" %>
 
-        <h2>Danh sách phòng có thể nâng cấp</h2>
+        <h2>Room list for upgrade</h2>
 
         <!-- Bộ lọc loại phòng -->
         <form method="get" action="UpgradeBooking" class="filter-form">
@@ -152,6 +152,8 @@
             <input type="hidden" name="currentPeople" value="${param.currentPeople}" />
         </form>
 
+        <c:set var="foundRoom" value="false" />
+
         <!-- Danh sách phòng -->
         <table>
             <thead>
@@ -167,6 +169,7 @@
             <tbody>
                 <c:forEach var="room" items="${listR}">
                     <c:if test="${param.roomType == 'all' || empty param.roomType || room.roomType == param.roomType}">
+                        <c:set var="foundRoom" value="true" />
                         <tr>
                             <td data-label="Room Number">${room.roomNumber}</td>
                             <td data-label="Room Type">${room.roomType}</td>
@@ -186,8 +189,16 @@
                         </tr>
                     </c:if>
                 </c:forEach>
+
+                <!-- Nếu không có phòng nào -->
+                <c:if test="${!foundRoom}">
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 20px; color: red;">
+                            There are no rooms available for upgrade.
+                        </td>
+                    </tr>
+                </c:if>
             </tbody>
         </table>
-
     </body>
 </html>

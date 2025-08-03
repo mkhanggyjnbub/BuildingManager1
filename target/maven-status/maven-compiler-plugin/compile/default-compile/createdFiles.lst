@@ -122,6 +122,7 @@ dao\VoucherDao.class
 models\Buildings.class
 controllers\services\EditServiceDashboard.class
 controllers\account\Login.class
+controllers\checkInOut\SelectAvailableRoom.class
 controllers\voucher\AddVoucher.class
 controllers\voucher\DeleteVoucher.class
 models\RoomEquipment.class

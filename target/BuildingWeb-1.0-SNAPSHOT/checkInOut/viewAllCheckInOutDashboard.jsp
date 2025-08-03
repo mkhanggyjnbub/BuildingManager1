@@ -223,15 +223,18 @@
                 const now = new Date();
 
                 if (now > checkoutDeadline) {
-                    if (confirm("Check-out sau 12h trưa có thể bị tính phụ thu.\nBạn có muốn thêm ExtraCharge không?")) {
+                    const confirmExtra = confirm("Check-out sau 12h trưa có thể bị tính phụ thu.\nBạn có muốn thêm ExtraCharge không?");
+                    if (confirmExtra) {
                         window.location.href = "AddExtraCharge?bookingId=" + bookingId;
-                    } else {
-                        document.getElementById("checkoutForm-" + bookingId).submit();
                     }
                 } else {
-                    document.getElementById("checkoutForm-" + bookingId).submit();
+                    const confirmCheckout = confirm("Bạn có chắc chắn muốn Check-Out?");
+                    if (confirmCheckout) {
+                        document.getElementById("checkoutForm-" + bookingId).submit();
+                    }
                 }
             }
+
         </script>
     </head>
 

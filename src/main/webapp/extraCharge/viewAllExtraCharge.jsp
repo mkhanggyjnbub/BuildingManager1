@@ -13,7 +13,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Extra Charges</title>
-        <!-- CSS giống như trang customer -->
+        <!-- CSS giá»ng nhÆ° trang customer -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
         <style>
             :root {

@@ -138,6 +138,8 @@ Author     : Admin
                                     <p class="expired-text">Expired</p>
                                 </c:when>
                                 <c:when test="${v.customerVouchers.isUsed == true}">
+
+
                                     <p class="expired-text">Used</p>
                                 </c:when>
                                 <c:otherwise>
@@ -175,6 +177,7 @@ Author     : Admin
                                     </c:otherwise>
                                 </c:choose>
                             </c:if>
+
                         </div>
                     </c:forEach>
 

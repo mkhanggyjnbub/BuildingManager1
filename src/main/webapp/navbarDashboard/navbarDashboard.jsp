@@ -13,6 +13,10 @@
     </a>
 <!--          <a href="Notification">Notification</a>
                         <a href="TakeNotification">Nh?n Notification</a>
+=======
+<!--          <a href="Notification">Notification</a>-->
+<!--                        <a href="TakeNotification">Nh?n Notification</a>
+>>>>>>> ca14ef794ea1e54fbb140d4ca31390f8737e751a
                          <a href="MessageForDashboard">MessageForDashboard</a>-->
 </div>
 

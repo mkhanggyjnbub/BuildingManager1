@@ -151,15 +151,48 @@
                     opacity: 1;
                 }
             }
+
+
+.dashboard-layout {
+    display: flex;
+}
+
+/* Nội dung ban đầu lệch 60px */
+.main-content {
+    margin-left: 60px;
+    padding: 20px;
+    flex: 1;
+    transition: margin-left 0.3s ease;
+}
+
+/* Khi sidebar mở rộng */
+.sidebar.open ~ .main-content {
+    margin-left: 220px;
+}
+
+
+
         </style>
     </head>    
 
+<<<<<<< HEAD
     <%@ include file="../navbarDashboard/navbarDashboard.jsp" %>
     <%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
 
     <body <c:if test="${empty customer}">onload="showAccountChoicePopup()"</c:if>>
             <div class="dashboard-container">
 
+=======
+
+
+
+    <body <c:if test="${empty customer}">onload="showAccountChoicePopup()"</c:if>>
+        <%@ include file="../navbarDashboard/navbarDashboard.jsp" %>
+
+        <div class="dashboard-layout">
+            <%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
+             <div class="main-content" id="main-content">
+>>>>>>> ca14ef794ea1e54fbb140d4ca31390f8737e751a
 
                 <!-- Modal chọn loại tài khoản -->
                 <div id="accountModal" class="modal">
@@ -199,6 +232,7 @@
 
 
 
+<<<<<<< HEAD
             <c:if test="${not empty customer}">
                 <h2>Customer: ${customer.fullName}</h2>
                 <p><strong>Phone: </strong> ${customer.phone}</p>
@@ -298,6 +332,91 @@
                     </table>
                 </c:if>
             </c:if>
+=======
+                <c:if test="${not empty customer}">
+                    <h2>Customer: ${customer.fullName}</h2>
+                    <p><strong>Phone: </strong> ${customer.phone}</p>
+                    <c:if test="${not empty customer.identityNumber}">
+                        <p><strong>Identity Number:</strong> ${customer.identityNumber}</p>
+                    </c:if>
+
+
+                    <c:if test="${!customer.registered}">
+                        <p style="color: #ff9900;"><em>Temporary account</em></p>
+                    </c:if>
+
+                    <form method="get" action="CheckExistingCustomer">
+                        <input type="hidden" name="action" value="logoutCustomer" />
+                        <button type="submit" style="background-color: crimson; color: white; padding: 8px 16px; border: none; border-radius: 4px; display: flex">
+                            Exit
+                        </button>
+                    </form>
+
+
+                    <!-- Tìm phòng -->
+                    <div class="search-box">
+                        <form method="post" action="CreateBooking" class="search-form">
+                            <label>Check in:
+                                <input type="date" id="startDate" name="startDate"
+                                       value="${startDate}" required />
+                            </label>
+                            <label>Check out:
+                                <input type="date" id="endDate" name="endDate"
+                                       value="${endDate}" required />
+                            </label>
+                            <label>Adult:
+                                <input type="number" name="adults" id="adults" value="${adults}" min="1" required />
+                            </label>
+                            <label>Children:
+                                <input type="number" name="children" id="children" value="${children}" min="0" required />
+                            </label>
+
+                            <input type="hidden" name="action" value="searchRoom" />
+                            <button type="submit">Find available rooms</button>
+                        </form>
+                    </div>
+
+
+                    <!-- Danh sách phòng -->
+                    <c:if test="${not empty rooms}">
+                        <h3>List of available room types</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Room</th>
+                                    <th>Type</th>
+                                    <th>Price</th>
+                                    <th>Max Occupancy</th>
+                                    <th>Booking</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="room" items="${rooms}">
+                                    <tr>
+                                        <td>${room.roomNumber}</td>
+                                        <td>${room.roomType}</td>
+                                        <td>${room.price} VNĐ</td>
+                                        <td>${room.maxOccupancy} People</td> 
+                                        <td>
+                                            <form method="post" action="CreateBooking">
+                                                <input type="hidden" name="action" value="bookRoom" />
+                                                <input type="hidden" name="roomId" value="${room.roomId}" />
+                                                <input type="hidden" name="startDate" value="${startDate}" />
+                                                <input type="hidden" name="endDate" value="${endDate}" />
+                                                <input type="hidden" name="adults" value="${adults}" />
+                                                <input type="hidden" name="children" value="${children}" />
+                                                <button type="submit">Booking</button>
+                                            </form>
+
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </c:if>
+                </c:if>
+            </div>
+>>>>>>> ca14ef794ea1e54fbb140d4ca31390f8737e751a
         </div>
         <script>
             function showAccountChoicePopup() {
@@ -384,6 +503,22 @@
                 validateNumberInput(adultsInput, 1);    // Người lớn phải >= 1
                 validateNumberInput(childrenInput, 0);  // Trẻ em >= 0
             });
+
+
+function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    const mainContent = document.getElementById("main-content");
+
+    sidebar.classList.toggle("open");
+
+    if (sidebar.classList.contains("open")) {
+        mainContent.style.marginLeft = "220px";
+    } else {
+        mainContent.style.marginLeft = "60px";
+    }
+}
+
+
         </script>
 
 
