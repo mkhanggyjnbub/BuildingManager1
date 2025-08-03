@@ -25,7 +25,8 @@
                 font-size: 24px;
                 color: #2c3e50;
                 margin-bottom: 20px;
-                text-align: center;
+                text-align: center;    
+                margin-top: 100px;
             }
 
             .voucher-list {
@@ -134,6 +135,7 @@
 
     </head>
     <body>
+        <%@include file="../header/header.jsp"%> 
         <h1 class="title">🎁 Voucher Warehouse</h1>
 
         <div class="voucher-list">
@@ -180,6 +182,8 @@
                 </div>
             </c:forEach>
         </div>
+        
+ 
     </body>
 
 </html>

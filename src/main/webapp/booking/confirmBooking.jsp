@@ -841,9 +841,7 @@
         </main>
 
     </body>
-    <footer>
-        © 2025 MyHotel. Địa chỉ: 123 Nguyễn Trãi, Hà Nội. Hotline: 1900 9999
-    </footer>
+           <%@include file="../footer/footer.jsp" %>
 
 </body>
 

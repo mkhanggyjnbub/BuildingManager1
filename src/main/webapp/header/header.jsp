@@ -110,7 +110,7 @@
     .dichvukhachhang-name {
         font-weight: bold;
         color: #fff;
-        padding: 8px 12px;
+      
     }
 
     .dichvukhachhang-content {
@@ -149,8 +149,8 @@
         <a href="Index">Home</a>
         <a href="ViewRooms">Rooms</a>
 
-        <a href="ViewVouchers">voucher warehouse</a>
-        <a href="#">Liên hệ</a>
+       <%-- <a href="ViewVouchers">voucher warehouse</a> --%>
+       <%--  <a href="#">Liên hệ</a>--%>
                 <!--<a href="UpImage">Up ảnh</a>-->
                 <!--
 >>>>>>> 5df086ec3e126c5c1a51ea75abb3800cbd341bc1
@@ -207,7 +207,7 @@
                     <div class="dichvukhachhang-name">${userName}</div>
                     <div class="dichvukhachhang-content">
                         <a href="ViewCustomerProfile?id=${customerId}">🔹 My Account</a>
-                        <a href="ViewServicesCart">🔹 Order Services</a>
+<!--                        <a href="ViewServicesCart">🔹 Order Services</a>-->
                         <a href="ViewBookingHistory">🔹 Đơn đặt phòng</a>
                         <!--                        
                                                 <a href="#">🔹 Lịch sử thanh toán</a>
