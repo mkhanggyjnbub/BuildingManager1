@@ -184,8 +184,6 @@
             <h2>Welcome to the Admin Dashboard</h2>
             <p>Use the sidebar to manage users, bookings, amenities, and more.</p>
 
-            <h2>Welcome to the Admin Dashboard</h2>
-            <p>Use the sidebar to manage users, bookings, amenities, and more.</p>
 
             <!-- ====== ROOM TYPE CHART ====== -->
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 30px;">
