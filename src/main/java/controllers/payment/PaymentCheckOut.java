@@ -2,9 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.booking;
+package controllers.payment;
 
 import dao.BookingDao;
+import dao.ExtraChargeDao;
+import dao.InvoiceDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,17 +14,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import models.Bookings;
+import models.ExtraCharge;
+import models.Invoices;
 
 /**
  *
- * @author Dương Đinh Thế Vinh
+ * @author dodan
  */
-@WebServlet(name = "ViewBookingDetail", urlPatterns = {"/ViewBookingDetail"})
-public class ViewBookingDetail extends HttpServlet {
+@WebServlet(name = "PaymentCheckOut", urlPatterns = {"/PaymentCheckOut"})
+public class PaymentCheckOut extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +43,10 @@ public class ViewBookingDetail extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewBookingDetail</title>");
+            out.println("<title>Servlet PaymentCheckOut</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewBookingDetail at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet PaymentCheckOut at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,34 +62,38 @@ public class ViewBookingDetail extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            int bookingId = Integer.parseInt(request.getParameter("bookingId"));
 
-    String bookingIdParam = request.getParameter("bookingId");
+            // Lấy booking
+            BookingDao bookingDao = new BookingDao();
+            Bookings booking = bookingDao.getBookingById(bookingId);
+            request.setAttribute("booking", booking);
 
-    if (bookingIdParam == null || bookingIdParam.isEmpty()) {
-        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Booking ID is required");
-        return;
-    }
+            // Tính tổng phụ thu (price)
+            ExtraChargeDao extraChargeDao = new ExtraChargeDao();
+            List<ExtraCharge> extraCharges = extraChargeDao.getByBookingId(bookingId);
 
-    try {
-        int bookingId = Integer.parseInt(bookingIdParam);
-        BookingDao bookingDao = new BookingDao();
-        Bookings booking = bookingDao.getBookingDetail(bookingId);
+            long price = 0;
+            for (ExtraCharge ec : extraCharges) {
+                price += ec.getUnitPrice() * ec.getQuantity();
+            }
+            request.setAttribute("price", price);
 
-        if (booking != null) {
-            request.setAttribute("bookingDetail", booking);
-            request.getRequestDispatcher("booking/viewBookingDetail.jsp").forward(request, response);
-        } else {
-            request.setAttribute("error", "Booking not found");
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Booking not found"); //  chuyển vào bên trong
+            // Lấy hóa đơn
+            InvoiceDao invoiceDao = new InvoiceDao();
+            Invoices invoice = invoiceDao.getByBookingId(bookingId);
+            request.setAttribute("invoice", invoice);
+
+            // Chuyển tiếp sang JSP
+            request.getRequestDispatcher("payment/paymentCheckOut.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("error.jsp");
         }
-
-    } catch (SQLException ex) {
-        Logger.getLogger(ViewBookingDetail.class.getName()).log(Level.SEVERE, null, ex);
-        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Database error"); //  truyền vào catch
     }
-}
 
     /**
      * Handles the HTTP <code>POST</code> method.

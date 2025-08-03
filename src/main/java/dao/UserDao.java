@@ -34,7 +34,7 @@ public class UserDao {
         conn = ConnectData.getConnection();
     }
 
-    public static String md5(String input) {
+    public String md5(String input) {
         try {
             // Tạo đối tượng MessageDigest với thuật toán MD5
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -102,6 +102,7 @@ public class UserDao {
             String sql = "	SELECT  \n"
                     + "		u.UserId,\n"
                     + "		UserName,\n"
+                    + "         Status, \n"
                     + "		Email,\n"
                     + "		r.RoleName\n"
                     + "	FROM    \n"
@@ -123,6 +124,7 @@ public class UserDao {
                 user.setUserId(rs.getInt("UserId"));
                 user.setUserName(rs.getString("UserName"));
                 user.setEmail(rs.getString("email"));
+                user.setStatus(rs.getString("Status"));
                 role.setRoleName(rs.getString("RoleName"));
                 user.setRole(role);
                 listUser.add(user);
@@ -435,7 +437,80 @@ public class UserDao {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return cnt;
+    }
+    public int createStaff(Users newUser) {
+        int check = 0;
+        String sql = "INSERT INTO Users (UserName, Password, Email, IdentityNumber, Phone, RoleId, "
+                + "CreationDate, Gender, Status, AvatarUrl) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, newUser.getUserName());
+            ps.setString(2, newUser.getPassword());
+            ps.setString(3, newUser.getEmail());
+            ps.setString(4, newUser.getIdentityNumber());
+            ps.setString(5, newUser.getPhone());
+            ps.setInt(6, newUser.getRoleId());
+            ps.setTimestamp(7, Timestamp.valueOf(newUser.getCreationDate())); // LocalDateTime -> Timestamp
+            ps.setString(8, newUser.getGender());
+            ps.setString(9, newUser.getStatus());
+            ps.setString(10, newUser.getAvatarUrl());
+
+            check = ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return check;
+    }
+
+    public boolean isUserNameExists(String userName) {
+        String sql = "SELECT 1 FROM Users WHERE UserName = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, userName);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean isEmailExists(String email) {
+        String sql = "SELECT 1 FROM Users WHERE Email = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean isIdentityNumberExists(String identityNumber) {
+        String sql = "SELECT 1 FROM Users WHERE IdentityNumber = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, identityNumber);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deleteStaff(int userId, String status) {
+        String sql = "UPDATE Users SET Status = ? WHERE UserId = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, status);
+            ps.setInt(2, userId);
+            int rowsUpdated = ps.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

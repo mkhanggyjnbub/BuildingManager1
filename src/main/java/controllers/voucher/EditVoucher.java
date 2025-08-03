@@ -110,7 +110,7 @@ public class EditVoucher extends HttpServlet {
             v.setQuantity(Integer.parseInt(request.getParameter("quantity")));
             v.setIsActive(isActiveNew);
 
-            // ✅ Nếu người dùng bật Active thì kiểm tra xem có trùng code không
+            //  Nếu người dùng bật Active thì kiểm tra xem có trùng code không
             if (isActiveNew) {
                 boolean conflict = dao.isCodeConflictWhenActivating(v.getCode(), v.getStartDate(), v.getEndDate(), v.getVoucherId());
                 if (conflict) {

@@ -4,8 +4,6 @@
  */
 package controllers.admin;
 
-import dao.PaginationDao;
-import dao.RoomDao;
 import dao.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,16 +12,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.ResultSet;
-import java.util.List;
+import java.time.LocalDateTime;
 import models.Users;
 
 /**
  *
- * @author Kiều Hoàng Mạnh Khang - ce180749
+ * @author dodan
  */
-@WebServlet(name = "Dashboard", urlPatterns = {"/Dashboard"})
-public class Dashboard extends HttpServlet {
+@WebServlet(name = "CreateStaff", urlPatterns = {"/CreateStaff"})
+public class CreateStaff extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +39,10 @@ public class Dashboard extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Admin</title>");
+            out.println("<title>Servlet CreateUserDashboard</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Admin at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CreateUserDashboard at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,37 +60,7 @@ public class Dashboard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        // Lấy giá trị lọc thời gian cho biểu đồ loại phòng
-        String period = request.getParameter("period");
-        if (period == null || period.isEmpty()) {
-            period = "week"; // mặc định là tuần
-        }
-
-        // Lấy giá trị lọc thời gian cho biểu đồ doanh thu
-        String revenuePeriod = request.getParameter("revenuePeriod");
-        if (revenuePeriod == null || revenuePeriod.isEmpty()) {
-            revenuePeriod = "month"; // mặc định là theo tháng
-        }
-
-        try {
-            RoomDao dao = new RoomDao();
-
-            // Biểu đồ loại phòng được đặt nhiều nhất
-            List<Object[]> topRoomTypes = dao.getTopRoomTypes(period);
-            request.setAttribute("topRoomTypes", topRoomTypes);
-            request.setAttribute("period", period); // giữ trạng thái dropdown room type
-
-            // Biểu đồ doanh thu
-            List<Object[]> revenueStats = dao.getRevenueStatistics(revenuePeriod);
-            request.setAttribute("revenueStats", revenueStats);
-            request.setAttribute("revenuePeriod", revenuePeriod); // giữ trạng thái dropdown doanh thu
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        request.getRequestDispatcher("admin/dashboard.jsp").forward(request, response);
+        request.getRequestDispatcher("admin/createStaff.jsp").forward(request, response);
     }
 
     /**
@@ -108,6 +75,63 @@ public class Dashboard extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        String userName = request.getParameter("userName");
+        String password = request.getParameter("password");
+        String email = request.getParameter("email");
+        String identityNumber = request.getParameter("identityNumber");
+        String phone = request.getParameter("phone");
+
+        UserDao dao = new UserDao();
+
+        boolean userNameExists = dao.isUserNameExists(userName);
+        boolean emailExists = dao.isEmailExists(email);
+        boolean identityExists = dao.isIdentityNumberExists(identityNumber);
+
+        if (userNameExists || emailExists || identityExists) {
+            StringBuilder errorMsg = new StringBuilder();
+            if (userNameExists) {
+                errorMsg.append("Username already exists.<br>");
+            }
+            if (emailExists) {
+                errorMsg.append("Email already exists.<br>");
+            }
+            if (identityExists) {
+                errorMsg.append("Identity Number already exists.<br>");
+            }
+
+            request.setAttribute("error", errorMsg.toString());
+
+            // Preserve user input
+            request.setAttribute("userName", userName);
+            request.setAttribute("email", email);
+            request.setAttribute("identityNumber", identityNumber);
+            request.setAttribute("phone", phone);
+
+            request.getRequestDispatcher("admin/createStaff.jsp").forward(request, response);
+            return;
+        }
+
+        // If not duplicate, proceed to create
+        Users newUser = new Users();
+        newUser.setUserName(userName);
+        newUser.setPassword(dao.md5(password));
+        newUser.setEmail(email);
+        newUser.setIdentityNumber(identityNumber);
+        newUser.setPhone(phone);
+        newUser.setRoleId(2);
+        newUser.setCreationDate(LocalDateTime.now());
+        newUser.setGender("Other");
+        newUser.setStatus("1");
+        newUser.setAvatarUrl("images/default.jpg");
+
+        int check = dao.createStaff(newUser);
+
+        if (check > 0) {
+            response.sendRedirect("DashboardUser");
+        } else {
+            request.setAttribute("error", "Failed to create staff account.");
+            request.getRequestDispatcher("admin/createStaff.jsp").forward(request, response);
+        }
     }
 
     /**

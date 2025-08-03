@@ -160,29 +160,22 @@
                     </execution>
                 </executions>
             </plugin>
-             <plugin>
-    <groupId>com.github.spotbugs</groupId>
-    <artifactId>spotbugs-maven-plugin</artifactId>
-    <version>4.7.3.0</version>
-    <executions>
-        <execution>
-            <goals>
-                <goal>check</goal>
-                <goal>spotbugs</goal>
-            </goals>
-        </execution>
-    </executions>
-    <configuration>
-        <effort>Max</effort>
-        <threshold>Low</threshold>
-        <failOnError>false</failOnError>
-        <xmlOutput>true</xmlOutput>
-        <htmlOutput>true</htmlOutput>
-        <outputDirectory>${project.build.directory}/spotbugs</outputDirectory>
-    </configuration>
-</plugin>
 
-    </plugins>
-</build>
+
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>4.7.3.0</version>
+                <configuration>
+                    <effort>Max</effort>
+                    <threshold>Low</threshold>
+                    <xmlOutput>true</xmlOutput>
+                    <outputDirectory>${project.build.directory}/spotbugs</outputDirectory>
+                </configuration>
+            </plugin>
+  </plugins>
+        
+        
+    </build>
 
 </project>

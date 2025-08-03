@@ -7,6 +7,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <!DOCTYPE html>
 <html>
@@ -333,15 +335,15 @@
                     document.getElementById('detailPopup-' + id).style.display = 'none';
                 }
             }
-            
+
             //highlight
-             window.onload = function () {
-        const url = new URL(window.location);
-        if (url.searchParams.has("highlightId")) {
-            url.searchParams.delete("highlightId");
-            window.history.replaceState({}, document.title, url.pathname); // không reload, chỉ xóa param
-        }
-    };
+            window.onload = function () {
+                const url = new URL(window.location);
+                if (url.searchParams.has("highlightId")) {
+                    url.searchParams.delete("highlightId");
+                    window.history.replaceState({}, document.title, url.pathname); // không reload, chỉ xóa param
+                }
+            };
         </script>
     </head>
     <body>
@@ -351,26 +353,43 @@
         <div class="content-wrapper">
             <c:if test="${sessionScope.bookingConfirmed}"><script>window.onload = () => alert('Booking confirmed!');</script><c:remove var="bookingConfirmed" scope="session"/></c:if>
 
-                <h1>Booking Confirmation List</h1>
-
                 <!-- báo lỗi hết loại phòng -->
             <c:if test="${noRoomTypeAlert}">
                 <script>
                     alert("❌ There are no more rooms of this type available during the selected period!");
                 </script>
             </c:if>
+            <!-- tìm kiếm đơn-->
+            <c:if test="${searched and noResult}">
+                <script>
+                    window.onload = function () {
+                        alert("🔍 No matching results found!");
+                    };
+                </script>
+            </c:if>
 
-            <c:if test="${searched and noResult}"><script>window.onload = showNoResultsPopup;</script></c:if>
-                <form action="BookingConfirmation" method="post">
-                    Room Type: <input type="text" name="roomType" maxlength="30" title="Only letters" oninput="removeNumbers(this)" />
-                    Full Name: <input type="text" name="fullName" maxlength="30" title="Only letters" oninput="removeNumbers(this)" />
-                    Start Date: <input type="date" name="startDate" value="${startDate}" />
-                End Date: <input type="date" name="endDate" value="${endDate}" />
-                Status: <select name="status"><option value="">-- All --</option><option value="Waiting for processing" ${status=='Waiting for processing'?'selected':''}>Waiting</option><option value="Confirmed" ${status=='Confirmed'?'selected':''}>Confirmed</option></select>
-                <button type="submit">Search</button>
-            </form>
-            <c:set var="highlightId" value="${param.highlightId}" />
-            <div class="table-responsive">
+
+            <h1>Booking Confirmation List</h1><!-- comment -->
+
+            <form action="BookingConfirmation" method="post">
+                Room Type:
+                <input type="text" name="roomType" value="${roomType}" placeholder="e.g. Deluxe" />
+                Full Name:
+                <input type="text" name="fullName" value="${fullName}" placeholder="e.g. John Doe" />
+                Start Date:
+                <input type="date" name="startDate" value="${startDate}" />
+                End Date:
+                <input type="date" name="endDate" value="${endDate}" />
+                Status:
+                <select name="status">
+                    <option value="">-- All --</option>
+                    <option value="Waiting for processing" <c:if test="${status == 'Waiting for processing'}">selected</c:if>>Waiting</option>
+                    <option value="Confirmed" <c:if test="${status == 'Confirmed'}">selected</c:if>>Confirmed</option>
+                    </select>
+                    <button type="submit">Search</button>
+                </form>
+
+                <!-- Danh sách booking -->
                 <table>
                     <thead>
                         <tr>
@@ -384,49 +403,67 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="booking" items="${booking}">
-                            <tr class="${highlightId == booking.bookingId ? 'highlight-row' : ''}">
-                                <td data-label="Room Number">${booking.roomType}</td>
-                                <td data-label="Full Name">${booking.customers.fullName}</td>
-                                <td data-label="Start Date">${booking.formattedStartDate}</td>
-                                <td data-label="End Date">${booking.formattedEndDate}</td>
+                    <c:forEach var="booking" items="${bookingList}">
+                        <tr>
+                            <td>${booking.roomType}</td>
+                            <td>${booking.customers.fullName}</td>
+                            <td>${booking.formattedStartDate}</td>
+                            <td>${booking.formattedEndDate}</td>
+                            <td>
+                                <a href="ViewBookingDetail?bookingId=${booking.bookingId}">
+                                    <button>View Detail</button>
+                                </a>
+                            </td>
+                            <td>
+                                <c:if test="${booking.status eq 'Waiting for processing'}">
+                                    <button onclick="openConfirmationPopup(${booking.bookingId})">Waiting</button>
+                                    <div id="popup-confirm-${booking.bookingId}" class="popup-overlay">
+                                        <div class="popup-box">
+                                            <p>How do you want to confirm this booking?</p>
+                                            <form action="SelectRoom" method="get">
+                                                <input type="hidden" name="bookingId" value="${booking.bookingId}" />
+                                                <button type="submit">✔️ Select Room</button>
+                                            </form>
+                                            <form action="BookingConfirmation" method="post">
+                                                <input type="hidden" name="bookingId" value="${booking.bookingId}" />
+                                                <input type="hidden" name="actionType" value="confirmBooking" />
+                                                <button type="submit">✅ Confirm without Room</button>
+                                            </form>
+                                            <button class="popup-close" onclick="closePopup(${booking.bookingId})">Cancel</button>
+                                        </div>
+                                    </div>
+                                </c:if>
+                                <c:if test="${booking.status eq 'Confirmed'}">
+                                    <span class="confirmed">Confirmed</span>
+                                </c:if>
+                            </td>
+                            <td>
+                                <form id="cancelForm-${booking.bookingId}" action="BookingCancel" method="post">
+                                    <input type="hidden" name="bookingId" value="${booking.bookingId}" />
+                                    <input type="hidden" name="notes" id="notesInput-${booking.bookingId}" />
+                                    <button type="button" onclick="openCancelModal('${booking.bookingId}')">Cancel</button>
+                                </form>
 
-                                <td data-label="Detail">
-                                    <a href="ViewBookingDetail?bookingId=${booking.bookingId}">
-                                        <button class="waiting">View Detail</button>
-                                    </a>
-                                </td>
-
-                                <td data-label="Status">
-                                    <c:if test="${booking.status eq 'Waiting for processing'}">
-                                        <button class="waiting" onclick="openConfirmationPopup(${booking.bookingId})">Waiting</button>
-                                        <!-- popup code ở đây -->
-                                    </c:if>
-                                    <c:if test="${booking.status eq 'Confirmed'}">
-                                        <span class="confirmed">Confirmed</span>
-                                    </c:if>
-                                </td>
-
-                                <td data-label="Cancel" style="text-align:center;">
-                                    <form id="cancelForm-${booking.bookingId}" action="BookingCancel" method="post">
-                                        <input type="hidden" name="bookingId" value="${booking.bookingId}" />
-                                        <input type="hidden" name="notes" id="notesInput-${booking.bookingId}" />
-                                        <button type="button" class="cancel" onclick="openCancelModal('${booking.bookingId}')">Cancel</button>
-                                    </form>
-                                    <!-- modal code ở đây -->
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="load-more-wrapper">
-                <button id="loadMoreBtn" style="padding:8px 16px;">See more</button>
-            </div>
-
-            <div id="noResultsPopup" class="popup-overlay" style="display:none;"><div class="popup-box"><p>🔍 No matching results found!</p><button onclick="closePopup()">OK</button></div></div>
+                                <div id="cancelModal-${booking.bookingId}" class="cancel-modal">
+                                    <div class="modal-content">
+                                        <h3>❌ Cancel Booking</h3>
+                                        <textarea id="notesTextarea-${booking.bookingId}" rows="4" placeholder="Enter reason for cancellation..."></textarea>
+                                        <div class="modal-actions">
+                                            <button type="button" onclick="confirmReason('${booking.bookingId}')">Confirm</button>
+                                            <button type="button" onclick="closeCancelModal('${booking.bookingId}')">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
         </div>
 
-    </body>
+        <div class="load-more-wrapper">
+            <button id="loadMoreBtn" style="padding:8px 16px;">See more</button>
+        </div>
+    </div>
+</body>
 </html>

@@ -148,8 +148,6 @@
     <nav id="nav-menu">
         <a href="Index">Home</a>
         <a href="ViewRooms">Rooms</a>
-
-
                 <!--<a href="UpImage">Up ảnh</a>-->
                 <!--
 >>>>>>> 5df086ec3e126c5c1a51ea75abb3800cbd341bc1
@@ -165,7 +163,9 @@
                         <a href="Notification">Notification</a>
                         <a href="TakeNotification">Nhận Notification</a>-->
         <!--        <a href="ViewVouchers">voucher</a>-->
-        <c:if test="${not empty customerId  }">   <a href="UserVouchers">User voucher</a></c:if>
+        <c:if test="${not empty customerId  }">  
+            <a href="ViewVouchers">voucher warehouse</a>
+            <a href="UserVouchers">User voucher</a></c:if>
             <a href="ViewNews">News</a>
 
 

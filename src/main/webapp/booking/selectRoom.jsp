@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Phòng trống</title>
+        <title>Select Room</title>
         <style>
             body {
                 font-family: 'Segoe UI', sans-serif;
@@ -158,9 +158,7 @@
         </style>
     </head>
     <body>
-        
-        
-        
+
         <c:if test="${noRoomTypeAlert}">
             <script>
                 window.onload = function () {
@@ -168,16 +166,16 @@
                 };
             </script>
         </c:if>
-            <%@ include file="../navbarDashboard/navbarDashboard.jsp" %>
-<%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
-    
+
+        <%@ include file="../navbarDashboard/navbarDashboard.jsp" %>
+        <%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
+
         <div class="booking-section">
             <h2>📅 Booking time information</h2>
-
+          <%-- 
             <form action="SelectRoom" method="post" class="booking-date-form">
                 <input type="hidden" name="bookingId" value="${bookingId}" />
-                <input type="hidden" name="roomType" value="${room.roomType}" />
-
+                <input type="hidden" name="roomType" value="${roomType}" />
 
                 <div class="form-group">
                     <label for="customStart">📅 <strong>Check-in date:</strong></label>
@@ -195,9 +193,7 @@
                     <button type="submit" class="search-room-btn">🔍 Find available rooms</button>
                 </div>
             </form>
-
-
-
+ --%>
             <c:forEach var="floorEntry" items="${roomsByFloor}">
                 <h3 class="floor-heading">Floor ${floorEntry.key}</h3>
                 <div class="room-grid">
@@ -205,20 +201,20 @@
                         <div class="room-card">
                             <p><strong>Room:</strong> ${room.roomNumber}</p>
                             <p><strong>Room type:</strong> ${room.roomType}</p>
-                            <p><strong>Price:</strong> ${room.price}₫</p>
+
                             <form action="BookingConfirmation" method="post">
                                 <input type="hidden" name="roomId" value="${room.roomId}" />
                                 <input type="hidden" name="bookingId" value="${bookingId}" />
+                                <input type="hidden" name="roomType" value="${roomType}" />
                                 <input type="hidden" name="actionType" value="confirmBooking" />
+
                                 <button type="submit" class="confirm-btn">✔️ Select Room</button>
                             </form>
                         </div>
                     </c:forEach>
                 </div>
             </c:forEach>
-
-
+        </div>
 
     </body>
-
 </html>

@@ -4,30 +4,23 @@
  */
 package models;
 
+import java.time.LocalDateTime;
+
 /**
  *
  * @author Kiều Hoàng Mạnh Khang - ce180749
  */
 public class Invoices {
+
     private int invoiceId;
     private int bookingId;
-   private long invoiceDate;
-   private long roomPriceTotal;
-   private long discount;
-   private long totalAmount;
-   private long status;
-   private long paidAmount;
-
-    public Invoices(int invoiceId, int bookingId, long invoiceDate, long roomPriceTotal, long discount, long totalAmount, long status, long paidAmount) {
-        this.invoiceId = invoiceId;
-        this.bookingId = bookingId;
-        this.invoiceDate = invoiceDate;
-        this.roomPriceTotal = roomPriceTotal;
-        this.discount = discount;
-        this.totalAmount = totalAmount;
-        this.status = status;
-        this.paidAmount = paidAmount;
-    }
+    private LocalDateTime invoiceDate;
+    private long roomPriceTotal;
+    private long discount;
+    private long totalAmount;
+    private boolean status;
+    private long paidAmount;
+    private long serviceTotal;
 
     public Invoices() {
     }
@@ -48,11 +41,11 @@ public class Invoices {
         this.bookingId = bookingId;
     }
 
-    public long getInvoiceDate() {
+    public LocalDateTime getInvoiceDate() {
         return invoiceDate;
     }
 
-    public void setInvoiceDate(long invoiceDate) {
+    public void setInvoiceDate(LocalDateTime invoiceDate) {
         this.invoiceDate = invoiceDate;
     }
 
@@ -80,11 +73,11 @@ public class Invoices {
         this.totalAmount = totalAmount;
     }
 
-    public long getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(long status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
@@ -95,6 +88,14 @@ public class Invoices {
     public void setPaidAmount(long paidAmount) {
         this.paidAmount = paidAmount;
     }
-    
+
+    public long getServiceTotal() {
+        return serviceTotal;
+    }
+
+    public void setServiceTotal(long serviceTotal) {
+        this.serviceTotal = serviceTotal;
+    }
+
     
 }

@@ -82,12 +82,23 @@ public class BookingCancel extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        if (session == null || session.getAttribute("staffId") == null) {
+
+        Object staffObj = session.getAttribute("staffId");
+        Object receptionObj = session.getAttribute("reception");
+
+        String userIdStr = null;
+        if (staffObj != null) {
+            userIdStr = String.valueOf(staffObj);
+        } else if (receptionObj != null) {
+            userIdStr = String.valueOf(receptionObj);
+        }
+
+        if (userIdStr == null) {
             response.sendRedirect("Login");
             return;
         }
 
-        int canceledBy = Integer.parseInt(session.getAttribute("staffId").toString());
+        int canceledBy = Integer.parseInt(userIdStr);
 
         try {
             int bookingId = Integer.parseInt(request.getParameter("bookingId"));

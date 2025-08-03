@@ -4,6 +4,7 @@
  */
 package controllers.room;
 
+import dao.BookingDao;
 import dao.RoomDao;
 import dao.RoomReviewDao;
 import java.io.IOException;
@@ -114,18 +115,42 @@ public class ViewRoomDetail extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        int roomId = Integer.parseInt(request.getParameter("roomId"));
-        int customerId = Integer.parseInt(session.getAttribute("customerId").toString());
-        int rating = Integer.parseInt(request.getParameter("rating"));
-        String comment = request.getParameter("comment");
-        RoomReviewDao roomReview = new RoomReviewDao();
-        int cnt = roomReview.addReview(roomId, customerId, rating, comment);
-        if (cnt != 0) {
-            response.sendRedirect("ViewRoomDetail?id=" + roomId);
-        } else {
-            response.sendRedirect("Error");
+        Object cusObj = session.getAttribute("customerId");
+
+        if (cusObj == null) {
+            response.sendRedirect("Login");
+            return;
         }
 
+        int customerId = Integer.parseInt(cusObj.toString());
+        int roomId = Integer.parseInt(request.getParameter("roomId"));
+        int rating = Integer.parseInt(request.getParameter("rating"));
+        String comment = request.getParameter("comment");
+
+        BookingDao bookingDao = new BookingDao();
+        RoomReviewDao reviewDao = new RoomReviewDao();
+
+        int bookingCount = bookingDao.countBookingsByRoomAndCustomer(roomId, customerId);
+        System.out.println("bookingCount" + bookingCount);
+
+        int reviewCount = reviewDao.countReviewsByRoomAndCustomer(roomId, customerId);
+        System.out.println("reviewCount" + reviewCount);
+        if (bookingCount > reviewCount) {
+            int cnt = reviewDao.addReview(roomId, customerId, rating, comment);
+            response.sendRedirect("ViewRoomDetail?id=" + roomId);
+        } else {
+            // Không cho gửi review, quay lại trang và gán lỗi
+            request.setAttribute("roomId", roomId); // gửi lại roomId
+            request.setAttribute("reviewError", "You have not booked this room or have rated it enough times.");
+
+            // Lấy lại dữ liệu phòng và review để hiển thị
+            RoomDao roomDao = new RoomDao();
+            Rooms room = roomDao.getRoomDetail(roomId);
+            List<RoomReviews> customerReview = reviewDao.getReviewsByRoomId(roomId);
+            request.setAttribute("room", room);
+            request.setAttribute("customerReview", customerReview);
+            request.getRequestDispatcher("room/viewRoomDetail.jsp").forward(request, response);
+        }
     }
 
     /**

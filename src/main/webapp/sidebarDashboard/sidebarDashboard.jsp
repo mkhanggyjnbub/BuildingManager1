@@ -188,12 +188,12 @@
     }
 
 
-    
+
     .menu li a.active {
-    background-color: var(--hover-bg);
-    font-weight: bold;
-    padding-left: 28px;
-}
+        background-color: var(--hover-bg);
+        font-weight: bold;
+        padding-left: 28px;
+    }
 
 </style>
 
@@ -208,9 +208,9 @@
         <li style="--i:1"><a href="ViewStaffsForDashboard"><i class="fa-solid fa-user"></i><span>Users</span></a></li>
         <li style="--i:2"><a href="VouchersDashBoard"><i class="fa-solid fa-ticket"></i><span>Vouchers</span></a></li>
         <li style="--i:3"><a href="ViewNewsDashboard"><i class="fa-solid fa-newspaper"></i><span>News</span></a></li>
-        
+
         <li style="--i:3"><a href="CreateBooking"><i class="fa-solid fa-calendar-check"></i><span>Desk Booking</span></a></li>
-        
+
         <li style="--i:4"><a href="BookingConfirmation"><i class="fa-solid fa-calendar-check"></i><span>Bookings</span></a></li>
         <li style="--i:5"><a href="ViewAllRoomsForDashboard"><i class="fa-solid fa-bed"></i><span>List Rooms</span></a></li>
         <li style="--i:6"><a href="ViewServicesDashboard"><i class="fa-solid fa-concierge-bell"></i><span>Services</span></a></li>
@@ -238,9 +238,9 @@
         const sidebar = document.getElementById("sidebar");
         sidebar.classList.toggle("open");
     }
-    
-    
-     document.addEventListener("DOMContentLoaded", function () {
+
+
+    document.addEventListener("DOMContentLoaded", function () {
         const links = document.querySelectorAll(".menu li a");
         const currentUrl = window.location.href;
 

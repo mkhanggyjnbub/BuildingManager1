@@ -13,6 +13,7 @@
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/src/main/webapp/extraCharge (1)/createExtraCharge.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/extraCharge/createExtraCharge.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/extraCharge (1)/viewAllExtraCharge.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/extraCharge/viewAllExtraCharge.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT.war" afterDir="false" />
@@ -20,11 +21,39 @@
       <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/extraCharge (1)/viewAllExtraCharge.jsp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/Account/Logout.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/Account/Logout.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/booking/BookingCancel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/booking/BookingCancel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/booking/BookingConfirmation.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/booking/BookingConfirmation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/booking/CreateBooking.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/booking/CreateBooking.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/booking/SelectRoom.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/booking/SelectRoom.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/checkInOut/CheckInOutDetail.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/checkInOut/CheckInOutDetail.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/checkInOut/ComfirmCheckIn.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/checkInOut/ComfirmCheckIn.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/checkInOut/SelectAvailableRoom.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/checkInOut/SelectAvailableRoom.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/checkInOut/ViewAllCheckInOutDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/controllers/checkInOut/ViewAllCheckInOutDashboard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/dao/BookingDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/dao/BookingDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/Bookings.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/BuildingWeb-1.0-SNAPSHOT/WEB-INF/classes/models/Bookings.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controllers/Account/Logout.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/Account/Logout.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controllers/booking/BookingCancel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/booking/BookingCancel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controllers/booking/BookingConfirmation.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/booking/BookingConfirmation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controllers/booking/CreateBooking.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/booking/CreateBooking.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controllers/booking/SelectRoom.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/booking/SelectRoom.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controllers/checkInOut/CheckInOutDetail.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/checkInOut/CheckInOutDetail.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controllers/checkInOut/ComfirmCheckIn.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/checkInOut/ComfirmCheckIn.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controllers/checkInOut/SelectAvailableRoom.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/checkInOut/SelectAvailableRoom.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controllers/checkInOut/ViewAllCheckInOutDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controllers/checkInOut/ViewAllCheckInOutDashboard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/BookingDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/BookingDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/models/Bookings.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/models/Bookings.class" afterDir="false" />
+>>>>>>> 6bd8991cc0b3b1cf7c1e233af5b257d37c7b7c17
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FindBugs-IDEA-Workspace">
+    <toolWindowGroupBy>Priority</toolWindowGroupBy>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -45,6 +74,7 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "JavaScript Debug.index.jsp.executor": "Debug",
@@ -68,8 +98,36 @@
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
+=======
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JavaScript Debug.index.jsp.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;TomEE Server.TomEE 10.0.23.executor&quot;: &quot;Run&quot;,
+    &quot;TomEE Server.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;Tomcat Server.Tomcat 10.0.23.executor&quot;: &quot;Run&quot;,
+    &quot;Tomcat Server.addAmenitiesDashboard.jsp.executor&quot;: &quot;Run&quot;,
+    &quot;Tomcat Server.admin.jsp.executor&quot;: &quot;Run&quot;,
+    &quot;Tomcat Server.index.jsp.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;nhanh__cua__Vinh&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/SWP_Project/BuildingManager1&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+>>>>>>> 6bd8991cc0b3b1cf7c1e233af5b257d37c7b7c17
   }
-}]]></component>
+}</component>
   <component name="RunDashboard">
     <option name="excludedTypes">
       <set>
@@ -79,7 +137,11 @@
     </option>
   </component>
   <component name="RunManager">
+<<<<<<< HEAD
     <configuration name="TomEE 10.0.23" type="TomeeConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="TomEE 10.1.43" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="1.8" nameIsGenerated="true">
+=======
+    <configuration name="TomEE 10.0.23" type="TomeeConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="TomEE 10.0.23" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+>>>>>>> 6bd8991cc0b3b1cf7c1e233af5b257d37c7b7c17
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
         <artifact name="unnamed">
@@ -89,8 +151,12 @@
         </artifact>
       </deployment>
       <server-settings>
+<<<<<<< HEAD
         <option name="BASE_DIRECTORY_NAME" value="b4ee46e5-4570-48db-a11f-78910e7a4c31" />
         <option name="HTTP_PORT" value="8080" />
+=======
+        <option name="BASE_DIRECTORY_NAME" value="e6354324-8c82-40cf-80b1-2c522d83f805" />
+>>>>>>> 6bd8991cc0b3b1cf7c1e233af5b257d37c7b7c17
       </server-settings>
       <predefined_log_file enabled="true" id="Tomcat" />
       <predefined_log_file enabled="true" id="Tomcat Catalina" />
@@ -98,7 +164,11 @@
       <predefined_log_file id="Tomcat Host Manager" />
       <predefined_log_file id="Tomcat Localhost Access" />
       <RunnerSettings RunnerId="Debug">
+<<<<<<< HEAD
         <option name="DEBUG_PORT" value="54403" />
+=======
+        <option name="DEBUG_PORT" value="59808" />
+>>>>>>> 6bd8991cc0b3b1cf7c1e233af5b257d37c7b7c17
       </RunnerSettings>
       <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
         <option name="USE_ENV_VARIABLES" value="true" />
@@ -168,6 +238,7 @@
       </method>
     </configuration>
     <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
+<<<<<<< HEAD
       <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/apache_tomcat_10_0_23/" />
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
@@ -180,11 +251,16 @@
       <server-settings>
         <option name="BASE_DIRECTORY_NAME" value="f434104c-0f86-4149-9ac5-9af4c82c5dd0" />
       </server-settings>
+=======
+      <deployment />
+      <server-settings />
+>>>>>>> 6bd8991cc0b3b1cf7c1e233af5b257d37c7b7c17
       <predefined_log_file enabled="true" id="Tomcat" />
       <predefined_log_file enabled="true" id="Tomcat Catalina" />
       <predefined_log_file id="Tomcat Manager" />
       <predefined_log_file id="Tomcat Host Manager" />
       <predefined_log_file id="Tomcat Localhost Access" />
+<<<<<<< HEAD
       <RunnerSettings RunnerId="Debug">
         <option name="DEBUG_PORT" value="53921" />
       </RunnerSettings>
@@ -248,6 +324,8 @@
           <option name="PROGRAM_PARAMETERS" value="" />
         </SHUTDOWN>
       </ConfigurationWrapper>
+=======
+>>>>>>> 6bd8991cc0b3b1cf7c1e233af5b257d37c7b7c17
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -256,8 +334,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
-        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26094.121" />
+        <option value="bundled-js-predefined-d6986cc7102b-b26f3e71634d-JavaScript-IU-251.26094.121" />
       </set>
     </attachedChunks>
   </component>
@@ -273,8 +351,13 @@
       <workItem from="1750306111224" duration="31000" />
       <workItem from="1750663631133" duration="19000" />
       <workItem from="1750664787629" duration="744000" />
+<<<<<<< HEAD
       <workItem from="1753255779405" duration="231000" />
       <workItem from="1753256017657" duration="7439000" />
+=======
+      <workItem from="1753258963882" duration="2977000" />
+      <workItem from="1753263191634" duration="2124000" />
+>>>>>>> 6bd8991cc0b3b1cf7c1e233af5b257d37c7b7c17
     </task>
     <servers />
   </component>

@@ -21,6 +21,7 @@ import java.util.List;
 import models.Bookings;
 import models.Customers;
 import models.Rooms;
+import models.Users;
 import sendMail.EmailSender;
 
 /**
@@ -69,6 +70,8 @@ public class CreateBooking extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            request.setAttribute("today", LocalDate.now().toString());
+
             String action = request.getParameter("action");
 
             if ("searchRoom".equals(action)) {
@@ -137,20 +140,27 @@ public class CreateBooking extends HttpServlet {
                 int guestCount = adults + children;
 
                 HttpSession session = request.getSession();
+
+                System.out.println("SESSION staffId: " + session.getAttribute("staffId"));
+
                 Customers customer = (Customers) session.getAttribute("customer");
                 String staffIdStr = (String) session.getAttribute("staffId");
+                if (staffIdStr == null) {
+                    staffIdStr = (String) session.getAttribute("reception");
+                }
 
-                if (customer == null || staffIdStr == null) {
+                if (staffIdStr == null) {
                     response.sendRedirect("Login");
                     return;
                 }
-                //check gọi mail
+
+                //check debug gọi mail
                 if (customer != null) {
-                    System.out.println("Tên khách: " + customer.getFullName());
-                    System.out.println("Email khách: " + customer.getEmail());
-                    System.out.println("Customer ID: " + customer.getCustomerId());
+                    System.out.println("name: " + customer.getFullName());
+                    System.out.println("email: " + customer.getEmail());
+                    System.out.println("ID: " + customer.getCustomerId());
                 } else {
-                    System.out.println("Không tìm thấy customer trong session!");
+                    System.out.println("Không thấy customer");
                 }
 
                 int customerId = customer.getCustomerId();
@@ -187,16 +197,16 @@ public class CreateBooking extends HttpServlet {
                                 booking.getRoomType(),
                                 booking.getConfirmationTime()
                         );
-                        System.out.println("Đã gửi Mail tới: " + customer.getEmail());
+                        System.out.println("Email sent to: " + customer.getEmail());
                     } catch (Exception e) {
                         e.printStackTrace();
-                        System.out.println("Gửi mail thất bại: " + e.getMessage());
+                        System.out.println("Email sending failed: " + e.getMessage());
                         request.setAttribute("emailError", true); // Có thể thông báo cho JSP nếu muốn
                     }
 
                 }
 
-                // Load lại danh sách phòng trống mới (không dùng sendRedirect)
+                // Load lại danh sách phòng trống mới
                 RoomDao roomDao = new RoomDao();
                 List<Rooms> availableRooms = roomDao.getAvailableRoomTypes(startDate, endDate, guestCount);
 
@@ -207,14 +217,13 @@ public class CreateBooking extends HttpServlet {
                 request.setAttribute("children", children);
                 request.setAttribute("bookingSuccess", true);
 
-                
-
+                request.setAttribute("today", LocalDate.now().toString());
                 
                 request.getRequestDispatcher("booking/createBooking.jsp").forward(request, response);
                 return;
 
             } else if ("searchRoom".equals(action)) {
-                // Giữ nguyên logic cũ
+
                 LocalDate startDate = LocalDate.parse(request.getParameter("startDate"));
                 LocalDate endDate = LocalDate.parse(request.getParameter("endDate"));
                 int adults = Integer.parseInt(request.getParameter("adults"));
@@ -223,6 +232,8 @@ public class CreateBooking extends HttpServlet {
 
                 RoomDao roomDao = new RoomDao();
                 List<Rooms> availableRooms = roomDao.getAvailableRoomTypes(startDate, endDate, guestCount);
+
+                request.setAttribute("today", LocalDate.now().toString());
 
                 request.setAttribute("rooms", availableRooms);
                 request.setAttribute("startDate", startDate.toString());

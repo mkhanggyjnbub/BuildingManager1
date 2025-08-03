@@ -62,52 +62,63 @@ public class AddExtraCharge extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int bookingId = Integer.parseInt(request.getParameter("bookingId"));
+        try {
+            int bookingId = Integer.parseInt(request.getParameter("bookingId"));
+            String redirect = request.getParameter("redirect"); // redirect nếu có
 
-        BookingDao dao = new BookingDao();
-        Bookings b = dao.getBookingById(bookingId);
+            BookingDao dao = new BookingDao();
+            Bookings b = dao.getBookingById(bookingId);
 
-        if (b == null || b.getEndDate() == null) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid booking or end date.");
-            return;
+            if (b == null || b.getEndDate() == null) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid booking or end date.");
+                return;
+            }
+
+            // 1. Tính thời gian phụ thu
+            LocalDate endDate = b.getEndDate();
+            LocalDateTime checkoutDeadline = endDate.atTime(12, 0); // 12:00 trưa ngày trả
+            LocalDateTime now = LocalDateTime.now();
+
+            long hoursLate = Duration.between(checkoutDeadline, now).toHours();
+            if (hoursLate <= 0) {
+                hoursLate = 0; // Không trễ
+            }
+
+            // 2. Nếu có trễ thì tạo phụ thu
+            if (hoursLate > 0) {
+                ExtraCharge e = new ExtraCharge();
+                e.setBookingId(bookingId);
+                e.setChargeType("Late Hour");
+                e.setQuantity((int) hoursLate);
+
+                RoomDao roomDao = new RoomDao();
+                long roomPrice = roomDao.getPriceRoomByBookingId(bookingId);
+                long hourlyPrice = Math.round(roomPrice * 0.1); // 10% mỗi giờ
+
+                e.setUnitPrice(hourlyPrice);
+                e.setStartTime(checkoutDeadline);
+                e.setEndTime(now);
+
+                ExtraChargeDao extraChargeDao = new ExtraChargeDao();
+                extraChargeDao.insertExtraCharge(e);
+            }
+
+            // 3. Cập nhật trạng thái booking
+            dao.checkedOutBooking(bookingId);
+
+            // 4. Điều hướng
+            if (redirect != null && redirect.equals("PaymentCheckOut")) {
+                response.sendRedirect("PaymentCheckOut?bookingId=" + bookingId);
+            } else {
+                response.sendRedirect("ViewAllCheckInOutDashboard");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("error.jsp");
         }
-
-        // Tính thời gian trưa ngày checkout (12:00 tại ngày endDate)
-        LocalDate endDate = b.getEndDate();
-        LocalDateTime checkoutDeadline = endDate.atTime(12, 0); // 12:00 trưa
-        LocalDateTime now = LocalDateTime.now();
-
-        long hoursLate = Duration.between(checkoutDeadline, now).toHours();
-        if (hoursLate <= 0) {
-            hoursLate = 0; // Không trễ, không cần phụ thu
-        }
-
-        // Tạo ExtraCharge
-        ExtraCharge e = new ExtraCharge();
-        e.setBookingId(bookingId);
-        e.setChargeType("Late Hour");
-        e.setQuantity(Integer.parseInt(String.valueOf(hoursLate)));
-
-        // Tính giá theo giờ: 10% giá phòng
-        RoomDao roomDao = new RoomDao();
-        long roomPrice = roomDao.getPriceRoomByBookingId(bookingId);
-        long hourlyPrice = Math.round(roomPrice * 0.1);
-        e.setUnitPrice(hourlyPrice);
-
-        // Gán thời gian bắt đầu - kết thúc phụ thu
-        e.setStartTime(checkoutDeadline);
-        e.setEndTime(now);
-
-        // Lưu phụ thu nếu cần
-        ExtraChargeDao extraChargeDao = new ExtraChargeDao();
-        extraChargeDao.insertExtraCharge(e);
-
-        dao.checkedOutBooking(bookingId);
-        // Điều hướng tiếp theo (tùy bạn muốn redirect đi đâu)
-        response.sendRedirect("ViewAllCheckInOutDashboard");
     }
 
     /**

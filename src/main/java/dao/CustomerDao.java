@@ -4,7 +4,6 @@
  */
 package dao;
 
-import static dao.UserDao.md5;
 import db.ConnectData;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -351,6 +350,35 @@ public class CustomerDao {
             ps.executeUpdate();
         }
     }
+
+    
+    public boolean isPhoneExist(String phone) throws SQLException {
+    String sql = "SELECT COUNT(*) FROM Customers WHERE Phone = ?";
+    PreparedStatement ps = conn.prepareStatement(sql);
+    ps.setString(1, phone);
+    ResultSet rs = ps.executeQuery();
+    return rs.next() && rs.getInt(1) > 0;
+}
+
+public boolean isIdentityNumberExist(String identityNumber) throws SQLException {
+    String sql = "SELECT COUNT(*) FROM Customers WHERE IdentityNumber = ?";
+    PreparedStatement ps = conn.prepareStatement(sql);
+    ps.setString(1, identityNumber);
+    ResultSet rs = ps.executeQuery();
+    return rs.next() && rs.getInt(1) > 0;
+}
+
+public boolean isEmailExist(String email) throws SQLException {
+    if (email == null || email.trim().isEmpty()) return false; // Email có thể bỏ trống
+    String sql = "SELECT COUNT(*) FROM Customers WHERE Email = ?";
+    PreparedStatement ps = conn.prepareStatement(sql);
+    ps.setString(1, email);
+    ResultSet rs = ps.executeQuery();
+    return rs.next() && rs.getInt(1) > 0;
+}
+
+    //Đống của Vinh
+
 
     public boolean insertCustomerIfCccdNotEmpty(String fullName, String cccd, String email, String phone) {
         if (cccd == null || cccd.trim().isEmpty()) {

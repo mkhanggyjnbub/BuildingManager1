@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.booking;
+package controllers.admin;
 
-import dao.BookingDao;
+import dao.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,17 +12,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import models.Bookings;
 
 /**
  *
- * @author Dương Đinh Thế Vinh
+ * @author dodan
  */
-@WebServlet(name = "ViewBookingDetail", urlPatterns = {"/ViewBookingDetail"})
-public class ViewBookingDetail extends HttpServlet {
+@WebServlet(name = "DeleteStaff", urlPatterns = {"/DeleteStaff"})
+public class DeleteStaff extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +37,10 @@ public class ViewBookingDetail extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewBookingDetail</title>");
+            out.println("<title>Servlet DeleteStaff</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewBookingDetail at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DeleteStaff at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,34 +56,19 @@ public class ViewBookingDetail extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int userId = Integer.parseInt(request.getParameter("id"));
+        UserDao dao = new UserDao();
+        boolean success = dao.deleteStaff(userId, "Inactive");
 
-    String bookingIdParam = request.getParameter("bookingId");
-
-    if (bookingIdParam == null || bookingIdParam.isEmpty()) {
-        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Booking ID is required");
-        return;
-    }
-
-    try {
-        int bookingId = Integer.parseInt(bookingIdParam);
-        BookingDao bookingDao = new BookingDao();
-        Bookings booking = bookingDao.getBookingDetail(bookingId);
-
-        if (booking != null) {
-            request.setAttribute("bookingDetail", booking);
-            request.getRequestDispatcher("booking/viewBookingDetail.jsp").forward(request, response);
+        if (success) {
+            response.sendRedirect("DashboardUser");
         } else {
-            request.setAttribute("error", "Booking not found");
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Booking not found"); //  chuyển vào bên trong
+            request.setAttribute("error", "Delete failed.");
+            request.getRequestDispatcher("DashboardUser").forward(request, response);
         }
-
-    } catch (SQLException ex) {
-        Logger.getLogger(ViewBookingDetail.class.getName()).log(Level.SEVERE, null, ex);
-        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Database error"); //  truyền vào catch
     }
-}
 
     /**
      * Handles the HTTP <code>POST</code> method.
