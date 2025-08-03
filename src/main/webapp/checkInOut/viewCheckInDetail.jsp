@@ -134,8 +134,8 @@
                 </c:choose>
             </p>
             <p><strong><i class="fa-solid fa-bars-progress"></i> Status:</strong> ${booking.status}</p>
-            <p><strong><i class="fa-solid fa-calendar-plus"></i> Start Date:</strong> ${booking.formattedStartDate}</p>
-            <p><strong><i class="fa-solid fa-calendar-minus"></i> End Date:</strong> ${booking.formattedEndDate}</p>
+            <p><strong><i class="fa-solid fa-calendar-plus"></i> Start Date:</strong> ${booking.startDate}</p>
+            <p><strong><i class="fa-solid fa-calendar-minus"></i> End Date:</strong> ${booking.endDate}</p>
         </c:if>
         <c:if test="${empty booking}">
             <div class="not-found">⚠️ Booking not found.</div>

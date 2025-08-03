@@ -36,6 +36,7 @@ F:\SWP\SWPd\BuildingManager1\src\main\java\dao\RoomDao.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\services\ViewServiceDetail.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\amenities\ViewAmenitiesDashboard.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\booking\SelectRoom.java
+F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\extraCharge\AddExtraCharge.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\account\ResetPassword.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\Websocket\TakeNotification.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\Websocket\Notification.java
@@ -44,6 +45,7 @@ F:\SWP\SWPd\BuildingManager1\src\main\java\dao\EquipmentDao.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\dao\ExtraChargeDao.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\report\AddNewReport.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\sendMail\EmailSender.java
+F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\admin\ViewUserProfile.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\room\DeleteRoomForDashboard.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\dao\NewsDao.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\news\ViewNewsDashboard.java
@@ -61,6 +63,7 @@ F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\voucher\AddVoucher.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\account\ForgotPassword.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\voucher\UserVouchers.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\booking\CreateBooking.java
+F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\booking\CancelBookingForCustomer.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\services\ViewServicesCart.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\customer\ViewAllCustomersDashboard.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\db\SendOTPEmail.java
@@ -108,13 +111,16 @@ F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\customer\ViewCustomerDeta
 F:\SWP\SWPd\BuildingManager1\src\main\java\models\MaintenanceStatuses.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\news\AddNewsDashboard.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\models\Amenities.java
+F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\customer\ChangePasswordForCustomer.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\booking\StatusBooking.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\Websocket\WebSocket.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\booking\ConfirmBooking.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\account\Logout.java
+F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\admin\EditUserProfile.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\models\Employees.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\checkInOut\ViewAllCheckInOutDashboard.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\booking\CreateGuestCustomer.java
+F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\booking\UpgradeBooking.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\account\EmailVerification.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\room\EditRoomForDashboard.java
 F:\SWP\SWPd\BuildingManager1\src\main\java\controllers\room\ViewRooms.java

@@ -154,12 +154,12 @@
         </style>
     </head>    
 
-<%@ include file="../navbarDashboard/navbarDashboard.jsp" %>
-<%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
+    <%@ include file="../navbarDashboard/navbarDashboard.jsp" %>
+    <%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
 
     <body <c:if test="${empty customer}">onload="showAccountChoicePopup()"</c:if>>
             <div class="dashboard-container">
-      
+
 
                 <!-- Modal chọn loại tài khoản -->
                 <div id="accountModal" class="modal">
@@ -199,89 +199,106 @@
 
 
 
-                <c:if test="${not empty customer}">
-                    <h2>Customer: ${customer.fullName}</h2>
-                    <p><strong>Phone: </strong> ${customer.phone}</p>
-                    <c:if test="${not empty customer.identityNumber}">
-                        <p><strong>Identity Number:</strong> ${customer.identityNumber}</p>
-                    </c:if>
-
-
-                    <c:if test="${!customer.registered}">
-                        <p style="color: #ff9900;"><em>Temporary account</em></p>
-                    </c:if>
-
-                    <form method="get" action="CheckExistingCustomer">
-                        <input type="hidden" name="action" value="logoutCustomer" />
-                        <button type="submit" style="background-color: crimson; color: white; padding: 8px 16px; border: none; border-radius: 4px; display: flex">
-                             Exit
-                        </button>
-                    </form>
-                        
-                        
-                    <!-- Tìm phòng -->
-                    <div class="search-box">
-                        <form method="post" action="CreateBooking" class="search-form">
-                            <label>Check in:
-                                <input type="date" id="startDate" name="startDate"
-                                       value="${startDate}" required />
-                            </label>
-                            <label>Check out:
-                                <input type="date" id="endDate" name="endDate"
-                                       value="${endDate}" required />
-                            </label>
-                            <label>Adult:
-                                <input type="number" name="adults" id="adults" value="${adults}" min="1" required />
-                            </label>
-                            <label>Children:
-                                <input type="number" name="children" id="children" value="${children}" min="0" required />
-                            </label>
-
-                            <input type="hidden" name="action" value="searchRoom" />
-                            <button type="submit">Find available rooms</button>
-                        </form>
-                    </div>
-
-
-                    <!-- Danh sách phòng -->
-                    <c:if test="${not empty rooms}">
-                        <h3>List of available room types</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Room</th>
-                                    <th>Type</th>
-                                    <th>Price</th>
-                                    <th>Max Occupancy</th>
-                                    <th>Booking</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach var="room" items="${rooms}">
-                                    <tr>
-                                        <td>${room.roomNumber}</td>
-                                        <td>${room.roomType}</td>
-                                        <td>${room.price} VNĐ</td>
-                                        <td>${room.maxOccupancy} People</td> 
-                                        <td>
-                                            <form method="post" action="CreateBooking">
-                                                <input type="hidden" name="action" value="bookRoom" />
-                                                <input type="hidden" name="roomId" value="${room.roomId}" />
-                                                <input type="hidden" name="startDate" value="${startDate}" />
-                                                <input type="hidden" name="endDate" value="${endDate}" />
-                                                <input type="hidden" name="adults" value="${adults}" />
-                                                <input type="hidden" name="children" value="${children}" />
-                                                <button type="submit">Booking</button>
-                                            </form>
-
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
-                    </c:if>
+            <c:if test="${not empty customer}">
+                <h2>Customer: ${customer.fullName}</h2>
+                <p><strong>Phone: </strong> ${customer.phone}</p>
+                <c:if test="${not empty customer.identityNumber}">
+                    <p><strong>Identity Number:</strong> ${customer.identityNumber}</p>
                 </c:if>
-            </div>
+
+
+                <c:if test="${!customer.registered}">
+                    <p style="color: #ff9900;"><em>Temporary account</em></p>
+                </c:if>
+
+                <form method="get" action="CheckExistingCustomer">
+                    <input type="hidden" name="action" value="logoutCustomer" />
+                    <button type="submit" style="background-color: crimson; color: white; padding: 8px 16px; border: none; border-radius: 4px; display: flex">
+                        Exit
+                    </button>
+                </form>
+
+
+                <!-- Tìm phòng -->
+                <div class="search-box">
+                    <form method="post" action="CreateBooking" class="search-form">
+                        <label>Check in:
+                            <input type="date" id="startDate" name="startDate"
+                                   value="${startDate}" required />
+                        </label>
+                        <label>Check out:
+                            <input type="date" id="endDate" name="endDate"
+                                   value="${endDate}" required />
+                        </label>
+                        <label>Adult:
+                            <input type="number" name="adults" id="adults" value="${adults}" min="1" required />
+                        </label>
+                        <label>Children:
+                            <input type="number" name="children" id="children" value="${children}" min="0" required />
+                        </label>
+
+                        <input type="hidden" name="action" value="searchRoom" />
+                        <button type="submit">Find available rooms</button>
+                    </form>
+                </div>
+
+
+                <!-- Danh sách phòng -->
+                <c:if test="${not empty rooms}">
+                    <h3>List of available room types</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Room</th>
+                                <th>Type</th>
+                                <th>Price</th>
+                                <th>Max Occupancy</th>
+                                <th>Booking</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="room" items="${rooms}">
+                                <tr>
+                                    <td>${room.roomNumber}</td>
+                                    <td>${room.roomType}</td>
+                                    <td>${room.price} VNĐ</td>
+                                    <td>${room.maxOccupancy} People</td> 
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${not empty bookingId}">
+                                                <form method="post" action="CreateBooking">
+                                                    <input type="hidden" name="action" value="upgradeRoom" />
+                                                    <input type="hidden" name="originalBookingId" value="${originalBookingId}" />
+                                                    <input type="hidden" name="roomId" value="${room.roomId}" />
+                                                    <input type="hidden" name="startDate" value="${startDate}" />
+                                                    <input type="hidden" name="endDate" value="${endDate}" />
+                                                    <input type="hidden" name="adults" value="${adults}" />
+                                                    <input type="hidden" name="children" value="${children}" />
+                                                    <button type="submit" style="background-color: orange; color: white;">Upgrade</button>
+                                                </form>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <form method="post" action="CreateBooking">
+                                                    <input type="hidden" name="action" value="bookRoom" />
+                                                    <input type="hidden" name="roomId" value="${room.roomId}" />
+                                                    <input type="hidden" name="startDate" value="${startDate}" />
+                                                    <input type="hidden" name="endDate" value="${endDate}" />
+                                                    <input type="hidden" name="adults" value="${adults}" />
+                                                    <input type="hidden" name="children" value="${children}" />
+                                                    <button type="submit">Booking</button>
+                                                </form>
+                                            </c:otherwise>
+                                        </c:choose>
+
+
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </c:if>
+            </c:if>
+        </div>
         <script>
             function showAccountChoicePopup() {
                 document.getElementById('accountModal').style.display = 'block';

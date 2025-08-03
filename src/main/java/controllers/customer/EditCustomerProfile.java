@@ -79,7 +79,7 @@ public class EditCustomerProfile extends HttpServlet {
             } else {
                 request.setAttribute("message", "An error occurred in the system. Please wait a few minutes and log in again.");
             }
-            request.getRequestDispatcher("customer/editCustomerProfile.jsp").forward(request, response);
+            request.getRequestDispatcher("admin/editCustomerProfile.jsp").forward(request, response);
         } catch (Exception e) {
         }
     }
@@ -135,7 +135,7 @@ public class EditCustomerProfile extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("message", "Đã xảy ra lỗi. Vui lòng thử lại...");
-            request.getRequestDispatcher("customer/viewCustomerProfile.jsp").forward(request, response);
+            request.getRequestDispatcher("admin/viewCustomerProfile.jsp").forward(request, response);
         }
     }
 

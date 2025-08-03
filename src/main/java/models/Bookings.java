@@ -254,5 +254,4 @@ public class Bookings {
     public void setExtendedEndDate(LocalDateTime extendedEndDate) {
         this.extendedEndDate = extendedEndDate;
     }
-
 }

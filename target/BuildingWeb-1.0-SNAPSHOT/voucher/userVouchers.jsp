@@ -138,8 +138,6 @@ Author     : Admin
                                     <p class="expired-text">Expired</p>
                                 </c:when>
                                 <c:when test="${v.customerVouchers.isUsed == true}">
-
-<<<<<<< HEAD
                                     <p class="expired-text">Used</p>
                                 </c:when>
                                 <c:otherwise>
@@ -160,9 +158,8 @@ Author     : Admin
                                     </c:choose>
                                 </c:otherwise>
                             </c:choose>
-=======
                             <c:if test="${!expired}">
-                         <c:choose>
+                                <c:choose>
                                     <c:when test="${v.isActive}">
 
                                         <!-- Voucher còn hạn và đang active -->
@@ -178,9 +175,6 @@ Author     : Admin
                                     </c:otherwise>
                                 </c:choose>
                             </c:if>
-
-
->>>>>>> e901db0bab988fc5d19da92a9df4e55f52b6df08
                         </div>
                     </c:forEach>
 
