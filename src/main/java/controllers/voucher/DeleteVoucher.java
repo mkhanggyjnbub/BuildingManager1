@@ -65,7 +65,7 @@ public class DeleteVoucher extends HttpServlet {
                 int id = Integer.parseInt(idStr);
                 VoucherDao dao = new VoucherDao();
 
-                // ✅ Kiểm tra có ai lưu voucher này không
+                //  Kiểm tra có ai lưu voucher này không
                 if (dao.isVoucherUsedByCustomer(id)) {
                     request.getSession().setAttribute("error", "This voucher has already been saved...");
                     response.sendRedirect("VouchersDashBoard");

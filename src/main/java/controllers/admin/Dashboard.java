@@ -5,6 +5,7 @@
 package controllers.admin;
 
 import dao.PaginationDao;
+import dao.RoomDao;
 import dao.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -62,9 +63,37 @@ public class Dashboard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        // Lấy giá trị lọc thời gian cho biểu đồ loại phòng
+        String period = request.getParameter("period");
+        if (period == null || period.isEmpty()) {
+            period = "week"; // mặc định là tuần
+        }
+
+        // Lấy giá trị lọc thời gian cho biểu đồ doanh thu
+        String revenuePeriod = request.getParameter("revenuePeriod");
+        if (revenuePeriod == null || revenuePeriod.isEmpty()) {
+            revenuePeriod = "month"; // mặc định là theo tháng
+        }
+
+        try {
+            RoomDao dao = new RoomDao();
+
+            // Biểu đồ loại phòng được đặt nhiều nhất
+            List<Object[]> topRoomTypes = dao.getTopRoomTypes(period);
+            request.setAttribute("topRoomTypes", topRoomTypes);
+            request.setAttribute("period", period); // giữ trạng thái dropdown room type
+
+            // Biểu đồ doanh thu
+            List<Object[]> revenueStats = dao.getRevenueStatistics(revenuePeriod);
+            request.setAttribute("revenueStats", revenueStats);
+            request.setAttribute("revenuePeriod", revenuePeriod); // giữ trạng thái dropdown doanh thu
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         request.getRequestDispatcher("admin/dashboard.jsp").forward(request, response);
-
-
     }
 
     /**
