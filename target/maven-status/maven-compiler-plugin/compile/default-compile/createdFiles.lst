@@ -45,12 +45,14 @@ dao\BuildingDao.class
 controllers\admin\DashboardUser.class
 controllers\checkInOut\ComfirmCheckIn.class
 controllers\report\AddNewReport.class
+controllers\admin\CreateStaff.class
 db\FileUploader.class
 models\Customers.class
 controllers\services\AddServiceDashboard.class
 controllers\voucher\ViewVouchers.class
 db\SendOTPEmail.class
 controllers\room\ViewRoomDetail.class
+controllers\booking\ViewBookingDetail.class
 dao\ReportDao.class
 db\SendOTPEmail$1.class
 controllers\checkInOut\CheckInOutDetail.class
@@ -71,6 +73,7 @@ paymentVNpay\ajaxServlet.class
 dao\NewsDao.class
 dao\EquipmentDao.class
 sendMail\EmailSender.class
+controllers\admin\DeleteStaff.class
 controllers\amenities\AddAmenitiesDashboard.class
 controllers\booking\CancelBookingForCustomer.class
 controllers\booking\BookingConfirmation.class
