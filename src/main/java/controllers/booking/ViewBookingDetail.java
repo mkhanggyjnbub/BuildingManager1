@@ -80,12 +80,12 @@ public class ViewBookingDetail extends HttpServlet {
             request.getRequestDispatcher("booking/viewBookingDetail.jsp").forward(request, response);
         } else {
             request.setAttribute("error", "Booking not found");
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Booking not found"); // ✅ moved inside
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Booking not found"); //  chuyển vào bên trong
         }
 
     } catch (SQLException ex) {
         Logger.getLogger(ViewBookingDetail.class.getName()).log(Level.SEVERE, null, ex);
-        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Database error"); // ✅ moved inside catch
+        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Database error"); //  truyền vào catch
     }
 }
 

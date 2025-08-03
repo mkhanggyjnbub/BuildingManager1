@@ -237,9 +237,14 @@ public class BookingDao {
             params.add(Date.valueOf(endDateFilter));
         }
 
-        if (statusFilter != null && !statusFilter.equals("-- All --")) {
+        if (statusFilter != null && !statusFilter.trim().isEmpty()) {
             sql.append(" AND b.Status = ? ");
-            params.add(statusFilter);
+            params.add(statusFilter.trim());
+        } else {
+            // Chỉ hiển thị những trạng thái hợp lệ mặc định
+            sql.append(" AND b.Status IN (?, ?) ");
+            params.add("Confirmed");
+            params.add("Waiting for processing");
         }
 
         PreparedStatement ps = conn.prepareStatement(sql.toString());
@@ -272,7 +277,7 @@ public class BookingDao {
 
             String roomType = rs.getString("RoomType");
             if (roomType == null || roomType.trim().isEmpty()) {
-                roomType = "Chưa gán phòng";
+                roomType = "Room not assigned yet";
             }
             booking.setRoomType(roomType);
 

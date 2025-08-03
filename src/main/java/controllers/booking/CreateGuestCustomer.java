@@ -83,27 +83,47 @@ public class CreateGuestCustomer extends HttpServlet {
             String email = request.getParameter("email");
             String identityNumber = request.getParameter("identityNumber");
 
-            // ✅ Kiểm tra CCCD không được để trống
-            if (identityNumber == null || identityNumber.trim().isEmpty()) {
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "CCCD không được để trống.");
-                return;
-            }
+            HttpSession session = request.getSession();
             CustomerDao dao = new CustomerDao();
 
-            // Kiểm tra xem khách hàng đã tồn tại chưa
+            // Kiểm tra CCCD không được để trống
+            if (identityNumber == null || identityNumber.trim().isEmpty()) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Identity Number cannot be left blank.");
+                return;
+            }
+
+            // Kiểm tra trùng dữ liệu
+            boolean phoneExists = dao.isPhoneExist(phone);
+            boolean idExists = dao.isIdentityNumberExist(identityNumber);
+            boolean emailExists = dao.isEmailExist(email);
+
+            if (phoneExists || idExists || emailExists) {
+                StringBuilder message = new StringBuilder("❌ ");
+                if (phoneExists) {
+                    message.append("Phone number already exists.\\n");
+                }
+                if (idExists) {
+                    message.append("Identity number already exists.\\n");
+                }
+                if (emailExists) {
+                    message.append("Email already exists.\\n");
+                }
+
+                session.setAttribute("duplicateError", message.toString());
+                response.sendRedirect("CreateBooking");
+                return;
+            }
+
+            // Nếu không trùng: kiểm tra đã có chưa → nếu chưa thì tạo
             Customers existing = dao.getCustomerByFullNameAndPhone(fullName, phone);
             if (existing != null) {
-                request.getSession().setAttribute("customer", existing);
+                session.setAttribute("customer", existing);
             } else {
                 dao.insertNewGuest(fullName, phone, email, identityNumber);
                 Customers customer = dao.getCustomerByFullNameAndPhone(fullName, phone);
-                request.getSession().setAttribute("customer", customer);
+                session.setAttribute("customer", customer);
             }
 
-            HttpSession session = request.getSession();
-            int bookingId = Integer.parseInt(session.getAttribute("bookingId").toString());
-            request.setAttribute("bookingId", bookingId);
-            
             response.sendRedirect("CreateBooking");
 
         } catch (SQLException ex) {

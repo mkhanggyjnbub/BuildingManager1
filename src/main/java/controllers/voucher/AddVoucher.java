@@ -99,7 +99,7 @@ public class AddVoucher extends HttpServlet {
             return;
         }
 
-        // ❗ Chỉ kiểm tra code trùng nếu đang bật active
+        // Chỉ kiểm tra code trùng nếu đang bật active
         if (isActive && voucherDao.isVoucherCodeExists(code)) {
             request.setAttribute("error", "Voucher code '" + code + "' is already active.");
             request.getRequestDispatcher("vouchersAdmin/addVoucher.jsp").forward(request, response);
