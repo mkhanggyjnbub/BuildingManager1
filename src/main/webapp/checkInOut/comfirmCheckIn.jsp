@@ -285,7 +285,7 @@
 
                     <c:choose>
                         <c:when test="${checkRoom == 0}">
-                            <button type="submit" class="btn-submit">Chọn phòng</button>
+                            <button type="submit" class="btn-submit">Chose Room</button>
                         </c:when>
                         <c:otherwise>
                             <input type="hidden" name="checkRoom" value="${checkRoom}"/>

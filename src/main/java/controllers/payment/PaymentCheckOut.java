@@ -85,6 +85,9 @@ public class PaymentCheckOut extends HttpServlet {
             // Lấy hóa đơn
             InvoiceDao invoiceDao = new InvoiceDao();
             Invoices invoice = invoiceDao.getByBookingId(bookingId);
+            if (invoice != null) {
+                System.out.println("invoice k null");
+            }
             request.setAttribute("invoice", invoice);
 
             // Chuyển tiếp sang JSP
@@ -106,7 +109,30 @@ public class PaymentCheckOut extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        try {
+            int bookingId = Integer.parseInt(request.getParameter("bookingId"));
+            int totalPayable = Integer.parseInt(request.getParameter("totalPayable"));
+
+            InvoiceDao invoiceDao = new InvoiceDao();
+            Invoices invoice = invoiceDao.getByBookingId(bookingId);
+
+            if (invoice == null) {
+                request.setAttribute("error", "Invoice not found.");
+                request.getRequestDispatcher("error.jsp").forward(request, response);
+                return;
+            }
+
+            invoiceDao.updatePayment(invoice.getInvoiceId(), totalPayable);
+
+            // Chuyển về trang thông báo hoặc dashboard
+            request.setAttribute("message", "Payment Successfully");
+            response.sendRedirect("ViewAllCheckInOutDashboard");
+
+        } catch (NumberFormatException e) {
+            request.setAttribute("error", "Invalid data.");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
     }
 
     /**
