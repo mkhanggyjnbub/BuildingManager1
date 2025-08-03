@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.extraCharge;
+package controllers.payment;
 
 import dao.BookingDao;
 import dao.ExtraChargeDao;
-import dao.RoomDao;
+import dao.InvoiceDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,18 +14,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.List;
 import models.Bookings;
 import models.ExtraCharge;
+import models.Invoices;
 
 /**
  *
  * @author dodan
  */
-@WebServlet(name = "AddExtraCharge", urlPatterns = {"/AddExtraCharge"})
-public class AddExtraCharge extends HttpServlet {
+@WebServlet(name = "PaymentCheckOut", urlPatterns = {"/PaymentCheckOut"})
+public class PaymentCheckOut extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +43,10 @@ public class AddExtraCharge extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddExtracharge</title>");
+            out.println("<title>Servlet PaymentCheckOut</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddExtracharge at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet PaymentCheckOut at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,59 +61,34 @@ public class AddExtraCharge extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             int bookingId = Integer.parseInt(request.getParameter("bookingId"));
-            String redirect = request.getParameter("redirect"); // redirect nếu có
 
-            BookingDao dao = new BookingDao();
-            Bookings b = dao.getBookingById(bookingId);
+            // Lấy booking
+            BookingDao bookingDao = new BookingDao();
+            Bookings booking = bookingDao.getBookingById(bookingId);
+            request.setAttribute("booking", booking);
 
-            if (b == null || b.getEndDate() == null) {
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid booking or end date.");
-                return;
+            // Tính tổng phụ thu (price)
+            ExtraChargeDao extraChargeDao = new ExtraChargeDao();
+            List<ExtraCharge> extraCharges = extraChargeDao.getByBookingId(bookingId);
+
+            long price = 0;
+            for (ExtraCharge ec : extraCharges) {
+                price += ec.getUnitPrice() * ec.getQuantity();
             }
+            request.setAttribute("price", price);
 
-            // 1. Tính thời gian phụ thu
-            LocalDate endDate = b.getEndDate();
-            LocalDateTime checkoutDeadline = endDate.atTime(12, 0); // 12:00 trưa ngày trả
-            LocalDateTime now = LocalDateTime.now();
+            // Lấy hóa đơn
+            InvoiceDao invoiceDao = new InvoiceDao();
+            Invoices invoice = invoiceDao.getByBookingId(bookingId);
+            request.setAttribute("invoice", invoice);
 
-            long hoursLate = Duration.between(checkoutDeadline, now).toHours();
-            if (hoursLate <= 0) {
-                hoursLate = 0; // Không trễ
-            }
-
-            // 2. Nếu có trễ thì tạo phụ thu
-            if (hoursLate > 0) {
-                ExtraCharge e = new ExtraCharge();
-                e.setBookingId(bookingId);
-                e.setChargeType("Late Hour");
-                e.setQuantity((int) hoursLate);
-
-                RoomDao roomDao = new RoomDao();
-                long roomPrice = roomDao.getPriceRoomByBookingId(bookingId);
-                long hourlyPrice = Math.round(roomPrice * 0.1); // 10% mỗi giờ
-
-                e.setUnitPrice(hourlyPrice);
-                e.setStartTime(checkoutDeadline);
-                e.setEndTime(now);
-
-                ExtraChargeDao extraChargeDao = new ExtraChargeDao();
-                extraChargeDao.insertExtraCharge(e);
-            }
-
-            // 3. Cập nhật trạng thái booking
-            dao.checkedOutBooking(bookingId);
-
-            // 4. Điều hướng
-            if (redirect != null && redirect.equals("PaymentCheckOut")) {
-                response.sendRedirect("PaymentCheckOut?bookingId=" + bookingId);
-            } else {
-                response.sendRedirect("ViewAllCheckInOutDashboard");
-            }
-
+            // Chuyển tiếp sang JSP
+            request.getRequestDispatcher("payment/paymentCheckOut.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("error.jsp");
