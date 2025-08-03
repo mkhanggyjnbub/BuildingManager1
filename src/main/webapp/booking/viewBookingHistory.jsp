@@ -256,6 +256,7 @@
                                     Cancel
                                 </button>
                             </c:when>
+
                             <c:otherwise>
                                 <button class="booking-button disabled">Cancel</button>
                             </c:otherwise>
@@ -295,32 +296,33 @@
 
             function showCancelPopup(startDate, bookingId) {
                 if (!bookingId) {
-                    alert("Không tìm thấy mã đặt phòng để huỷ.");
+                    alert("Booking ID not found.");
                     return;
                 }
 
                 const message = checkCancellationTime(startDate);
                 if (confirm(message)) {
-                    // Sửa đúng cú pháp ở đây
                     window.location.href = "CancelBookingForCustomer?bookingId=" + bookingId;
                 }
             }
 
 
+
             function checkCancellationTime(startDateString) {
                 const startDate = new Date(startDateString);
-                startDate.setHours(12, 0, 0, 0); // fixed giờ 12:00 trưa
+                startDate.setHours(12, 0, 0, 0); // set to 12:00 noon on StartDate
 
                 const now = new Date();
                 const diffMs = startDate - now;
                 const diffHours = diffMs / (1000 * 60 * 60);
 
                 if (diffHours >= 24) {
-                    return "Bạn có chắc là muốn hủy đặt phòng chứ?";
+                    return "Do you want to cancel your booking? You will get back 30% of your booking fee.";
                 } else {
-                    return "Bạn có chắc là muốn hủy phòng chứ? \nBạn đã vượt quá thời gian quy định hủy đặt phòng. \nNếu tiếp tục, bạn sẽ không thể nhận lại phí đã thanh toán ban đầu!";
+                    return "Your cancellation is late. If you cancel now, you will lose 30% of your booking fee. Do you still want to proceed?";
                 }
             }
+
         </script>
 
     </body>

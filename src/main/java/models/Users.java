@@ -16,7 +16,7 @@ public class Users {
     private int userId;
     private String userName;
     private String password;
-    private Date lastLogin;
+    private LocalDateTime lastLogin;
     private Roles role;
     private int roleId;
     private LocalDateTime CreationDate;
@@ -98,11 +98,11 @@ public class Users {
         this.avatarUrl = avatarUrl;
     }
 
-    public Date getLastLogin() {
+    public LocalDateTime getLastLogin() {
         return lastLogin;
     }
 
-    public void setLastLogin(Date lastLogin) {
+    public void setLastLogin(LocalDateTime lastLogin) {
         this.lastLogin = lastLogin;
     }
 
@@ -169,4 +169,6 @@ public class Users {
     public void setIdenityNumber(String idenityNumber) {
         this.idenityNumber = idenityNumber;
     }
+    
+    
 }

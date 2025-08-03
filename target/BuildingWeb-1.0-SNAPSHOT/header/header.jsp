@@ -149,7 +149,7 @@
         <a href="Index">Home</a>
         <a href="ViewRooms">Rooms</a>
 
-
+        <a href="ViewVouchers">voucher warehouse</a>
         <a href="#">Liên hệ</a>
                 <!--<a href="UpImage">Up ảnh</a>-->
                 <!--

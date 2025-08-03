@@ -690,6 +690,61 @@ public class RoomDao {
         return roomType;
 
     }
+    
+    
+    // biểu đồ loại phòng đặt nhiêu nhất
+    public List<Object[]> getTopRoomTypes(String period) throws SQLException {
+    String query = "SELECT RoomType, COUNT(*) AS BookingCount FROM Bookings " +
+               "WHERE Status IN ('Confirmed', 'Checked in') ";
+
+    if ("week".equals(period)) {
+        query += "AND StartDate >= DATEADD(DAY, -7, GETDATE()) ";
+    } else if ("month".equals(period)) {
+        query += "AND MONTH(StartDate) = MONTH(GETDATE()) AND YEAR(StartDate) = YEAR(GETDATE()) ";
+    } else if ("year".equals(period)) {
+        query += "AND YEAR(StartDate) = YEAR(GETDATE()) ";
+    }
+
+    query += "GROUP BY RoomType ORDER BY BookingCount DESC";
+
+    List<Object[]> list = new ArrayList<>();
+    PreparedStatement ps = conn.prepareStatement(query);
+    ResultSet rs = ps.executeQuery();
+    while (rs.next()) {
+        Object[] row = new Object[2];
+        row[0] = rs.getString("RoomType");        // label
+        row[1] = rs.getInt("BookingCount");       // value
+        list.add(row);
+    }
+    return list;
+}
+    
+    // biểu đồ danh thu cao nhất
+    public List<Object[]> getRevenueStatistics(String period) throws SQLException {
+    String query = "";
+    if ("day".equals(period)) {
+        query = "SELECT CONVERT(date, InvoiceDate) AS Label, SUM(TotalAmount) AS Revenue " +
+                "FROM Invoices WHERE Status = 1 AND InvoiceDate >= DATEADD(DAY, -7, GETDATE()) " +
+                "GROUP BY CONVERT(date, InvoiceDate) ORDER BY Label";
+    } else if ("month".equals(period)) {
+        query = "SELECT MONTH(InvoiceDate) AS Label, SUM(TotalAmount) AS Revenue " +
+                "FROM Invoices WHERE Status = 1 AND YEAR(InvoiceDate) = YEAR(GETDATE()) " +
+                "GROUP BY MONTH(InvoiceDate) ORDER BY Label";
+    } else if ("year".equals(period)) {
+        query = "SELECT YEAR(InvoiceDate) AS Label, SUM(TotalAmount) AS Revenue " +
+                "FROM Invoices WHERE Status = 1 GROUP BY YEAR(InvoiceDate) ORDER BY Label";
+    }
+
+    List<Object[]> list = new ArrayList<>();
+    PreparedStatement ps = conn.prepareStatement(query);
+    ResultSet rs = ps.executeQuery();
+    while (rs.next()) {
+        list.add(new Object[]{ rs.getString("Label"), rs.getLong("Revenue") });
+    }
+    return list;
+}
+
+
 //Đóng của Vinh
 
     public Rooms getRoomDetailForEdit(int id) {
@@ -977,4 +1032,95 @@ public class RoomDao {
         }
         return 0;
     }
+
+    //code cua Khoa
+    public List<Rooms> getAvailableRoomsForUpgrade(Date startDate, Date endDate, int currentPeople, int bookingId) {
+        List<Rooms> list = new ArrayList<>();
+        Integer currentRoomId = null;
+
+        // B1: Lấy RoomId của booking hiện tại
+        String getRoomIdSql = "SELECT RoomId FROM Bookings WHERE BookingId = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(getRoomIdSql)) {
+            ps.setInt(1, bookingId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                currentRoomId = rs.getInt("RoomId");
+                if (rs.wasNull()) {
+                    currentRoomId = null;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return list; // Trả về danh sách rỗng nếu lỗi xảy ra
+        }
+
+        // B2: Truy vấn danh sách phòng hợp lệ
+        String sql = "SELECT r.RoomId, r.RoomNumber, r.FloorNumber, r.RoomType, r.BedType, r.Price, "
+                + "r.MaxOccupancy, r.Description, r.ImageUrl, r.Status "
+                + "FROM Rooms r "
+                + "WHERE r.Status = 'Active' "
+                + "  AND r.MaxOccupancy >= ? "
+                + "  AND NOT EXISTS ( "
+                + "      SELECT 1 FROM Bookings b "
+                + "      WHERE b.RoomId = r.RoomId "
+                + "        AND b.Status IN ('Confirmed', 'Checked In') "
+                + "        AND NOT (b.EndDate <= ? OR b.StartDate >= ?) "
+                + "  ) ";
+
+        // Nếu booking hiện tại đã có RoomId thì loại luôn phòng đó
+        if (currentRoomId != null) {
+            sql += " AND r.RoomId <> ? ";
+        }
+
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, currentPeople + 1); // yêu cầu upgrade
+            ps.setDate(2, new java.sql.Date(startDate.getTime()));
+            ps.setDate(3, new java.sql.Date(endDate.getTime()));
+            if (currentRoomId != null) {
+                ps.setInt(4, currentRoomId);
+            }
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Rooms r = new Rooms();
+                r.setRoomId(rs.getInt("RoomId"));
+                r.setRoomNumber(rs.getString("RoomNumber"));
+                r.setFloorNumber(rs.getInt("FloorNumber"));
+                r.setRoomType(rs.getString("RoomType"));
+                r.setBedType(rs.getString("BedType"));
+                r.setPrice(rs.getLong("Price"));
+                r.setMaxOccupancy(rs.getInt("MaxOccupancy"));
+                r.setDescription(rs.getString("Description"));
+                r.setImageUrl(rs.getString("ImageUrl"));
+                r.setStatus(rs.getString("Status"));
+                list.add(r);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public int getMaxOccupancyByRoomId(int roomId) {
+        int maxOccupancy = -1; // Trả về -1 nếu không tìm thấy
+        String sql = "SELECT MaxOccupancy FROM Room WHERE RoomId = ?";
+
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, roomId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                maxOccupancy = rs.getInt("MaxOccupancy");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return maxOccupancy;
+    }
+
 }

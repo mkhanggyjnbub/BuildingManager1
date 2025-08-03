@@ -256,6 +256,7 @@ public class Bookings {
         this.extendedEndDate = extendedEndDate;
     }
 
+
     public Users getUserName() {
         return users;
     }
@@ -264,5 +265,5 @@ public class Bookings {
         this.users = userName;
     }
 
-    
+   
 }

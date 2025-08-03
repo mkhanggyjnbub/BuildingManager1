@@ -173,27 +173,27 @@
 
 
             .booking-btn {
-    background-color: #00b894;
-    color: white;
-    padding: 10px 18px;
-    font-weight: 600;
-    font-size: 15px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 4px 6px rgba(0, 184, 148, 0.2);
-}
+                background-color: #00b894;
+                color: white;
+                padding: 10px 18px;
+                font-weight: 600;
+                font-size: 15px;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: background-color 0.3s ease, transform 0.2s ease;
+                box-shadow: 0 4px 6px rgba(0, 184, 148, 0.2);
+            }
 
-.booking-btn:hover {
-    background-color: #019875;
-    transform: translateY(-2px);
-}
+            .booking-btn:hover {
+                background-color: #019875;
+                transform: translateY(-2px);
+            }
 
-.booking-btn:active {
-    transform: translateY(1px);
-    background-color: #017a60;
-}
+            .booking-btn:active {
+                transform: translateY(1px);
+                background-color: #017a60;
+            }
 
 
         </style>
@@ -204,6 +204,7 @@
 
         <div class="dashboard-layout">
             <%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
+
             <div class="main-content" id="main-content">
 
                 <!-- Modal chọn loại tài khoản -->
@@ -268,9 +269,9 @@
                     <div class="search-box">
                         <form method="post" action="CreateBooking" class="search-form">
                             <label>Check in:
-                                <input type="date" id="startDate" name="startDate" value="${startDate}" min="${today}" required />
+                                <input type="date" id="startDate" name="startDate"
+                                       value="${startDate}" required />
                             </label>
-
                             <label>Check out:
                                 <input type="date" id="endDate" name="endDate"
                                        value="${endDate}" required />
@@ -309,16 +310,32 @@
                                         <td>${room.price} VNĐ</td>
                                         <td>${room.maxOccupancy} People</td> 
                                         <td>
-                                            <form method="post" action="CreateBooking">
-                                                <input type="hidden" name="action" value="bookRoom" />
-                                                <input type="hidden" name="roomId" value="${room.roomId}" />
-                                                <input type="hidden" name="startDate" value="${startDate}" />
-                                                <input type="hidden" name="endDate" value="${endDate}" />
-                                                <input type="hidden" name="adults" value="${adults}" />
-                                                <input type="hidden" name="children" value="${children}" />
-                                                <button type="submit" class="booking-btn">Book Now</button>
+                                            <c:choose>
+                                                <c:when test="${not empty bookingId}">
+                                                    <form method="post" action="CreateBooking">
+                                                        <input type="hidden" name="action" value="upgradeRoom" />
+                                                        <input type="hidden" name="originalBookingId" value="${originalBookingId}" />
+                                                        <input type="hidden" name="roomId" value="${room.roomId}" />
+                                                        <input type="hidden" name="startDate" value="${startDate}" />
+                                                        <input type="hidden" name="endDate" value="${endDate}" />
+                                                        <input type="hidden" name="adults" value="${adults}" />
+                                                        <input type="hidden" name="children" value="${children}" />
+                                                        <button type="submit" style="background-color: orange; color: white;">Upgrade</button>
+                                                    </form>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <form method="post" action="CreateBooking">
+                                                        <input type="hidden" name="action" value="bookRoom" />
+                                                        <input type="hidden" name="roomId" value="${room.roomId}" />
+                                                        <input type="hidden" name="startDate" value="${startDate}" />
+                                                        <input type="hidden" name="endDate" value="${endDate}" />
+                                                        <input type="hidden" name="adults" value="${adults}" />
+                                                        <input type="hidden" name="children" value="${children}" />
+                                                        <button type="submit">Booking</button>
+                                                    </form>
+                                                </c:otherwise>
+                                            </c:choose>
 
-                                            </form>
 
                                         </td>
                                     </tr>
@@ -327,111 +344,118 @@
                         </table>
                     </c:if>
                 </c:if>
+
             </div>
-        </div>
-        <script>
-            function showAccountChoicePopup() {
-                document.getElementById('accountModal').style.display = 'block';
-            }
-
-            function showExistingForm() {
-                document.getElementById('accountModal').style.display = 'none';
-                document.getElementById('existingForm').style.display = 'block';
-            }
-
-            function showGuestForm() {
-                document.getElementById('accountModal').style.display = 'none';
-                document.getElementById('guestForm').style.display = 'block';
-            }
-
-            document.addEventListener("DOMContentLoaded", function () {
-                const startInput = document.getElementById("startDate");
-                const endInput = document.getElementById("endDate");
-                const adultsInput = document.getElementById("adults");
-                const childrenInput = document.getElementById("children");
-
-                const today = new Date();
-                const yyyy = today.getFullYear();
-                const mm = String(today.getMonth() + 1).padStart(2, '0');
-                const dd = String(today.getDate()).padStart(2, '0');
-                const todayStr = `${yyyy}-${mm}-${dd}`;
-
-                        if (startInput && endInput) {
-                     
-                            let selectedStart = startInput.value;
-                            if (!selectedStart || selectedStart < todayStr) {
-                                selectedStart = todayStr;
-                                startInput.value = todayStr;
-                            }
-                            startInput.setAttribute("min", todayStr);
-
-                            // áp dụng selectedStart làm min cho endDate
-                            endInput.setAttribute("min", selectedStart);
-                            if (!endInput.value || endInput.value < selectedStart) {
-                                endInput.value = selectedStart;
-                            }
-
-                            // cập nhật endDate
-                            startInput.addEventListener("change", function () {
-                                const newStart = this.value;
-                                endInput.setAttribute("min", newStart);
-                                if (!endInput.value || endInput.value < newStart) {
-                                    endInput.value = newStart;
-                                }
-                            });
-                        }
-
-                        // xác thực người số người
-                        function validateNumberInput(input, min) {
-                            input.addEventListener("input", function () {
-                                this.value = this.value.replace(/[^0-9]/g, '');
-                                if (this.value !== '' && parseInt(this.value) < min) {
-                                    this.value = min;
-                                }
-                            });
-                            input.addEventListener("keydown", function (e) {
-                                const invalidKeys = ['e', 'E', '+', '-', '.'];
-                                if (invalidKeys.includes(e.key)) {
-                                    e.preventDefault();
-                                }
-                            });
-                        }
-
-                        validateNumberInput(adultsInput, 1);
-                        validateNumberInput(childrenInput, 0);
-                    });
-
-
-                    function toggleSidebar() {
-                        const sidebar = document.getElementById("sidebar");
-                        const mainContent = document.getElementById("main-content");
-
-                        sidebar.classList.toggle("open");
-
-                        if (sidebar.classList.contains("open")) {
-                            mainContent.style.marginLeft = "220px";
-                        } else {
-                            mainContent.style.marginLeft = "60px";
-                        }
-                    }
-
-        </script>
-
-
-
-
-        <c:if test="${bookingSuccess}">
-            <script>alert("✅ Booking successful!");</script>
-        </c:if>
-        <c:if test="${bookingError}">
-            <script>alert("❌ An error occurred during the booking process.");</script>
-        </c:if>
-
-        <c:if test="${notFound}">
             <script>
-                alert("❌ Customer not found. Please check your Name and Phone Number again.");
+                function showAccountChoicePopup() {
+                    document.getElementById('accountModal').style.display = 'block';
+                }
+
+                function showExistingForm() {
+                    document.getElementById('accountModal').style.display = 'none';
+                    document.getElementById('existingForm').style.display = 'block';
+                }
+
+                function showGuestForm() {
+                    document.getElementById('accountModal').style.display = 'none';
+                    document.getElementById('guestForm').style.display = 'block';
+                }
+
+                document.addEventListener("DOMContentLoaded", function () {
+                    const startInput = document.getElementById("startDate");
+                    const endInput = document.getElementById("endDate");
+                    const adultsInput = document.getElementById("adults");
+                    const childrenInput = document.getElementById("children");
+
+                    const today = new Date();
+                    const yyyy = today.getFullYear();
+                    const mm = String(today.getMonth() + 1).padStart(2, '0');
+                    const dd = String(today.getDate()).padStart(2, '0');
+                    const todayStr = `${yyyy}-${mm}-${dd}`;
+
+                            if (startInput && endInput) {
+
+                                let selectedStart = startInput.value;
+                                if (!selectedStart || selectedStart < todayStr) {
+                                    selectedStart = todayStr;
+                                    startInput.value = todayStr;
+                                }
+                                startInput.setAttribute("min", todayStr);
+
+                                // áp dụng selectedStart làm min cho endDate
+                                endInput.setAttribute("min", selectedStart);
+                                if (!endInput.value || endInput.value < selectedStart) {
+                                    endInput.value = selectedStart;
+                                }
+
+                                // cập nhật endDate
+                                startInput.addEventListener("change", function () {
+                                    const newStart = this.value;
+                                    endInput.setAttribute("min", newStart);
+                                    if (!endInput.value || endInput.value < newStart) {
+                                        endInput.value = newStart;
+                                    }
+                                });
+                            }
+
+                            // xác thực người số người
+                            function validateNumberInput(input, min) {
+                                input.addEventListener("input", function () {
+                                    this.value = this.value.replace(/[^0-9]/g, '');
+                                    if (this.value !== '' && parseInt(this.value) < min) {
+                                        this.value = min;
+                                    }
+                                });
+                                input.addEventListener("keydown", function (e) {
+                                    const invalidKeys = ['e', 'E', '+', '-', '.'];
+                                    if (invalidKeys.includes(e.key)) {
+                                        e.preventDefault();
+                                    }
+                                });
+                            }
+
+                            validateNumberInput(adultsInput, 1);
+                            validateNumberInput(childrenInput, 0);
+                        });
+
+
+                        function toggleSidebar() {
+                            const sidebar = document.getElementById("sidebar");
+                            const mainContent = document.getElementById("main-content");
+
+                            sidebar.classList.toggle("open");
+
+                            if (sidebar.classList.contains("open")) {
+                                mainContent.style.marginLeft = "220px";
+                            } else {
+                                mainContent.style.marginLeft = "60px";
+                            }
+                        }
+
             </script>
-        </c:if>
+
+
+
+
+            <c:if test="${bookingSuccess}">
+                <script>alert("✅ Booking successful!");</script>
+            </c:if>
+            <c:if test="${bookingError}">
+                <script>alert("❌ data entry request");</script>
+            </c:if>
+
+            <c:if test="${notFound}">
+                <script>
+                    alert("❌ Customer not found. Please check your Name and Phone Number again.");
+                </script>
+            </c:if>
+
+            <c:if test="${not empty sessionScope.duplicateError}">
+                <script>
+                    alert("${sessionScope.duplicateError}");
+                </script>
+                <c:remove var="duplicateError" scope="session"/>
+            </c:if>
 
     </body>
 

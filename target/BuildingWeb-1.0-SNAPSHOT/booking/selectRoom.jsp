@@ -172,7 +172,7 @@
 
         <div class="booking-section">
             <h2>📅 Booking time information</h2>
-
+          <%-- 
             <form action="SelectRoom" method="post" class="booking-date-form">
                 <input type="hidden" name="bookingId" value="${bookingId}" />
                 <input type="hidden" name="roomType" value="${roomType}" />
@@ -193,7 +193,7 @@
                     <button type="submit" class="search-room-btn">🔍 Find available rooms</button>
                 </div>
             </form>
-
+ --%>
             <c:forEach var="floorEntry" items="${roomsByFloor}">
                 <h3 class="floor-heading">Floor ${floorEntry.key}</h3>
                 <div class="room-grid">
@@ -206,6 +206,8 @@
                                 <input type="hidden" name="roomId" value="${room.roomId}" />
                                 <input type="hidden" name="bookingId" value="${bookingId}" />
                                 <input type="hidden" name="roomType" value="${roomType}" />
+                                <input type="hidden" name="actionType" value="confirmBooking" />
+
                                 <button type="submit" class="confirm-btn">✔️ Select Room</button>
                             </form>
                         </div>

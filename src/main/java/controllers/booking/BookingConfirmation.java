@@ -157,15 +157,24 @@ public class BookingConfirmation extends HttpServlet {
 
             // 2. Xác nhận không cần chọn phòng
             if ("confirmBooking".equals(actionType)) {
-                int bookingId = Integer.parseInt(request.getParameter("bookingId"));
-                String staffIdStr = (String) session.getAttribute("staffId");
+    int bookingId = Integer.parseInt(request.getParameter("bookingId"));
 
-                if (staffIdStr == null) {
-                    response.sendRedirect("Login");
-                    return;
-                }
+    Object staffObj = session.getAttribute("staffId");
+    Object receptionObj = session.getAttribute("reception");
 
-                int confirmedBy = Integer.parseInt(staffIdStr);
+    String staffIdStr = null;
+    if (staffObj != null) {
+        staffIdStr = String.valueOf(staffObj);
+    } else if (receptionObj != null) {
+        staffIdStr = String.valueOf(receptionObj);
+    }
+
+    if (staffIdStr == null) {
+        response.sendRedirect("Login");
+        return;
+    }
+
+    int confirmedBy = Integer.parseInt(staffIdStr);
                 BookingDao dao = new BookingDao();
                 String currentStatus = dao.getBookingStatus(bookingId);
 

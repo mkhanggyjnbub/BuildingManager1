@@ -225,7 +225,7 @@
         <li style="--i:12" class="khang-item">
             <a href="#"><i class="fa-solid fa-user-gear"></i><span>Khang</span></a>
             <ul class="khang-dropdown">
-                <li><a href="Profile"><span>?</span> My Account</a></li>
+                <li><a href="ViewUserProfile?id="><span>?</span> My Account</a></li>
                 <li><a href="OrderServices"><span>?</span> Order Services</a></li>
             </ul>
         </li>

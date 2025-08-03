@@ -96,7 +96,7 @@
     </head>
     <body>
         <div class="reset-container">
-            <h2>Đặt lại mật khẩu</h2>
+            <h2>Reset Password</h2>
 
             <c:if test="${not empty error}">
                 <div class="error">${error}</div>
@@ -111,23 +111,26 @@
                     <label for="confirmPassword">Re-Enter Password</label>
                     <input type="password" id="confirmPassword" name="confirmPassword" required minlength="8" maxlength="100">
                 </div>
-                <input type="submit" value="Xác nhận">
+                <input type="submit" value="Confirm">
             </form>
         </div>
 
-        <!-- Hiển thị popup nếu có message -->
+        <!-- Popup SweetAlert nếu đổi mật khẩu thành công -->
         <c:if test="${not empty message}">
             <script>
                 Swal.fire({
                     icon: 'success',
-                    title: 'Thành công!',
+                    title: 'Password changed successfully!',
                     text: '${message}',
-                    confirmButtonText: 'Đăng nhập',
+                    confirmButtonText: 'Back to Login',
                     confirmButtonColor: '#007bff'
-                }).then(() => {
-                    window.location.href = 'Login';
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = 'Logout'; // hoặc 'Login' nếu không cần Logout
+                    }
                 });
             </script>
         </c:if>
     </body>
 </html>
+

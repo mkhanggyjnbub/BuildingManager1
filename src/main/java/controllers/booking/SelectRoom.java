@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -71,6 +72,28 @@ public class SelectRoom extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+
+            HttpSession session = request.getSession();  // tạo mới nếu chưa có
+
+            if (session == null) {
+                response.sendRedirect("Login");
+                return;
+            }
+
+           Object staffObj = session.getAttribute("staffId");
+Object receptionObj = session.getAttribute("reception");
+
+String userIdStr = null;
+if (staffObj != null) {
+    userIdStr = String.valueOf(staffObj);
+} else if (receptionObj != null) {
+    userIdStr = String.valueOf(receptionObj);
+}
+
+if (userIdStr == null) {
+    response.sendRedirect("Login");
+    return;
+}
             int bookingId = Integer.parseInt(request.getParameter("bookingId"));
             BookingDao bookingDao = new BookingDao();
             Bookings booking = bookingDao.getBookingInfoForConfirmation(bookingId);
@@ -124,7 +147,33 @@ public class SelectRoom extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         try {
+
+            HttpSession session = request.getSession();
+
+            if (session == null) {
+                response.sendRedirect("Login");
+                return;
+            }
+
+Object staffObj = session.getAttribute("staffId");
+Object receptionObj = session.getAttribute("reception");
+
+String userIdStr = null;
+if (staffObj != null) {
+    userIdStr = String.valueOf(staffObj);
+} else if (receptionObj != null) {
+    userIdStr = String.valueOf(receptionObj);
+}
+
+if (userIdStr == null) {
+    response.sendRedirect("Login");
+    return;
+}
+
+
+            // ✅ Bắt đầu xử lý chọn phòng
             String bookingIdStr = request.getParameter("bookingId");
             if (bookingIdStr == null || bookingIdStr.trim().isEmpty()) {
                 request.setAttribute("noRoomTypeAlert", true);
@@ -167,8 +216,8 @@ public class SelectRoom extends HttpServlet {
 
                     if (start.isBefore(end)) {
                         RoomDao roomDao = new RoomDao();
-                        System.out.println("start time m" + start);
-                        System.out.println("end time m" + end);
+                        System.out.println("start time: " + start);
+                        System.out.println("end time: " + end);
                         availableRoomsList = roomDao.getAvailableRoomByDateAndType(end, start, roomType);
                         request.setAttribute("customStart", start.toString());
                         request.setAttribute("customEnd", end.toString());
@@ -199,10 +248,8 @@ public class SelectRoom extends HttpServlet {
             // Nhóm phòng theo tầng
             Map<Integer, List<Rooms>> roomsByFloor = new HashMap<Integer, List<Rooms>>();
             if (availableRoomsList != null) {
-                for (int i = 0; i < availableRoomsList.size(); i++) {
-                    Rooms room = availableRoomsList.get(i);
+                for (Rooms room : availableRoomsList) {
                     int floor = room.getFloorNumber();
-
                     if (!roomsByFloor.containsKey(floor)) {
                         roomsByFloor.put(floor, new ArrayList<Rooms>());
                     }
@@ -214,7 +261,6 @@ public class SelectRoom extends HttpServlet {
             request.getRequestDispatcher("booking/selectRoom.jsp").forward(request, response);
 
         } catch (Exception ex) {
-            // Nếu có bất kỳ lỗi nào khác thì chỉ hiển thị popup thông báo chung
             ex.printStackTrace();
             request.setAttribute("noRoomTypeAlert", true);
             request.getRequestDispatcher("booking/selectRoom.jsp").forward(request, response);

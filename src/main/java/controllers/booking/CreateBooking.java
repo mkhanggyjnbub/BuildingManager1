@@ -6,6 +6,7 @@ package controllers.booking;
 
 import dao.BookingDao;
 import dao.RoomDao;
+import jakarta.mail.Session;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -217,7 +218,7 @@ public class CreateBooking extends HttpServlet {
                 request.setAttribute("bookingSuccess", true);
 
                 request.setAttribute("today", LocalDate.now().toString());
-
+                
                 request.getRequestDispatcher("booking/createBooking.jsp").forward(request, response);
                 return;
 
@@ -240,6 +241,8 @@ public class CreateBooking extends HttpServlet {
                 request.setAttribute("adults", adults);
                 request.setAttribute("children", children);
 
+                
+                
                 request.getRequestDispatcher("booking/createBooking.jsp").forward(request, response);
             } else {
                 response.sendRedirect("CreateBooking?error=unknown_action");
