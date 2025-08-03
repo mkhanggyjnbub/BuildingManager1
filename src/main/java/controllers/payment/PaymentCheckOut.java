@@ -125,6 +125,8 @@ public class PaymentCheckOut extends HttpServlet {
 
             invoiceDao.updatePayment(invoice.getInvoiceId(), totalPayable);
 
+            BookingDao daoB = new BookingDao();
+            daoB.updateStatusCheckOut(bookingId);
             // Chuyển về trang thông báo hoặc dashboard
             request.setAttribute("message", "Payment Successfully");
             response.sendRedirect("ViewAllCheckInOutDashboard");

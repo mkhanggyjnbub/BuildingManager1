@@ -1607,4 +1607,16 @@ public class BookingDao {
         return count;
     }
 
+    public boolean updateStatusCheckOut(int bookingId) {
+        String sql = "UPDATE Bookings SET CheckOutTime = ? WHERE BookingId = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+            ps.setInt(2, bookingId);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace(); // hoặc log lỗi
+            return false;
+        }
+    }
 }
