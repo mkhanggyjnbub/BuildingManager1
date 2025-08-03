@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -153,37 +154,57 @@
             }
 
 
-.dashboard-layout {
-    display: flex;
+            .dashboard-layout {
+                display: flex;
+            }
+
+            /* Nội dung ban đầu lệch 60px */
+            .main-content {
+                margin-left: 60px;
+                padding: 20px;
+                flex: 1;
+                transition: margin-left 0.3s ease;
+            }
+
+            /* Khi sidebar mở rộng */
+            .sidebar.open ~ .main-content {
+                margin-left: 220px;
+            }
+
+
+            .booking-btn {
+    background-color: #00b894;
+    color: white;
+    padding: 10px 18px;
+    font-weight: 600;
+    font-size: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 184, 148, 0.2);
 }
 
-/* Nội dung ban đầu lệch 60px */
-.main-content {
-    margin-left: 60px;
-    padding: 20px;
-    flex: 1;
-    transition: margin-left 0.3s ease;
+.booking-btn:hover {
+    background-color: #019875;
+    transform: translateY(-2px);
 }
 
-/* Khi sidebar mở rộng */
-.sidebar.open ~ .main-content {
-    margin-left: 220px;
+.booking-btn:active {
+    transform: translateY(1px);
+    background-color: #017a60;
 }
-
 
 
         </style>
     </head>    
-
-
-
 
     <body <c:if test="${empty customer}">onload="showAccountChoicePopup()"</c:if>>
         <%@ include file="../navbarDashboard/navbarDashboard.jsp" %>
 
         <div class="dashboard-layout">
             <%@ include file="../sidebarDashboard/sidebarDashboard.jsp" %>
-             <div class="main-content" id="main-content">
+            <div class="main-content" id="main-content">
 
                 <!-- Modal chọn loại tài khoản -->
                 <div id="accountModal" class="modal">
@@ -247,9 +268,9 @@
                     <div class="search-box">
                         <form method="post" action="CreateBooking" class="search-form">
                             <label>Check in:
-                                <input type="date" id="startDate" name="startDate"
-                                       value="${startDate}" required />
+                                <input type="date" id="startDate" name="startDate" value="${startDate}" min="${today}" required />
                             </label>
+
                             <label>Check out:
                                 <input type="date" id="endDate" name="endDate"
                                        value="${endDate}" required />
@@ -295,7 +316,8 @@
                                                 <input type="hidden" name="endDate" value="${endDate}" />
                                                 <input type="hidden" name="adults" value="${adults}" />
                                                 <input type="hidden" name="children" value="${children}" />
-                                                <button type="submit">Booking</button>
+                                                <button type="submit" class="booking-btn">Book Now</button>
+
                                             </form>
 
                                         </td>
@@ -322,93 +344,80 @@
                 document.getElementById('guestForm').style.display = 'block';
             }
 
-
-            // Lấy ngày hôm nay định dạng yyyy-MM-dd
-            function getLocalDateTimeString(date = new Date()) {
-                // Trả về định dạng yyyy-MM-ddT00:00 để bỏ giờ
-                const yyyy = date.getFullYear();
-                const mm = String(date.getMonth() + 1).padStart(2, '0');
-                const dd = String(date.getDate()).padStart(2, '0');
-                return `${yyyy}-${mm}-${dd}T00:00`;
-            }
-
-            window.addEventListener('DOMContentLoaded', () => {
-                const today = getLocalDateTimeString();
+            document.addEventListener("DOMContentLoaded", function () {
                 const startInput = document.getElementById("startDate");
                 const endInput = document.getElementById("endDate");
+                const adultsInput = document.getElementById("adults");
+                const childrenInput = document.getElementById("children");
 
-                if (startInput) {
-                    startInput.setAttribute('min', today);
-                    if (startInput.value < today) {
-                        startInput.value = today;
+                const today = new Date();
+                const yyyy = today.getFullYear();
+                const mm = String(today.getMonth() + 1).padStart(2, '0');
+                const dd = String(today.getDate()).padStart(2, '0');
+                const todayStr = `${yyyy}-${mm}-${dd}`;
+
+                        if (startInput && endInput) {
+                     
+                            let selectedStart = startInput.value;
+                            if (!selectedStart || selectedStart < todayStr) {
+                                selectedStart = todayStr;
+                                startInput.value = todayStr;
+                            }
+                            startInput.setAttribute("min", todayStr);
+
+                            // áp dụng selectedStart làm min cho endDate
+                            endInput.setAttribute("min", selectedStart);
+                            if (!endInput.value || endInput.value < selectedStart) {
+                                endInput.value = selectedStart;
+                            }
+
+                            // cập nhật endDate
+                            startInput.addEventListener("change", function () {
+                                const newStart = this.value;
+                                endInput.setAttribute("min", newStart);
+                                if (!endInput.value || endInput.value < newStart) {
+                                    endInput.value = newStart;
+                                }
+                            });
+                        }
+
+                        // xác thực người số người
+                        function validateNumberInput(input, min) {
+                            input.addEventListener("input", function () {
+                                this.value = this.value.replace(/[^0-9]/g, '');
+                                if (this.value !== '' && parseInt(this.value) < min) {
+                                    this.value = min;
+                                }
+                            });
+                            input.addEventListener("keydown", function (e) {
+                                const invalidKeys = ['e', 'E', '+', '-', '.'];
+                                if (invalidKeys.includes(e.key)) {
+                                    e.preventDefault();
+                                }
+                            });
+                        }
+
+                        validateNumberInput(adultsInput, 1);
+                        validateNumberInput(childrenInput, 0);
+                    });
+
+
+                    function toggleSidebar() {
+                        const sidebar = document.getElementById("sidebar");
+                        const mainContent = document.getElementById("main-content");
+
+                        sidebar.classList.toggle("open");
+
+                        if (sidebar.classList.contains("open")) {
+                            mainContent.style.marginLeft = "220px";
+                        } else {
+                            mainContent.style.marginLeft = "60px";
+                        }
                     }
-                }
-
-                if (endInput) {
-                    const minEnd = startInput.value || today;
-                    endInput.setAttribute('min', minEnd);
-                    if (endInput.value < minEnd) {
-                        endInput.value = minEnd;
-                    }
-                }
-
-                // Nếu chọn lại startDate thì update min cho endDate
-                if (startInput && endInput) {
-                    startInput.addEventListener("change", () => {
-                        const selected = startInput.value;
-                        endInput.min = selected;
-                        if (endInput.value < selected) {
-                            endInput.value = selected;
-                        }
-                    });
-                }
-            });
-
-
-            document.addEventListener('DOMContentLoaded', function () {
-                const adultsInput = document.getElementById('adults');
-                const childrenInput = document.getElementById('children');
-
-                function validateNumberInput(input, min) {
-                    input.addEventListener('input', function () {
-                        // Xóa ký tự không phải số (chặn ký tự chữ, ký tự đặc biệt)
-                        this.value = this.value.replace(/[^0-9]/g, '');
-
-                        // Nếu giá trị nhỏ hơn min thì đặt lại thành min
-                        if (this.value !== '' && parseInt(this.value) < min) {
-                            this.value = min;
-                        }
-                    });
-
-                    // Cấm nhập chữ từ bàn phím (ngăn input type="number" vẫn cho gõ e, +, -)
-                    input.addEventListener('keydown', function (e) {
-                        const invalidKeys = ['e', 'E', '+', '-', '.'];
-                        if (invalidKeys.includes(e.key)) {
-                            e.preventDefault();
-                        }
-                    });
-                }
-
-                validateNumberInput(adultsInput, 1);    // Người lớn phải >= 1
-                validateNumberInput(childrenInput, 0);  // Trẻ em >= 0
-            });
-
-
-function toggleSidebar() {
-    const sidebar = document.getElementById("sidebar");
-    const mainContent = document.getElementById("main-content");
-
-    sidebar.classList.toggle("open");
-
-    if (sidebar.classList.contains("open")) {
-        mainContent.style.marginLeft = "220px";
-    } else {
-        mainContent.style.marginLeft = "60px";
-    }
-}
-
 
         </script>
+
+
 
 
         <c:if test="${bookingSuccess}">

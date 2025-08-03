@@ -474,11 +474,10 @@ public class RoomDao {
     }
 
 //vinh select room    
+    // Tìm các phòng cùng loại với bookingId và KHÔNG bị trùng lịch đặt
     public List<Rooms> getAvailableRoomSameType(int bookingId) {
         List<Rooms> list = new ArrayList<>();
-
         try {
-            // 1. Lấy ngày và loại phòng từ đơn đặt
             String bookingSQL = "SELECT StartDate, EndDate, RoomType FROM Bookings WHERE BookingId = ?";
             PreparedStatement ps1 = conn.prepareStatement(bookingSQL);
             ps1.setInt(1, bookingId);
@@ -489,14 +488,13 @@ public class RoomDao {
                 LocalDate endDate = rs1.getDate("EndDate").toLocalDate();
                 String roomType = rs1.getString("RoomType");
 
-                // 2. Lấy các phòng đang trống và cùng loại phòng
                 String sql = "SELECT * FROM Rooms R "
                         + "WHERE R.RoomType = ? AND R.Status = 'Active' "
                         + "AND NOT EXISTS ("
                         + "    SELECT 1 FROM Bookings B "
                         + "    WHERE B.RoomId = R.RoomId "
                         + "    AND B.StartDate < ? AND B.EndDate > ? "
-                        + "    AND B.Status IN ('Waiting for processing', 'Confirmed', 'Checked in', 'Canceled')"
+                        + "    AND B.Status IN ('Waiting for processing', 'Confirmed', 'Checked in')"
                         + ") "
                         + "ORDER BY R.FloorNumber, R.RoomNumber";
 
@@ -504,8 +502,8 @@ public class RoomDao {
                 ps2.setString(1, roomType);
                 ps2.setDate(2, Date.valueOf(endDate));
                 ps2.setDate(3, Date.valueOf(startDate));
-                ResultSet rs2 = ps2.executeQuery();
 
+                ResultSet rs2 = ps2.executeQuery();
                 while (rs2.next()) {
                     Rooms room = new Rooms();
                     room.setRoomId(rs2.getInt("RoomId"));
@@ -525,35 +523,31 @@ public class RoomDao {
         } catch (SQLException ex) {
             Logger.getLogger(RoomDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return list;
     }
 
     //vinh dùng cho select room
-    public List<Rooms> getAvailableRoomByDateAndType(LocalDate startDate, LocalDate endDate, String roomType) {
-        List<Rooms> list = new ArrayList<>();
+    // Tìm các phòng cùng loại và không bị trùng lịch trong khoảng ngày được chọn
+    public List<Rooms> getAvailableRoomByDateAndType(LocalDate endDate, LocalDate startDate, String roomType) {
+        List<Rooms> list = new ArrayList<Rooms>();
 
         try {
-
-            System.out.println(startDate);
-            System.out.println(endDate);
             String sql = "SELECT * FROM Rooms R "
                     + "WHERE R.RoomType = ? AND R.Status = 'Active' "
                     + "AND NOT EXISTS ("
                     + "    SELECT 1 FROM Bookings B "
                     + "    WHERE B.RoomId = R.RoomId "
-                    + "    AND (B.EndDate > ? AND B.StartDate < ?) "
-                    + "    AND B.Status IN ('Waiting for processing', 'Confirmed', 'Checked in', 'Canceled')"
+                    + "    AND NOT (B.EndDate <= ? OR B.StartDate >= ?) "
+                    + "    AND B.Status IN ('Waiting for processing', 'Confirmed', 'Checked in')"
                     + ") "
                     + "ORDER BY R.FloorNumber, R.RoomNumber";
 
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, roomType);
-            ps.setDate(2, Date.valueOf(endDate));   // B.EndDate > start
-            ps.setDate(3, Date.valueOf(startDate)); // B.StartDate < end
+            ps.setDate(2, Date.valueOf(endDate));
+            ps.setDate(3, Date.valueOf(startDate));
 
             ResultSet rs = ps.executeQuery();
-
             while (rs.next()) {
                 Rooms room = new Rooms();
                 room.setRoomId(rs.getInt("RoomId"));
@@ -563,14 +557,19 @@ public class RoomDao {
                 room.setImageUrl(rs.getString("ImageUrl"));
                 room.setFloorNumber(rs.getInt("FloorNumber"));
                 room.setRoomNumber(rs.getString("RoomNumber"));
+
                 list.add(room);
             }
 
+            rs.close();
+            ps.close();
         } catch (SQLException ex) {
             Logger.getLogger(RoomDao.class.getName()).log(Level.SEVERE, null, ex);
         }
+        if (!list.isEmpty()) {
+            System.out.println("list k rong");
+        }
         return list;
-
     }
 
     //vinh
@@ -691,6 +690,7 @@ public class RoomDao {
         return roomType;
 
     }
+//Đóng của Vinh
 
     public Rooms getRoomDetailForEdit(int id) {
         ResultSet rs = null;

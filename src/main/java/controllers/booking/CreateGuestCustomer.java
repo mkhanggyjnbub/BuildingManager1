@@ -82,9 +82,9 @@ public class CreateGuestCustomer extends HttpServlet {
             String email = request.getParameter("email");
             String identityNumber = request.getParameter("identityNumber");
 
-            // ✅ Kiểm tra CCCD không được để trống
+            // Kiểm tra CCCD không được để trống
             if (identityNumber == null || identityNumber.trim().isEmpty()) {
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "CCCD không được để trống.");
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Identify Number cannot be left blank.");
                 return;
             }
             CustomerDao dao = new CustomerDao();

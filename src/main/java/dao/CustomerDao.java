@@ -352,6 +352,7 @@ public class CustomerDao {
         }
     }
 
+    //Đống của Vinh
     public boolean insertCustomerIfCccdNotEmpty(String fullName, String cccd, String email, String phone) {
         if (cccd == null || cccd.trim().isEmpty()) {
             return false;

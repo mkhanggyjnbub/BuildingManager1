@@ -51,6 +51,7 @@ controllers\services\AddServiceDashboard.class
 controllers\voucher\ViewVouchers.class
 db\SendOTPEmail.class
 controllers\room\ViewRoomDetail.class
+controllers\booking\ViewBookingDetail.class
 dao\ReportDao.class
 db\SendOTPEmail$1.class
 controllers\checkInOut\CheckInOutDetail.class

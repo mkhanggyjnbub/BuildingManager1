@@ -119,7 +119,7 @@
                     <label for="accountType">Select Account Type</label>
                     <select id="accountType" name="accountType" required>
                         <option value="">-- Select Account Type --</option>
-                        <option value="option1">Admin, Manager, Staff</option>
+                        <option value="option1">Admin, Receptionist, Staff</option>
                         <option value="option2">User</option>
                     </select>
                 </div>
