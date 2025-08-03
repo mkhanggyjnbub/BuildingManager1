@@ -89,4 +89,30 @@ public class ExtraChargeDao {
         return null; // Không có ExtraCharge nào
     }
 
+    public List<ExtraCharge> getByBookingId(int bookingId) {
+        List<ExtraCharge> list = new ArrayList<>();
+        String sql = "SELECT * FROM ExtraCharge WHERE BookingId = ?";
+
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, bookingId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                ExtraCharge ec = new ExtraCharge();
+                ec.setExtraChargeId(rs.getInt("ExtraChargeId"));
+                ec.setBookingId(rs.getInt("BookingId"));
+                ec.setUnitPrice(rs.getLong("UnitPrice"));
+                ec.setQuantity(rs.getInt("Quantity"));
+                // Nếu có thêm cột khác như Description, CreatedAt thì set thêm
+                list.add(ec);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
 }
