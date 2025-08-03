@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -316,16 +317,101 @@ public class UserDao {
                     + "WHERE isOnl = 1\n"
                     + "ORDER BY userId ASC";
 
-           Statement st = conn.createStatement();
-           rs =st.executeQuery(sql);
-           if(rs.next()){
-             return rs.getInt("userId");
-           }
-           
+            Statement st = conn.createStatement();
+            rs = st.executeQuery(sql);
+            if (rs.next()) {
+                return rs.getInt("userId");
+            }
+
         } catch (SQLException ex) {
             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
+    }
+
+    public Users getUserByIdForProfile(int id) {
+        Users u = null;
+        String sql = "SELECT * FROM Users WHERE UserId = ?";
+
+        try ( PreparedStatement pst = conn.prepareStatement(sql)) {
+            pst.setInt(1, id);
+            try ( ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    u = new Users();
+                    u.setUserId(rs.getInt("UserId"));
+                    u.setUserName(rs.getString("UserName"));
+                    u.setFullName(rs.getString("FullName"));
+                    u.setPhone(rs.getString("Phone"));
+                    u.setEmail(rs.getString("Email"));
+                    u.setAddress(rs.getString("Address"));
+                    u.setAvatarUrl(rs.getString("AvatarUrl"));
+                    u.setGender(rs.getString("Gender"));
+                    u.setIdenityNumber(rs.getString("IdentityNumber"));
+                    u.setStatus(rs.getString("Status"));
+                    try {
+                        u.setDayOfBirth(rs.getDate("DateOfBirth"));
+                    } catch (SQLException e) {
+                        u.setDayOfBirth(null); // fallback
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return u;
+    }
+
+    public int updateUserProfileById(int id, Users staff) {
+        int result = 0;
+        try {
+            String sql = "UPDATE Users SET Address = ?, FullName = ?, DateOfBirth = ?, Gender = ?, AvatarUrl = ? WHERE UserId = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, staff.getAddress());
+            pst.setString(2, staff.getFullName());
+            pst.setDate(3, staff.getDayOfBirth());
+            pst.setString(4, staff.getGender());
+            pst.setString(5, staff.getAvatarUrl());
+            pst.setInt(6, id);
+            result = pst.executeUpdate();
+            return result;
+        } catch (SQLException ex) {
+            Logger.getLogger(Users.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+
+    public Users getUserByIdForEdit(int id) {
+        Users user = null;
+        String sql = "SELECT UserName, FullName, Email, Phone, Status, AvatarUrl, Address, Gender, DateOfBirth, LastLogin "
+                + "FROM Users WHERE UserId = ?";
+
+        try ( PreparedStatement pst = conn.prepareStatement(sql)) {
+            pst.setInt(1, id);
+            try ( ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    user = new Users();
+                    user.setUserName(rs.getString("UserName"));
+                    user.setFullName(rs.getString("FullName"));
+                    user.setEmail(rs.getString("Email"));
+                    user.setPhone(rs.getString("Phone"));
+                    user.setStatus(rs.getString("Status"));
+                    user.setAvatarUrl(rs.getString("AvatarUrl"));
+                    user.setAddress(rs.getString("Address")); // nullable
+                    user.setGender(rs.getString("Gender"));   // nullable
+                    user.setDayOfBirth(rs.getDate("DateOfBirth")); // nullable
+                    Timestamp ts = rs.getTimestamp("LastLogin");
+                    if (ts != null) {
+                        user.setLastLogin(ts.toLocalDateTime());
+                    } else {
+                        user.setLastLogin(null);
+                    }
+                    return user;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
 }

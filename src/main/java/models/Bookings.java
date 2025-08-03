@@ -35,7 +35,8 @@ public class Bookings {
     private int userId;
     private String formattedStartDate;
     private String formattedEndDate;
-
+    private Users users;
+    
     private LocalDateTime extendedEndDate;
 
     private String RoomType;
@@ -255,4 +256,14 @@ public class Bookings {
         this.extendedEndDate = extendedEndDate;
     }
 
+
+    public Users getUserName() {
+        return users;
+    }
+
+    public void setUserName(Users userName) {
+        this.users = userName;
+    }
+
+   
 }

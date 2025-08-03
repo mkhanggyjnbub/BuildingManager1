@@ -1,11 +1,18 @@
+<%-- 
+    Document   : changePasswordForCustomer
+    Created on : 28 Jul 2025, 02:06:06
+    Author     : dodan
+--%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Đặt lại mật khẩu</title>
+        <title>Change Password</title>
 
-        <!-- SweetAlert2 CDN -->
+        <!-- SweetAlert2 -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <style>
@@ -79,58 +86,58 @@
                 background-color: #0056b3;
             }
 
-            .error {
-                color: red;
+            .error, .success {
                 font-size: 14px;
                 margin-bottom: 10px;
                 text-align: center;
             }
 
+            .error {
+                color: red;
+            }
             .success {
                 color: green;
-                font-size: 14px;
-                margin-bottom: 10px;
-                text-align: center;
             }
         </style>
     </head>
     <body>
         <div class="reset-container">
-            <h2>Reset Password</h2>
+            <h2>Change Password</h2>
 
             <c:if test="${not empty error}">
                 <div class="error">${error}</div>
             </c:if>
 
-            <form method="post" action="ResetPassword">
+            <form method="post" action="ChangePasswordForCustomer">
+                <input type="hidden" name="customerId" value="${customerId}">
+                <div class="form-group">
+                    <label for="currentPassword">Current Password</label>
+                    <input type="password" id="currentPassword" name="currentPassword">
+                </div>
                 <div class="form-group">
                     <label for="newPassword">New Password</label>
-                    <input type="password" id="newPassword" name="newPassword" required minlength="8" maxlength="100">
+                    <input type="password" id="newPassword" name="newPassword" required minlength="8">
                 </div>
                 <div class="form-group">
-                    <label for="confirmPassword">Re-Enter Password</label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" required minlength="8" maxlength="100">
+                    <label for="confirmPassword">Confirm New Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required minlength="8">
                 </div>
-                <input type="submit" value="Confirm">
+                <input type="submit" value="Confirm Change">
             </form>
         </div>
 
-        <!-- Popup SweetAlert nếu đổi mật khẩu thành công -->
         <c:if test="${not empty message}">
             <script>
                 Swal.fire({
                     icon: 'success',
-                    title: 'Password changed successfully!',
-                    text: '${message}',
-                    confirmButtonText: 'Back to Login',
+                    title: 'Success!',
+                    text: `${message}`,
+                    confirmButtonText: 'OK',
                     confirmButtonColor: '#007bff'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = 'Logout'; // hoặc 'Login' nếu không cần Logout
-                    }
+                }).then(() => {
+                    window.location.href = 'Index';
                 });
             </script>
         </c:if>
     </body>
-</html>
-
+</html

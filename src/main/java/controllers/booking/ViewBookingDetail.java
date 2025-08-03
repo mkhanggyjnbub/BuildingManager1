@@ -2,28 +2,27 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.checkInOut;
+package controllers.booking;
 
-import com.google.gson.Gson;
 import dao.BookingDao;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import static java.nio.file.Files.list;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.Bookings;
 
 /**
  *
- * @author KHANH
+ * @author Dương Đinh Thế Vinh
  */
-@WebServlet("/CheckInOutDetail")
-public class CheckInOutDetail extends HttpServlet {
+@WebServlet(name = "ViewBookingDetail", urlPatterns = {"/ViewBookingDetail"})
+public class ViewBookingDetail extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +41,10 @@ public class CheckInOutDetail extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CheckInCheckOutDetails</title>");
+            out.println("<title>Servlet ViewBookingDetail</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CheckInCheckOutDetails at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ViewBookingDetail at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,26 +60,34 @@ public class CheckInOutDetail extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String bookingIdStr = request.getParameter("bookingId");
-        if (bookingIdStr != null) {
-            int id = Integer.parseInt(bookingIdStr);
-            BookingDao dao = new BookingDao();
-            Bookings booking = dao.getBookingById(id);
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
 
-            if (booking == null) {
-                response.sendRedirect("viewAllCheckInOutDashboard.jsp");
-                return;
-            }
+    String bookingIdParam = request.getParameter("bookingId");
 
-            // Đưa booking sang JSP viewCheckInDetail.jsp luôn
-            request.setAttribute("booking", booking);
-            request.getRequestDispatcher("checkInOut/viewCheckInDetail.jsp").forward(request, response);
-        } else {
-            response.sendRedirect("viewAllCheckInOutDashboard.jsp");
-        }
+    if (bookingIdParam == null || bookingIdParam.isEmpty()) {
+        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Booking ID is required");
+        return;
     }
+
+    try {
+        int bookingId = Integer.parseInt(bookingIdParam);
+        BookingDao bookingDao = new BookingDao();
+        Bookings booking = bookingDao.getBookingDetail(bookingId);
+
+        if (booking != null) {
+            request.setAttribute("bookingDetail", booking);
+            request.getRequestDispatcher("booking/viewBookingDetail.jsp").forward(request, response);
+        } else {
+            request.setAttribute("error", "Booking not found");
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Booking not found"); // ✅ moved inside
+        }
+
+    } catch (SQLException ex) {
+        Logger.getLogger(ViewBookingDetail.class.getName()).log(Level.SEVERE, null, ex);
+        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Database error"); // ✅ moved inside catch
+    }
+}
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -93,7 +100,7 @@ public class CheckInOutDetail extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
+        processRequest(request, response);
     }
 
     /**

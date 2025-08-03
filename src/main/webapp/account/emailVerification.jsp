@@ -119,7 +119,7 @@
     </head>
     <body>
         <div class="verify-container">
-            <h2>Xác thực Email</h2>
+            <h2>Email Authentication</h2>
 
             <c:if test="${not empty message}">
                 <div class="message success">${message}</div>
@@ -130,16 +130,16 @@
 
             <form action="EmailVerification" method="post">
                 <div class="form-group">
-                    <label for="otp">Nhập mã OTP</label>
+                    <label for="otp">Enter your OTP</label>
                     <input type="text" id="otp" name="otp" required>
                 </div>
-                <input type="submit" value="Xác minh">
+                <input type="submit" value="Verify">
             </form>
 
             <div class="message" id="countdown" style="text-align: center; font-weight: bold;"></div>
             <div id="resendContainer" style="display: none; text-align: center; margin-top: 15px;">
                 <form action="ResendOTP" method="post">
-                    <input type="submit" value="Gửi lại OTP">
+                    <input type="submit" value="Resend OTP">
                 </form>
             </div>
         </div>
@@ -151,11 +151,11 @@
 
             const timer = setInterval(function () {
                 if (remainingTime > 0) {
-                    countdownElement.textContent = "OTP sẽ hết hạn sau: " + remainingTime + " giây";
+                    countdownElement.textContent = "OTP will expire after: " + remainingTime + " second";
                     remainingTime--;
                 } else {
                     clearInterval(timer);
-                    countdownElement.textContent = "OTP đã hết hạn. Vui lòng gửi lại!";
+                    countdownElement.textContent = "OTP has expired. Please resend!";
                     resendContainer.style.display = "block";
                 }
             }, 1000);

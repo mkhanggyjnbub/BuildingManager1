@@ -2,28 +2,30 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.checkInOut;
+package controllers.booking;
 
-import com.google.gson.Gson;
 import dao.BookingDao;
+import dao.RoomDao;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import static java.nio.file.Files.list;
-import java.sql.SQLException;
+import jakarta.servlet.http.HttpSession;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import models.Bookings;
+import models.Rooms;
 
 /**
  *
- * @author KHANH
+ * @author dodan
  */
-@WebServlet("/CheckInOutDetail")
-public class CheckInOutDetail extends HttpServlet {
+@WebServlet(name = "UpgradeBooking", urlPatterns = {"/UpgradeBooking"})
+public class UpgradeBooking extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +44,10 @@ public class CheckInOutDetail extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CheckInCheckOutDetails</title>");
+            out.println("<title>Servlet UpgradeBooking</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CheckInCheckOutDetails at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpgradeBooking at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,23 +65,24 @@ public class CheckInOutDetail extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String bookingIdStr = request.getParameter("bookingId");
-        if (bookingIdStr != null) {
-            int id = Integer.parseInt(bookingIdStr);
-            BookingDao dao = new BookingDao();
-            Bookings booking = dao.getBookingById(id);
+        int bookingId = Integer.parseInt(request.getParameter("bookingId"));
+        System.out.println("bookingId la: "+ bookingId);
+//        dao.updateStatusForUpgradeBooking(bookingId);
+        Bookings b = new Bookings();
+        BookingDao daoB = new BookingDao();
+        b = daoB.getBookingByIdForUpdateBooking(bookingId);
+        RoomDao daoR = new RoomDao();
+        LocalDate startLocalDate = b.getStartDate();
+        LocalDate endLocalDate = b.getEndDate();
 
-            if (booking == null) {
-                response.sendRedirect("viewAllCheckInOutDashboard.jsp");
-                return;
-            }
+        Date startDate = java.sql.Date.valueOf(startLocalDate);
+        Date endDate = java.sql.Date.valueOf(endLocalDate);
 
-            // Đưa booking sang JSP viewCheckInDetail.jsp luôn
-            request.setAttribute("booking", booking);
-            request.getRequestDispatcher("checkInOut/viewCheckInDetail.jsp").forward(request, response);
-        } else {
-            response.sendRedirect("viewAllCheckInOutDashboard.jsp");
-        }
+        List<Rooms> listR = daoR.getAvailableRoomsForUpgrade(startDate, endDate, daoR.getMaxOccupancyByRoomId(b.getRoomId()) , bookingId);
+        
+        request.setAttribute("listR", listR);
+        request.setAttribute("bookingId", bookingId);
+        request.getRequestDispatcher("booking/upgradeBooking.jsp").forward(request, response);
     }
 
     /**
@@ -93,7 +96,31 @@ public class CheckInOutDetail extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
+        int roomId = Integer.parseInt(request.getParameter("roomId"));
+        int bookingId = Integer.parseInt(request.getParameter("bookingId"));
+        String roomType = request.getParameter("roomType");
+        
+        BookingDao daoB = new BookingDao();
+        
+        Bookings b;
+        
+        b = daoB.getBookingByIdForUpdateBooking(bookingId);
+        HttpSession session = request.getSession();
+        if (session.getAttribute("reception") != null) {
+            b.setConfirmedBy(Integer.parseInt(session.getAttribute("reception").toString()));
+        } else if (session.getAttribute("staffId") != null) {
+            b.setConfirmedBy(Integer.parseInt(session.getAttribute("staffId").toString()));
+        } else if (session.getAttribute("adminId") != null) {
+            b.setConfirmedBy(Integer.parseInt(session.getAttribute("adminId").toString()));
+        }
+        
+        int check = daoB.updateBooking(b, roomId, roomType);
+        
+        daoB.updateStatusForUpgradeBooking(bookingId);
+        if (check != 0) {
+            response.sendRedirect("ViewAllCheckInOutDashboard");
+        }
+        
     }
 
     /**

@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -99,6 +100,10 @@ public class CreateGuestCustomer extends HttpServlet {
                 request.getSession().setAttribute("customer", customer);
             }
 
+            HttpSession session = request.getSession();
+            int bookingId = Integer.parseInt(session.getAttribute("bookingId").toString());
+            request.setAttribute("bookingId", bookingId);
+            
             response.sendRedirect("CreateBooking");
 
         } catch (SQLException ex) {

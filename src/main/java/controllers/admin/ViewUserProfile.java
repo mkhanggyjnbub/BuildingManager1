@@ -2,28 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.checkInOut;
+package controllers.admin;
 
-import com.google.gson.Gson;
-import dao.BookingDao;
+import dao.UserDao;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import static java.nio.file.Files.list;
-import java.sql.SQLException;
-import java.util.List;
-import models.Bookings;
+import jakarta.servlet.http.HttpSession;
+import models.Users;
 
 /**
  *
- * @author KHANH
+ * @author dodan
  */
-@WebServlet("/CheckInOutDetail")
-public class CheckInOutDetail extends HttpServlet {
+@WebServlet(name = "ViewUserProfile", urlPatterns = {"/ViewUserProfile"})
+public class ViewUserProfile extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +39,10 @@ public class CheckInOutDetail extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CheckInCheckOutDetails</title>");
+            out.println("<title>Servlet ViewUserProfile</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CheckInCheckOutDetails at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ViewUserProfile at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,22 +60,29 @@ public class CheckInOutDetail extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String bookingIdStr = request.getParameter("bookingId");
-        if (bookingIdStr != null) {
-            int id = Integer.parseInt(bookingIdStr);
-            BookingDao dao = new BookingDao();
-            Bookings booking = dao.getBookingById(id);
-
-            if (booking == null) {
-                response.sendRedirect("viewAllCheckInOutDashboard.jsp");
-                return;
-            }
-
-            // Đưa booking sang JSP viewCheckInDetail.jsp luôn
-            request.setAttribute("booking", booking);
-            request.getRequestDispatcher("checkInOut/viewCheckInDetail.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        int id = 0;
+//Integer.parseInt(request.getParameter("id"))
+        if (session.getAttribute("adminId") != null) {
+            id = Integer.parseInt(session.getAttribute("adminId").toString());
+        } else if (session.getAttribute("reception") != null) {
+            id = Integer.parseInt(session.getAttribute("reception").toString());
+        } else if (session.getAttribute("staffId") != null) {
+            id = Integer.parseInt(session.getAttribute("staffId").toString());
         } else {
-            response.sendRedirect("viewAllCheckInOutDashboard.jsp");
+            response.sendRedirect("Login");
+            return;
+        }
+
+        UserDao dao = new UserDao();
+        Users u = dao.getUserByIdForProfile(id);
+
+        if (u != null) {
+            request.setAttribute("userProfile", u); // Truyền user sang JSP
+            request.getRequestDispatcher("admin/viewUserProfile.jsp").forward(request, response);
+        } else {
+            request.setAttribute("message", "User not found.");
+            request.getRequestDispatcher("admin/viewUserProfile.jsp").forward(request, response);
         }
     }
 
@@ -93,7 +97,7 @@ public class CheckInOutDetail extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
+        processRequest(request, response);
     }
 
     /**

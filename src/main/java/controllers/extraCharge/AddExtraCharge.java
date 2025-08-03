@@ -2,28 +2,30 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.checkInOut;
+package controllers.extraCharge;
 
-import com.google.gson.Gson;
 import dao.BookingDao;
+import dao.ExtraChargeDao;
+import dao.RoomDao;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import static java.nio.file.Files.list;
-import java.sql.SQLException;
-import java.util.List;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import models.Bookings;
+import models.ExtraCharge;
 
 /**
  *
- * @author KHANH
+ * @author dodan
  */
-@WebServlet("/CheckInOutDetail")
-public class CheckInOutDetail extends HttpServlet {
+@WebServlet(name = "AddExtraCharge", urlPatterns = {"/AddExtraCharge"})
+public class AddExtraCharge extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +44,10 @@ public class CheckInOutDetail extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CheckInCheckOutDetails</title>");
+            out.println("<title>Servlet AddExtracharge</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CheckInCheckOutDetails at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddExtracharge at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,23 +65,49 @@ public class CheckInOutDetail extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String bookingIdStr = request.getParameter("bookingId");
-        if (bookingIdStr != null) {
-            int id = Integer.parseInt(bookingIdStr);
-            BookingDao dao = new BookingDao();
-            Bookings booking = dao.getBookingById(id);
+        int bookingId = Integer.parseInt(request.getParameter("bookingId"));
 
-            if (booking == null) {
-                response.sendRedirect("viewAllCheckInOutDashboard.jsp");
-                return;
-            }
+        BookingDao dao = new BookingDao();
+        Bookings b = dao.getBookingById(bookingId);
 
-            // Đưa booking sang JSP viewCheckInDetail.jsp luôn
-            request.setAttribute("booking", booking);
-            request.getRequestDispatcher("checkInOut/viewCheckInDetail.jsp").forward(request, response);
-        } else {
-            response.sendRedirect("viewAllCheckInOutDashboard.jsp");
+        if (b == null || b.getEndDate() == null) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid booking or end date.");
+            return;
         }
+
+        // Tính thời gian trưa ngày checkout (12:00 tại ngày endDate)
+        LocalDate endDate = b.getEndDate();
+        LocalDateTime checkoutDeadline = endDate.atTime(12, 0); // 12:00 trưa
+        LocalDateTime now = LocalDateTime.now();
+
+        long hoursLate = Duration.between(checkoutDeadline, now).toHours();
+        if (hoursLate <= 0) {
+            hoursLate = 0; // Không trễ, không cần phụ thu
+        }
+
+        // Tạo ExtraCharge
+        ExtraCharge e = new ExtraCharge();
+        e.setBookingId(bookingId);
+        e.setChargeType("Late Hour");
+        e.setQuantity(Integer.parseInt(String.valueOf(hoursLate)));
+
+        // Tính giá theo giờ: 10% giá phòng
+        RoomDao roomDao = new RoomDao();
+        long roomPrice = roomDao.getPriceRoomByBookingId(bookingId);
+        long hourlyPrice = Math.round(roomPrice * 0.1);
+        e.setUnitPrice(hourlyPrice);
+
+        // Gán thời gian bắt đầu - kết thúc phụ thu
+        e.setStartTime(checkoutDeadline);
+        e.setEndTime(now);
+
+        // Lưu phụ thu nếu cần
+        ExtraChargeDao extraChargeDao = new ExtraChargeDao();
+        extraChargeDao.insertExtraCharge(e);
+
+        dao.checkedOutBooking(bookingId);
+        // Điều hướng tiếp theo (tùy bạn muốn redirect đi đâu)
+        response.sendRedirect("ViewAllCheckInOutDashboard");
     }
 
     /**
@@ -93,7 +121,7 @@ public class CheckInOutDetail extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
+        processRequest(request, response);
     }
 
     /**
