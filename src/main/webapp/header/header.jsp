@@ -110,7 +110,6 @@
     .dichvukhachhang-name {
         font-weight: bold;
         color: #fff;
-        padding: 8px 12px;
     }
 
     .dichvukhachhang-content {

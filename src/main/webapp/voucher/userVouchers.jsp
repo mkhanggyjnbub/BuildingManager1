@@ -167,7 +167,7 @@ Author     : Admin
                                         <!-- Voucher còn hạn và đang active -->
                                         <form action="ConfirmBooking" method="get">
                                             <input type="hidden" name="voucherId" value="${v.voucherId}" />
-                                            <button type="submit" class="use-button">Use Voucher</button>
+                                            
                                         </form>
                                     </c:when>
                                     <c:otherwise>
