@@ -779,25 +779,6 @@
                             maxlength="500"
                             ></textarea>
                     </div>
-                    <!--                    <div>
-                                            <label class="form-label">Selected Service</label>
-                                            <div
-                                                aria-atomic="true"
-                                                aria-live="polite"
-                                                aria-relevant="text"
-                                                class="services-list"
-                                                id="servicesList"
-                                                >
-                                                <p class="services-placeholder">No Services Selected yet </p>
-                                            </div>
-                                        </div>
-                                        <button
-                                            type="button"
-                                            id="chooseServicesBtn"
-                                            class="btn btn-services"
-                                            >
-                                            <i class="fas fa-concierge-bell"></i>Select Service
-                                        </button>-->
                     <div
                         aria-atomic="true"
                         aria-live="polite"
@@ -841,9 +822,7 @@
         </main>
 
     </body>
-    <footer>
-        © 2025 MyHotel. Địa chỉ: 123 Nguyễn Trãi, Hà Nội. Hotline: 1900 9999
-    </footer>
+   
 
 </body>
 
@@ -852,78 +831,59 @@
 
 
 <script>
-    // chỉnh sửa khi chọn thanh toán 
-    document.addEventListener('DOMContentLoaded', function () {
-        const select = document.getElementById("limit");
-        const totalPice = document.getElementById("price3");
-        let originalPrice = totalPice.dataset.price;
-        select.addEventListener('change', function () {
-            const paymentCod = document.getElementById("cod");
-            if (select.value === "50" || select.value === "30") {
-                paymentCod.hidden = true;
-                const totalPice = document.getElementById("price3");
-                let originalPrice = totalPice.dataset.price;
-                if (select.value === "50") {
+document.addEventListener('DOMContentLoaded', function () {
+    const limitSelect = document.getElementById("limit");
+    const priceDisplay = document.getElementById("price3");
+    const discountEl = document.getElementById("discount");
+    const voucherLink = document.getElementById("Voucher");
 
-                    totalPice.textContent = (parseInt(originalPrice) * 0.5).toLocaleString("vi-VN") + " VND ";
+    // Lấy giá gốc từ data attribute
+    let originalPrice = parseFloat(priceDisplay.dataset.price);
+    let discountPercent = parseFloat(discountEl.dataset.discount || "0");
 
-                } else {
-                    totalPice.textContent = (parseInt(originalPrice) * 0.3).toLocaleString("vi-VN") + " VND ";
-                }
-            } else {
-                totalPice.textContent = (parseInt(originalPrice).toLocaleString("vi-VN")) + " VND ";
-                paymentCod.hidden = false;
-            }
+    // Hàm cập nhật giá dựa trên phần trăm thanh toán
+    function updatePaymentPrice() {
+        let selectedValue = limitSelect.value;
+        let finalPrice = originalPrice;
+
+        if (selectedValue === "50") {
+            finalPrice = originalPrice * 0.5;
+        } else if (selectedValue === "30") {
+            finalPrice = originalPrice * 0.3;
+        } // Nếu là full thì giữ nguyên giá đã áp dụng giảm
+
+        priceDisplay.textContent = finalPrice.toLocaleString("vi-VN") + " VND";
+    }
+
+    // Khi chọn thanh toán theo phần trăm
+    limitSelect.addEventListener('change', updatePaymentPrice);
+
+    // Khi click chọn voucher (nếu bạn có xử lý chuyển trang thì dòng này thực ra không cần)
+    if (voucherLink) {
+        voucherLink.addEventListener("click", function () {
+            // Không cần xử lý ở đây vì trang chuyển đi để chọn voucher rồi load lại
+            // Nhưng nếu vẫn cần xử lý động thì dùng đoạn dưới:
+            const discountedPrice = originalPrice * (1 - discountPercent / 100);
+            priceDisplay.textContent = discountedPrice.toLocaleString("vi-VN") + " VND";
         });
-    });
-// chỉnh sửa thanh toán khi chọn voucher
-    document.addEventListener("DOMContentLoaded", function () {
-        const totalPice = document.getElementById("price3");
-        let priceValue = totalPice.textContent;
-        let priceNumber = parseInt(priceValue.replace(/[^\d]/g, ''));
-        let priceVoucher = document.getElementById("discount").textContent.replace("%", "");
-        let select = document.getElementById("Voucher");
-        let numberNight = document.getElementById();
-        select.addEventListener("click", function () {
+    }
 
-            totalPice.textContent = (parseInt(priceNumber) - (parseInt(priceNumber) * (parseFloat(priceVoucher) / 100))).toLocaleString("vi-VN") + " VND";
+    // Định dạng giá lúc load trang
+    const price1 = document.getElementById("price1");
+    const price2 = document.getElementById("price2");
 
+    if (price1 && !isNaN(parseInt(price1.textContent))) {
+        price1.textContent = parseInt(price1.textContent).toLocaleString("vi-VN") + " VND / Night";
+    }
 
-        });
+    if (price2 && !isNaN(parseInt(price2.textContent))) {
+        price2.textContent = parseInt(price2.textContent).toLocaleString("vi-VN") + " VND / Night";
+    }
 
-
-    });
-
-
-    document.addEventListener("DOMContentLoaded", function () {
-
-        const paymentCod = document.getElementById("cod");
-        const action = document.getElementById("cod");
-        select.addEventListener("click", function () {
-
-
-
-
-        });
-
-
-    });
-
-    // thêm dấu . cách 3 số 0
-    document.addEventListener('DOMContentLoaded', function () {
-        let price1 = document.getElementById("price1");
-        let num1 = parseInt(price1.textContent);
-        let price2 = document.getElementById("price2");
-        let num2 = parseInt(price2.textContent);
-        let price3 = document.getElementById("price3");
-        let num3 = parseInt(price3.textContent);
-        if (!isNaN(num1) || !isNaN(num2) || !isNaN(num3)) {
-            price1.textContent = num1.toLocaleString("vi-VN") + " VND / Night";
-            price2.textContent = num2.toLocaleString("vi-VN") + " VND / Night";
-            price3.textContent = num3.toLocaleString("vi-VN") + " VND ";
-        }
-    });
-
-
+    if (priceDisplay && !isNaN(originalPrice)) {
+        priceDisplay.textContent = originalPrice.toLocaleString("vi-VN") + " VND";
+    }
+});
 </script>
+
 </html>
