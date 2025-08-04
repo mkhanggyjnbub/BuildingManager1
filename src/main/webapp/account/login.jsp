@@ -10,6 +10,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Login Page</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
         <style>
             body {
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -24,9 +25,9 @@
             .login-container {
                 background: #fff;
                 padding: 40px 30px;
-                border-radius: 12px;
-                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-                width: 360px;
+                border-radius: 14px;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+                width: 380px;
                 animation: fadeIn 0.6s ease;
             }
 
@@ -45,36 +46,59 @@
                 text-align: center;
                 margin-bottom: 25px;
                 color: #333;
-                font-weight: 600;
+                font-weight: 700;
+                font-size: 26px;
             }
 
             .form-group {
-                margin-bottom: 20px;
+                margin-bottom: 18px;
+                position: relative;
             }
 
             label {
                 display: block;
                 margin-bottom: 8px;
-                color: #555;
+                color: #444;
                 font-weight: 500;
+            }
+
+            .form-group i {
+                position: absolute;
+                top: 40px;
+                left: 12px;
+                color: #888;
             }
 
             input[type="text"],
             input[type="password"],
             select {
                 width: 100%;
-                padding: 10px;
+                padding: 12px 12px 12px 40px;
                 border: 1px solid #ccc;
-                border-radius: 8px;
+                border-radius: 10px;
                 font-size: 15px;
-                transition: border-color 0.3s;
+                height: 45px;
+                box-sizing: border-box;
+                transition: border-color 0.3s, box-shadow 0.3s;
+                background-color: #fff;
+                appearance: none;
             }
 
             input[type="text"]:focus,
             input[type="password"]:focus,
             select:focus {
                 border-color: #007bff;
+                box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
                 outline: none;
+            }
+
+            /* Custom arrow cho select */
+            select {
+                background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 20 20'><path fill='gray' d='M5.5 7l4.5 4.5L14.5 7'/></svg>");
+                background-repeat: no-repeat;
+                background-position: right 12px center;
+                background-size: 14px;
+                padding-right: 35px;
             }
 
             input[type="submit"] {
@@ -83,15 +107,29 @@
                 border: none;
                 color: white;
                 padding: 12px;
-                border-radius: 8px;
+                border-radius: 10px;
                 cursor: pointer;
                 font-size: 16px;
                 font-weight: 600;
+                margin-top: 5px;
                 transition: background-color 0.3s ease;
             }
 
             input[type="submit"]:hover {
                 background-color: #0056b3;
+            }
+
+            .forgot-link {
+                display: block;
+                text-align: right;
+                font-size: 14px;
+                margin-top: 5px;
+                text-decoration: none;
+                color: #007bff;
+            }
+
+            .forgot-link:hover {
+                text-decoration: underline;
             }
 
             .signup-link {
@@ -113,27 +151,35 @@
     </head>
     <body>
         <div class="login-container">
-            <h2>Login</h2>
+            <h2><i class="fa-solid fa-right-to-bracket"></i> Login</h2>
             <form action="Login" method="post">
+
+                <!-- Account Type -->
                 <div class="form-group">
-                    <label for="accountType">Select Account Type</label>
+                    <label for="accountType">Account Type</label>
+                    <i class="fa-solid fa-users"></i>
                     <select id="accountType" name="accountType" required>
                         <option value="">-- Select Account Type --</option>
-                        <option value="option1">Admin, Receptionist, Staff</option>
+                        <option value="option1">Admin, Manager, Staff</option>
                         <option value="option2">User</option>
                     </select>
                 </div>
 
+                <!-- Username -->
                 <div class="form-group">
                     <label for="tk">Username</label>
-                    <input id="tk" name="tk" type="text" required>
+                    <i class="fa-solid fa-user"></i>
+                    <input id="tk" name="tk" type="text" placeholder="Enter username" required>
                 </div>
 
+                <!-- Password -->
                 <div class="form-group">
                     <label for="pas">Password</label>
-                    <input id="pas" name="pas" type="password" required>
+                    <i class="fa-solid fa-lock"></i>
+                    <input id="pas" name="pas" type="password" placeholder="Enter password" required>
                 </div>
-                <a href="ForgotPassword">Forgot Password</a>
+
+                <a href="ForgotPassword" class="forgot-link">Forgot Password?</a>
                 <input name="sub" type="submit" value="Log In"/>
             </form>
 
